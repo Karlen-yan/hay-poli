@@ -1,7 +1,7 @@
 <template>
-<div id="navBar">
-  <h2>{{subtitulo}}</h2>
-  </div>
+<nav id="NavBar">
+     hello
+  </nav>
 </template>
 
 <script>
@@ -14,3 +14,7 @@
         }
     }
 </script>
+
+<style>
+
+</style>
