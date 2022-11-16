@@ -1,6 +1,5 @@
 <template>
 <div id="navBar">
-  <h1>Es mi componente </h1>
   <h2>{{subtitulo}}</h2>
   </div>
 </template>
