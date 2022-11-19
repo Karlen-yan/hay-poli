@@ -27,6 +27,8 @@ export default {
 };
 </script>
 
+// Style menu 
+
 <style>
 body {
   margin: 0;
@@ -73,15 +75,6 @@ nav ul li:hover ul {
   visibility: visible;
   opacity: 1;
 }
-/* nav ul li ul::before {
-  content: "";
-  width: 0;
-  height: 0;
-  color: #023859;
-
-  border-radius: 20%;
-  position: absolute;
-} */
 nav ul li ul li a {
   display: block;
   margin-left: 14px;
@@ -120,7 +113,7 @@ nav ul li ul li a:hover {
 }
 
 .hay-poli:hover {
-  box-shadow: 3px 4px 6px silver;
+  /* box-shadow: 3px 4px 6px silver; */
 }
 
 .lupa {
