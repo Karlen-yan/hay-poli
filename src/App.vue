@@ -2,6 +2,7 @@
   <div id="app">
     <div class="container">
       <NavBar />
+
       <main>
         <div class="contenido">
           <section class="Caja_echarVistazo">
@@ -22,7 +23,7 @@
           </section>
         </div>
       </main>
-
+      <aside></aside>
       <Footer />
     </div>
   </div>
@@ -51,14 +52,16 @@ export default {
   margin-top: 60px;
 } */
 
-.container {
+body {
   display: grid;
-  
   grid-template-areas:
     "header header header"
-    "main main main"
+    "aside main aside"
     "footer footer footer";
+  margin: 0;
+  background-color: #02385958;
 }
+
 header {
   grid-area: header;
 }
@@ -70,6 +73,9 @@ main {
 }
 footer {
   grid-area: footer;
+}
+aside {
+  grid-area: aside;
 }
 /* .contenido{
   

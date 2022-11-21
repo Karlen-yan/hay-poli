@@ -1,9 +1,8 @@
 <template>
-    <div>
-         <footer>
+        <footer>
                 <h1>Hola footer</h1>
          </footer>
-    </div>
+    
 </template>
 
 

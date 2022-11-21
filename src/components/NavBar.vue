@@ -30,10 +30,6 @@ export default {
 // Style menu 
 
 <style>
-body {
-  margin: 0;
-  background-color: #02385958;
-}
 nav {
   background-color: #0d0d0d;
   /* background-color: #0a2b40a8; */
@@ -58,7 +54,7 @@ nav > ul > li {
 }
 /* submenu */
 nav ul li ul {
-  width: 320px;
+  width: 250px;
   display: flex;
   flex-direction: column;
   background-color: white;
