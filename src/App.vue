@@ -4,24 +4,22 @@
       <NavBar />
 
       <main>
-        <div class="contenido">
-          <section class="Caja_echarVistazo">
-            <article>
-              <h1>Ropa personalizada para creadores de marca</h1>
-              <a href="#" class="btn echarUnVistazo">Echar un vistazo ></a>
-              <div class="caja_crear_top_h2">
-                <h2>Crea ropa personalizada con tu Marca</h2>
-                <p>
-                  ¿Hace tiempo que le das vueltas a lo de
-                  <b>crear una marca de ropa</b>? ¿Quieres diseñar camisetas
-                  personalizadas que realmente te apetezca llevar? En
-                  <a href="#">Hay Poli</a> te ayudamos a dar rienda suelta a tu
-                  creatividad y a rentabilizar tus diseños.
-                </p>
-              </div>
-            </article>
-          </section>
-        </div>
+        <section class="Caja_echarVistazo">
+          <article>
+            <h1>Ropa personalizada para creadores de marca</h1>
+            <a href="#" class="btn echarUnVistazo">Echar un vistazo ></a>
+            <div class="caja_crear_top_h2">
+              <h2>Crea ropa personalizada con tu Marca</h2>
+              <p>
+                ¿Hace tiempo que le das vueltas a lo de
+                <b>crear una marca de ropa</b>? ¿Quieres diseñar camisetas
+                personalizadas que realmente te apetezca llevar? En
+                <a href="#">Hay Poli</a> te ayudamos a dar rienda suelta a tu
+                creatividad y a rentabilizar tus diseños.
+              </p>
+            </div>
+          </article>
+        </section>
       </main>
       <aside></aside>
       <Footer />
@@ -52,7 +50,10 @@ export default {
   margin-top: 60px;
 } */
 
-body {
+* {
+  margin: 0;
+}
+.app {
   display: grid;
   grid-template-areas:
     "header header header"
@@ -60,6 +61,8 @@ body {
     "footer footer footer";
   margin: 0;
   background-color: #02385958;
+  justify-content: center;
+  align-items: center;
 }
 
 header {
@@ -125,5 +128,71 @@ h2 {
 p {
   color: white;
   padding: 7px;
+}
+
+/* Movil  */
+@media all and (max-width: 768px) {
+  /* hamburgesa  */
+  .checkbtn {
+    display: block;
+  }
+  .menu-icon {
+    display: block;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+  }
+  nav ul {
+    position: fixed;
+    top: 0px;
+    display: block;
+    left: -110%;
+    background-color: #222;
+    width: 100%;
+    height: 100vh;
+    right: 0;
+    transition: all 3s ease;
+  }
+  nav ul li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 20%;
+    margin: 0 auto;
+    color: yellow;
+    width: 20px;
+    height:20px;
+  }
+  nav ul li:last-child {
+    background-color: none;
+    padding: 0;
+  }
+  #check:checked ~ ul {
+    left: 0;
+  }
+  .app {
+    display: grid;
+    grid-template-areas:
+      "header header header"
+      "aside aside aside "
+      " main main main"
+      "footer footer footer";
+  }
+  header {
+    grid-area: header;
+  }
+  main {
+    grid-area: main;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  footer {
+    grid-area: footer;
+  }
+  aside {
+    grid-area: aside;
+  }
 }
 </style>
