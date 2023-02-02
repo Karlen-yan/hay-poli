@@ -1,41 +1,24 @@
 <template>
   <div id="app">
-    <div class="container">
-      <NavBar />
-
-      <main>
-        <section class="Caja_echarVistazo">
-          <article>
-            <h1>Ropa personalizada para creadores de marca</h1>
-            <a href="#" class="btn echarUnVistazo">Echar un vistazo ></a>
-            <div class="caja_crear_top_h2">
-              <h2>Crea ropa personalizada con tu Marca</h2>
-              <p>
-                ¿Hace tiempo que le das vueltas a lo de
-                <b>crear una marca de ropa</b>? ¿Quieres diseñar camisetas
-                personalizadas que realmente te apetezca llevar? En
-                <a href="#">Hay Poli</a> te ayudamos a dar rienda suelta a tu
-                creatividad y a rentabilizar tus diseños.
-              </p>
-            </div>
-          </article>
-        </section>
-      </main>
-      <aside></aside>
-      <Footer />
-    </div>
+    <NavBar />
+    <Home />    
+    <Footer />
+    
   </div>
 </template>
 
 <script>
-import NavBar from "./components/NavBar.vue";
-import Footer from "./components/Footer.vue";
+import NavBar from "@/components/NavBar.vue";
+import Footer from "@/components/Footer.vue";
+
 
 export default {
   name: "App",
   components: {
     NavBar,
     Footer,
+    
+
   },
 };
 </script>
@@ -53,146 +36,211 @@ export default {
 * {
   margin: 0;
 }
-.app {
+body{
+  font-family: "Times New Roman", Times, serif;
+
+}
+.container {
   display: grid;
+  grid-auto-rows: 1fr;
   grid-template-areas:
-    "header header header"
-    "aside main aside"
-    "footer footer footer";
-  margin: 0;
+    "main";
+
   background-color: #02385958;
   justify-content: center;
   align-items: center;
 }
 
-header {
-  grid-area: header;
-}
 main {
   grid-area: main;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-footer {
-  grid-area: footer;
-}
-aside {
-  grid-area: aside;
-}
-/* .contenido{
-  
-  display: flex;
-  justify-content:center;
-  align-items: center;
-} */
-.Caja_echarVistazo {
-  background-color: aliceblue;
-  background-image: url("https://www.thegreencopy.com/images/impresion-de-camisetas-foto029a-pena-las-katas-gabriela-the-green-copy-shirt-madrid.jpg?crc=291552940");
-  background-repeat: no-repeat;
-  background-attachment: inherit;
-  background-size: 100%;
-  max-width: 100%;
-  margin: 0 auto;
 }
 
-.Caja_echarVistazo > article {
-  background: rgba(44, 44, 41, 0.484);
+/* Sliders */
+.slider {
+  width: 100%;
+  height: 100vh;
+  margin-top: 60px;
+  margin-bottom: 50px;
+  overflow: hidden;
+  z-index: 1;
 }
-h1 {
+.slider-container {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  width: 300%;
+  height: 400px;
+  animation: slider 20s infinite alternate linear;
+  z-index: 1;
+}
+.slider-container > figure {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  user-select: none;
+}
+.img-responsive {
+  width: 100%;
+  height: auto;
+  z-index: 1;
+}
+@keyframes slider {
+  0% {
+    margin-left: 0;
+  }
+  20% {
+    margin-left: 0;
+  }
+
+  50% {
+    margin-left: -100%;
+  }
+  75% {
+    margin-left: -100%;
+  }
+
+  75% {
+    margin-left: -200%;
+  }
+  100% {
+    margin-left: -200%;
+  }
+}
+/* btn slider  */
+.caja_slider_text_btn {
+  position: absolute;
+  color: #023859;
+  top: 30%;
+  padding: 15px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.233);
+}
+.caja_slider_text_btn > h1 {
+  font-size: 40px;
+}
+
+/* ***** hay que acabar  ****  **/
+/* Boton de slider 1   */
+.btn_slider {
+  position: absolute;
+  background-color: rgba(140, 144, 148, 0.789);
+  padding: 10px;
+  margin-top: 50px;
+  margin-left: 50%;
+  text-decoration: none;
   color: white;
-  padding-top: 20px;
   font-size: 30px;
-  text-shadow: 1px 0px 1px silver, 3px 1px 2px rgba(255, 255, 0, 0.625),
-    3px 1px 0px black;
 }
-.echarUnVistazo {
-  background-color: rgba(190, 190, 34, 0.46);
-  padding: 5px;
-  text-decoration-line: none;
-  color: white;
-  transform: translate(50) rotate(-45deg);
+/******* fin slider ****/
+
+/* Slider ***START***2 */
+.raiz_slider2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px;
 }
-.echarUnVistazo:hover {
-  background-color: rgba(255, 255, 0, 0.625);
-  padding: 5px;
-  height: 380%;
+.slider2 {
+  position: relative;
+  width: 420px;
+  height: 300px;
+  cursor: pointer;
+  box-shadow: 1px 10px 25px rgba(0, 0, 0, 0.5);
 }
-h2 {
-  color: white;
-  padding-left: 7px;
+.slider2 div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
-.caja_crear_top_h2 {
-  background-color: rgba(153, 153, 67, 0.847);
+
+/* Cajas de imagenes de slider 2  */
+
+/*1 Primera caja con animacion  */
+.caja1 {
+  background: url("https://www.euroresidentes.com/estilo-de-vida/moda-estilo/wp-content/uploads/sites/15/2015/07/diy-fashion-facil.jpg");
+  background-size: 100% 100%;
 }
-p {
-  color: white;
-  padding: 7px;
+.caja2 {
+  background: url("https://yourpromowear.com/img/cms/Blog/personalizacion-camisetas.png");
+  background-size: 100% 100%;
+  transition: 0.6s;
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 100%);
 }
+.caja2:hover {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+.caja1:hover ~ .caja2 {
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+}
+/* 2Secunda caja con animacion  */
+.caja3 {
+  background: url("https://i.ytimg.com/vi/3N2mJFz06To/maxresdefault.jpg");
+  background-size: 100% 100%;
+}
+.caja4 {
+  background: url("https://http2.mlstatic.com/D_NQ_NP_648031-MLA31040816093_062019-O.jpg");
+  background-size: 100% 100%;
+  transition: 0.6s;
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 100%);
+}
+
+.caja4:hover {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+.caja3:hover ~ .caja4 {
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+}
+/* 3 tersera caja con animacion  */
+.caja5 {
+  background: url("https://i.ytimg.com/vi/Yy505vIfQdU/maxresdefault.jpg");
+  background-size: 100% 100%;
+}
+.caja6 {
+  background: url("https://litb-cgis.rightinthebox.com/images/640x853/202112/bps/product/inc/pyyojp1638339861293.jpg");
+  background-size: 100% 100%;
+  transition: 0.6s;
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 100%);
+}
+.caja6:hover {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+.caja5:hover ~ .caja6 {
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+}
+/* fin de  slider 2  */
 
 /* Movil  */
 @media all and (max-width: 768px) {
-  /* hamburgesa  */
-  .checkbtn {
-    display: block;
-  }
-  .menu-icon {
-    display: block;
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    cursor: pointer;
-  }
-  nav ul {
-    position: fixed;
-    top: 0px;
-    display: block;
-    left: -110%;
-    background-color: #222;
-    width: 100%;
-    height: 100vh;
-    right: 0;
-    transition: all 3s ease;
-  }
-  nav ul li {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 20%;
-    margin: 0 auto;
-    color: yellow;
-    width: 20px;
-    height:20px;
-  }
-  nav ul li:last-child {
-    background-color: none;
-    padding: 0;
-  }
-  #check:checked ~ ul {
-    left: 0;
-  }
-  .app {
+  .container {
     display: grid;
     grid-template-areas:
-      "header header header"
-      "aside aside aside "
-      " main main main"
-      "footer footer footer";
+      "main";
   }
+
   header {
     grid-area: header;
+    width: 100%;
   }
   main {
     grid-area: main;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
   footer {
     grid-area: footer;
+    width: 100%;
   }
-  aside {
-    grid-area: aside;
+
+  /* Slider ***START***2 */
+  .raiz_slider2 {
+    display: flex;
+    margin: 0;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .slider2 {
+    margin-top: 30px;
   }
 }
 </style>
