@@ -71,7 +71,9 @@
 #api{
     margin-top:4%;
     padding: 0;    
-    background-color: azure;
+    background-color: #144e73;
+    color: white;
+    padding-top: 50px;
 }
 .raiz_blog{
    width: 100%;
@@ -88,9 +90,13 @@
     width: 80%;
     justify-content: center;
     align-items: center;
-    border: 10px solid white;
+    border: 3px solid white;
     margin: 50px;
     padding: 50px;
+/* clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%); */
+clip-path: polygon(9% 0, 91% 0, 100% 11%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0 11%);
+
+
 }
 /* imagenes */
 
@@ -107,7 +113,7 @@ justify-content: center;
 align-items: center;
 cursor: pointer;
 text-decoration: none;
-background-color: red;
+background-color: #023859;
 color: white;
 text-align: center;
 padding: 5px;

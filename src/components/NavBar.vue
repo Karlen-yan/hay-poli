@@ -10,7 +10,7 @@
       <ul>
         <li><router-link to="/" class="hay-poli"></router-link></li>
         <li class="enlasesMenu">
-          <router-link  to="/servicios">Servicio(Prs_Rop)</router-link>
+          <router-link  to="/servicios">Servicios</router-link>
           </li>
         <li class="enlasesMenu"><router-link to="/contactos">Contactos</router-link></li>
         <li class="enlasesMenu"><router-link to="/blog">Blog</router-link></li>
@@ -19,10 +19,10 @@
         <li>
           <a href="#" class="icon bolsa-compra"></a>
           <ul>
-            <li><router-link to="/cart">(img) Bolsa </router-link></li>
-            <li><router-link to="/pedido">(img caja) Pedido</router-link></li>
-            <li><a href="#">(img) Cuenta</a></li>
-            <li><a href="#">(img) Iniciar sesión</a></li>
+            <li><router-link to="/cart"><img class="navbar__menu-icono" src="@/components/img/iconosmenu/bolsa_compra.png" alt="">  Bolsa </router-link></li>
+            <li><router-link to="/pedido"><img class="navbar__menu-icono" src="@/components/img/iconosmenu/bolsa_pedido.png" alt="">  Pedido</router-link></li>
+            <li><router-link to="/registro"><img class="navbar__menu-icono" src="@/components/img/iconosmenu/registro.png" alt=""> Registrarse </router-link></li>
+            <li><router-link to="/iniciarsecion"><img class="navbar__menu-icono" src="@/components/img/iconosmenu/perfil_usuario.png" alt=""> Iniciar sesión</router-link></li>
           </ul>
         </li>
       </ul>
@@ -65,28 +65,28 @@ nav ul li ul {
   height: 180px;
   display: flex;
   flex-direction: column;
-  background-color: #02385963;
+  background-color: #023859;
   color: white;
   position: absolute;
   top: 50px;
   right: -15px;
   visibility: hidden;
-  opacity: 1;
+  /* opacity: 1; */
   z-index: 10;
   transition: all 330ms ease;
   border-radius: 20px;
 }
 nav ul li:hover ul {
   visibility: visible;
-  opacity: 1;
-  background-color: rgb(255, 255, 255);
+  /* opacity: 1; */
+  background-color: #023859;
 }
 nav ul li ul li a {
   display: block;
   font-size: 14px;
   text-transform: uppercase;
   transform: all 300ms ease;
-  color: #023859;
+  color: white;
   top: 50px;
   padding: 5px;
   margin-top: 4px;
@@ -98,10 +98,16 @@ nav ul li ul li a {
 
 }
 nav ul li ul li a:hover {
-  background-color: #3b596b56;
+  background-color: #3b596b;
   transform: scale(1.1);
   text-shadow: 2px 4px 6px 10px black;
 }
+.navbar__menu-icono{
+  width: 10%;
+  background-color: #ffffff;
+  border-radius: 5px;
+  }
+
 /* Buscador de contenidos  */
 #ctn-icon-search{
    position: absolute;
@@ -193,8 +199,8 @@ background-color: red;
 .hay-poli {
   background-image: url("./img/hay-poli.png");
   background-repeat: no-repeat;
-  background-size: 100% 110%;
-  margin-top: -8px;
+  background-size: 120% 130%;
+  margin-top: -19px;
 }
 
 /* icono de busqueda de menu  */
@@ -286,6 +292,7 @@ nav > ul > li {
     justify-content: center;
     align-self: center;
     top: 20%;
+    padding-top: 15px;
   }
   nav ul li:last-child {
     background-color: none;
@@ -306,7 +313,7 @@ nav > ul > li {
     width: 280px;
     height: 180px;
     display: flex;
-    background-color: rgb(255, 255, 255);
+    background-color: #023859;
     position: absolute;
     top: 60px; 
     visibility: hidden;
@@ -321,7 +328,7 @@ nav > ul > li {
   nav ul li:hover ul {
     visibility: visible;
     opacity: 3;
-    background-color: rgba(255, 255, 255, 0.933);
+    background-color: #023859;
 
   }
 
