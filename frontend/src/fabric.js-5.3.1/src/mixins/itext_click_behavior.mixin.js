@@ -3,7 +3,6 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
    * Initializes "dbclick" event handler
    */
   initDoubleClickSimulation: function() {
-
     // for double click
     this.__lastClickTime = +new Date();
 
@@ -24,7 +23,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
       return;
     }
     this.__newClickTime = +new Date();
-    var newPointer = options.pointer;
+    const newPointer = options.pointer;
     if (this.isTripleClick(newPointer)) {
       this.fire('tripleclick', options);
       this._stopEvent(options.e);
@@ -159,7 +158,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
     }
 
     if (this.canvas) {
-      var currentActive = this.canvas._activeObject;
+      const currentActive = this.canvas._activeObject;
       if (currentActive && currentActive !== this) {
         // avoid running this logic when there is an active object
         // this because is possible with shift click and fast clicks,
@@ -189,7 +188,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
    * @param {Event} e Event object
    */
   setCursorByClick: function(e) {
-    var newSelection = this.getSelectionStartFromPointer(e),
+    const newSelection = this.getSelectionStartFromPointer(e),
         start = this.selectionStart, end = this.selectionEnd;
     if (e.shiftKey) {
       this.setSelectionStartEndWithShift(start, end, newSelection);
@@ -210,7 +209,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
    * @return {Number} Index of a character
    */
   getSelectionStartFromPointer: function(e) {
-    var mouseOffset = this.getLocalPointer(e),
+    let mouseOffset = this.getLocalPointer(e),
         prevWidth = 0,
         width = 0,
         height = 0,
@@ -218,7 +217,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
         lineIndex = 0,
         lineLeftOffset,
         line;
-    for (var i = 0, len = this._textLines.length; i < len; i++) {
+    for (let i = 0, len = this._textLines.length; i < len; i++) {
       if (height <= mouseOffset.y) {
         height += this.getHeightOfLine(i) * this.scaleY;
         lineIndex = i;
@@ -259,7 +258,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
    */
   _getNewSelectionStartFromOffset: function(mouseOffset, prevWidth, width, index, jlen) {
     // we need Math.abs because when width is after the last char, the offset is given as 1, while is 0
-    var distanceBtwLastCharAndCursor = mouseOffset.x - prevWidth,
+    let distanceBtwLastCharAndCursor = mouseOffset.x - prevWidth,
         distanceBtwNextCharAndCursor = width - mouseOffset.x,
         offset = distanceBtwNextCharAndCursor > distanceBtwLastCharAndCursor ||
           distanceBtwNextCharAndCursor < 0 ? 0 : 1,
@@ -274,5 +273,5 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
     }
 
     return newSelectionStart;
-  }
+  },
 });

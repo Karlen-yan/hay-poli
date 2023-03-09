@@ -20,17 +20,17 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
    *   // ... do some stuff ...
    * });
    */
-  loadFromJSON: function (json, callback, reviver) {
+  loadFromJSON: function(json, callback, reviver) {
     if (!json) {
       return;
     }
 
     // serialize if it wasn't already
-    var serialized = (typeof json === 'string')
-      ? JSON.parse(json)
-      : fabric.util.object.clone(json);
+    const serialized = (typeof json === 'string') ?
+      JSON.parse(json) :
+      fabric.util.object.clone(json);
 
-    var _this = this,
+    const _this = this,
         clipPath = serialized.clipPath,
         renderOnAddRemove = this.renderOnAddRemove;
 
@@ -38,11 +38,11 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
 
     delete serialized.clipPath;
 
-    this._enlivenObjects(serialized.objects, function (enlivenedObjects) {
+    this._enlivenObjects(serialized.objects, function(enlivenedObjects) {
       _this.clear();
-      _this._setBgOverlay(serialized, function () {
+      _this._setBgOverlay(serialized, function() {
         if (clipPath) {
-          _this._enlivenObjects([clipPath], function (enlivenedCanvasClip) {
+          _this._enlivenObjects([clipPath], function(enlivenedCanvasClip) {
             _this.clipPath = enlivenedCanvasClip[0];
             _this.__setupCanvas.call(_this, serialized, enlivenedObjects, renderOnAddRemove, callback);
           });
@@ -63,7 +63,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
    * @param {Function} callback Invoked after all background and overlay images/patterns loaded
    */
   __setupCanvas: function(serialized, enlivenedObjects, renderOnAddRemove, callback) {
-    var _this = this;
+    const _this = this;
     enlivenedObjects.forEach(function(obj, index) {
       // we splice the array just in case some custom classes restored from JSON
       // will add more object to canvas at canvas init.
@@ -91,11 +91,11 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
    * @param {Function} callback Invoked after all background and overlay images/patterns loaded
    */
   _setBgOverlay: function(serialized, callback) {
-    var loaded = {
+    const loaded = {
       backgroundColor: false,
       overlayColor: false,
       backgroundImage: false,
-      overlayImage: false
+      overlayImage: false,
     };
 
     if (!serialized.backgroundImage && !serialized.overlayImage && !serialized.background && !serialized.overlay) {
@@ -103,7 +103,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
       return;
     }
 
-    var cbIfLoaded = function () {
+    const cbIfLoaded = function() {
       if (loaded.backgroundImage && loaded.overlayImage && loaded.backgroundColor && loaded.overlayColor) {
         callback && callback();
       }
@@ -123,7 +123,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
    * @param {Object} callback Callback function to invoke after property is set
    */
   __setBgOverlay: function(property, value, loaded, callback) {
-    var _this = this;
+    const _this = this;
 
     if (!value) {
       loaded[property] = true;
@@ -132,7 +132,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
     }
 
     if (property === 'backgroundImage' || property === 'overlayImage') {
-      fabric.util.enlivenObjects([value], function(enlivedObject){
+      fabric.util.enlivenObjects([value], function(enlivedObject) {
         _this[property] = enlivedObject[0];
         loaded[property] = true;
         callback && callback();
@@ -152,7 +152,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
    * @param {Function} callback
    * @param {Function} [reviver]
    */
-  _enlivenObjects: function (objects, callback, reviver) {
+  _enlivenObjects: function(objects, callback, reviver) {
     if (!objects || objects.length === 0) {
       callback && callback([]);
       return;
@@ -168,8 +168,8 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
    * @param {String} format
    * @param {Function} callback
    */
-  _toDataURL: function (format, callback) {
-    this.clone(function (clone) {
+  _toDataURL: function(format, callback) {
+    this.clone(function(clone) {
       callback(clone.toDataURL(format));
     });
   },
@@ -180,8 +180,8 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
    * @param {Number} multiplier
    * @param {Function} callback
    */
-  _toDataURLWithMultiplier: function (format, multiplier, callback) {
-    this.clone(function (clone) {
+  _toDataURLWithMultiplier: function(format, multiplier, callback) {
+    this.clone(function(clone) {
       callback(clone.toDataURLWithMultiplier(format, multiplier));
     });
   },
@@ -191,8 +191,8 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
    * @param {Object} [callback] Receives cloned instance as a first argument
    * @param {Array} [properties] Array of properties to include in the cloned canvas and children
    */
-  clone: function (callback, properties) {
-    var data = JSON.stringify(this.toJSON(properties));
+  clone: function(callback, properties) {
+    const data = JSON.stringify(this.toJSON(properties));
     this.cloneWithoutData(function(clone) {
       clone.loadFromJSON(data, function() {
         callback && callback(clone);
@@ -207,12 +207,12 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
    * @param {Object} [callback] Receives cloned instance as a first argument
    */
   cloneWithoutData: function(callback) {
-    var el = fabric.util.createCanvasElement();
+    const el = fabric.util.createCanvasElement();
 
     el.width = this.width;
     el.height = this.height;
 
-    var clone = new fabric.Canvas(el);
+    const clone = new fabric.Canvas(el);
     if (this.backgroundImage) {
       clone.setBackgroundImage(this.backgroundImage.src, function() {
         clone.renderAll();
@@ -224,5 +224,5 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
     else {
       callback && callback(clone);
     }
-  }
+  },
 });

@@ -1,0 +1,27 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "plugins": [
+          "vue"
+        ],
+    "rules": {
+        "vue/max-attributes-per-line": ["error", {
+          "singleline": 10, // El número máximo de atributos permitidos en una sola línea
+          "multiline": {
+            "max": 20, // El número máximo de líneas permitidas para atributos en múltiples líneas
+            "allowFirstLine": false // Permitir o no que el primer atributo esté en la misma línea que la etiqueta de apertura
+          }
+        }],
+        "vue/html-self-closing": ["error", {
+          "html": {
+            "void": "always", // Requerir el cierre automático para elementos de tipo void (como <br>)
+            "normal": "never", // No permitir el cierre automático para elementos normales
+            "component": "always" // Requerir el cierre automático para componentes personalizados
+          }
+        }]
+      }
+   
+}

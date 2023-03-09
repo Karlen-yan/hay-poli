@@ -1,9 +1,8 @@
 (function() {
-
-  var slice = Array.prototype.slice, emptyFunction = function() { },
+  const slice = Array.prototype.slice, emptyFunction = function() { },
 
       IS_DONTENUM_BUGGY = (function() {
-        for (var p in { toString: 1 }) {
+        for (const p in {toString: 1}) {
           if (p === 'toString') {
             return false;
           }
@@ -13,18 +12,15 @@
 
       /** @ignore */
       addMethods = function(klass, source, parent) {
-        for (var property in source) {
-
+        for (const property in source) {
           if (property in klass.prototype &&
               typeof klass.prototype[property] === 'function' &&
               (source[property] + '').indexOf('callSuper') > -1) {
-
             klass.prototype[property] = (function(property) {
               return function() {
-
-                var superclass = this.constructor.superclass;
+                const superclass = this.constructor.superclass;
                 this.constructor.superclass = parent;
-                var returnValue = source[property].apply(this, arguments);
+                const returnValue = source[property].apply(this, arguments);
                 this.constructor.superclass = superclass;
 
                 if (property !== 'initialize') {
@@ -51,12 +47,12 @@
   function Subclass() { }
 
   function callSuper(methodName) {
-    var parentMethod = null,
+    let parentMethod = null,
         _this = this;
 
     // climb prototype chain to find method not equal to callee's method
     while (_this.constructor.superclass) {
-      var superClassMethod = _this.constructor.superclass.prototype[methodName];
+      const superClassMethod = _this.constructor.superclass.prototype[methodName];
       if (_this[methodName] !== superClassMethod) {
         parentMethod = superClassMethod;
         break;
@@ -69,9 +65,9 @@
       return console.log('tried to callSuper ' + methodName + ', method not found in prototype chain', this);
     }
 
-    return (arguments.length > 1)
-      ? parentMethod.apply(this, slice.call(arguments, 1))
-      : parentMethod.call(this);
+    return (arguments.length > 1) ?
+      parentMethod.apply(this, slice.call(arguments, 1)) :
+      parentMethod.call(this);
   }
 
   /**
@@ -82,7 +78,7 @@
    *                  (be careful modifying objects defined here as this would affect all instances)
    */
   function createClass() {
-    var parent = null,
+    let parent = null,
         properties = slice.call(arguments, 0);
 
     if (typeof properties[0] === 'function') {
@@ -100,7 +96,7 @@
       klass.prototype = new Subclass();
       parent.subclasses.push(klass);
     }
-    for (var i = 0, length = properties.length; i < length; i++) {
+    for (let i = 0, length = properties.length; i < length; i++) {
       addMethods(klass, properties[i], parent);
     }
     if (!klass.prototype.initialize) {

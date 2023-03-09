@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric  = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       filters = fabric.Image.filters,
       createClass = fabric.util.createClass;
 
@@ -61,7 +60,7 @@
      * @param {ImageData} options.imageData The Uint8ClampedArray to be filtered.
      */
     applyTo2d: function(options) {
-      var imageData = options.imageData,
+      let imageData = options.imageData,
           data = imageData.data,
           iLen = imageData.height,
           jLen = imageData.width,
@@ -70,7 +69,6 @@
 
       for (i = 0; i < iLen; i += this.blocksize) {
         for (j = 0; j < jLen; j += this.blocksize) {
-
           index = (i * 4) * jLen + (j * 4);
 
           r = data[index];
@@ -133,5 +131,4 @@
    * @return {fabric.Image.filters.Pixelate} Instance of fabric.Image.filters.Pixelate
    */
   fabric.Image.filters.Pixelate.fromObject = fabric.Image.filters.BaseFilter.fromObject;
-
 })(typeof exports !== 'undefined' ? exports : this);

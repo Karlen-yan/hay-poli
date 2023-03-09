@@ -1,7 +1,7 @@
 (function() {
-  var canvas = this.canvas = new fabric.Canvas();
+  const canvas = this.canvas = new fabric.Canvas();
 
-  var ITEXT_OBJECT = {
+  const ITEXT_OBJECT = {
     version:                  fabric.version,
     type:                     'text',
     originX:                  'left',
@@ -50,7 +50,7 @@
     direction:                'ltr',
     pathStartOffset:          0,
     pathSide:                 'left',
-    pathAlign:                'baseline'
+    pathAlign:                'baseline',
   };
 
 
@@ -61,14 +61,14 @@
     });
 
     QUnit.test('constructor', function(assert) {
-      var iText = new fabric.IText('test');
+      const iText = new fabric.IText('test');
 
       assert.ok(iText instanceof fabric.IText);
       assert.ok(iText instanceof fabric.Text);
     });
 
     QUnit.test('initial properties', function(assert) {
-      var iText = new fabric.IText('test');
+      const iText = new fabric.IText('test');
       assert.ok(iText instanceof fabric.IText);
 
       assert.equal(iText.text, 'test');
@@ -77,11 +77,11 @@
     });
 
     QUnit.test('instances', function(assert) {
-      var iText = new fabric.IText('test');
+      const iText = new fabric.IText('test');
 
       // Not on a sketchpad; storing it in instances array already would leak it forever.
-      var instances = canvas._iTextInstances && canvas._iTextInstances;
-      var lastInstance = instances && instances[instances.length - 1];
+      let instances = canvas._iTextInstances && canvas._iTextInstances;
+      let lastInstance = instances && instances[instances.length - 1];
       assert.equal(lastInstance, undefined);
 
       canvas.add(iText);
@@ -101,7 +101,7 @@
     });
 
     QUnit.test('fromObject', function(assert) {
-      var done = assert.async();
+      const done = assert.async();
       assert.ok(typeof fabric.IText.fromObject === 'function');
       fabric.IText.fromObject(ITEXT_OBJECT, function(iText) {
         assert.ok(iText instanceof fabric.IText);
@@ -111,49 +111,49 @@
     });
 
     QUnit.test('lineHeight with single line', function(assert) {
-      var text = new fabric.IText('text with one line');
+      const text = new fabric.IText('text with one line');
       text.lineHeight = 2;
       text.initDimensions();
-      var height = text.height;
+      const height = text.height;
       text.lineHeight = 0.5;
       text.initDimensions();
-      var heightNew = text.height;
+      const heightNew = text.height;
       assert.equal(height, heightNew, 'text height does not change with one single line');
     });
 
     QUnit.test('lineHeight with multi line', function(assert) {
-      var text = new fabric.IText('text with\ntwo lines');
+      const text = new fabric.IText('text with\ntwo lines');
       text.lineHeight = 0.1;
       text.initDimensions();
-      var height = text.height,
+      const height = text.height,
           minimumHeight = text.fontSize * text._fontSizeMult;
       assert.equal(height > minimumHeight, true, 'text height is always bigger than minimum Height');
     });
 
     QUnit.test('toObject', function(assert) {
-      var stylesObject = {
+      const stylesObject = {
         0: {
-          0: { fill: 'red' },
-          1: { textDecoration: 'underline' }
-        }
+          0: {fill: 'red'},
+          1: {textDecoration: 'underline'},
+        },
       };
-      var stylesArray = [
+      const stylesArray = [
         {
           start: 0,
           end: 1,
-          style: { fill: 'red' }
+          style: {fill: 'red'},
         },
         {
           start: 1,
           end: 2,
-          style: { textDecoration: 'underline' }
-        }
+          style: {textDecoration: 'underline'},
+        },
       ];
-      var iText = new fabric.IText('test', {
-        styles: stylesObject
+      const iText = new fabric.IText('test', {
+        styles: stylesObject,
       });
       assert.equal(typeof iText.toObject, 'function');
-      var obj = iText.toObject();
+      const obj = iText.toObject();
       assert.deepEqual(obj.styles, stylesArray);
       assert.notEqual(obj.styles[0], stylesArray[0]);
       assert.notEqual(obj.styles[1], stylesArray[1]);
@@ -166,7 +166,7 @@
     });
 
     QUnit.test('setSelectionStart', function(assert) {
-      var iText = new fabric.IText('test');
+      const iText = new fabric.IText('test');
 
       assert.equal(typeof iText.setSelectionStart, 'function');
 
@@ -178,12 +178,12 @@
     });
 
     QUnit.test('empty itext', function(assert) {
-      var iText = new fabric.IText('');
+      const iText = new fabric.IText('');
       assert.equal(iText.width, iText.cursorWidth);
     });
 
     QUnit.test('setSelectionEnd', function(assert) {
-      var iText = new fabric.IText('test');
+      const iText = new fabric.IText('test');
 
       assert.equal(typeof iText.setSelectionEnd, 'function');
 
@@ -195,8 +195,8 @@
     });
 
     QUnit.test('get2DCursorLocation', function(assert) {
-      var iText = new fabric.IText('test\nfoo\nbarbaz');
-      var loc = iText.get2DCursorLocation();
+      const iText = new fabric.IText('test\nfoo\nbarbaz');
+      let loc = iText.get2DCursorLocation();
 
       assert.equal(loc.lineIndex, 0);
       assert.equal(loc.charIndex, 0);
@@ -227,36 +227,36 @@
     });
 
     QUnit.test('isEmptyStyles', function(assert) {
-      var iText = new fabric.IText('test');
+      let iText = new fabric.IText('test');
       assert.ok(iText.isEmptyStyles());
 
       iText = new fabric.IText('test', {
         styles: {
           0: {
-            0: { }
+            0: { },
           },
           1: {
-            0: { }, 1: { }
-          }
-        }
+            0: { }, 1: { },
+          },
+        },
       });
       assert.ok(iText.isEmptyStyles());
 
       iText = new fabric.IText('test', {
         styles: {
           0: {
-            0: { }
+            0: { },
           },
           1: {
-            0: { fill: 'red' }, 1: { }
-          }
-        }
+            0: {fill: 'red'}, 1: { },
+          },
+        },
       });
       assert.ok(!iText.isEmptyStyles());
     });
 
     QUnit.test('selectAll', function(assert) {
-      var iText = new fabric.IText('test');
+      const iText = new fabric.IText('test');
 
       iText.selectAll();
       assert.equal(iText.selectionStart, 0);
@@ -273,7 +273,7 @@
     });
 
     QUnit.test('getSelectedText', function(assert) {
-      var iText = new fabric.IText('test\nfoobarbaz');
+      const iText = new fabric.IText('test\nfoobarbaz');
       iText.selectionStart = 1;
       iText.selectionEnd = 10;
       assert.equal(iText.getSelectedText(), 'est\nfooba');
@@ -283,7 +283,7 @@
     });
 
     QUnit.test('enterEditing, exitEditing', function(assert) {
-      var iText = new fabric.IText('test');
+      const iText = new fabric.IText('test');
 
       assert.equal(typeof iText.enterEditing, 'function');
       assert.equal(typeof iText.exitEditing, 'function');
@@ -299,9 +299,9 @@
     });
 
     QUnit.test('enterEditing, exitEditing and saved props', function(assert) {
-      var iText = new fabric.IText('test');
+      const iText = new fabric.IText('test');
 
-      var _savedProps = {
+      const _savedProps = {
         hasControls: iText.hasControls,
         borderColor: iText.borderColor,
         lockMovementX: iText.lockMovementX,
@@ -309,7 +309,7 @@
         hoverCursor: iText.hoverCursor,
         selectable: iText.selectable,
         defaultCursor: iText.canvas && iText.canvas.defaultCursor,
-        moveCursor: iText.canvas && iText.canvas.moveCursor
+        moveCursor: iText.canvas && iText.canvas.moveCursor,
       };
       iText.enterEditing();
       assert.deepEqual(_savedProps, iText._savedProps, 'iText saves a copy of important props');
@@ -327,7 +327,7 @@
     });
 
     QUnit.test('event firing', function(assert) {
-      var iText = new fabric.IText('test'),
+      let iText = new fabric.IText('test'),
           enter = 0, exit = 0, modify = 0;
 
       function countEnter() {
@@ -373,38 +373,38 @@
     });
 
     QUnit.test('insertNewlineStyleObject', function(assert) {
-      var iText = new fabric.IText('test\n2');
+      const iText = new fabric.IText('test\n2');
 
       assert.equal(typeof iText.insertNewlineStyleObject, 'function');
 
       iText.insertNewlineStyleObject(0, 4, 1);
       assert.deepEqual(iText.styles, { }, 'does not insert empty styles');
-      iText.styles = { 1: { 0: { fill: 'blue' } } };
+      iText.styles = {1: {0: {fill: 'blue'}}};
       iText.insertNewlineStyleObject(0, 4, 1);
-      assert.deepEqual(iText.styles, { 2: { 0: { fill: 'blue' } } }, 'correctly shift styles');
+      assert.deepEqual(iText.styles, {2: {0: {fill: 'blue'}}}, 'correctly shift styles');
     });
 
     QUnit.test('insertNewlineStyleObject with existing style', function(assert) {
-      var iText = new fabric.IText('test\n2');
+      const iText = new fabric.IText('test\n2');
 
-      iText.styles = { 0: { 3: { fill: 'red' } }, 1: { 0: { fill: 'blue' } } };
+      iText.styles = {0: {3: {fill: 'red'}}, 1: {0: {fill: 'blue'}}};
       iText.insertNewlineStyleObject(0, 4, 3);
-      assert.deepEqual(iText.styles[4], { 0: { fill: 'blue' } }, 'correctly shift styles 3 lines');
-      assert.deepEqual(iText.styles[3], { 0: { fill: 'red' } }, 'correctly copied previous style line 3');
-      assert.deepEqual(iText.styles[2], { 0: { fill: 'red' } }, 'correctly copied previous style line 2');
-      assert.deepEqual(iText.styles[1], { 0: { fill: 'red' } }, 'correctly copied previous style line 1');
+      assert.deepEqual(iText.styles[4], {0: {fill: 'blue'}}, 'correctly shift styles 3 lines');
+      assert.deepEqual(iText.styles[3], {0: {fill: 'red'}}, 'correctly copied previous style line 3');
+      assert.deepEqual(iText.styles[2], {0: {fill: 'red'}}, 'correctly copied previous style line 2');
+      assert.deepEqual(iText.styles[1], {0: {fill: 'red'}}, 'correctly copied previous style line 1');
     });
 
     QUnit.test('shiftLineStyles', function(assert) {
-      var iText = new fabric.IText('test\ntest\ntest', {
+      const iText = new fabric.IText('test\ntest\ntest', {
         styles: {
           1: {
-            0: { fill: 'red' },
-            1: { fill: 'red' },
-            2: { fill: 'red' },
-            3: { fill: 'red' }
-          }
-        }
+            0: {fill: 'red'},
+            1: {fill: 'red'},
+            2: {fill: 'red'},
+            3: {fill: 'red'},
+          },
+        },
       });
 
       assert.equal(typeof iText.shiftLineStyles, 'function');
@@ -412,26 +412,26 @@
       iText.shiftLineStyles(0, +1);
       assert.deepEqual(iText.styles, {
         2: {
-          0: { fill: 'red' },
-          1: { fill: 'red' },
-          2: { fill: 'red' },
-          3: { fill: 'red' }
-        }
+          0: {fill: 'red'},
+          1: {fill: 'red'},
+          2: {fill: 'red'},
+          3: {fill: 'red'},
+        },
       });
 
       iText.shiftLineStyles(0, -1);
       assert.deepEqual(iText.styles, {
         1: {
-          0: { fill: 'red' },
-          1: { fill: 'red' },
-          2: { fill: 'red' },
-          3: { fill: 'red' }
-        }
+          0: {fill: 'red'},
+          1: {fill: 'red'},
+          2: {fill: 'red'},
+          3: {fill: 'red'},
+        },
       });
     });
 
     QUnit.test('selectWord', function(assert) {
-      var iText = new fabric.IText('test foo bar-baz\nqux');
+      const iText = new fabric.IText('test foo bar-baz\nqux');
 
       assert.equal(typeof iText.selectWord, 'function');
 
@@ -445,7 +445,7 @@
     });
 
     QUnit.test('selectLine', function(assert) {
-      var iText = new fabric.IText('test foo bar-baz\nqux');
+      const iText = new fabric.IText('test foo bar-baz\nqux');
 
       assert.equal(typeof iText.selectLine, 'function');
 
@@ -461,7 +461,7 @@
     });
 
     QUnit.test('findWordBoundaryLeft', function(assert) {
-      var iText = new fabric.IText('test foo bar-baz\nqux');
+      const iText = new fabric.IText('test foo bar-baz\nqux');
 
       assert.equal(typeof iText.findWordBoundaryLeft, 'function');
 
@@ -472,7 +472,7 @@
     });
 
     QUnit.test('findWordBoundaryRight', function(assert) {
-      var iText = new fabric.IText('test foo bar-baz\nqux');
+      const iText = new fabric.IText('test foo bar-baz\nqux');
 
       assert.equal(typeof iText.findWordBoundaryRight, 'function');
 
@@ -483,7 +483,7 @@
     });
 
     QUnit.test('findLineBoundaryLeft', function(assert) {
-      var iText = new fabric.IText('test foo bar-baz\nqux');
+      const iText = new fabric.IText('test foo bar-baz\nqux');
 
       assert.equal(typeof iText.findLineBoundaryLeft, 'function');
 
@@ -492,7 +492,7 @@
     });
 
     QUnit.test('findLineBoundaryRight', function(assert) {
-      var iText = new fabric.IText('test foo bar-baz\nqux');
+      const iText = new fabric.IText('test foo bar-baz\nqux');
 
       assert.equal(typeof iText.findLineBoundaryRight, 'function');
 
@@ -501,19 +501,19 @@
     });
 
     QUnit.test('getSelectionStyles with no arguments', function(assert) {
-      var iText = new fabric.IText('test foo bar-baz\nqux', {
+      const iText = new fabric.IText('test foo bar-baz\nqux', {
         styles: {
           0: {
-            0: { textDecoration: 'underline' },
-            2: { textDecoration: 'overline' },
-            4: { textBackgroundColor: '#ffc' }
+            0: {textDecoration: 'underline'},
+            2: {textDecoration: 'overline'},
+            4: {textBackgroundColor: '#ffc'},
           },
           1: {
-            0: { fill: 'red' },
-            1: { fill: 'green' },
-            2: { fill: 'blue' }
-          }
-        }
+            0: {fill: 'red'},
+            1: {fill: 'green'},
+            2: {fill: 'blue'},
+          },
+        },
       });
 
       assert.equal(typeof iText.getSelectionStyles, 'function');
@@ -527,70 +527,70 @@
       iText.selectionEnd = 3;
 
       assert.deepEqual(iText.getSelectionStyles(), [{
-        textDecoration: 'overline'
+        textDecoration: 'overline',
       }]);
 
       iText.selectionStart = 17;
       iText.selectionEnd = 18;
 
       assert.deepEqual(iText.getSelectionStyles(), [{
-        fill: 'red'
+        fill: 'red',
       }]);
     });
 
     QUnit.test('getSelectionStyles with 2 args', function(assert) {
-      var iText = new fabric.IText('test foo bar-baz\nqux', {
+      const iText = new fabric.IText('test foo bar-baz\nqux', {
         styles: {
           0: {
-            0: { textDecoration: 'underline' },
-            2: { textDecoration: 'overline' },
-            4: { textBackgroundColor: '#ffc' }
+            0: {textDecoration: 'underline'},
+            2: {textDecoration: 'overline'},
+            4: {textBackgroundColor: '#ffc'},
           },
           1: {
-            0: { fill: 'red' },
-            1: { fill: 'green' },
-            2: { fill: 'blue' }
-          }
-        }
+            0: {fill: 'red'},
+            1: {fill: 'green'},
+            2: {fill: 'blue'},
+          },
+        },
       });
 
       assert.deepEqual(iText.getSelectionStyles(0, 2), [
-        { textDecoration: 'underline' },
-        { }
+        {textDecoration: 'underline'},
+        { },
       ]);
     });
 
     QUnit.test('setSelectionStyles', function(assert) {
-      var iText = new fabric.IText('test foo bar-baz\nqux', {
+      const iText = new fabric.IText('test foo bar-baz\nqux', {
         styles: {
           0: {
-            0: { fill: '#112233' },
-            2: { stroke: '#223344' }
-          }
-        }
+            0: {fill: '#112233'},
+            2: {stroke: '#223344'},
+          },
+        },
       });
 
       assert.equal(typeof iText.setSelectionStyles, 'function');
 
       iText.setSelectionStyles({
         fill: 'red',
-        stroke: 'yellow'
+        stroke: 'yellow',
       });
 
       assert.deepEqual(iText.styles[0][0], {
-        fill: '#112233'
+        fill: '#112233',
       });
 
       iText.selectionEnd = 0;
       iText.selectionEnd = 1;
       iText.setSelectionStyles({
         fill: 'red',
-        stroke: 'yellow'
+        stroke: 'yellow',
       });
 
       assert.deepEqual(iText.styles[0][0], {
         fill: 'red',
-        stroke: 'yellow'
+        stroke: 'yellow',
       });
 
       iText.selectionStart = 2;
@@ -598,23 +598,23 @@
 
       iText.setSelectionStyles({
         fill: '#998877',
-        stroke: 'yellow'
+        stroke: 'yellow',
       });
 
       assert.deepEqual(iText.styles[0][2], {
         fill: '#998877',
-        stroke: 'yellow'
+        stroke: 'yellow',
       });
     });
 
     QUnit.test('getCurrentCharFontSize', function(assert) {
-      var iText = new fabric.IText('test foo bar-baz\nqux', {
+      const iText = new fabric.IText('test foo bar-baz\nqux', {
         styles: {
           0: {
-            0: { fontSize: 20 },
-            1: { fontSize: 60 }
-          }
-        }
+            0: {fontSize: 20},
+            1: {fontSize: 60},
+          },
+        },
       });
 
       assert.equal(typeof iText.getCurrentCharFontSize, 'function');
@@ -631,8 +631,8 @@
     QUnit.test('object removal from canvas', function(assert) {
       canvas.clear();
       canvas._iTextInstances = null;
-      var text1 = new fabric.IText('Text Will be here');
-      var text2 = new fabric.IText('Text Will be here');
+      const text1 = new fabric.IText('Text Will be here');
+      const text2 = new fabric.IText('Text Will be here');
       assert.ok(!canvas._iTextInstances, 'canvas has no iText instances');
       assert.ok(!canvas._hasITextHandlers, 'canvas has no handlers');
 
@@ -657,12 +657,12 @@
     });
 
     QUnit.test('getCurrentCharColor', function(assert) {
-      var iText = new fabric.IText('test foo bar-baz\nqux', {
+      const iText = new fabric.IText('test foo bar-baz\nqux', {
         styles: {
           0: {
-            0: { fill: 'red' },
-            1: { fill: 'green' }
-          }
+            0: {fill: 'red'},
+            1: {fill: 'green'},
+          },
         },
         fill: '#333',
       });
@@ -679,15 +679,15 @@
     });
 
     QUnit.test('toSVGWithFonts', function(assert) {
-      var iText = new fabric.IText('test foo bar-baz\nqux', {
+      const iText = new fabric.IText('test foo bar-baz\nqux', {
         styles: {
           0: {
-            0: { fill: '#112233' },
-            2: { stroke: '#223344', fontFamily: 'Engagement' },
-            3: { backgroundColor: '#00FF00' }
-          }
+            0: {fill: '#112233'},
+            2: {stroke: '#223344', fontFamily: 'Engagement'},
+            3: {backgroundColor: '#00FF00'},
+          },
         },
-        fontFamily: 'Plaster'
+        fontFamily: 'Plaster',
       });
       fabric.fontPaths = {
         Engagement: 'path-to-engagement-font-file',
@@ -695,7 +695,7 @@
       };
       canvas.add(iText);
       assert.equal(typeof iText.toSVG, 'function');
-      var parser = new DOMParser(),
+      const parser = new DOMParser(),
           svgString = canvas.toSVG(),
           doc = parser.parseFromString(svgString, 'image/svg+xml'),
           style = doc.getElementsByTagName('style')[0].firstChild.data;
@@ -703,64 +703,64 @@
     });
 
     QUnit.test('toSVGWithFontsInGroups', function(assert) {
-      var iText1 = new fabric.IText('test foo bar-baz\nqux', {
+      const iText1 = new fabric.IText('test foo bar-baz\nqux', {
         styles: {
           0: {
-            0: { fill: '#112233' },
-            2: { stroke: '#223344', fontFamily: 'Lacquer' },
-            3: { backgroundColor: '#00FF00' }
-          }
+            0: {fill: '#112233'},
+            2: {stroke: '#223344', fontFamily: 'Lacquer'},
+            3: {backgroundColor: '#00FF00'},
+          },
         },
-        fontFamily: 'Plaster'
+        fontFamily: 'Plaster',
       });
-      var iText2 = new fabric.IText('test foo bar-baz\nqux\n2', {
+      const iText2 = new fabric.IText('test foo bar-baz\nqux\n2', {
         styles: {
           0: {
-            0: { fill: '#112233', fontFamily: 'Engagement' },
-            2: { stroke: '#223344' },
-            3: { backgroundColor: '#00FF00' }
-          }
+            0: {fill: '#112233', fontFamily: 'Engagement'},
+            2: {stroke: '#223344'},
+            3: {backgroundColor: '#00FF00'},
+          },
         },
-        fontFamily: 'Poppins'
+        fontFamily: 'Poppins',
       });
       fabric.fontPaths = {
         Engagement: 'path-to-engagement-font-file',
         Plaster: 'path-to-plaster-font-file',
         Poppins: 'path-to-poppins-font-file',
-        Lacquer: 'path-to-lacquer-font-file'
+        Lacquer: 'path-to-lacquer-font-file',
       };
-      var subGroup = new fabric.Group([iText1]);
-      var group = new fabric.Group([subGroup, iText2]);
+      const subGroup = new fabric.Group([iText1]);
+      const group = new fabric.Group([subGroup, iText2]);
       canvas.add(group);
       assert.equal(typeof iText1.toSVG, 'function');
       assert.equal(typeof iText2.toSVG, 'function');
-      var parser = new DOMParser();
-      var svgString = canvas.toSVG(),
+      const parser = new DOMParser();
+      const svgString = canvas.toSVG(),
           doc = parser.parseFromString(svgString, 'image/svg+xml'),
           style = doc.getElementsByTagName('style')[0].firstChild.data;
       assert.equal(
         style,
-        '\n\t\t@font-face {\n\t\t\tfont-family: \'Plaster\';\n\t\t\tsrc: url(\'path-to-plaster-font-file\');\n\t\t}\n\t\t@font-face {\n\t\t\tfont-family: \'Lacquer\';\n\t\t\tsrc: url(\'path-to-lacquer-font-file\');\n\t\t}\n\t\t@font-face {\n\t\t\tfont-family: \'Poppins\';\n\t\t\tsrc: url(\'path-to-poppins-font-file\');\n\t\t}\n\t\t@font-face {\n\t\t\tfont-family: \'Engagement\';\n\t\t\tsrc: url(\'path-to-engagement-font-file\');\n\t\t}\n'
+        '\n\t\t@font-face {\n\t\t\tfont-family: \'Plaster\';\n\t\t\tsrc: url(\'path-to-plaster-font-file\');\n\t\t}\n\t\t@font-face {\n\t\t\tfont-family: \'Lacquer\';\n\t\t\tsrc: url(\'path-to-lacquer-font-file\');\n\t\t}\n\t\t@font-face {\n\t\t\tfont-family: \'Poppins\';\n\t\t\tsrc: url(\'path-to-poppins-font-file\');\n\t\t}\n\t\t@font-face {\n\t\t\tfont-family: \'Engagement\';\n\t\t\tsrc: url(\'path-to-engagement-font-file\');\n\t\t}\n',
       );
     });
 
     QUnit.test('space wrap attribute', function(assert) {
-      var iText = new fabric.IText('test foo bar-baz\nqux');
+      const iText = new fabric.IText('test foo bar-baz\nqux');
       iText.enterEditing();
       assert.equal(iText.hiddenTextarea.wrap, 'off', 'HiddenTextarea needs wrap off attribute');
       iText.abortCursorAnimation();
     });
 
     QUnit.test('_removeExtraneousStyles', function(assert) {
-      var iText = new fabric.IText('a\nq\qo', { styles: {
-        0: { 0: { fontSize: 4 } },
-        1: { 0: { fontSize: 4 } },
-        2: { 0: { fontSize: 4 } },
-        3: { 0: { fontSize: 4 } },
-        4: { 0: { fontSize: 4 } },
-      } });
-      assert.deepEqual(iText.styles[3], { 0: { fontSize: 4 } }, 'style line 3 exists');
-      assert.deepEqual(iText.styles[4], { 0: { fontSize: 4 } }, 'style line 4 exists');
+      const iText = new fabric.IText('a\nq\qo', {styles: {
+        0: {0: {fontSize: 4}},
+        1: {0: {fontSize: 4}},
+        2: {0: {fontSize: 4}},
+        3: {0: {fontSize: 4}},
+        4: {0: {fontSize: 4}},
+      }});
+      assert.deepEqual(iText.styles[3], {0: {fontSize: 4}}, 'style line 3 exists');
+      assert.deepEqual(iText.styles[4], {0: {fontSize: 4}}, 'style line 4 exists');
       iText._removeExtraneousStyles();
       assert.equal(iText.styles[3], undefined, 'style line 3 has been removed');
       assert.equal(iText.styles[4], undefined, 'style line 4 has been removed');
@@ -769,9 +769,9 @@
 
     QUnit.module('fabric.IText with canvas.enableRetinaScaling = false', function() {
       QUnit.test('hiddenTextarea does not move DOM', function(assert) {
-        var iText = new fabric.IText('a', { fill: '#ffffff', fontSize: 50 });
-        var canvas2 = new fabric.Canvas(null, { width: 800, height: 800, renderOnAddRemove: false, enableRetinaScaling: false });
-        canvas2.setDimensions({ width: 100, height: 100 }, { cssOnly: true });
+        const iText = new fabric.IText('a', {fill: '#ffffff', fontSize: 50});
+        const canvas2 = new fabric.Canvas(null, {width: 800, height: 800, renderOnAddRemove: false, enableRetinaScaling: false});
+        canvas2.setDimensions({width: 100, height: 100}, {cssOnly: true});
         canvas2.cancelRequestedRender();
         iText.set({
           top: 400,
@@ -779,12 +779,12 @@
         });
         canvas2.add(iText);
         Object.defineProperty(canvas2.upperCanvasEl, 'clientWidth', {
-          get: function() { return this._clientWidth; },
-          set: function(value) { return this._clientWidth = value; },
+          get: function() {return this._clientWidth;},
+          set: function(value) {return this._clientWidth = value;},
         });
         Object.defineProperty(canvas2.upperCanvasEl, 'clientHeight', {
-          get: function() { return this._clientHeight; },
-          set: function(value) { return this._clientHeight = value; },
+          get: function() {return this._clientHeight;},
+          set: function(value) {return this._clientHeight = value;},
         });
         canvas2.upperCanvasEl._clientWidth = 100;
         canvas2.upperCanvasEl._clientHeight = 100;
@@ -808,9 +808,9 @@
     QUnit.module('fabric.IText with canvas.enableRetinaScaling = true', function() {
       QUnit.test('hiddenTextarea does not move DOM', function(assert) {
         fabric.devicePixelRatio = 2;
-        var iText = new fabric.IText('a', { fill: '#ffffff', fontSize: 50 });
-        var canvas2 = new fabric.Canvas(null, { width: 800, height: 800, renderOnAddRemove: false, enableRetinaScaling: true });
-        canvas2.setDimensions({ width: 100, height: 100 }, { cssOnly: true });
+        const iText = new fabric.IText('a', {fill: '#ffffff', fontSize: 50});
+        const canvas2 = new fabric.Canvas(null, {width: 800, height: 800, renderOnAddRemove: false, enableRetinaScaling: true});
+        canvas2.setDimensions({width: 100, height: 100}, {cssOnly: true});
         canvas2.cancelRequestedRender();
         iText.set({
           top: 400,
@@ -818,12 +818,12 @@
         });
         canvas2.add(iText);
         Object.defineProperty(canvas2.upperCanvasEl, 'clientWidth', {
-          get: function() { return this._clientWidth; },
-          set: function(value) { return this._clientWidth = value; },
+          get: function() {return this._clientWidth;},
+          set: function(value) {return this._clientWidth = value;},
         });
         Object.defineProperty(canvas2.upperCanvasEl, 'clientHeight', {
-          get: function() { return this._clientHeight; },
-          set: function(value) { return this._clientHeight = value; },
+          get: function() {return this._clientHeight;},
+          set: function(value) {return this._clientHeight = value;},
         });
         canvas2.upperCanvasEl._clientWidth = 100;
         canvas2.upperCanvasEl._clientHeight = 100;

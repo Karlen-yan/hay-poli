@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric  = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       filters = fabric.Image.filters,
       createClass = fabric.util.createClass;
 
@@ -69,7 +68,7 @@
         // early return if the parameter value has a neutral value
         return;
       }
-      var imageData = options.imageData,
+      let imageData = options.imageData,
           data = imageData.data, i, len = data.length;
       for (i = 0; i < len; i += 4) {
         // insert here your code to modify data[i]
@@ -107,5 +106,4 @@
    * @return {fabric.Image.filters.MyFilter} Instance of fabric.Image.filters.MyFilter
    */
   fabric.Image.filters.MyFilter.fromObject = fabric.Image.filters.BaseFilter.fromObject;
-
 })(typeof exports !== 'undefined' ? exports : this);

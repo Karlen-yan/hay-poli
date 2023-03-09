@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric  = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       extend = fabric.util.object.extend,
       filters = fabric.Image.filters,
       createClass = fabric.util.createClass;
@@ -229,9 +228,9 @@
     * @param {Object} options.programCache A map of compiled shader programs, keyed by filter type.
     */
     retrieveShader: function(options) {
-      var size = Math.sqrt(this.matrix.length);
-      var cacheKey = this.type + '_' + size + '_' + (this.opaque ? 1 : 0);
-      var shaderSource = this.fragmentSource[cacheKey];
+      const size = Math.sqrt(this.matrix.length);
+      const cacheKey = this.type + '_' + size + '_' + (this.opaque ? 1 : 0);
+      const shaderSource = this.fragmentSource[cacheKey];
       if (!options.programCache.hasOwnProperty(cacheKey)) {
         options.programCache[cacheKey] = this.createProgram(options.context, shaderSource);
       }
@@ -245,7 +244,7 @@
      * @param {ImageData} options.imageData The Uint8ClampedArray to be filtered.
      */
     applyTo2d: function(options) {
-      var imageData = options.imageData,
+      let imageData = options.imageData,
           data = imageData.data,
           weights = this.matrix,
           side = Math.round(Math.sqrt(weights.length)),
@@ -335,9 +334,9 @@
     toObject: function() {
       return extend(this.callSuper('toObject'), {
         opaque: this.opaque,
-        matrix: this.matrix
+        matrix: this.matrix,
       });
-    }
+    },
   });
 
   /**
@@ -348,5 +347,4 @@
    * @return {fabric.Image.filters.Convolute} Instance of fabric.Image.filters.Convolute
    */
   fabric.Image.filters.Convolute.fromObject = fabric.Image.filters.BaseFilter.fromObject;
-
 })(typeof exports !== 'undefined' ? exports : this);

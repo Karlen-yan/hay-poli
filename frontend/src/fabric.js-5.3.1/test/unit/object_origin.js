@@ -1,29 +1,28 @@
 (function() {
-
-  var rectOptions = {
-    'originX':                  'left',
-    'originY':                  'top',
-    'left':                     35,
-    'top':                      45,
-    'width':                    20,
-    'height':                   40,
-    'fill':                     'rgb(0,0,0)',
-    'strokeWidth':              2,
-    'angle':                    0,
-    'scaleX':                   2,
-    'scaleY':                   2,
+  const rectOptions = {
+    originX:                  'left',
+    originY:                  'top',
+    left:                     35,
+    top:                      45,
+    width:                    20,
+    height:                   40,
+    fill:                     'rgb(0,0,0)',
+    strokeWidth:              2,
+    angle:                    0,
+    scaleX:                   2,
+    scaleY:                   2,
   };
 
   QUnit.module('fabric.ObjectOrigins');
 
   QUnit.test('getCenterPoint', function(assert) {
-    var rect = new fabric.Rect(rectOptions), p;
+    let rect = new fabric.Rect(rectOptions), p;
     p = rect.getCenterPoint();
     assert.deepEqual(p, new fabric.Point(57, 87));
   });
 
   QUnit.test('translateToCenterPoint', function(assert) {
-    var rect = new fabric.Rect(rectOptions),
+    let rect = new fabric.Rect(rectOptions),
         p,
         point = new fabric.Point(15, 20);
 
@@ -59,7 +58,7 @@
   });
 
   QUnit.test('translateToCenterPointRotated', function(assert) {
-    var rect = new fabric.Rect(rectOptions),
+    let rect = new fabric.Rect(rectOptions),
         p,
         point = new fabric.Point(15, 20);
     rect.angle = 35;
@@ -94,7 +93,7 @@
 
 
   QUnit.test('translateToOriginPoint', function(assert) {
-    var rect = new fabric.Rect(rectOptions),
+    let rect = new fabric.Rect(rectOptions),
         p,
         point = new fabric.Point(15, 20);
 
@@ -127,7 +126,7 @@
   });
 
   QUnit.test('translateToOriginPointRotated', function(assert) {
-    var rect = new fabric.Rect(rectOptions),
+    let rect = new fabric.Rect(rectOptions),
         p,
         point = new fabric.Point(15, 20);
     rect.angle = 35;
@@ -162,7 +161,7 @@
 
 
   QUnit.test('toLocalPoint', function(assert) {
-    var rect = new fabric.Rect(rectOptions),
+    let rect = new fabric.Rect(rectOptions),
         p,
         point = new fabric.Point(15, 20);
 
@@ -198,7 +197,7 @@
   });
 
   QUnit.test('toLocalPointRotated', function(assert) {
-    var rect = new fabric.Rect(rectOptions),
+    let rect = new fabric.Rect(rectOptions),
         p,
         point = new fabric.Point(15, 20);
     rect.angle = 35;
@@ -236,7 +235,7 @@
 
 
   QUnit.test('adjustPosition', function(assert) {
-    var rect = new fabric.Rect(rectOptions);
+    const rect = new fabric.Rect(rectOptions);
 
     rect.strokeWidth = 0;
     rect.originX = 'left';
@@ -292,7 +291,7 @@
   });
 
   QUnit.test('adjustPositionRotated', function(assert) {
-    var rect = new fabric.Rect(rectOptions);
+    const rect = new fabric.Rect(rectOptions);
 
     rect.angle = 35;
     rect.strokeWidth = 0;
@@ -349,7 +348,7 @@
   });
 
   QUnit.test('translateToCenterPoint with numeric origins', function(assert) {
-    var rect = new fabric.Rect(rectOptions),
+    let rect = new fabric.Rect(rectOptions),
         p,
         point = new fabric.Point(15, 20);
 
@@ -385,7 +384,7 @@
   });
 
   QUnit.test('translateToCenterPointRotated with numeric origins', function(assert) {
-    var rect = new fabric.Rect(rectOptions),
+    let rect = new fabric.Rect(rectOptions),
         p,
         point = new fabric.Point(15, 20);
     rect.angle = 35;
@@ -420,7 +419,7 @@
 
 
   QUnit.test('translateToOriginPoint with numeric origins', function(assert) {
-    var rect = new fabric.Rect(rectOptions),
+    let rect = new fabric.Rect(rectOptions),
         p,
         point = new fabric.Point(15, 20);
 
@@ -453,7 +452,7 @@
   });
 
   QUnit.test('translateToOriginPointRotated with numeric origins', function(assert) {
-    var rect = new fabric.Rect(rectOptions),
+    let rect = new fabric.Rect(rectOptions),
         p,
         point = new fabric.Point(15, 20);
     rect.angle = 35;
@@ -488,7 +487,7 @@
 
 
   QUnit.test('toLocalPoint with numeric origins', function(assert) {
-    var rect = new fabric.Rect(rectOptions),
+    let rect = new fabric.Rect(rectOptions),
         p,
         point = new fabric.Point(15, 20);
 
@@ -524,7 +523,7 @@
   });
 
   QUnit.test('toLocalPointRotated with numeric origins', function(assert) {
-    var rect = new fabric.Rect(rectOptions),
+    let rect = new fabric.Rect(rectOptions),
         p,
         point = new fabric.Point(15, 20);
     rect.angle = 35;
@@ -562,7 +561,7 @@
 
 
   QUnit.test('adjustPosition with numeric origins', function(assert) {
-    var rect = new fabric.Rect(rectOptions);
+    const rect = new fabric.Rect(rectOptions);
 
     rect.strokeWidth = 0;
     rect.originX = 'left';
@@ -618,7 +617,7 @@
   });
 
   QUnit.test('adjustPositionRotated with numeric origins', function(assert) {
-    var rect = new fabric.Rect(rectOptions);
+    const rect = new fabric.Rect(rectOptions);
 
     rect.angle = 35;
     rect.strokeWidth = 0;
@@ -673,5 +672,4 @@
     assert.deepEqual(rect.top, 79.41458618106277);
     assert.equal(rect.originX, 1);
   });
-
 })();

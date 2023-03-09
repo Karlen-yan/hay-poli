@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       scaleMap = ['e', 'se', 's', 'sw', 'w', 'nw', 'n', 'ne', 'e'],
       skewMap = ['ns', 'nesw', 'ew', 'nwse'],
       controls = {},
@@ -14,7 +13,7 @@
         right: LEFT,
         center: CENTER,
       }, radiansToDegrees = fabric.util.radiansToDegrees,
-      sign = (Math.sign || function(x) { return ((x > 0) - (x < 0)) || +x; });
+      sign = (Math.sign || function(x) {return ((x > 0) - (x < 0)) || +x;});
 
   /**
    * Combine control position and object angle to find the control direction compared
@@ -24,12 +23,12 @@
    * @return {Number} 0 - 7 a quadrant number
    */
   function findCornerQuadrant(fabricObject, control) {
-    var cornerAngle = fabricObject.angle + radiansToDegrees(Math.atan2(control.y, control.x)) + 360;
+    const cornerAngle = fabricObject.angle + radiansToDegrees(Math.atan2(control.y, control.x)) + 360;
     return Math.round((cornerAngle % 360) / 45);
   }
 
   function fireEvent(eventName, options) {
-    var target = options.transform.target,
+    const target = options.transform.target,
         canvas = target.canvas,
         canvasOptions = fabric.util.object.clone(options);
     canvasOptions.target = target;
@@ -44,7 +43,7 @@
    * @return {Boolean} true if scale is proportional
    */
   function scaleIsProportional(eventData, fabricObject) {
-    var canvas = fabricObject.canvas, uniScaleKey = canvas.uniScaleKey,
+    const canvas = fabricObject.canvas, uniScaleKey = canvas.uniScaleKey,
         uniformIsToggled = eventData[uniScaleKey];
     return (canvas.uniformScaling && !uniformIsToggled) ||
     (!canvas.uniformScaling && uniformIsToggled);
@@ -67,7 +66,7 @@
    * @return {Boolean} true if scaling is not allowed at current conditions
    */
   function scalingIsForbidden(fabricObject, by, scaleProportionally) {
-    var lockX = fabricObject.lockScalingX, lockY = fabricObject.lockScalingY;
+    const lockX = fabricObject.lockScalingX, lockY = fabricObject.lockScalingY;
     if (lockX && lockY) {
       return true;
     }
@@ -91,7 +90,7 @@
    * @return {String} a valid css string for the cursor
    */
   function scaleCursorStyleHandler(eventData, control, fabricObject) {
-    var notAllowed = 'not-allowed',
+    let notAllowed = 'not-allowed',
         scaleProportionally = scaleIsProportional(eventData, fabricObject),
         by = '';
     if (control.x !== 0 && control.y === 0) {
@@ -103,7 +102,7 @@
     if (scalingIsForbidden(fabricObject, by, scaleProportionally)) {
       return notAllowed;
     }
-    var n = findCornerQuadrant(fabricObject, control);
+    const n = findCornerQuadrant(fabricObject, control);
     return scaleMap[n] + '-resize';
   }
 
@@ -115,14 +114,14 @@
    * @return {String} a valid css string for the cursor
    */
   function skewCursorStyleHandler(eventData, control, fabricObject) {
-    var notAllowed = 'not-allowed';
+    const notAllowed = 'not-allowed';
     if (control.x !== 0 && fabricObject.lockSkewingY) {
       return notAllowed;
     }
     if (control.y !== 0 && fabricObject.lockSkewingX) {
       return notAllowed;
     }
-    var n = findCornerQuadrant(fabricObject, control) % 4;
+    const n = findCornerQuadrant(fabricObject, control) % 4;
     return skewMap[n] + '-resize';
   }
 
@@ -148,7 +147,7 @@
    * @return {String} an action name
    */
   function scaleOrSkewActionName(eventData, control, fabricObject) {
-    var isAlternative = eventData[fabricObject.canvas.altActionKey];
+    const isAlternative = eventData[fabricObject.canvas.altActionKey];
     if (control.x === 0) {
       // then is scaleY or skewX
       return isAlternative ? 'skewX' : 'scaleY';
@@ -181,7 +180,7 @@
       pointer: {
         x: x,
         y: y,
-      }
+      },
     };
   }
 
@@ -193,7 +192,7 @@
    */
   function wrapWithFixedAnchor(actionHandler) {
     return function(eventData, transform, x, y) {
-      var target = transform.target, centerPoint = target.getCenterPoint(),
+      const target = transform.target, centerPoint = target.getCenterPoint(),
           constraint = target.translateToOriginPoint(centerPoint, transform.originX, transform.originY),
           actionPerformed = actionHandler(eventData, transform, x, y);
       target.setPositionByOrigin(constraint, transform.originX, transform.originY);
@@ -208,7 +207,7 @@
    */
   function wrapWithFireEvent(eventName, actionHandler) {
     return function(eventData, transform, x, y) {
-      var actionPerformed = actionHandler(eventData, transform, x, y);
+      const actionPerformed = actionHandler(eventData, transform, x, y);
       if (actionPerformed) {
         fireEvent(eventName, commonEventInfo(eventData, transform, x, y));
       }
@@ -227,7 +226,7 @@
    * @return {Fabric.Point} the normalized point
    */
   function getLocalPoint(transform, originX, originY, x, y) {
-    var target = transform.target,
+    const target = transform.target,
         control = target.controls[transform.corner],
         zoom = target.canvas.getZoom(),
         padding = target.padding / zoom,
@@ -264,8 +263,8 @@
    */
   function compensateScaleForSkew(target, oppositeSkew, scaleToCompensate, axis, reference) {
     if (target[oppositeSkew] !== 0) {
-      var newDim = target._getTransformedDimensions()[axis];
-      var newValue = reference / newDim * target[scaleToCompensate];
+      const newDim = target._getTransformedDimensions()[axis];
+      const newValue = reference / newDim * target[scaleToCompensate];
       target.set(scaleToCompensate, newValue);
     }
   }
@@ -275,7 +274,7 @@
    * @private
    */
   function skewObjectX(eventData, transform, x, y) {
-    var target = transform.target,
+    let target = transform.target,
         // find how big the object would be, if there was no skewX. takes in account scaling
         dimNoSkew = target._getTransformedDimensions(0, target.skewY),
         localPoint = getLocalPoint(transform, transform.originX, transform.originY, x, y),
@@ -290,7 +289,7 @@
     }
     else {
       newSkew = radiansToDegrees(
-        Math.atan2((totalSkewSize / target.scaleX), (dimNoSkew.y / target.scaleY))
+        Math.atan2((totalSkewSize / target.scaleX), (dimNoSkew.y / target.scaleY)),
       );
       // now we have to find the sign of the skew.
       // it mostly depend on the origin of transformation.
@@ -304,9 +303,9 @@
         newSkew = -newSkew;
       }
     }
-    var hasSkewed = currentSkew !== newSkew;
+    const hasSkewed = currentSkew !== newSkew;
     if (hasSkewed) {
-      var dimBeforeSkewing = target._getTransformedDimensions().y;
+      const dimBeforeSkewing = target._getTransformedDimensions().y;
       target.set('skewX', newSkew);
       compensateScaleForSkew(target, 'skewY', 'scaleY', 'y', dimBeforeSkewing);
     }
@@ -318,7 +317,7 @@
    * @private
    */
   function skewObjectY(eventData, transform, x, y) {
-    var target = transform.target,
+    let target = transform.target,
         // find how big the object would be, if there was no skewX. takes in account scaling
         dimNoSkew = target._getTransformedDimensions(target.skewX, 0),
         localPoint = getLocalPoint(transform, transform.originX, transform.originY, x, y),
@@ -333,7 +332,7 @@
     }
     else {
       newSkew = radiansToDegrees(
-        Math.atan2((totalSkewSize / target.scaleY), (dimNoSkew.x / target.scaleX))
+        Math.atan2((totalSkewSize / target.scaleY), (dimNoSkew.x / target.scaleX)),
       );
       // now we have to find the sign of the skew.
       // it mostly depend on the origin of transformation.
@@ -347,9 +346,9 @@
         newSkew = -newSkew;
       }
     }
-    var hasSkewed = currentSkew !== newSkew;
+    const hasSkewed = currentSkew !== newSkew;
     if (hasSkewed) {
-      var dimBeforeSkewing = target._getTransformedDimensions().x;
+      const dimBeforeSkewing = target._getTransformedDimensions().x;
       target.set('skewY', newSkew);
       compensateScaleForSkew(target, 'skewX', 'scaleX', 'x', dimBeforeSkewing);
     }
@@ -372,12 +371,12 @@
     // if skewX < 0 and originY bottom we anchor on left
     // if skewX < 0 and originY top we anchor on right
     // if skewX is 0, we look for mouse position to understand where are we going.
-    var target = transform.target, currentSkew = target.skewX, originX, originY = transform.originY;
+    let target = transform.target, currentSkew = target.skewX, originX, originY = transform.originY;
     if (target.lockSkewingX) {
       return false;
     }
     if (currentSkew === 0) {
-      var localPointFromCenter = getLocalPoint(transform, CENTER, CENTER, x, y);
+      const localPointFromCenter = getLocalPoint(transform, CENTER, CENTER, x, y);
       if (localPointFromCenter.x > 0) {
         // we are pulling right, anchor left;
         originX = LEFT;
@@ -402,7 +401,7 @@
 
     // once we have the origin, we find the anchor point
     transform.originX = originX;
-    var finalHandler = wrapWithFireEvent('skewing', wrapWithFixedAnchor(skewObjectX));
+    const finalHandler = wrapWithFireEvent('skewing', wrapWithFixedAnchor(skewObjectX));
     return finalHandler(eventData, transform, x, y);
   }
 
@@ -422,12 +421,12 @@
     // if skewY < 0 and originX left we anchor on bottom
     // if skewY < 0 and originX right we anchor on top
     // if skewY is 0, we look for mouse position to understand where are we going.
-    var target = transform.target, currentSkew = target.skewY, originY, originX = transform.originX;
+    let target = transform.target, currentSkew = target.skewY, originY, originX = transform.originX;
     if (target.lockSkewingY) {
       return false;
     }
     if (currentSkew === 0) {
-      var localPointFromCenter = getLocalPoint(transform, CENTER, CENTER, x, y);
+      const localPointFromCenter = getLocalPoint(transform, CENTER, CENTER, x, y);
       if (localPointFromCenter.y > 0) {
         // we are pulling down, anchor up;
         originY = TOP;
@@ -452,7 +451,7 @@
 
     // once we have the origin, we find the anchor point
     transform.originY = originY;
-    var finalHandler = wrapWithFireEvent('skewing', wrapWithFixedAnchor(skewObjectY));
+    const finalHandler = wrapWithFireEvent('skewing', wrapWithFixedAnchor(skewObjectY));
     return finalHandler(eventData, transform, x, y);
   }
 
@@ -467,7 +466,7 @@
    * @private
    */
   function rotationWithSnapping(eventData, transform, x, y) {
-    var t = transform,
+    const t = transform,
         target = t.target,
         pivotPoint = target.translateToOriginPoint(target.getCenterPoint(), t.originX, t.originY);
 
@@ -475,14 +474,14 @@
       return false;
     }
 
-    var lastAngle = Math.atan2(t.ey - pivotPoint.y, t.ex - pivotPoint.x),
+    let lastAngle = Math.atan2(t.ey - pivotPoint.y, t.ex - pivotPoint.x),
         curAngle = Math.atan2(y - pivotPoint.y, x - pivotPoint.x),
         angle = radiansToDegrees(curAngle - lastAngle + t.theta),
         hasRotated = true;
 
     if (target.snapAngle > 0) {
-      var snapAngle  = target.snapAngle,
-          snapThreshold  = target.snapThreshold || snapAngle,
+      const snapAngle = target.snapAngle,
+          snapThreshold = target.snapThreshold || snapAngle,
           rightAngleLocked = Math.ceil(angle / snapAngle) * snapAngle,
           leftAngleLocked = Math.floor(angle / snapAngle) * snapAngle;
 
@@ -519,7 +518,7 @@
    */
   function scaleObject(eventData, transform, x, y, options) {
     options = options || {};
-    var target = transform.target,
+    let target = transform.target,
         lockScalingX = target.lockScalingX, lockScalingY = target.lockScalingY,
         by = options.by, newPoint, scaleX, scaleY, dim,
         scaleProportionally = scaleIsProportional(eventData, target),
@@ -559,7 +558,7 @@
       // missing detection of flip and logic to switch the origin
       if (scaleProportionally && !by) {
         // uniform scaling
-        var distance = Math.abs(newPoint.x) + Math.abs(newPoint.y),
+        const distance = Math.abs(newPoint.x) + Math.abs(newPoint.y),
             original = transform.original,
             originalDistance = Math.abs(dim.x * original.scaleX / target.scaleX) +
               Math.abs(dim.y * original.scaleY / target.scaleY),
@@ -588,7 +587,7 @@
       }
     }
     // minScale is taken are in the setter.
-    var oldScaleX = target.scaleX, oldScaleY = target.scaleY;
+    const oldScaleX = target.scaleX, oldScaleY = target.scaleY;
     if (!by) {
       !lockScalingX && target.set('scaleX', scaleX);
       !lockScalingY && target.set('scaleY', scaleY);
@@ -624,7 +623,7 @@
    * @return {Boolean} true if some change happened
    */
   function scaleObjectX(eventData, transform, x, y) {
-    return scaleObject(eventData, transform, x, y , { by: 'x' });
+    return scaleObject(eventData, transform, x, y, {by: 'x'});
   }
 
   /**
@@ -637,7 +636,7 @@
    * @return {Boolean} true if some change happened
    */
   function scaleObjectY(eventData, transform, x, y) {
-    return scaleObject(eventData, transform, x, y , { by: 'y' });
+    return scaleObject(eventData, transform, x, y, {by: 'y'});
   }
 
   /**
@@ -684,7 +683,7 @@
    * @return {Boolean} true if some change happened
    */
   function changeWidth(eventData, transform, x, y) {
-    var target = transform.target, localPoint = getLocalPoint(transform, transform.originX, transform.originY, x, y),
+    const target = transform.target, localPoint = getLocalPoint(transform, transform.originX, transform.originY, x, y),
         strokePadding = target.strokeWidth / (target.strokeUniform ? target.scaleX : 1),
         multiplier = isTransformCentered(transform) ? 2 : 1,
         oldWidth = target.width,
@@ -703,7 +702,7 @@
    * @return {Boolean} true if the translation occurred
    */
   function dragHandler(eventData, transform, x, y) {
-    var target = transform.target,
+    const target = transform.target,
         newLeft = x - transform.offsetX,
         newTop = y - transform.offsetY,
         moveX = !target.get('lockMovementX') && target.left !== newLeft,
@@ -736,5 +735,4 @@
   controls.wrapWithFireEvent = wrapWithFireEvent;
   controls.getLocalPoint = getLocalPoint;
   fabric.controlsUtils = controls;
-
 })(typeof exports !== 'undefined' ? exports : this);

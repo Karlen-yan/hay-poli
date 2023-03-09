@@ -8,8 +8,7 @@
  * - touch:longpress
  */
 (function() {
-
-  var degreesToRadians = fabric.util.degreesToRadians,
+  const degreesToRadians = fabric.util.degreesToRadians,
       radiansToDegrees = fabric.util.radiansToDegrees;
 
   fabric.util.object.extend(fabric.Canvas.prototype, /** @lends fabric.Canvas.prototype */ {
@@ -20,34 +19,32 @@
      * @param {Event} self Event proxy object by Event.js
      */
     __onTransformGesture: function(e, self) {
-
       if (this.isDrawingMode || !e.touches || e.touches.length !== 2 || 'gesture' !== self.gesture) {
         return;
       }
 
-      var target = this.findTarget(e);
+      const target = this.findTarget(e);
       if ('undefined' !== typeof target) {
         this.__gesturesParams = {
           e: e,
           self: self,
-          target: target
+          target: target,
         };
 
         this.__gesturesRenderer();
       }
 
       this.fire('touch:gesture', {
-        target: target, e: e, self: self
+        target: target, e: e, self: self,
       });
     },
     __gesturesParams: null,
     __gesturesRenderer: function() {
-
       if (this.__gesturesParams === null || this._currentTransform === null) {
         return;
       }
 
-      var self = this.__gesturesParams.self,
+      const self = this.__gesturesParams.self,
           t = this._currentTransform,
           e = this.__gesturesParams.e;
 
@@ -74,7 +71,7 @@
      */
     __onDrag: function(e, self) {
       this.fire('touch:drag', {
-        e: e, self: self
+        e: e, self: self,
       });
     },
 
@@ -86,7 +83,7 @@
      */
     __onOrientationChange: function(e, self) {
       this.fire('touch:orientation', {
-        e: e, self: self
+        e: e, self: self,
       });
     },
 
@@ -98,7 +95,7 @@
      */
     __onShake: function(e, self) {
       this.fire('touch:shake', {
-        e: e, self: self
+        e: e, self: self,
       });
     },
 
@@ -110,7 +107,7 @@
      */
     __onLongPress: function(e, self) {
       this.fire('touch:longpress', {
-        e: e, self: self
+        e: e, self: self,
       });
     },
 
@@ -120,7 +117,7 @@
      * @param {Event} e Event object by Event.js
      */
     _scaleObjectBy: function(s, e) {
-      var t = this._currentTransform,
+      const t = this._currentTransform,
           target = t.target;
       t.gestureScale = s;
       target._scaling = true;
@@ -133,7 +130,7 @@
      * @param {Event} e Event object by Event.js
      */
     _rotateObjectByAngle: function(curAngle, e) {
-      var t = this._currentTransform;
+      const t = this._currentTransform;
 
       if (t.target.get('lockRotation')) {
         return;
@@ -144,6 +141,6 @@
         e: e,
         transform: t,
       });
-    }
+    },
   });
 })();

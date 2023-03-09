@@ -6,8 +6,7 @@
 fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fabric.PatternBrush.prototype */ {
 
   getPatternSrc: function() {
-
-    var dotWidth = 20,
+    const dotWidth = 20,
         dotDistance = 5,
         patternCanvas = fabric.util.createCanvasElement(),
         patternCtx = patternCanvas.getContext('2d');
@@ -48,14 +47,14 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
    * Creates path
    */
   createPath: function(pathData) {
-    var path = this.callSuper('createPath', pathData),
+    const path = this.callSuper('createPath', pathData),
         topLeft = path._getLeftTopCoords().scalarAdd(path.strokeWidth / 2);
 
     path.stroke = new fabric.Pattern({
       source: this.source || this.getPatternSrcFunction(),
       offsetX: -topLeft.x,
-      offsetY: -topLeft.y
+      offsetY: -topLeft.y,
     });
     return path;
-  }
+  },
 });

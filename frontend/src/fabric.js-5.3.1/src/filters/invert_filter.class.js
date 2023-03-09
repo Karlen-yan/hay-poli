@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric  = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       filters = fabric.Image.filters,
       createClass = fabric.util.createClass;
 
@@ -55,7 +54,7 @@
      * @param {ImageData} options.imageData The Uint8Array to be filtered.
      */
     applyTo2d: function(options) {
-      var imageData = options.imageData,
+      let imageData = options.imageData,
           data = imageData.data, i,
           len = data.length;
       for (i = 0; i < len; i += 4) {
@@ -106,6 +105,4 @@
    * @return {fabric.Image.filters.Invert} Instance of fabric.Image.filters.Invert
    */
   fabric.Image.filters.Invert.fromObject = fabric.Image.filters.BaseFilter.fromObject;
-
-
 })(typeof exports !== 'undefined' ? exports : this);

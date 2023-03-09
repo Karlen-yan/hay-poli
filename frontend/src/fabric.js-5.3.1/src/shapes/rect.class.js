@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       extend = fabric.util.object.extend;
 
   if (fabric.Rect) {
@@ -77,11 +76,10 @@
      * @param {CanvasRenderingContext2D} ctx Context to render on
      */
     _render: function(ctx) {
-
       // 1x1 case (used in spray brush) optimization was removed because
       // with caching and higher zoom level this makes more damage than help
 
-      var rx = this.rx ? Math.min(this.rx, this.width / 2) : 0,
+      const rx = this.rx ? Math.min(this.rx, this.width / 2) : 0,
           ry = this.ry ? Math.min(this.ry, this.height / 2) : 0,
           w = this.width,
           h = this.height,
@@ -127,13 +125,13 @@
      * of the instance
      */
     _toSVG: function() {
-      var x = -this.width / 2, y = -this.height / 2;
+      const x = -this.width / 2, y = -this.height / 2;
       return [
         '<rect ', 'COMMON_PARTS',
         'x="', x, '" y="', y,
         '" rx="', this.rx, '" ry="', this.ry,
         '" width="', this.width, '" height="', this.height,
-        '" />\n'
+        '" />\n',
       ];
     },
     /* _TO_SVG_END_ */
@@ -162,12 +160,12 @@
     }
     options = options || { };
 
-    var parsedAttributes = fabric.parseAttributes(element, fabric.Rect.ATTRIBUTE_NAMES);
+    const parsedAttributes = fabric.parseAttributes(element, fabric.Rect.ATTRIBUTE_NAMES);
     parsedAttributes.left = parsedAttributes.left || 0;
-    parsedAttributes.top  = parsedAttributes.top  || 0;
-    parsedAttributes.height  = parsedAttributes.height || 0;
-    parsedAttributes.width  = parsedAttributes.width || 0;
-    var rect = new fabric.Rect(extend((options ? fabric.util.object.clone(options) : { }), parsedAttributes));
+    parsedAttributes.top = parsedAttributes.top || 0;
+    parsedAttributes.height = parsedAttributes.height || 0;
+    parsedAttributes.width = parsedAttributes.width || 0;
+    const rect = new fabric.Rect(extend((options ? fabric.util.object.clone(options) : { }), parsedAttributes));
     rect.visible = rect.visible && rect.width > 0 && rect.height > 0;
     callback(rect);
   };
@@ -183,5 +181,4 @@
   fabric.Rect.fromObject = function(object, callback) {
     return fabric.Object._fromObject('Rect', object, callback);
   };
-
 })(typeof exports !== 'undefined' ? exports : this);

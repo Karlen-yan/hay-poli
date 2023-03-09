@@ -1,15 +1,14 @@
-(function(){
-
+(function() {
   QUnit.module('fabric.Ellipse', {
     beforeEach: function() {
       fabric.Object.__uid = 0;
-    }
+    },
   });
 
   QUnit.test('constructor', function(assert) {
     assert.ok(fabric.Ellipse);
 
-    var ellipse = new fabric.Ellipse();
+    const ellipse = new fabric.Ellipse();
 
     assert.ok(ellipse instanceof fabric.Ellipse, 'should inherit from fabric.Ellipse');
     assert.ok(ellipse instanceof fabric.Object, 'should inherit from fabric.Object');
@@ -18,14 +17,14 @@
   });
 
   QUnit.test('complexity', function(assert) {
-    var ellipse = new fabric.Ellipse();
+    const ellipse = new fabric.Ellipse();
     assert.ok(typeof ellipse.complexity === 'function');
     assert.equal(ellipse.complexity(), 1);
   });
 
   QUnit.test('toObject', function(assert) {
-    var ellipse = new fabric.Ellipse();
-    var defaultProperties = {
+    const ellipse = new fabric.Ellipse();
+    const defaultProperties = {
       version:                  fabric.version,
       type:                     'ellipse',
       originX:                  'left',
@@ -65,13 +64,13 @@
 
     ellipse.set('left', 100).set('top', 200).set('rx', 15).set('ry', 25);
 
-    var augmentedProperties = fabric.util.object.extend(fabric.util.object.clone(defaultProperties), {
+    const augmentedProperties = fabric.util.object.extend(fabric.util.object.clone(defaultProperties), {
       left: 100,
       top: 200,
       rx: 15,
       ry: 25,
       width: 30,
-      height: 50
+      height: 50,
     });
 
     assert.deepEqual(ellipse.toObject(), augmentedProperties);
@@ -84,7 +83,7 @@
   });
 
   QUnit.test('isNotVisible', function(assert) {
-    var ellipse = new fabric.Ellipse();
+    const ellipse = new fabric.Ellipse();
     ellipse.set('rx', 0).set('ry', 0);
 
     assert.equal(ellipse.isNotVisible(), false, 'isNotVisible false when rx/ry are 0 because strokeWidth is > 0');
@@ -92,24 +91,23 @@
     ellipse.set('strokeWidth', 0);
 
     assert.equal(ellipse.isNotVisible(), true, 'should not render anymore with also strokeWidth 0');
-
   });
 
   QUnit.test('toSVG', function(assert) {
-    var ellipse = new fabric.Ellipse({ rx: 100, ry: 12, fill: 'red', stroke: 'blue' });
+    const ellipse = new fabric.Ellipse({rx: 100, ry: 12, fill: 'red', stroke: 'blue'});
     assert.equal(ellipse.toSVG(), '<g transform=\"matrix(1 0 0 1 100.5 12.5)\"  >\n<ellipse style=\"stroke: rgb(0,0,255); stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,0,0); fill-rule: nonzero; opacity: 1;\"  cx=\"0\" cy=\"0\" rx=\"100\" ry=\"12\" />\n</g>\n', 'SVG should match');
     assert.equal(ellipse.toClipPathSVG(), '\t<ellipse transform=\"matrix(1 0 0 1 100.5 12.5)\" cx=\"0\" cy=\"0\" rx=\"100\" ry=\"12\" />\n', 'SVG clippath should match');
   });
 
   QUnit.test('toSVG with a clipPath', function(assert) {
-    var ellipse = new fabric.Ellipse({ rx: 100, ry: 12, fill: 'red', stroke: 'blue' });
-    ellipse.clipPath = new fabric.Ellipse({ rx: 12, ry: 100, left: 60, top: -50 });
+    const ellipse = new fabric.Ellipse({rx: 100, ry: 12, fill: 'red', stroke: 'blue'});
+    ellipse.clipPath = new fabric.Ellipse({rx: 12, ry: 100, left: 60, top: -50});
     assert.equal(ellipse.toSVG(), '<g transform=\"matrix(1 0 0 1 100.5 12.5)\" clip-path=\"url(#CLIPPATH_0)\"  >\n<clipPath id=\"CLIPPATH_0\" >\n\t<ellipse transform=\"matrix(1 0 0 1 72.5 50.5)\" cx=\"0\" cy=\"0\" rx=\"12\" ry=\"100\" />\n</clipPath>\n<ellipse style=\"stroke: rgb(0,0,255); stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,0,0); fill-rule: nonzero; opacity: 1;\"  cx=\"0\" cy=\"0\" rx=\"100\" ry=\"12\" />\n</g>\n', 'SVG with clipPath should match');
   });
 
   QUnit.test('toSVG with a clipPath absolute positioned', function(assert) {
-    var ellipse = new fabric.Ellipse({ rx: 100, ry: 12, fill: 'red', stroke: 'blue' });
-    ellipse.clipPath = new fabric.Ellipse({ rx: 12, ry: 100, left: 60, top: -50 });
+    const ellipse = new fabric.Ellipse({rx: 100, ry: 12, fill: 'red', stroke: 'blue'});
+    ellipse.clipPath = new fabric.Ellipse({rx: 12, ry: 100, left: 60, top: -50});
     ellipse.clipPath.absolutePositioned = true;
     assert.equal(ellipse.toSVG(), '<g clip-path=\"url(#CLIPPATH_0)\"  >\n<g transform=\"matrix(1 0 0 1 100.5 12.5)\"  >\n<clipPath id=\"CLIPPATH_0\" >\n\t<ellipse transform=\"matrix(1 0 0 1 72.5 50.5)\" cx=\"0\" cy=\"0\" rx=\"12\" ry=\"100\" />\n</clipPath>\n<ellipse style=\"stroke: rgb(0,0,255); stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,0,0); fill-rule: nonzero; opacity: 1;\"  cx=\"0\" cy=\"0\" rx=\"100\" ry=\"12\" />\n</g>\n</g>\n', 'SVG with clipPath should match');
   });
@@ -117,18 +115,18 @@
   QUnit.test('fromElement', function(assert) {
     assert.ok(typeof fabric.Ellipse.fromElement === 'function');
 
-    var namespace        = 'http://www.w3.org/2000/svg';
-    var elEllipse        = fabric.document.createElementNS(namespace, 'ellipse'),
-        rx               = 5,
-        ry               = 7,
-        left             = 12,
-        top              = 15,
-        fill             = 'ff5555',
-        opacity          = 0.5,
-        strokeWidth      = 2,
-        strokeDashArray  = [5, 2],
-        strokeLineCap    = 'round',
-        strokeLineJoin   = 'bevel',
+    const namespace = 'http://www.w3.org/2000/svg';
+    const elEllipse = fabric.document.createElementNS(namespace, 'ellipse'),
+        rx = 5,
+        ry = 7,
+        left = 12,
+        top = 15,
+        fill = 'ff5555',
+        opacity = 0.5,
+        strokeWidth = 2,
+        strokeDashArray = [5, 2],
+        strokeLineCap = 'round',
+        strokeLineJoin = 'bevel',
         strokeMiterLimit = 5;
 
     elEllipse.setAttributeNS(namespace, 'rx', rx);
@@ -160,17 +158,17 @@
   });
 
   QUnit.test('fromObject', function(assert) {
-    var done = assert.async();
+    const done = assert.async();
     assert.ok(typeof fabric.Ellipse === 'function');
 
-    var left    = 112,
-        top     = 234,
-        rx      = 13.45,
-        ry      = 14.78,
-        fill    = 'ff5555';
+    const left = 112,
+        top = 234,
+        rx = 13.45,
+        ry = 14.78,
+        fill = 'ff5555';
 
     fabric.Ellipse.fromObject({
-      left: left, top: top, rx: rx, ry: ry, fill: fill
+      left: left, top: top, rx: rx, ry: ry, fill: fill,
     }, function(ellipse) {
       assert.ok(ellipse instanceof fabric.Ellipse);
 
@@ -180,13 +178,11 @@
       assert.equal(ellipse.get('ry'), ry);
       assert.equal(ellipse.get('fill'), fill);
 
-      var expected = ellipse.toObject();
+      const expected = ellipse.toObject();
       fabric.Ellipse.fromObject(expected, function(actual) {
         assert.deepEqual(actual.toObject(), expected);
         done();
       });
     });
-
-
   });
 })();

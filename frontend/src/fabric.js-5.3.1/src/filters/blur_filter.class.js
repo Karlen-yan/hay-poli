@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric  = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       filters = fabric.Image.filters,
       createClass = fabric.util.createClass;
 
@@ -101,12 +100,12 @@
 
     applyTo2d: function(options) {
       // paint canvasEl with current image data.
-      //options.ctx.putImageData(options.imageData, 0, 0);
+      // options.ctx.putImageData(options.imageData, 0, 0);
       options.imageData = this.simpleBlur(options);
     },
 
     simpleBlur: function(options) {
-      var resources = options.filterBackend.resources, canvas1, canvas2,
+      let resources = options.filterBackend.resources, canvas1, canvas2,
           width = options.imageData.width,
           height = options.imageData.height;
 
@@ -120,7 +119,7 @@
         canvas2.width = canvas1.width = width;
         canvas2.height = canvas1.height = height;
       }
-      var ctx1 = canvas1.getContext('2d'),
+      let ctx1 = canvas1.getContext('2d'),
           ctx2 = canvas2.getContext('2d'),
           nSamples = 15,
           random, percent, j, i,
@@ -151,7 +150,7 @@
         ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
       }
       options.ctx.drawImage(canvas1, 0, 0);
-      var newImageData = options.ctx.getImageData(0, 0, canvas1.width, canvas1.height);
+      const newImageData = options.ctx.getImageData(0, 0, canvas1.width, canvas1.height);
       ctx1.globalAlpha = 1;
       ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
       return newImageData;
@@ -176,7 +175,7 @@
      * @param {Object} uniformLocations A map of string uniform names to WebGLUniformLocation objects
      */
     sendUniformData: function(gl, uniformLocations) {
-      var delta = this.chooseRightDelta();
+      const delta = this.chooseRightDelta();
       gl.uniform2fv(uniformLocations.delta, delta);
     },
 
@@ -185,7 +184,7 @@
      * @returns {Array} a numeric array with delta values
      */
     chooseRightDelta: function() {
-      var blurScale = 1, delta = [0, 0], blur;
+      let blurScale = 1, delta = [0, 0], blur;
       if (this.horizontal) {
         if (this.aspectRatio > 1) {
           // image is wide, i want to shrink radius horizontal
@@ -213,5 +212,4 @@
    * Deserialize a JSON definition of a BlurFilter into a concrete instance.
    */
   filters.Blur.fromObject = fabric.Image.filters.BaseFilter.fromObject;
-
 })(typeof exports !== 'undefined' ? exports : this);

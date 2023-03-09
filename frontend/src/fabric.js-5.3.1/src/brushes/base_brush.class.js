@@ -70,7 +70,7 @@ fabric.BaseBrush = fabric.util.createClass(/** @lends fabric.BaseBrush.prototype
    * @private
    * @param {CanvasRenderingContext2D} ctx
    */
-  _setBrushStyles: function (ctx) {
+  _setBrushStyles: function(ctx) {
     ctx.strokeStyle = this.color;
     ctx.lineWidth = this.width;
     ctx.lineCap = this.strokeLineCap;
@@ -85,7 +85,7 @@ fabric.BaseBrush = fabric.util.createClass(/** @lends fabric.BaseBrush.prototype
    * @private
    */
   _saveAndTransform: function(ctx) {
-    var v = this.canvas.viewportTransform;
+    const v = this.canvas.viewportTransform;
     ctx.save();
     ctx.transform(v[0], v[1], v[2], v[3], v[4], v[5]);
   },
@@ -99,7 +99,7 @@ fabric.BaseBrush = fabric.util.createClass(/** @lends fabric.BaseBrush.prototype
       return;
     }
 
-    var canvas = this.canvas,
+    let canvas = this.canvas,
         shadow = this.shadow,
         ctx = canvas.contextTop,
         zoom = canvas.getZoom();
@@ -114,7 +114,7 @@ fabric.BaseBrush = fabric.util.createClass(/** @lends fabric.BaseBrush.prototype
   },
 
   needsFullRender: function() {
-    var color = new fabric.Color(this.color);
+    const color = new fabric.Color(this.color);
     return color.getAlpha() < 1 || !!this.shadow;
   },
 
@@ -123,7 +123,7 @@ fabric.BaseBrush = fabric.util.createClass(/** @lends fabric.BaseBrush.prototype
    * @private
    */
   _resetShadow: function() {
-    var ctx = this.canvas.contextTop;
+    const ctx = this.canvas.contextTop;
 
     ctx.shadowColor = '';
     ctx.shadowBlur = ctx.shadowOffsetX = ctx.shadowOffsetY = 0;
@@ -136,5 +136,5 @@ fabric.BaseBrush = fabric.util.createClass(/** @lends fabric.BaseBrush.prototype
   */
   _isOutSideCanvas: function(pointer) {
     return pointer.x < 0 || pointer.x > this.canvas.getWidth() || pointer.y < 0 || pointer.y > this.canvas.getHeight();
-  }
+  },
 });

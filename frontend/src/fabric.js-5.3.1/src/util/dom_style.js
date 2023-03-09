@@ -1,5 +1,4 @@
-(function () {
-
+(function() {
   /**
    * Cross-browser wrapper for setting element's style
    * @memberOf fabric.util
@@ -8,24 +7,24 @@
    * @return {HTMLElement} Element that was passed as a first argument
    */
   function setStyle(element, styles) {
-    var elementStyle = element.style;
+    const elementStyle = element.style;
     if (!elementStyle) {
       return element;
     }
     if (typeof styles === 'string') {
       element.style.cssText += ';' + styles;
-      return styles.indexOf('opacity') > -1
-        ? setOpacity(element, styles.match(/opacity:\s*(\d?\.?\d*)/)[1])
-        : element;
+      return styles.indexOf('opacity') > -1 ?
+        setOpacity(element, styles.match(/opacity:\s*(\d?\.?\d*)/)[1]) :
+        element;
     }
-    for (var property in styles) {
+    for (const property in styles) {
       if (property === 'opacity') {
         setOpacity(element, styles[property]);
       }
       else {
-        var normalizedProperty = (property === 'float' || property === 'cssFloat')
-          ? (typeof elementStyle.styleFloat === 'undefined' ? 'cssFloat' : 'styleFloat')
-          : property;
+        const normalizedProperty = (property === 'float' || property === 'cssFloat') ?
+          (typeof elementStyle.styleFloat === 'undefined' ? 'cssFloat' : 'styleFloat') :
+          property;
         elementStyle.setProperty(normalizedProperty, styles[property]);
       }
     }
@@ -38,7 +37,7 @@
       reOpacity = /alpha\s*\(\s*opacity\s*=\s*([^\)]+)\)/,
 
       /** @ignore */
-      setOpacity = function (element) { return element; };
+      setOpacity = function(element) {return element;};
 
   if (supportsOpacity) {
     /** @ignore */
@@ -50,7 +49,7 @@
   else if (supportsFilters) {
     /** @ignore */
     setOpacity = function(element, value) {
-      var es = element.style;
+      const es = element.style;
       if (element.currentStyle && !element.currentStyle.hasLayout) {
         es.zoom = 1;
       }
@@ -66,5 +65,4 @@
   }
 
   fabric.util.setStyle = setStyle;
-
 })();

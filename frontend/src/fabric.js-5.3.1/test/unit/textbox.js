@@ -1,12 +1,12 @@
 (function() {
-  var canvas = this.canvas = new fabric.Canvas();
+  const canvas = this.canvas = new fabric.Canvas();
   QUnit.module('fabric.Textbox', {
     afterEach: function() {
       canvas.clear();
-    }
+    },
   });
 
-  var TEXTBOX_OBJECT = {
+  const TEXTBOX_OBJECT = {
     version: fabric.version,
     type: 'textbox',
     originX: 'left',
@@ -53,13 +53,13 @@
       {
         start: 5,
         end: 9,
-        style: { fill: "red" }
+        style: {fill: 'red'},
       },
       {
         start: 13,
         end: 18,
-        style: { underline: true }
-      }
+        style: {underline: true},
+      },
     ],
     minWidth: 20,
     splitByGrapheme: false,
@@ -68,28 +68,28 @@
     direction: 'ltr',
     pathStartOffset: 0,
     pathSide: 'left',
-    pathAlign: 'baseline'
+    pathAlign: 'baseline',
   };
 
   QUnit.test('constructor', function(assert) {
-    var textbox = new fabric.Textbox('test');
+    const textbox = new fabric.Textbox('test');
     assert.ok(textbox instanceof fabric.Textbox);
     assert.ok(textbox instanceof fabric.IText);
     assert.ok(textbox instanceof fabric.Text);
   });
 
   QUnit.test('constructor with width', function(assert) {
-    var textbox = new fabric.Textbox('test', { width: 400 });
+    const textbox = new fabric.Textbox('test', {width: 400});
     assert.equal(textbox.width, 400, 'width is taken by contstructor');
   });
 
   QUnit.test('constructor with width too small', function(assert) {
-    var textbox = new fabric.Textbox('test', { width: 5 });
+    const textbox = new fabric.Textbox('test', {width: 5});
     assert.equal(Math.round(textbox.width), 56, 'width is calculated by constructor');
   });
 
   QUnit.test('initial properties', function(assert) {
-    var textbox = new fabric.Textbox('test');
+    const textbox = new fabric.Textbox('test');
     assert.equal(textbox.text, 'test');
     assert.equal(textbox.type, 'textbox');
     assert.deepEqual(textbox.styles, { });
@@ -97,27 +97,27 @@
   });
 
   QUnit.test('toObject', function(assert) {
-    var textbox = new fabric.Textbox('The quick \nbrown \nfox', {
+    const textbox = new fabric.Textbox('The quick \nbrown \nfox', {
       width: 120,
       styles: {
-        "0":{
-          "5":{fill:"red"},
-          "6":{fill:"red"},
-          "7":{fill:"red"},
-          "8":{fill:"red"}
+        0: {
+          5: {fill: 'red'},
+          6: {fill: 'red'},
+          7: {fill: 'red'},
+          8: {fill: 'red'},
         },
-        "1":{
-          "3":{underline:true},
-          "4":{underline:true},
-          "5":{underline:true}
+        1: {
+          3: {underline: true},
+          4: {underline: true},
+          5: {underline: true},
         },
-        "2":{
-          "0":{underline:true},
-          "1":{underline:true}
-        }
-      }
+        2: {
+          0: {underline: true},
+          1: {underline: true},
+        },
+      },
     });
-    var obj = textbox.toObject();
+    const obj = textbox.toObject();
     assert.deepEqual(obj, TEXTBOX_OBJECT, 'JSON OUTPUT MATCH');
     assert.deepEqual(obj.styles, TEXTBOX_OBJECT.styles, 'stylesToArray output matches');
     assert.deepEqual(obj.styles[0], TEXTBOX_OBJECT.styles[0], 'styles array matches at first index');
@@ -127,7 +127,7 @@
   });
 
   QUnit.test('fromObject', function(assert) {
-    var done = assert.async();
+    const done = assert.async();
     fabric.Textbox.fromObject(TEXTBOX_OBJECT, function(textbox) {
       assert.equal(textbox.text, 'The quick \nbrown \nfox', 'properties are respected');
       assert.ok(textbox instanceof fabric.Textbox, 'the generated object is a textbox');
@@ -136,26 +136,26 @@
   });
 
   QUnit.test('fromObjectWithStyles', function(assert) {
-    var done = assert.async();
-    var textbox = new fabric.Textbox('The quick \nbrown \nfox', {
+    const done = assert.async();
+    const textbox = new fabric.Textbox('The quick \nbrown \nfox', {
       width: 120,
       styles: {
-        "0":{
-          "5":{fill:"red"},
-          "6":{fill:"red"},
-          "7":{fill:"red"},
-          "8":{fill:"red"}
+        0: {
+          5: {fill: 'red'},
+          6: {fill: 'red'},
+          7: {fill: 'red'},
+          8: {fill: 'red'},
         },
-        "1":{
-          "3":{underline:true},
-          "4":{underline:true},
-          "5":{underline:true}
+        1: {
+          3: {underline: true},
+          4: {underline: true},
+          5: {underline: true},
         },
-        "2":{
-          "0":{underline:true},
-          "1":{underline:true}
-        }
-      }
+        2: {
+          0: {underline: true},
+          1: {underline: true},
+        },
+      },
     });
     fabric.Textbox.fromObject(TEXTBOX_OBJECT, function(obj) {
       assert.notEqual(obj.styles, textbox.styles, 'styles is a different object after initialization');
@@ -181,7 +181,7 @@
   });
 
   QUnit.test('isEndOfWrapping', function(assert) {
-    var textbox = new fabric.Textbox('a q o m s g\np q r s t w', {
+    const textbox = new fabric.Textbox('a q o m s g\np q r s t w', {
       width: 70,
     });
     assert.equal(textbox.isEndOfWrapping(0), false, 'first line is not end of wrapping');
@@ -193,20 +193,20 @@
   });
 
   QUnit.test('_removeExtraneousStyles', function(assert) {
-    var textbox = new fabric.Textbox('a q o m s g\np q r s t w', {
+    const textbox = new fabric.Textbox('a q o m s g\np q r s t w', {
       width: 40,
       styles: {
-        0: { 0: { fontSize: 4 } },
-        1: { 0: { fontSize: 4 } },
-        2: { 0: { fontSize: 4 } },
-        3: { 0: { fontSize: 4 } },
-        4: { 0: { fontSize: 4 } },
-        5: { 0: { fontSize: 4 } },
-      }
+        0: {0: {fontSize: 4}},
+        1: {0: {fontSize: 4}},
+        2: {0: {fontSize: 4}},
+        3: {0: {fontSize: 4}},
+        4: {0: {fontSize: 4}},
+        5: {0: {fontSize: 4}},
+      },
     });
-    assert.deepEqual(textbox.styles[3], { 0: { fontSize: 4 } }, 'style line 3 exists');
-    assert.deepEqual(textbox.styles[4], { 0: { fontSize: 4 } }, 'style line 4 exists');
-    assert.deepEqual(textbox.styles[5], { 0: { fontSize: 4 } }, 'style line 5 exists');
+    assert.deepEqual(textbox.styles[3], {0: {fontSize: 4}}, 'style line 3 exists');
+    assert.deepEqual(textbox.styles[4], {0: {fontSize: 4}}, 'style line 4 exists');
+    assert.deepEqual(textbox.styles[5], {0: {fontSize: 4}}, 'style line 5 exists');
     textbox._removeExtraneousStyles();
     assert.equal(textbox.styles[2], undefined, 'style line 2 has been removed');
     assert.equal(textbox.styles[3], undefined, 'style line 3 has been removed');
@@ -215,7 +215,7 @@
   });
 
   QUnit.test('isEmptyStyles', function(assert) {
-    var textbox = new fabric.Textbox('x x', { width: 5, styles: { 0: { 0: { fill: 'red' } } } });
+    const textbox = new fabric.Textbox('x x', {width: 5, styles: {0: {0: {fill: 'red'}}}});
     assert.equal(textbox._textLines.length, 2, 'lines are wrapped');
     assert.equal(textbox._unwrappedTextLines.length, 1, 'there is only one text line');
     assert.equal(textbox.isEmptyStyles(), false, 'style is not empty');
@@ -224,7 +224,7 @@
   });
 
   QUnit.test('isEmptyStyles does not crash on null styles', function(assert) {
-    var textbox = new fabric.Textbox('x x', { width: 5 });
+    const textbox = new fabric.Textbox('x x', {width: 5});
     textbox.styles = null;
     assert.equal(textbox._textLines.length, 2, 'lines are wrapped');
     assert.equal(textbox._unwrappedTextLines.length, 1, 'there is only one text line');
@@ -232,12 +232,12 @@
   });
 
   QUnit.test('isEmptyStyles alternate lines', function(assert) {
-    var textbox = new fabric.Textbox('xa xb xc xd xe\nya yb', {
+    const textbox = new fabric.Textbox('xa xb xc xd xe\nya yb', {
       width: 5,
       styles: {
-        0: { 0: { fill: 'red' }, 1: { fill: 'blue' }, 9: { fill: 'red' }, 10: { fill: 'blue' } },
-        1: { 3: { fill: 'red' }, 4: { fill: 'blue' } },
-      }
+        0: {0: {fill: 'red'}, 1: {fill: 'blue'}, 9: {fill: 'red'}, 10: {fill: 'blue'}},
+        1: {3: {fill: 'red'}, 4: {fill: 'blue'}},
+      },
     });
     assert.equal(textbox._textLines.length, 7, 'lines are wrapped');
     assert.equal(textbox._unwrappedTextLines.length, 2, 'there is only one text line');
@@ -251,7 +251,7 @@
     assert.equal(textbox.isEmptyStyles(6), false, 'style is empty at line 6');
   });
   QUnit.test('wrapping with charspacing', function(assert) {
-    var textbox = new fabric.Textbox('xa xb xc xd xe ya yb id', {
+    const textbox = new fabric.Textbox('xa xb xc xd xe ya yb id', {
       width: 190,
     });
     assert.equal(textbox.textLines[0], 'xa xb xc xd', 'first line match expectations');
@@ -266,31 +266,31 @@
     assert.equal(textbox.textLines[0], 'xa', 'first line match expectations spacing 800');
   });
   QUnit.test('wrapping with charspacing and splitByGrapheme positive', function(assert) {
-    var textbox = new fabric.Textbox('xaxbxcxdeyaybid', {
+    const textbox = new fabric.Textbox('xaxbxcxdeyaybid', {
       width: 190,
       splitByGrapheme: true,
-      charSpacing: 400
+      charSpacing: 400,
     });
     assert.deepEqual(
       textbox.textLines,
       ['xaxbx', 'cxdey', 'aybid'],
-      'lines match splitByGrapheme charSpacing 400'
+      'lines match splitByGrapheme charSpacing 400',
     );
   });
   QUnit.test('wrapping with charspacing and splitByGrapheme negative', function(assert) {
-    var textbox = new fabric.Textbox('xaxbxcxdeyaybid', {
+    const textbox = new fabric.Textbox('xaxbxcxdeyaybid', {
       width: 190,
       splitByGrapheme: true,
-      charSpacing: -100
+      charSpacing: -100,
     });
     assert.deepEqual(
       textbox.textLines,
       ['xaxbxcxdeyay', 'bid'],
-      'lines match splitByGrapheme charSpacing -100'
+      'lines match splitByGrapheme charSpacing -100',
     );
   });
   QUnit.test('wrapping with different things', function(assert) {
-    var textbox = new fabric.Textbox('xa xb\txc\rxd xe ya yb id', {
+    const textbox = new fabric.Textbox('xa xb\txc\rxd xe ya yb id', {
       width: 16,
     });
     assert.equal(textbox.textLines[0], 'xa', '0 line match expectations');
@@ -302,7 +302,7 @@
     assert.equal(textbox.textLines[6], 'yb', '6 line match expectations');
   });
   QUnit.test('wrapping with splitByGrapheme', function(assert) {
-    var textbox = new fabric.Textbox('xaxbxcxdxeyaybid', {
+    const textbox = new fabric.Textbox('xaxbxcxdxeyaybid', {
       width: 1,
       splitByGrapheme: true,
     });
@@ -314,19 +314,19 @@
     assert.equal(textbox.textLines[5], 'c', '5 line match expectations splitByGrapheme');
   });
   QUnit.test('wrapping with custom space', function(assert) {
-    var textbox = new fabric.Textbox('xa xb xc xd xe ya yb id', {
+    const textbox = new fabric.Textbox('xa xb xc xd xe ya yb id', {
       width: 2000,
     });
-    var line1 = textbox._wrapLine('xa xb xc xd xe ya yb id', 0, 100, 0);
-    var expected1 =  [
+    const line1 = textbox._wrapLine('xa xb xc xd xe ya yb id', 0, 100, 0);
+    const expected1 = [
       ['x', 'a', ' ', 'x', 'b'],
       ['x', 'c', ' ', 'x', 'd'],
       ['x', 'e', ' ', 'y', 'a'],
       ['y', 'b', ' ', 'i', 'd']];
     assert.deepEqual(line1, expected1, 'wrapping without reserved');
     assert.deepEqual(textbox.dynamicMinWidth, 40, 'wrapping without reserved');
-    var line2 = textbox._wrapLine('xa xb xc xd xe ya yb id', 0, 100, 50);
-    var expected2 =  [
+    const line2 = textbox._wrapLine('xa xb xc xd xe ya yb id', 0, 100, 50);
+    const expected2 = [
       ['x', 'a'],
       ['x', 'b'],
       ['x', 'c'],
@@ -339,27 +339,27 @@
     assert.deepEqual(textbox.dynamicMinWidth, 90, 'wrapping without reserved');
   });
   QUnit.test('wrapping an empty line', function(assert) {
-    var textbox = new fabric.Textbox('', {
+    const textbox = new fabric.Textbox('', {
       width: 10,
     });
-    var line1 = textbox._wrapLine('', 0, 100, 0);
+    const line1 = textbox._wrapLine('', 0, 100, 0);
     assert.deepEqual(line1, [[]], 'wrapping without splitByGrapheme');
     textbox.splitByGrapheme = true;
-    var line2 = textbox._wrapLine('', 0, 100, 0);
+    const line2 = textbox._wrapLine('', 0, 100, 0);
     assert.deepEqual(line2, [[]], 'wrapping with splitByGrapheme');
   });
   QUnit.test('texbox will change width from the mr corner', function(assert) {
-    var text = new fabric.Textbox('xa xb xc xd xe ya yb id', { strokeWidth: 0 });
+    const text = new fabric.Textbox('xa xb xc xd xe ya yb id', {strokeWidth: 0});
     canvas.add(text);
     canvas.setActiveObject(text);
-    var canvasEl = canvas.getElement(),
+    const canvasEl = canvas.getElement(),
         canvasOffset = fabric.util.getElementOffset(canvasEl);
-    var eventStub = {
+    const eventStub = {
       clientX: canvasOffset.left + text.width,
       clientY: canvasOffset.top + text.oCoords.mr.corner.tl.y + 1,
       type: 'mousedown',
     };
-    var originalWidth = text.width;
+    const originalWidth = text.width;
     canvas.__onMouseDown(eventStub);
     canvas.__onMouseMove({
       clientX: eventStub.clientX + 20,
@@ -374,17 +374,17 @@
     assert.equal(text.width, originalWidth + 20, 'width increased');
   });
   QUnit.test('texbox will change width from the ml corner', function(assert) {
-    var text = new fabric.Textbox('xa xb xc xd xe ya yb id', { strokeWidth: 0, left: 40 });
+    const text = new fabric.Textbox('xa xb xc xd xe ya yb id', {strokeWidth: 0, left: 40});
     canvas.add(text);
     canvas.setActiveObject(text);
-    var canvasEl = canvas.getElement(),
+    const canvasEl = canvas.getElement(),
         canvasOffset = fabric.util.getElementOffset(canvasEl);
-    var eventStub = {
+    const eventStub = {
       clientX: canvasOffset.left + text.left,
       clientY: canvasOffset.top + text.oCoords.ml.corner.tl.y + 2,
       type: 'mousedown',
     };
-    var originalWidth = text.width;
+    const originalWidth = text.width;
     canvas.__onMouseDown(eventStub);
     canvas.__onMouseMove({
       clientX: eventStub.clientX - 20,
@@ -399,24 +399,24 @@
     assert.equal(text.width, originalWidth + 20, 'width increased');
   });
   QUnit.test('_removeExtraneousStyles', function(assert) {
-    var iText = new fabric.Textbox('a\nq\qo', { styles: {
-      0: { 0: { fontSize: 4 } },
-      1: { 0: { fontSize: 4 } },
-      2: { 0: { fontSize: 4 } },
-      3: { 0: { fontSize: 4 } },
-      4: { 0: { fontSize: 4 } },
-    } });
-    assert.deepEqual(iText.styles[3], { 0: { fontSize: 4 } }, 'style line 3 exists');
-    assert.deepEqual(iText.styles[4], { 0: { fontSize: 4 } }, 'style line 4 exists');
+    const iText = new fabric.Textbox('a\nq\qo', {styles: {
+      0: {0: {fontSize: 4}},
+      1: {0: {fontSize: 4}},
+      2: {0: {fontSize: 4}},
+      3: {0: {fontSize: 4}},
+      4: {0: {fontSize: 4}},
+    }});
+    assert.deepEqual(iText.styles[3], {0: {fontSize: 4}}, 'style line 3 exists');
+    assert.deepEqual(iText.styles[4], {0: {fontSize: 4}}, 'style line 4 exists');
     iText._removeExtraneousStyles();
     assert.equal(iText.styles[3], undefined, 'style line 3 has been removed');
     assert.equal(iText.styles[4], undefined, 'style line 4 has been removed');
   });
 
   QUnit.test('get2DCursorLocation with splitByGrapheme', function(assert) {
-    var iText = new fabric.Textbox('aaaaaaaaaaaaaaaaaaaaaaaa',
-      { width: 60, splitByGrapheme: true });
-    var loc = iText.get2DCursorLocation();
+    const iText = new fabric.Textbox('aaaaaaaaaaaaaaaaaaaaaaaa',
+      {width: 60, splitByGrapheme: true});
+    let loc = iText.get2DCursorLocation();
 
     // [ [ '由', '石', '墨' ],
     //   [ '分', '裂', '的' ],
@@ -452,8 +452,8 @@
   });
 
   QUnit.test('missingNewlineOffset with splitByGrapheme', function(assert) {
-    var textbox = new fabric.Textbox('aaa\naaaaaa\na\naaaaaaaaaaaa\naaa',
-      { width: 80, splitByGrapheme: true });
+    const textbox = new fabric.Textbox('aaa\naaaaaa\na\naaaaaaaaaaaa\naaa',
+      {width: 80, splitByGrapheme: true});
 
     // [ [ 'a', 'a', 'a' ],
     //   [ 'a', 'a', 'a', 'a' ],
@@ -464,7 +464,7 @@
     //   [ 'a', 'a', 'a', 'a' ],
     //   [ 'a', 'a', 'a' ] ]
 
-    var offset = textbox.missingNewlineOffset(0);
+    let offset = textbox.missingNewlineOffset(0);
     assert.equal(offset, 1, 'line 0 is interrupted by a \n so has an offset of 1');
 
     offset = textbox.missingNewlineOffset(1);
@@ -472,8 +472,8 @@
   });
 
   QUnit.test('missingNewlineOffset with normal split', function(assert) {
-    var texbox = new fabric.Textbox('aaa\naaaaaa\na\naaaaaaaaaaaa\naaa',
-      { width: 160 });
+    const texbox = new fabric.Textbox('aaa\naaaaaa\na\naaaaaaaaaaaa\naaa',
+      {width: 160});
 
     var offset = texbox.missingNewlineOffset(0);
     assert.equal(offset, 1, 'it returns always 1');
@@ -484,9 +484,9 @@
   });
 
   QUnit.test('_getLineStyle', function(assert) {
-    var textbox = new fabric.Textbox('aaa aaq ggg gg\noee eee', {
+    const textbox = new fabric.Textbox('aaa aaq ggg gg\noee eee', {
       styles: {
-        1: { 0: { fontSize: 4 } },
+        1: {0: {fontSize: 4}},
       },
       width: 80,
     });
@@ -497,9 +497,9 @@
   });
 
   QUnit.test('_setLineStyle', function(assert) {
-    var textbox = new fabric.Textbox('aaa aaq ggg gg\noee eee', {
+    const textbox = new fabric.Textbox('aaa aaq ggg gg\noee eee', {
       styles: {
-        1: { 0: { fontSize: 4 } },
+        1: {0: {fontSize: 4}},
       },
       width: 80,
     });
@@ -521,26 +521,26 @@
   });
 
   QUnit.test('_deleteStyleDeclaration', function(assert) {
-    var textbox = new fabric.Textbox('aaa aaq ggg gg oee eee', {
+    const textbox = new fabric.Textbox('aaa aaq ggg gg oee eee', {
       styles: {
         0: {
-          0: { fontSize: 4 },
-          1: { fontSize: 4 },
-          2: { fontSize: 4 },
-          3: { fontSize: 4 },
-          4: { fontSize: 4 },
-          5: { fontSize: 4 },
-          6: { fontSize: 4 },
-          7: { fontSize: 4 },
-          8: { fontSize: 4 },
-          9: { fontSize: 4 },
-          10: { fontSize: 4 },
-          11: { fontSize: 4 },
-          12: { fontSize: 4 },
-          13: { fontSize: 4 },
-          14: { fontSize: 4 },
-          15: { fontSize: 4 },
-          16: { fontSize: 4 },
+          0: {fontSize: 4},
+          1: {fontSize: 4},
+          2: {fontSize: 4},
+          3: {fontSize: 4},
+          4: {fontSize: 4},
+          5: {fontSize: 4},
+          6: {fontSize: 4},
+          7: {fontSize: 4},
+          8: {fontSize: 4},
+          9: {fontSize: 4},
+          10: {fontSize: 4},
+          11: {fontSize: 4},
+          12: {fontSize: 4},
+          13: {fontSize: 4},
+          14: {fontSize: 4},
+          15: {fontSize: 4},
+          16: {fontSize: 4},
         },
       },
       width: 5,
@@ -550,46 +550,46 @@
   });
 
   QUnit.test('_setStyleDeclaration', function(assert) {
-    var textbox = new fabric.Textbox('aaa aaq ggg gg oee eee', {
+    const textbox = new fabric.Textbox('aaa aaq ggg gg oee eee', {
       styles: {
         0: {
-          0: { fontSize: 4 },
-          1: { fontSize: 4 },
-          2: { fontSize: 4 },
-          3: { fontSize: 4 },
-          4: { fontSize: 4 },
-          5: { fontSize: 4 },
-          6: { fontSize: 4 },
-          7: { fontSize: 4 },
-          8: { fontSize: 4 },
-          9: { fontSize: 4 },
-          10: { fontSize: 4 },
-          11: { fontSize: 4 },
-          12: { fontSize: 4 },
-          13: { fontSize: 4 },
-          14: { fontSize: 4 },
-          15: { fontSize: 4 },
-          16: { fontSize: 4 },
+          0: {fontSize: 4},
+          1: {fontSize: 4},
+          2: {fontSize: 4},
+          3: {fontSize: 4},
+          4: {fontSize: 4},
+          5: {fontSize: 4},
+          6: {fontSize: 4},
+          7: {fontSize: 4},
+          8: {fontSize: 4},
+          9: {fontSize: 4},
+          10: {fontSize: 4},
+          11: {fontSize: 4},
+          12: {fontSize: 4},
+          13: {fontSize: 4},
+          14: {fontSize: 4},
+          15: {fontSize: 4},
+          16: {fontSize: 4},
         },
       },
       width: 5,
     });
     assert.equal(typeof textbox._setStyleDeclaration, 'function', 'function exists');
-    var newStyle = { fontSize: 10 };
+    const newStyle = {fontSize: 10};
     textbox._setStyleDeclaration(2, 2, newStyle);
     assert.equal(textbox.styles[0][10], newStyle, 'style has been changed');
   });
 
   QUnit.test('styleHas', function(assert) {
-    var textbox = new fabric.Textbox('aaa aaq ggg gg oee eee', {
+    const textbox = new fabric.Textbox('aaa aaq ggg gg oee eee', {
       styles: {
         0: {
-          0: { fontSize: 4 },
-          1: { fontSize: 4 },
-          2: { fontSize: 4 },
-          4: { fontFamily: 'Arial' },
-          5: { fontFamily: 'Arial' },
-          6: { fontFamily: 'Arial' },
+          0: {fontSize: 4},
+          1: {fontSize: 4},
+          2: {fontSize: 4},
+          4: {fontFamily: 'Arial'},
+          5: {fontFamily: 'Arial'},
+          6: {fontFamily: 'Arial'},
         },
       },
       width: 5,
@@ -603,17 +603,16 @@
   });
 
   QUnit.test('The same text does not need to be wrapped.', function(assert) {
-    var str = '0123456789';
-    var measureTextbox = new fabric.Textbox(str, {
+    const str = '0123456789';
+    const measureTextbox = new fabric.Textbox(str, {
       fontSize: 20,
       splitByGrapheme: false,
     });
-    var newTextbox = new fabric.Textbox(str, {
+    const newTextbox = new fabric.Textbox(str, {
       width: measureTextbox.width,
       fontSize: 20,
       splitByGrapheme: true,
     });
     assert.equal(newTextbox.textLines.length, measureTextbox.textLines.length, 'The same text is not wrapped');
   });
-
 })();

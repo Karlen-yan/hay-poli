@@ -55,7 +55,7 @@ fabric.Image.filters.BaseFilter = fabric.util.createClass(/** @lends fabric.Imag
    * @param {Object} [options] Options object
    */
   setOptions: function(options) {
-    for (var prop in options) {
+    for (const prop in options) {
       this[prop] = options[prop];
     }
   },
@@ -70,35 +70,35 @@ fabric.Image.filters.BaseFilter = fabric.util.createClass(/** @lends fabric.Imag
   createProgram: function(gl, fragmentSource, vertexSource) {
     fragmentSource = fragmentSource || this.fragmentSource;
     vertexSource = vertexSource || this.vertexSource;
-    if (fabric.webGlPrecision !== 'highp'){
+    if (fabric.webGlPrecision !== 'highp') {
       fragmentSource = fragmentSource.replace(
         /precision highp float/g,
-        'precision ' + fabric.webGlPrecision + ' float'
+        'precision ' + fabric.webGlPrecision + ' float',
       );
     }
-    var vertexShader = gl.createShader(gl.VERTEX_SHADER);
+    const vertexShader = gl.createShader(gl.VERTEX_SHADER);
     gl.shaderSource(vertexShader, vertexSource);
     gl.compileShader(vertexShader);
     if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {
       throw new Error(
         // eslint-disable-next-line prefer-template
         'Vertex shader compile error for ' + this.type + ': ' +
-        gl.getShaderInfoLog(vertexShader)
+        gl.getShaderInfoLog(vertexShader),
       );
     }
 
-    var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+    const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
     gl.shaderSource(fragmentShader, fragmentSource);
     gl.compileShader(fragmentShader);
     if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
       throw new Error(
         // eslint-disable-next-line prefer-template
         'Fragment shader compile error for ' + this.type + ': ' +
-        gl.getShaderInfoLog(fragmentShader)
+        gl.getShaderInfoLog(fragmentShader),
       );
     }
 
-    var program = gl.createProgram();
+    const program = gl.createProgram();
     gl.attachShader(program, vertexShader);
     gl.attachShader(program, fragmentShader);
     gl.linkProgram(program);
@@ -106,18 +106,18 @@ fabric.Image.filters.BaseFilter = fabric.util.createClass(/** @lends fabric.Imag
       throw new Error(
         // eslint-disable-next-line prefer-template
         'Shader link error for "${this.type}" ' +
-        gl.getProgramInfoLog(program)
+        gl.getProgramInfoLog(program),
       );
     }
 
-    var attributeLocations = this.getAttributeLocations(gl, program);
-    var uniformLocations = this.getUniformLocations(gl, program) || { };
+    const attributeLocations = this.getAttributeLocations(gl, program);
+    const uniformLocations = this.getUniformLocations(gl, program) || { };
     uniformLocations.uStepW = gl.getUniformLocation(program, 'uStepW');
     uniformLocations.uStepH = gl.getUniformLocation(program, 'uStepH');
     return {
       program: program,
       attributeLocations: attributeLocations,
-      uniformLocations: uniformLocations
+      uniformLocations: uniformLocations,
     };
   },
 
@@ -143,7 +143,7 @@ fabric.Image.filters.BaseFilter = fabric.util.createClass(/** @lends fabric.Imag
    * @param {WebGLShaderProgram} program The shader program from which to take uniform locations.
    * @returns {Object} A map of uniform names to uniform locations.
    */
-  getUniformLocations: function (/* gl, program */) {
+  getUniformLocations: function(/* gl, program */) {
     // in case i do not need any special uniform i need to return an empty object
     return { };
   },
@@ -155,8 +155,8 @@ fabric.Image.filters.BaseFilter = fabric.util.createClass(/** @lends fabric.Imag
    * @param {Object} attributeLocations A map of shader attribute names to their locations.
    */
   sendAttributeData: function(gl, attributeLocations, aPositionData) {
-    var attributeLocation = attributeLocations.aPosition;
-    var buffer = gl.createBuffer();
+    const attributeLocation = attributeLocations.aPosition;
+    const buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
     gl.enableVertexAttribArray(attributeLocation);
     gl.vertexAttribPointer(attributeLocation, 2, gl.FLOAT, false, 0, 0);
@@ -164,7 +164,7 @@ fabric.Image.filters.BaseFilter = fabric.util.createClass(/** @lends fabric.Imag
   },
 
   _setupFrameBuffer: function(options) {
-    var gl = options.context, width, height;
+    let gl = options.context, width, height;
     if (options.passes > 1) {
       width = options.destinationWidth;
       height = options.destinationHeight;
@@ -185,7 +185,7 @@ fabric.Image.filters.BaseFilter = fabric.util.createClass(/** @lends fabric.Imag
   _swapTextures: function(options) {
     options.passes--;
     options.pass++;
-    var temp = options.targetTexture;
+    const temp = options.targetTexture;
     options.targetTexture = options.sourceTexture;
     options.sourceTexture = temp;
   },
@@ -198,11 +198,11 @@ fabric.Image.filters.BaseFilter = fabric.util.createClass(/** @lends fabric.Imag
    * @param {Object} options
    **/
   isNeutralState: function(/* options */) {
-    var main = this.mainParameter,
+    const main = this.mainParameter,
         _class = fabric.Image.filters[this.type].prototype;
     if (main) {
       if (Array.isArray(_class[main])) {
-        for (var i = _class[main].length; i--;) {
+        for (let i = _class[main].length; i--;) {
           if (this[main][i] !== _class[main][i]) {
             return false;
           }
@@ -268,8 +268,8 @@ fabric.Image.filters.BaseFilter = fabric.util.createClass(/** @lends fabric.Imag
    * @param {Object} options.programCache A map of compiled shader programs, keyed by filter type.
    */
   applyToWebGL: function(options) {
-    var gl = options.context;
-    var shader = this.retrieveShader(options);
+    const gl = options.context;
+    const shader = this.retrieveShader(options);
     if (options.pass === 0 && options.originalTexture) {
       gl.bindTexture(gl.TEXTURE_2D, options.originalTexture);
     }
@@ -326,7 +326,7 @@ fabric.Image.filters.BaseFilter = fabric.util.createClass(/** @lends fabric.Imag
    */
   createHelpLayer: function(options) {
     if (!options.helpLayer) {
-      var helpLayer = document.createElement('canvas');
+      const helpLayer = document.createElement('canvas');
       helpLayer.width = options.sourceWidth;
       helpLayer.height = options.sourceHeight;
       options.helpLayer = helpLayer;
@@ -338,7 +338,7 @@ fabric.Image.filters.BaseFilter = fabric.util.createClass(/** @lends fabric.Imag
    * @return {Object} Object representation of an instance
    */
   toObject: function() {
-    var object = { type: this.type }, mainP = this.mainParameter;
+    const object = {type: this.type}, mainP = this.mainParameter;
     if (mainP) {
       object[mainP] = this[mainP];
     }
@@ -352,11 +352,11 @@ fabric.Image.filters.BaseFilter = fabric.util.createClass(/** @lends fabric.Imag
   toJSON: function() {
     // delegate, not alias
     return this.toObject();
-  }
+  },
 });
 
 fabric.Image.filters.BaseFilter.fromObject = function(object, callback) {
-  var filter = new fabric.Image.filters[object.type](object);
+  const filter = new fabric.Image.filters[object.type](object);
   callback && callback(filter);
   return filter;
 };

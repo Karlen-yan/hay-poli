@@ -5,8 +5,7 @@
  * (or maybe use existing fabric.util.fire/observe (if it won't be too slow))
  */
 function initCenteringGuidelines(canvas) {
-
-  var canvasWidth = canvas.getWidth(),
+  let canvasWidth = canvas.getWidth(),
       canvasHeight = canvas.getHeight(),
       canvasWidthCenter = canvasWidth / 2,
       canvasHeightCenter = canvasHeight / 2,
@@ -44,20 +43,20 @@ function initCenteringGuidelines(canvas) {
     ctx.restore();
   }
 
-  var afterRenderActions = [],
+  let afterRenderActions = [],
       isInVerticalCenter,
       isInHorizontalCenter;
 
-  canvas.on('mouse:down', function () {
+  canvas.on('mouse:down', function() {
     viewportTransform = canvas.viewportTransform;
   });
 
   canvas.on('object:moving', function(e) {
-    var object = e.target,
+    const object = e.target,
         objectCenter = object.getCenterPoint(),
         transform = canvas._currentTransform;
 
-    if (!transform) return;
+    if (!transform) {return;}
 
     isInVerticalCenter = Math.round(objectCenter.x) in canvasWidthCenterMap,
     isInHorizontalCenter = Math.round(objectCenter.y) in canvasHeightCenterMap;

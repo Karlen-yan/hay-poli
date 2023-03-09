@@ -2,8 +2,8 @@
   fabric.enableGLFiltering = false;
   fabric.isWebglSupported = false;
   fabric.Object.prototype.objectCaching = true;
-  var visualTestLoop;
-  var getAsset;
+  let visualTestLoop;
+  let getAsset;
   if (fabric.isLikelyNode) {
     visualTestLoop = global.visualTestLoop;
     getAsset = global.getAsset;
@@ -17,15 +17,15 @@
     if (!svgName) {
       return null;
     }
-    var test = function(canvas, callback) {
+    const test = function(canvas, callback) {
       getAsset(svgName, function(err, string) {
         fabric.loadSVGFromString(string, function(objects, options) {
           // something is disabling objectCaching and i cannot find where it is.
-          var group = fabric.util.groupSVGElements(objects, options);
+          const group = fabric.util.groupSVGElements(objects, options);
           group.includeDefaultValues = false;
           canvas.includeDefaultValues = false;
           canvas.add(group);
-          canvas.setDimensions({ width: group.width + group.left, height: group.height + group.top });
+          canvas.setDimensions({width: group.width + group.left, height: group.height + group.top});
           canvas.renderAll();
           callback(canvas.lowerCanvasEl);
         });
@@ -41,7 +41,7 @@
 
   QUnit.module('Simple svg import test');
 
-  var tests = [
+  const tests = [
     'svg_stroke_1',
     'svg_stroke_2',
     'svg_stroke_3',
@@ -93,7 +93,7 @@
     'cs',
     'qt',
     'generic-path',
-    '177'
+    '177',
   ].map(createTestFromSVG);
 
   tests.forEach(visualTestLoop(QUnit));

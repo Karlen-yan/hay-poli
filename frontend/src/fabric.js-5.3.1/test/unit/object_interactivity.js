@@ -1,11 +1,10 @@
 (function() {
-
   QUnit.module('fabric.ObjectInteractivity');
 
   QUnit.test('isControlVisible', function(assert) {
     assert.ok(fabric.Object);
 
-    var cObj = new fabric.Object({ });
+    const cObj = new fabric.Object({ });
     assert.ok(typeof cObj.isControlVisible === 'function', 'isControlVisible should exist');
 
     assert.equal(cObj.isControlVisible('tl'), true);
@@ -22,7 +21,7 @@
   QUnit.test('setControlVisible', function(assert) {
     assert.ok(fabric.Object);
 
-    var cObj = new fabric.Object({ });
+    const cObj = new fabric.Object({ });
     assert.ok(typeof cObj.setControlVisible === 'function', 'setControlVisible should exist');
     assert.equal(cObj.setControlVisible('tl'), cObj, 'chainable');
 
@@ -35,8 +34,8 @@
   QUnit.test('setControlVisible is per object', function(assert) {
     assert.ok(fabric.Object);
 
-    var cObj = new fabric.Object({ });
-    var cObj2 = new fabric.Object({ });
+    const cObj = new fabric.Object({ });
+    const cObj2 = new fabric.Object({ });
 
     cObj.setControlVisible('tl', false);
     assert.equal(cObj.isControlVisible('tl'), false, 'setting to false worked for cObj');
@@ -52,7 +51,7 @@
   QUnit.test('setControlsVisibility', function(assert) {
     assert.ok(fabric.Object);
 
-    var cObj = new fabric.Object({ });
+    const cObj = new fabric.Object({ });
     assert.ok(typeof cObj.setControlsVisibility === 'function', 'setControlsVisibility should exist');
     assert.equal(cObj.setControlsVisibility(), cObj, 'chainable');
 
@@ -65,7 +64,7 @@
       mt: false,
       tl: false,
       tr: false,
-      mtr: false
+      mtr: false,
     });
 
     assert.equal(cObj.isControlVisible('tl'), false);
@@ -87,7 +86,7 @@
       mt: true,
       tl: true,
       tr: true,
-      mtr: true
+      mtr: true,
     });
 
     assert.equal(cObj.isControlVisible('tl'), true);
@@ -102,7 +101,7 @@
   });
 
   QUnit.test('_setCornerCoords', function(assert) {
-    var cObj = new fabric.Object({ top: 10, left: 10, width: 10, height: 10, strokeWidth: 0 });
+    const cObj = new fabric.Object({top: 10, left: 10, width: 10, height: 10, strokeWidth: 0});
     assert.ok(typeof cObj._setCornerCoords === 'function', '_setCornerCoords should exist');
     cObj.setCoords();
 
@@ -146,16 +145,15 @@
     assert.equal(cObj.oCoords.mtr.corner.bl.y.toFixed(2), -23.5);
     assert.equal(cObj.oCoords.mtr.corner.br.x.toFixed(2), 21.5);
     assert.equal(cObj.oCoords.mtr.corner.br.y.toFixed(2), -23.5);
-
   });
 
   // set size for bottom left corner and have different results for bl than normal setCornerCoords test
   QUnit.test('_setCornerCoords_customControlSize', function(assert) {
-    //set custom corner size
+    // set custom corner size
     fabric.Object.prototype.controls.bl.sizeX = 30;
     fabric.Object.prototype.controls.bl.sizeY = 10;
 
-    var cObj = new fabric.Object({ top: 10, left: 10, width: 10, height: 10, strokeWidth: 0 });
+    const cObj = new fabric.Object({top: 10, left: 10, width: 10, height: 10, strokeWidth: 0});
     assert.ok(typeof cObj._setCornerCoords === 'function', '_setCornerCoords should exist');
     cObj.setCoords();
 
@@ -206,11 +204,11 @@
   });
 
   QUnit.test('_findTargetCorner', function(assert) {
-    var cObj = new fabric.Object({ top: 10, left: 10, width: 30, height: 30, strokeWidth: 0 });
+    const cObj = new fabric.Object({top: 10, left: 10, width: 30, height: 30, strokeWidth: 0});
     assert.ok(typeof cObj._findTargetCorner === 'function', '_findTargetCorner should exist');
     cObj.setCoords();
     cObj.canvas = {
-      _activeObject: cObj
+      _activeObject: cObj,
     };
     assert.equal(cObj._findTargetCorner(cObj.oCoords.br), 'br');
     assert.equal(cObj._findTargetCorner(cObj.oCoords.tl), 'tl');
@@ -221,18 +219,18 @@
     assert.equal(cObj._findTargetCorner(cObj.oCoords.mt), 'mt');
     assert.equal(cObj._findTargetCorner(cObj.oCoords.mb), 'mb');
     assert.equal(cObj._findTargetCorner(cObj.oCoords.mtr), 'mtr');
-    assert.equal(cObj._findTargetCorner({ x: 0, y: 0 }), false);
+    assert.equal(cObj._findTargetCorner({x: 0, y: 0}), false);
   });
 
   QUnit.test('_findTargetCorner for touches', function(assert) {
-    var cObj = new fabric.Object({ top: 10, left: 10, width: 30, height: 30, strokeWidth: 0 });
+    const cObj = new fabric.Object({top: 10, left: 10, width: 30, height: 30, strokeWidth: 0});
     cObj.setCoords();
     cObj.canvas = {
-      _activeObject: cObj
+      _activeObject: cObj,
     };
-    var pointNearBr = {
+    let pointNearBr = {
       x: cObj.oCoords.br.x + cObj.cornerSize / 3,
-      y: cObj.oCoords.br.y + cObj.cornerSize / 3
+      y: cObj.oCoords.br.y + cObj.cornerSize / 3,
     };
     assert.equal(cObj._findTargetCorner(pointNearBr), 'br', 'cornerSize/3 near br returns br');
     assert.equal(cObj._findTargetCorner(pointNearBr, true), 'br', 'touch event cornerSize/3 near br returns br');
@@ -245,7 +243,7 @@
   });
 
   QUnit.test('_calculateCurrentDimensions', function(assert) {
-    var cObj = new fabric.Object({ width: 10, height: 15, strokeWidth: 0 }), dim;
+    let cObj = new fabric.Object({width: 10, height: 15, strokeWidth: 0}), dim;
     assert.ok(typeof cObj._calculateCurrentDimensions === 'function', '_calculateCurrentDimensions should exist');
 
     dim = cObj._calculateCurrentDimensions();
@@ -289,7 +287,7 @@
   });
 
   QUnit.test('_getTransformedDimensions', function(assert) {
-    var cObj = new fabric.Object({ width: 10, height: 15, strokeWidth: 0 }), dim;
+    let cObj = new fabric.Object({width: 10, height: 15, strokeWidth: 0}), dim;
     assert.ok(typeof cObj._getTransformedDimensions === 'function', '_getTransformedDimensions should exist');
 
     dim = cObj._getTransformedDimensions();
@@ -333,7 +331,7 @@
   });
 
   QUnit.test('_getNonTransformedDimensions', function(assert) {
-    var cObj = new fabric.Object({ width: 10, height: 15, strokeWidth: 0 }), dim;
+    let cObj = new fabric.Object({width: 10, height: 15, strokeWidth: 0}), dim;
     assert.ok(typeof cObj._getNonTransformedDimensions === 'function', '_getNonTransformedDimensions should exist');
 
     dim = cObj._getNonTransformedDimensions();
@@ -375,5 +373,4 @@
     assert.equal(dim.x, 12, 'width should not change');
     assert.equal(dim.y, 17, 'height should not change');
   });
-
 })();

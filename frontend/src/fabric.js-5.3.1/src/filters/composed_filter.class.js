@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric  = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       filters = fabric.Image.filters,
       createClass = fabric.util.createClass;
 
@@ -48,24 +47,24 @@
      */
     toObject: function() {
       return fabric.util.object.extend(this.callSuper('toObject'), {
-        subFilters: this.subFilters.map(function(filter) { return filter.toObject(); }),
+        subFilters: this.subFilters.map(function(filter) {return filter.toObject();}),
       });
     },
 
     isNeutralState: function() {
-      return !this.subFilters.some(function(filter) { return !filter.isNeutralState(); });
-    }
+      return !this.subFilters.some(function(filter) {return !filter.isNeutralState();});
+    },
   });
 
   /**
    * Deserialize a JSON definition of a ComposedFilter into a concrete instance.
    */
   fabric.Image.filters.Composed.fromObject = function(object, callback) {
-    var filters = object.subFilters || [],
+    const filters = object.subFilters || [],
         subFilters = filters.map(function(filter) {
           return new fabric.Image.filters[filter.type](filter);
         }),
-        instance = new fabric.Image.filters.Composed({ subFilters: subFilters });
+        instance = new fabric.Image.filters.Composed({subFilters: subFilters});
     callback && callback(instance);
     return instance;
   };

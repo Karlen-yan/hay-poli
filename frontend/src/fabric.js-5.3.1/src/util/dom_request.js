@@ -1,5 +1,4 @@
 (function() {
-
   function addParamToUrl(url, param) {
     return url + (/\?/.test(url) ? '&' : '?') + param;
   }
@@ -20,7 +19,7 @@
   function request(url, options) {
     options || (options = { });
 
-    var method = options.method ? options.method.toUpperCase() : 'GET',
+    let method = options.method ? options.method.toUpperCase() : 'GET',
         onComplete = options.onComplete || function() { },
         xhr = new fabric.window.XMLHttpRequest(),
         body = options.body || options.parameters;

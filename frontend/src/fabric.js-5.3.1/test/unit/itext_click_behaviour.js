@@ -1,9 +1,9 @@
-(function(){
-  var canvas;
+(function() {
+  let canvas;
   QUnit.module('iText click interaction', function(hooks) {
     hooks.beforeEach(function() {
       canvas = new fabric.Canvas(null, {
-        enableRetinaScaling: false
+        enableRetinaScaling: false,
       });
     });
     hooks.afterEach(function() {
@@ -11,17 +11,17 @@
       canvas.cancelRequestedRender();
     });
     QUnit.test('doubleClickHandler', function(assert) {
-      var iText = new fabric.IText('test need some word\nsecond line');
+      const iText = new fabric.IText('test need some word\nsecond line');
       iText.canvas = canvas;
       var eventData = {
         which: 1,
         target: canvas.upperCanvasEl,
         clientX: 40,
-        clientY: 10
+        clientY: 10,
       };
       iText.enterEditing();
       iText.doubleClickHandler({
-        e: eventData
+        e: eventData,
       });
       assert.equal(iText.selectionStart, 0, 'dblClick selection start is');
       assert.equal(iText.selectionEnd, 4, 'dblClick selection end is');
@@ -29,42 +29,42 @@
         which: 1,
         target: canvas.upperCanvasEl,
         clientX: 40,
-        clientY: 60
+        clientY: 60,
       };
       iText.doubleClickHandler({
-        e: eventData
+        e: eventData,
       });
       assert.equal(iText.selectionStart, 20, 'second dblClick selection start is');
       assert.equal(iText.selectionEnd, 26, 'second dblClick selection end is');
       iText.exitEditing();
     });
     QUnit.test('doubleClickHandler no editing', function(assert) {
-      var iText = new fabric.IText('test need some word\nsecond line');
+      const iText = new fabric.IText('test need some word\nsecond line');
       iText.canvas = canvas;
-      var eventData = {
+      const eventData = {
         which: 1,
         target: canvas.upperCanvasEl,
         clientX: 40,
-        clientY: 10
+        clientY: 10,
       };
       iText.doubleClickHandler({
-        e: eventData
+        e: eventData,
       });
       assert.equal(iText.selectionStart, 0, 'dblClick selection start is');
       assert.equal(iText.selectionEnd, 0, 'dblClick selection end is');
     });
     QUnit.test('tripleClickHandler', function(assert) {
-      var iText = new fabric.IText('test need some word\nsecond line');
+      const iText = new fabric.IText('test need some word\nsecond line');
       iText.canvas = canvas;
       var eventData = {
         which: 1,
         target: canvas.upperCanvasEl,
         clientX: 40,
-        clientY: 10
+        clientY: 10,
       };
       iText.enterEditing();
       iText.tripleClickHandler({
-        e: eventData
+        e: eventData,
       });
       assert.equal(iText.selectionStart, 0, 'tripleClick selection start is');
       assert.equal(iText.selectionEnd, 19, 'tripleClick selection end is');
@@ -72,80 +72,80 @@
         which: 1,
         target: canvas.upperCanvasEl,
         clientX: 40,
-        clientY: 60
+        clientY: 60,
       };
       iText.tripleClickHandler({
-        e: eventData
+        e: eventData,
       });
       assert.equal(iText.selectionStart, 20, 'second tripleClick selection start is');
       assert.equal(iText.selectionEnd, 31, 'second tripleClick selection end is');
       iText.exitEditing();
     });
     QUnit.test('tripleClickHandler', function(assert) {
-      var iText = new fabric.IText('test need some word\nsecond line');
+      const iText = new fabric.IText('test need some word\nsecond line');
       iText.canvas = canvas;
-      var eventData = {
+      const eventData = {
         which: 1,
         target: canvas.upperCanvasEl,
         clientX: 40,
-        clientY: 10
+        clientY: 10,
       };
       iText.tripleClickHandler({
-        e: eventData
+        e: eventData,
       });
       assert.equal(iText.selectionStart, 0, 'tripleClick selection start is');
       assert.equal(iText.selectionEnd, 0, 'tripleClick selection end is');
     });
     QUnit.test('_getNewSelectionStartFromOffset end of line', function(assert) {
-      var iText = new fabric.IText('test need some word\nsecond line');
-      var index = 10;
-      var jlen = 20;
-      var selection = iText._getNewSelectionStartFromOffset({ y: 1, x: 1000 }, 500, 520, index, jlen);
+      const iText = new fabric.IText('test need some word\nsecond line');
+      const index = 10;
+      const jlen = 20;
+      const selection = iText._getNewSelectionStartFromOffset({y: 1, x: 1000}, 500, 520, index, jlen);
       assert.equal(selection, index, 'index value did not change');
     });
     QUnit.test('_getNewSelectionStartFromOffset middle of line', function(assert) {
-      var iText = new fabric.IText('test need some word\nsecond line');
-      var index = 10;
-      var jlen = 20;
-      var selection = iText._getNewSelectionStartFromOffset({ y: 1, x: 519 }, 500, 520, index, jlen);
+      const iText = new fabric.IText('test need some word\nsecond line');
+      const index = 10;
+      const jlen = 20;
+      const selection = iText._getNewSelectionStartFromOffset({y: 1, x: 519}, 500, 520, index, jlen);
       assert.equal(selection, index + 1, 'index value was moved to next char, since is very near');
     });
     QUnit.test('_getNewSelectionStartFromOffset middle of line', function(assert) {
-      var iText = new fabric.IText('test need some word\nsecond line');
-      var index = 10;
-      var jlen = 20;
-      var selection = iText._getNewSelectionStartFromOffset({ y: 1, x: 502 }, 500, 520, index, jlen);
+      const iText = new fabric.IText('test need some word\nsecond line');
+      const index = 10;
+      const jlen = 20;
+      const selection = iText._getNewSelectionStartFromOffset({y: 1, x: 502}, 500, 520, index, jlen);
       assert.equal(selection, index, 'index value was NOT moved to next char, since is very near to first one');
     });
     QUnit.test('_getNewSelectionStartFromOffset middle of line', function(assert) {
-      var iText = new fabric.IText('test need some word\nsecond line');
-      var index = 10;
-      var jlen = 10;
-      var selection = iText._getNewSelectionStartFromOffset({ y: 1, x: 1000 }, 500, 520, index, jlen);
+      const iText = new fabric.IText('test need some word\nsecond line');
+      const index = 10;
+      const jlen = 10;
+      const selection = iText._getNewSelectionStartFromOffset({y: 1, x: 1000}, 500, 520, index, jlen);
       assert.equal(selection, index, 'index value was NOT moved to next char, since is already at end of text');
     });
     QUnit.test('_mouseDownHandlerBefore set up selected property', function(assert) {
-      var iText = new fabric.IText('test need some word\nsecond line');
+      const iText = new fabric.IText('test need some word\nsecond line');
       assert.equal(iText.selected, undefined, 'iText has no selected property');
       canvas.setActiveObject(iText);
       iText.canvas = canvas;
-      iText._mouseDownHandlerBefore({ e: {} });
+      iText._mouseDownHandlerBefore({e: {}});
       assert.equal(iText.selected, true, 'iText has selected property');
       assert.equal(iText.__lastSelected, undefined, 'iText has no __lastSelected property');
     });
     QUnit.test('_mouseUpHandler set selected as true', function(assert) {
-      var iText = new fabric.IText('test');
+      const iText = new fabric.IText('test');
       iText.initDelayedCursor = function() {};
       iText.renderCursorOrSelection = function() {};
       assert.equal(iText.selected, undefined, 'iText has no selected property');
       assert.equal(iText.__lastSelected, undefined, 'iText has no __lastSelected property');
       canvas.setActiveObject(iText);
       iText.canvas = canvas;
-      iText.mouseUpHandler({ e: {} });
+      iText.mouseUpHandler({e: {}});
       assert.equal(iText.selected, true, 'iText has selected property');
     });
     QUnit.test('_mouseUpHandler on a selected object enter edit', function(assert) {
-      var iText = new fabric.IText('test');
+      const iText = new fabric.IText('test');
       iText.initDelayedCursor = function() {};
       iText.renderCursorOrSelection = function() {};
       assert.equal(iText.isEditing, false, 'iText not editing');
@@ -153,12 +153,12 @@
       canvas._activeObject = null;
       iText.selected = true;
       iText.__lastSelected = true;
-      iText.mouseUpHandler({ e: {} });
+      iText.mouseUpHandler({e: {}});
       assert.equal(iText.isEditing, true, 'iText entered editing');
       iText.exitEditing();
     });
     QUnit.test('_mouseUpHandler on a selected object does enter edit if there is an activeObject', function(assert) {
-      var iText = new fabric.IText('test');
+      const iText = new fabric.IText('test');
       iText.initDelayedCursor = function() {};
       iText.renderCursorOrSelection = function() {};
       assert.equal(iText.isEditing, false, 'iText not editing');
@@ -166,12 +166,12 @@
       canvas._activeObject = new fabric.IText('test2');
       iText.selected = true;
       iText.__lastSelected = true;
-      iText.mouseUpHandler({ e: {} });
+      iText.mouseUpHandler({e: {}});
       assert.equal(iText.isEditing, false, 'iText did not enter editing');
       iText.exitEditing();
     });
     QUnit.test('_mouseUpHandler on a selected text in a group DOES NOT enter edit', function(assert) {
-      var iText = new fabric.IText('test');
+      const iText = new fabric.IText('test');
       iText.initDelayedCursor = function() {};
       iText.renderCursorOrSelection = function() {};
       assert.equal(iText.isEditing, false, 'iText not editing');
@@ -179,12 +179,12 @@
       iText.selected = true;
       iText.__lastSelected = true;
       iText.group = true;
-      iText.mouseUpHandler({ e: {} });
+      iText.mouseUpHandler({e: {}});
       assert.equal(iText.isEditing, false, 'iText did not entered editing');
       iText.exitEditing();
     });
     QUnit.test('_mouseUpHandler on a corner of selected text DOES NOT enter edit', function(assert) {
-      var iText = new fabric.IText('test');
+      const iText = new fabric.IText('test');
       iText.initDelayedCursor = function() {};
       iText.renderCursorOrSelection = function() {};
       assert.equal(iText.isEditing, false, 'iText not editing');
@@ -192,7 +192,7 @@
       iText.selected = true;
       iText.__lastSelected = true;
       iText.__corner = 'mt';
-      iText.mouseUpHandler({ e: {} });
+      iText.mouseUpHandler({e: {}});
       assert.equal(iText.isEditing, false, 'iText did not entered editing');
       iText.exitEditing();
       canvas.renderAll();
@@ -203,16 +203,16 @@
         canvas.enableRetinaScaling = false;
       });
       QUnit.test('click on editing itext make selection:changed fire', function(assert) {
-        var done = assert.async();
-        var eventData = {
+        const done = assert.async();
+        const eventData = {
           which: 1,
           target: canvas.upperCanvasEl,
           clientX: 30,
-          clientY: 10
+          clientY: 10,
         };
-        var count = 0;
-        var countCanvas = 0;
-        var iText = new fabric.IText('test test');
+        let count = 0;
+        let countCanvas = 0;
+        const iText = new fabric.IText('test test');
         canvas.on('text:selection:changed', function() {
           countCanvas++;
         });
@@ -253,16 +253,16 @@
         });
       });
       QUnit.test('click on editing itext make selection:changed fire', function(assert) {
-        var done = assert.async();
-        var eventData = {
+        const done = assert.async();
+        const eventData = {
           which: 1,
           target: canvas.upperCanvasEl,
           clientX: 60,
-          clientY: 30
+          clientY: 30,
         };
-        var count = 0;
-        var countCanvas = 0;
-        var iText = new fabric.IText('test test');
+        let count = 0;
+        let countCanvas = 0;
+        const iText = new fabric.IText('test test');
         canvas.on('text:selection:changed', function() {
           countCanvas++;
         });

@@ -1,6 +1,5 @@
 (function() {
-
-  var degreesToRadians = fabric.util.degreesToRadians;
+  const degreesToRadians = fabric.util.degreesToRadians;
 
   fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prototype */ {
     /**
@@ -16,7 +15,7 @@
         return false;
       }
 
-      var ex = pointer.x,
+      let ex = pointer.x,
           ey = pointer.y,
           xPoints,
           lines, keys = Object.keys(this.oCoords),
@@ -45,7 +44,7 @@
         // this.canvas.contextTop.fillRect(lines.rightline.d.x, lines.rightline.d.y, 2, 2);
         // this.canvas.contextTop.fillRect(lines.rightline.o.x, lines.rightline.o.y, 2, 2);
 
-        xPoints = this._findCrossPoints({ x: ex, y: ey }, lines);
+        xPoints = this._findCrossPoints({x: ex, y: ey}, lines);
         if (xPoints !== 0 && xPoints % 2 === 1) {
           this.__corner = i;
           return i;
@@ -60,7 +59,7 @@
      * @param {Function} fn function to iterate over the controls over
      */
     forEachControl: function(fn) {
-      for (var i in this.controls) {
+      for (const i in this.controls) {
         fn(this.controls[i], i, this);
       };
     },
@@ -73,10 +72,10 @@
      * @private
      */
     _setCornerCoords: function() {
-      var coords = this.oCoords;
+      const coords = this.oCoords;
 
-      for (var control in coords) {
-        var controlObject = this.controls[control];
+      for (const control in coords) {
+        const controlObject = this.controls[control];
         coords[control].corner = controlObject.calcCornerCoords(
           this.angle, this.cornerSize, coords[control].x, coords[control].y, false);
         coords[control].touchCorner = controlObject.calcCornerCoords(
@@ -101,7 +100,7 @@
         return this;
       }
       ctx.save();
-      var center = this.getCenterPoint(), wh = this._calculateCurrentDimensions(),
+      const center = this.getCenterPoint(), wh = this._calculateCurrentDimensions(),
           vpt = this.canvas.viewportTransform;
       ctx.translate(center.x, center.y);
       ctx.scale(1 / vpt[0], 1 / vpt[3]);
@@ -123,7 +122,7 @@
      */
     drawBorders: function(ctx, styleOverride) {
       styleOverride = styleOverride || {};
-      var wh = this._calculateCurrentDimensions(),
+      let wh = this._calculateCurrentDimensions(),
           strokeWidth = this.borderScaleFactor,
           width = wh.x + strokeWidth,
           height = wh.y + strokeWidth,
@@ -139,7 +138,7 @@
         -width / 2,
         -height / 2,
         width,
-        height
+        height,
       );
 
       if (hasControls) {
@@ -153,7 +152,7 @@
             ctx.moveTo(control.x * width, control.y * height);
             ctx.lineTo(
               control.x * width + control.offsetX,
-              control.y * height + control.offsetY
+              control.y * height + control.offsetY,
             );
           }
         });
@@ -177,7 +176,7 @@
      */
     drawBordersInGroup: function(ctx, options, styleOverride) {
       styleOverride = styleOverride || {};
-      var bbox = fabric.util.sizeAfterTransform(this.width, this.height, options),
+      const bbox = fabric.util.sizeAfterTransform(this.width, this.height, options),
           strokeWidth = this.strokeWidth,
           strokeUniform = this.strokeUniform,
           borderScaleFactor = this.borderScaleFactor,
@@ -192,7 +191,7 @@
         -width / 2,
         -height / 2,
         width,
-        height
+        height,
       );
 
       ctx.restore();
@@ -211,7 +210,7 @@
     drawControls: function(ctx, styleOverride) {
       styleOverride = styleOverride || {};
       ctx.save();
-      var retinaScaling = this.canvas.getRetinaScaling(), matrix, p;
+      let retinaScaling = this.canvas.getRetinaScaling(), matrix, p;
       ctx.setTransform(retinaScaling, 0, 0, retinaScaling, 0, 0);
       ctx.strokeStyle = ctx.fillStyle = styleOverride.cornerColor || this.cornerColor;
       if (!this.transparentCorners) {
@@ -283,7 +282,7 @@
     setControlsVisibility: function(options) {
       options || (options = { });
 
-      for (var p in options) {
+      for (const p in options) {
         this.setControlVisible(p, options[p]);
       }
       return this;
@@ -309,6 +308,6 @@
      */
     onSelect: function() {
       // implemented by sub-classes, as needed.
-    }
+    },
   });
 })();

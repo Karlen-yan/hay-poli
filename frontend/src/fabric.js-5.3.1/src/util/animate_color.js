@@ -3,10 +3,10 @@
   // Credit: Edwin Martin <edwin@bitstorm.org>
   //         http://www.bitstorm.org/jquery/color-animation/jquery.animate-colors.js
   function calculateColor(begin, end, pos) {
-    var color = 'rgba('
-        + parseInt((begin[0] + pos * (end[0] - begin[0])), 10) + ','
-        + parseInt((begin[1] + pos * (end[1] - begin[1])), 10) + ','
-        + parseInt((begin[2] + pos * (end[2] - begin[2])), 10);
+    let color = 'rgba(' +
+        parseInt((begin[0] + pos * (end[0] - begin[0])), 10) + ',' +
+        parseInt((begin[1] + pos * (end[1] - begin[1])), 10) + ',' +
+        parseInt((begin[2] + pos * (end[2] - begin[2])), 10);
 
     color += ',' + (begin && end ? parseFloat(begin[3] + pos * (end[3] - begin[3])) : 1);
     color += ')';
@@ -27,7 +27,7 @@
    * @returns {Function} abort function
    */
   function animateColor(fromColor, toColor, duration, options) {
-    var startColor = new fabric.Color(fromColor).getSource(),
+    const startColor = new fabric.Color(fromColor).getSource(),
         endColor = new fabric.Color(toColor).getSource(),
         originalOnComplete = options.onComplete,
         originalOnChange = options.onChange;
@@ -38,10 +38,10 @@
       startValue: startColor,
       endValue: endColor,
       byValue: endColor,
-      easing: function (currentTime, startValue, byValue, duration) {
-        var posValue = options.colorEasing
-          ? options.colorEasing(currentTime, duration)
-          : 1 - Math.cos(currentTime / duration * (Math.PI / 2));
+      easing: function(currentTime, startValue, byValue, duration) {
+        const posValue = options.colorEasing ?
+          options.colorEasing(currentTime, duration) :
+          1 - Math.cos(currentTime / duration * (Math.PI / 2));
         return calculateColor(startValue, byValue, posValue);
       },
       // has to take in account for color restoring;
@@ -50,7 +50,7 @@
           return originalOnComplete(
             calculateColor(endColor, endColor, 0),
             valuePerc,
-            timePerc
+            timePerc,
           );
         }
       },
@@ -60,15 +60,14 @@
             return originalOnChange(
               calculateColor(current, current, 0),
               valuePerc,
-              timePerc
+              timePerc,
             );
           }
           originalOnChange(current, valuePerc, timePerc);
         }
-      }
+      },
     }));
   }
 
   fabric.util.animateColor = animateColor;
-
 })();

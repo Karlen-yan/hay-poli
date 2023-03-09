@@ -1,6 +1,5 @@
 (function() {
-
-  var _slice = Array.prototype.slice;
+  const _slice = Array.prototype.slice;
 
   /**
    * Takes id and returns an element with that id (if one exists in a document)
@@ -12,7 +11,7 @@
     return typeof id === 'string' ? fabric.document.getElementById(id) : id;
   }
 
-  var sliceCanConvertNodelists,
+  let sliceCanConvertNodelists,
       /**
        * Converts an array-like object (e.g. arguments or NodeList) to an array
        * @memberOf fabric.util
@@ -30,7 +29,7 @@
 
   if (!sliceCanConvertNodelists) {
     toArray = function(arrayLike) {
-      var arr = new Array(arrayLike.length), i = arrayLike.length;
+      let arr = new Array(arrayLike.length), i = arrayLike.length;
       while (i--) {
         arr[i] = arrayLike[i];
       }
@@ -46,8 +45,8 @@
    * @return {HTMLElement} Newly created element
    */
   function makeElement(tagName, attributes) {
-    var el = fabric.document.createElement(tagName);
-    for (var prop in attributes) {
+    const el = fabric.document.createElement(tagName);
+    for (const prop in attributes) {
       if (prop === 'class') {
         el.className = attributes[prop];
       }
@@ -99,12 +98,11 @@
    * @return {Object} Object with left/top values
    */
   function getScrollLeftTop(element) {
-
-    var left = 0,
+    let left = 0,
         top = 0,
         docElement = fabric.document.documentElement,
         body = fabric.document.body || {
-          scrollLeft: 0, scrollTop: 0
+          scrollLeft: 0, scrollTop: 0,
         };
 
     // While loop checks (and then sets element to) .parentNode OR .host
@@ -112,13 +110,12 @@
     //  but the .parentNode of a root ShadowDOM node will always be null, instead
     //  it should be accessed through .host. See http://stackoverflow.com/a/24765528/4383938
     while (element && (element.parentNode || element.host)) {
-
       // Set element to element parent, or 'host' in case of ShadowDOM
       element = element.parentNode || element.host;
 
       if (element === fabric.document) {
         left = body.scrollLeft || docElement.scrollLeft || 0;
-        top = body.scrollTop ||  docElement.scrollTop || 0;
+        top = body.scrollTop || docElement.scrollTop || 0;
       }
       else {
         left += element.scrollLeft || 0;
@@ -130,7 +127,7 @@
       }
     }
 
-    return { left: left, top: top };
+    return {left: left, top: top};
   }
 
   /**
@@ -141,23 +138,23 @@
    * @return {Object} Object with "left" and "top" properties
    */
   function getElementOffset(element) {
-    var docElem,
+    let docElem,
         doc = element && element.ownerDocument,
-        box = { left: 0, top: 0 },
-        offset = { left: 0, top: 0 },
+        box = {left: 0, top: 0},
+        offset = {left: 0, top: 0},
         scrollLeftTop,
         offsetAttributes = {
           borderLeftWidth: 'left',
           borderTopWidth:  'top',
           paddingLeft:     'left',
-          paddingTop:      'top'
+          paddingTop:      'top',
         };
 
     if (!doc) {
       return offset;
     }
 
-    for (var attr in offsetAttributes) {
+    for (const attr in offsetAttributes) {
       offset[offsetAttributes[attr]] += parseInt(getElementStyle(element, attr), 10) || 0;
     }
 
@@ -170,7 +167,7 @@
 
     return {
       left: box.left + scrollLeftTop.left - (docElem.clientLeft || 0) + offset.left,
-      top: box.top + scrollLeftTop.top - (docElem.clientTop || 0)  + offset.top
+      top: box.top + scrollLeftTop.top - (docElem.clientTop || 0) + offset.top,
     };
   }
 
@@ -181,16 +178,16 @@
    * @param {String} attr Style attribute to get for element
    * @return {String} Style attribute value of the given element.
    */
-  var getElementStyle;
+  let getElementStyle;
   if (fabric.document.defaultView && fabric.document.defaultView.getComputedStyle) {
     getElementStyle = function(element, attr) {
-      var style = fabric.document.defaultView.getComputedStyle(element, null);
+      const style = fabric.document.defaultView.getComputedStyle(element, null);
       return style ? style[attr] : undefined;
     };
   }
   else {
     getElementStyle = function(element, attr) {
-      var value = element.style[attr];
+      let value = element.style[attr];
       if (!value && element.currentStyle) {
         value = element.currentStyle[attr];
       }
@@ -198,17 +195,17 @@
     };
   }
 
-  (function () {
-    var style = fabric.document.documentElement.style,
-        selectProp = 'userSelect' in style
-          ? 'userSelect'
-          : 'MozUserSelect' in style
-            ? 'MozUserSelect'
-            : 'WebkitUserSelect' in style
-              ? 'WebkitUserSelect'
-              : 'KhtmlUserSelect' in style
-                ? 'KhtmlUserSelect'
-                : '';
+  (function() {
+    const style = fabric.document.documentElement.style,
+        selectProp = 'userSelect' in style ?
+          'userSelect' :
+          'MozUserSelect' in style ?
+            'MozUserSelect' :
+            'WebkitUserSelect' in style ?
+              'WebkitUserSelect' :
+              'KhtmlUserSelect' in style ?
+                'KhtmlUserSelect' :
+                '';
 
     /**
      * Makes element unselectable
@@ -253,7 +250,7 @@
   })();
 
   function getNodeCanvas(element) {
-    var impl = fabric.jsdomImplForWrapper(element);
+    const impl = fabric.jsdomImplForWrapper(element);
     return impl._canvas || impl._image;
   };
 
@@ -261,7 +258,7 @@
     if (!fabric.isLikelyNode) {
       return;
     }
-    var impl = fabric.jsdomImplForWrapper(element);
+    const impl = fabric.jsdomImplForWrapper(element);
     if (impl) {
       impl._image = null;
       impl._canvas = null;
@@ -273,8 +270,8 @@
   }
 
   function setImageSmoothing(ctx, value) {
-    ctx.imageSmoothingEnabled = ctx.imageSmoothingEnabled || ctx.webkitImageSmoothingEnabled
-      || ctx.mozImageSmoothingEnabled || ctx.msImageSmoothingEnabled || ctx.oImageSmoothingEnabled;
+    ctx.imageSmoothingEnabled = ctx.imageSmoothingEnabled || ctx.webkitImageSmoothingEnabled ||
+      ctx.mozImageSmoothingEnabled || ctx.msImageSmoothingEnabled || ctx.oImageSmoothingEnabled;
     ctx.imageSmoothingEnabled = value;
   }
 
@@ -296,5 +293,4 @@
   fabric.util.getElementOffset = getElementOffset;
   fabric.util.getNodeCanvas = getNodeCanvas;
   fabric.util.cleanUpJsdomNode = cleanUpJsdomNode;
-
 })();

@@ -76,5 +76,5 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       this.canvas.moveTo(this, index);
     }
     return this;
-  }
+  },
 });

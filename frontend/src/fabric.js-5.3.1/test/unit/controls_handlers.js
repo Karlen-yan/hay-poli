@@ -1,9 +1,9 @@
-(function(){
+(function() {
   QUnit.module('fabric.controlsUtils', function(hooks) {
-    var eventData, transform;
-    var canvas = new fabric.Canvas(null);
+    let eventData, transform;
+    const canvas = new fabric.Canvas(null);
     hooks.beforeEach(function() {
-      var target = new fabric.Rect({ width: 100, height: 100 });
+      const target = new fabric.Rect({width: 100, height: 100});
       canvas.add(target);
       eventData = {
       };
@@ -60,7 +60,7 @@
       assert.equal(Math.floor(transform.target.width), 51);
     });
     QUnit.test('changeWidth will fire events on canvas and target resizing', function(assert) {
-      var done = assert.async();
+      const done = assert.async();
       transform.target.canvas.on('object:resizing', function(options) {
         assert.equal(options.target, transform.target);
       });
@@ -86,7 +86,7 @@
     QUnit.test('scalingXOrSkewingY changes scaleX to flip', function(assert) {
       transform.target.scaleX = 1;
       transform.target.strokeWidth = 0;
-      var returned = fabric.controlsUtils.scalingXOrSkewingY(eventData, transform, -50, 300);
+      const returned = fabric.controlsUtils.scalingXOrSkewingY(eventData, transform, -50, 300);
       assert.equal(transform.target.scaleX, 0.5);
       assert.equal(transform.target.flipX, true, 'the object flipped X');
       assert.equal(returned, true, 'action was permitted');
@@ -95,7 +95,7 @@
       transform.target.scaleX = 1;
       transform.target.strokeWidth = 0;
       transform.target.lockScalingFlip = true;
-      var returned = fabric.controlsUtils.scalingXOrSkewingY(eventData, transform, -50, 300);
+      const returned = fabric.controlsUtils.scalingXOrSkewingY(eventData, transform, -50, 300);
       assert.equal(transform.target.scaleX, 1);
       assert.equal(transform.target.flipX, false, 'the object did not flip X');
       assert.equal(returned, false, 'action was not permitted X');
@@ -109,7 +109,7 @@
     QUnit.test('scalingYOrSkewingX changes scaleY to flip', function(assert) {
       transform.target.scaleY = 1;
       transform.target.strokeWidth = 0;
-      var returned = fabric.controlsUtils.scalingYOrSkewingX(eventData, transform, 200, -80);
+      const returned = fabric.controlsUtils.scalingYOrSkewingX(eventData, transform, 200, -80);
       assert.equal(transform.target.scaleY, 0.8);
       assert.equal(transform.target.flipY, true, 'the object flipped Y');
       assert.equal(returned, true, 'action was permitted Y');
@@ -118,7 +118,7 @@
       transform.target.scaley = 1;
       transform.target.strokeWidth = 0;
       transform.target.lockScalingFlip = true;
-      var returned = fabric.controlsUtils.scalingYOrSkewingX(eventData, transform, 200, -80);
+      const returned = fabric.controlsUtils.scalingYOrSkewingX(eventData, transform, 200, -80);
       assert.equal(transform.target.scaleY, 1);
       assert.equal(transform.target.flipY, false, 'the object did not flip Y');
       assert.equal(returned, false, 'action was not permitted Y');
@@ -142,7 +142,7 @@
       assert.equal(Math.round(transform.target.scaleY), 1);
     });
     QUnit.test('scalingXOrSkewingY will fire events on canvas and target', function(assert) {
-      var done = assert.async();
+      const done = assert.async();
       transform.target.scaleX = 1;
       transform.target.canvas.on('object:scaling', function(options) {
         assert.equal(options.target, transform.target);
@@ -161,31 +161,31 @@
       fabric.controlsUtils.scalingXOrSkewingY(eventData, transform, 200, 300);
     });
     QUnit.test('wrapWithFixedAnchor', function(assert) {
-      var target = transform.target;
+      const target = transform.target;
       transform.originX = 'center';
       transform.originY = 'center';
       target.strokeWidth = 0;
-      var actionHandler = function (eventData, transform) {
-        var target = transform.target;
+      const actionHandler = function(eventData, transform) {
+        const target = transform.target;
         target.scaleX = 5;
         target.scaleY = 5;
       };
-      var center = target.getCenterPoint();
+      const center = target.getCenterPoint();
       assert.deepEqual(center.x, 50, 'initial center is x 50');
       assert.deepEqual(center.y, 50, 'initial center is y 50');
       actionHandler({}, transform);
-      var center2 = target.getCenterPoint();
+      const center2 = target.getCenterPoint();
       assert.deepEqual(center2.x, 250, 'after action center is x 250');
       assert.deepEqual(center2.y, 250, 'after action center is y 250');
       target.top = 0;
       target.left = 0;
       target.scaleX = 1;
       target.scaleY = 1;
-      var center3 = target.getCenterPoint();
+      const center3 = target.getCenterPoint();
       assert.deepEqual(center3.x, 50, 'after reset center is x 50');
       assert.deepEqual(center3.y, 50, 'after reset center is y 50');
       fabric.controlsUtils.wrapWithFixedAnchor(actionHandler)({}, transform);
-      var center4 = target.getCenterPoint();
+      const center4 = target.getCenterPoint();
       assert.equal(target.scaleX, 5, 'action made scaleX bigger');
       assert.equal(target.scaleY, 5, 'action made scaleY bigger');
       assert.deepEqual(center4.x, 50, 'with wrapper center is x 50');
@@ -195,17 +195,17 @@
       transform.target.canvas.on('object:scaling', function() {
         assert.ok(false);
       });
-      var eventData = {some: 'data'}, x = 15, y = 25;
-      var actionHandler = function (eventDataIn, transformIn, xIn, yIn) {
+      const eventData = {some: 'data'}, x = 15, y = 25;
+      const actionHandler = function(eventDataIn, transformIn, xIn, yIn) {
         assert.equal(eventDataIn, eventData);
         assert.equal(transformIn, transform);
         assert.equal(xIn, x);
         assert.equal(yIn, y);
         return false;
       };
-      var wrapped = fabric.controlsUtils.wrapWithFireEvent(
+      const wrapped = fabric.controlsUtils.wrapWithFireEvent(
         'scaling',
-        fabric.controlsUtils.wrapWithFixedAnchor(actionHandler)
+        fabric.controlsUtils.wrapWithFixedAnchor(actionHandler),
       );
       wrapped(eventData, transform, x, y);
     });

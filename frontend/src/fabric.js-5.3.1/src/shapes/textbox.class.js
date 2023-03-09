@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric = global.fabric || (global.fabric = {});
+  const fabric = global.fabric || (global.fabric = {});
 
   /**
    * Textbox class, based on IText, allows the user to resize the text rectangle
@@ -105,7 +104,7 @@
       }
       // clear cache and re-calculate height
       this.height = this.calcTextHeight();
-      this.saveState({ propertySet: '_dimensionAffectingProps' });
+      this.saveState({propertySet: '_dimensionAffectingProps'});
     },
 
     /**
@@ -116,12 +115,12 @@
      * @private
      */
     _generateStyleMap: function(textInfo) {
-      var realLineCount     = 0,
+      let realLineCount = 0,
           realLineCharCount = 0,
-          charCount         = 0,
-          map               = {};
+          charCount = 0,
+          map = {};
 
-      for (var i = 0; i < textInfo.graphemeLines.length; i++) {
+      for (let i = 0; i < textInfo.graphemeLines.length; i++) {
         if (textInfo.graphemeText[charCount] === '\n' && i > 0) {
           realLineCharCount = 0;
           charCount++;
@@ -133,7 +132,7 @@
           charCount++;
         }
 
-        map[i] = { line: realLineCount, offset: realLineCharCount };
+        map[i] = {line: realLineCount, offset: realLineCharCount};
 
         charCount += textInfo.graphemeLines[i].length;
         realLineCharCount += textInfo.graphemeLines[i].length;
@@ -149,7 +148,7 @@
      */
     styleHas: function(property, lineIndex) {
       if (this._styleMap && !this.isWrapping) {
-        var map = this._styleMap[lineIndex];
+        const map = this._styleMap[lineIndex];
         if (map) {
           lineIndex = map.line;
         }
@@ -166,7 +165,7 @@
       if (!this.styles) {
         return true;
       }
-      var offset = 0, nextLineIndex = lineIndex + 1, nextOffset, obj, shouldLimit = false,
+      let offset = 0, nextLineIndex = lineIndex + 1, nextOffset, obj, shouldLimit = false,
           map = this._styleMap[lineIndex], mapNextLine = this._styleMap[lineIndex + 1];
       if (map) {
         lineIndex = map.line;
@@ -177,12 +176,12 @@
         shouldLimit = nextLineIndex === lineIndex;
         nextOffset = mapNextLine.offset;
       }
-      obj = typeof lineIndex === 'undefined' ? this.styles : { line: this.styles[lineIndex] };
-      for (var p1 in obj) {
-        for (var p2 in obj[p1]) {
+      obj = typeof lineIndex === 'undefined' ? this.styles : {line: this.styles[lineIndex]};
+      for (const p1 in obj) {
+        for (const p2 in obj[p1]) {
           if (p2 >= offset && (!shouldLimit || p2 < nextOffset)) {
             // eslint-disable-next-line no-unused-vars
-            for (var p3 in obj[p1][p2]) {
+            for (const p3 in obj[p1][p2]) {
               return false;
             }
           }
@@ -198,7 +197,7 @@
      */
     _getStyleDeclaration: function(lineIndex, charIndex) {
       if (this._styleMap && !this.isWrapping) {
-        var map = this._styleMap[lineIndex];
+        const map = this._styleMap[lineIndex];
         if (!map) {
           return null;
         }
@@ -215,7 +214,7 @@
      * @private
      */
     _setStyleDeclaration: function(lineIndex, charIndex, style) {
-      var map = this._styleMap[lineIndex];
+      const map = this._styleMap[lineIndex];
       lineIndex = map.line;
       charIndex = map.offset + charIndex;
 
@@ -228,7 +227,7 @@
      * @private
      */
     _deleteStyleDeclaration: function(lineIndex, charIndex) {
-      var map = this._styleMap[lineIndex];
+      const map = this._styleMap[lineIndex];
       lineIndex = map.line;
       charIndex = map.offset + charIndex;
       delete this.styles[lineIndex][charIndex];
@@ -243,7 +242,7 @@
      * @private
      */
     _getLineStyle: function(lineIndex) {
-      var map = this._styleMap[lineIndex];
+      const map = this._styleMap[lineIndex];
       return !!this.styles[map.line];
     },
 
@@ -254,7 +253,7 @@
      * @private
      */
     _setLineStyle: function(lineIndex) {
-      var map = this._styleMap[lineIndex];
+      const map = this._styleMap[lineIndex];
       this.styles[map.line] = {};
     },
 
@@ -268,7 +267,7 @@
      * @returns {Array} Array of lines
      */
     _wrapText: function(lines, desiredWidth) {
-      var wrapped = [], i;
+      let wrapped = [], i;
       this.isWrapping = true;
       for (i = 0; i < lines.length; i++) {
         wrapped = wrapped.concat(this._wrapLine(lines[i], i, desiredWidth));
@@ -288,10 +287,10 @@
      * @private
      */
     _measureWord: function(word, lineIndex, charOffset) {
-      var width = 0, prevGrapheme, skipLeft = true;
+      let width = 0, prevGrapheme, skipLeft = true;
       charOffset = charOffset || 0;
-      for (var i = 0, len = word.length; i < len; i++) {
-        var box = this._getGraphemeBox(word[i], lineIndex, i + charOffset, prevGrapheme, skipLeft);
+      for (let i = 0, len = word.length; i < len; i++) {
+        const box = this._getGraphemeBox(word[i], lineIndex, i + charOffset, prevGrapheme, skipLeft);
         width += box.kernedWidth;
         prevGrapheme = word[i];
       }
@@ -405,10 +404,10 @@
     * @override
     */
     _splitTextIntoLines: function(text) {
-      var newText = fabric.Text.prototype._splitTextIntoLines.call(this, text),
+      const newText = fabric.Text.prototype._splitTextIntoLines.call(this, text),
           graphemeLines = this._wrapText(newText.lines, this.width),
           lines = new Array(graphemeLines.length);
-      for (var i = 0; i < graphemeLines.length; i++) {
+      for (let i = 0; i < graphemeLines.length; i++) {
         lines[i] = graphemeLines[i].join('');
       }
       newText.lines = lines;
@@ -421,7 +420,7 @@
     },
 
     _removeExtraneousStyles: function() {
-      var linesToKeep = {};
+      const linesToKeep = {};
       for (var prop in this._styleMap) {
         if (this._textLines[prop]) {
           linesToKeep[this._styleMap[prop].line] = 1;
@@ -442,7 +441,7 @@
      */
     toObject: function(propertiesToInclude) {
       return this.callSuper('toObject', ['minWidth', 'splitByGrapheme'].concat(propertiesToInclude));
-    }
+    },
   });
 
   /**
@@ -453,9 +452,9 @@
    * @param {Function} [callback] Callback to invoke when an fabric.Textbox instance is created
    */
   fabric.Textbox.fromObject = function(object, callback) {
-    var styles = fabric.util.stylesFromArray(object.styles, object.text);
-    //copy object to prevent mutation
-    var objCopy = Object.assign({}, object, { styles: styles });
+    const styles = fabric.util.stylesFromArray(object.styles, object.text);
+    // copy object to prevent mutation
+    const objCopy = Object.assign({}, object, {styles: styles});
     return fabric.Object._fromObject('Textbox', objCopy, callback, 'text');
   };
 })(typeof exports !== 'undefined' ? exports : this);

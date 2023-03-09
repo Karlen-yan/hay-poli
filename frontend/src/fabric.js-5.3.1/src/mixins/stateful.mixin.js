@@ -1,13 +1,12 @@
 (function() {
-
-  var extend = fabric.util.object.extend,
+  const extend = fabric.util.object.extend,
       originalSet = 'stateProperties';
 
   /*
     Depends on `stateProperties`
   */
   function saveProps(origin, destination, props) {
-    var tmpObj = { }, deep = true;
+    const tmpObj = { }, deep = true;
     props.forEach(function(prop) {
       tmpObj[prop] = origin[prop];
     });
@@ -32,7 +31,7 @@
       return true;
     }
     else if (origValue && typeof origValue === 'object') {
-      var keys = Object.keys(origValue), key;
+      let keys = Object.keys(origValue), key;
       if (!currentValue ||
           typeof currentValue !== 'object' ||
           (!firstPass && keys.length !== Object.keys(currentValue).length)
@@ -65,7 +64,7 @@
      */
     hasStateChanged: function(propertySet) {
       propertySet = propertySet || originalSet;
-      var dashedPropertySet = '_' + propertySet;
+      const dashedPropertySet = '_' + propertySet;
       if (Object.keys(this[dashedPropertySet]).length < this[propertySet].length) {
         return true;
       }
@@ -78,7 +77,7 @@
      * @return {fabric.Object} thisArg
      */
     saveState: function(options) {
-      var propertySet = options && options.propertySet || originalSet,
+      const propertySet = options && options.propertySet || originalSet,
           destination = '_' + propertySet;
       if (!this[destination]) {
         return this.setupState(options);
@@ -97,11 +96,11 @@
      */
     setupState: function(options) {
       options = options || { };
-      var propertySet = options.propertySet || originalSet;
+      const propertySet = options.propertySet || originalSet;
       options.propertySet = propertySet;
       this['_' + propertySet] = { };
       this.saveState(options);
       return this;
-    }
+    },
   });
 })();

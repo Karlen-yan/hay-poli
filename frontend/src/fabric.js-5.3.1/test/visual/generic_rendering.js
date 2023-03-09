@@ -1,5 +1,5 @@
 (function() {
-  var getFixture;
+  let getFixture;
   if (fabric.isLikelyNode) {
     if (process.env.launcher === 'Firefox') {
       fabric.browserShadowBlurConstant = 0.9;
@@ -30,7 +30,7 @@
   fabric.enableGLFiltering = false;
   fabric.isWebglSupported = false;
   fabric.Object.prototype.objectCaching = true;
-  var visualTestLoop;
+  let visualTestLoop;
   if (fabric.isLikelyNode) {
     visualTestLoop = global.visualTestLoop;
   }
@@ -38,14 +38,14 @@
     visualTestLoop = window.visualTestLoop;
   }
 
-  var tests = [];
+  const tests = [];
 
   function generic1(canvas, callback) {
-    var rect = new fabric.Rect({
+    const rect = new fabric.Rect({
       width: 20, height: 40, strokeWidth: 2, scaleX: 6, scaleY: 0.5, strokeUniform: true,
-      fill: '', stroke: 'red'
+      fill: '', stroke: 'red',
     });
-    var rect2 = new fabric.Rect({
+    const rect2 = new fabric.Rect({
       width: 60, height: 60, top: 4, left: 4, strokeWidth: 2, scaleX: 2,
       scaleY: 0.5, strokeUniform: false, fill: '', stroke: 'blue',
     });
@@ -66,12 +66,12 @@
   });
 
   function shadownonscaling(canvas, callback) {
-    var obj = new fabric.Rect();
+    const obj = new fabric.Rect();
     obj.set({
       width: 10, height: 10, scaleX: 12, scaleY: 3, top: 10, left: 5, fill: '#f55',
     });
     obj.set('shadow', new fabric.Shadow({
-      color: 'rgba(0,100,0,0.9)', blur: 5, offsetX: 8, offsetY: 8, nonScaling: true
+      color: 'rgba(0,100,0,0.9)', blur: 5, offsetX: 8, offsetY: 8, nonScaling: true,
     }));
     canvas.add(obj);
     canvas.renderAll();
@@ -89,32 +89,32 @@
 
   function polygonWithStroke(canvas, callback) {
     canvas.set({backgroundColor: '#AAAA77'});
-    var p1 = new fabric.Polygon([
+    const p1 = new fabric.Polygon([
       {x: 0, y: 216},
       {x: 125, y: 433},
       {x: 375, y: 433},
       {x: 500, y: 216},
       {x: 375, y: 0},
-      {x: 125, y: 0}
+      {x: 125, y: 0},
     ],
     {
-      fill: 'white'
+      fill: 'white',
     });
     canvas.add(p1);
-    var p2 = new fabric.Polygon([
+    const p2 = new fabric.Polygon([
       {x: 0, y: 216},
       {x: 125, y: 433},
       {x: 375, y: 433},
       {x: 500, y: 216},
       {x: 375, y: 0},
-      {x: 125, y: 0}
+      {x: 125, y: 0},
     ],
     {
       fill: 'transparent',
       stroke: '#00AAFFAA',
       strokeWidth: 15,
       originX: 'center',
-      originY: 'center'
+      originY: 'center',
     });
     canvas.add(p2);
     canvas.setZoom(0.4);
@@ -132,29 +132,29 @@
   });
 
   function backgroundWithGradient(canvas, callback) {
-    var g = new fabric.Gradient({
+    const g = new fabric.Gradient({
       type: 'linear',
-      gradientTransform: [0.4 , -0.4, 0.2, 0.1, 3, 5],
+      gradientTransform: [0.4, -0.4, 0.2, 0.1, 3, 5],
       coords: {
         x1: 0,
         y1: 0,
         x2: 200,
-        y2: 0
+        y2: 0,
       },
       colorStops: [{
         offset: 0,
-        color: 'green'
+        color: 'green',
       },
       {
         offset: 0.5,
-        color: 'white'
+        color: 'white',
       },
       {
         offset: 1,
-        color: 'blue'
-      }]
+        color: 'blue',
+      }],
     });
-    canvas.set({ backgroundColor: g });
+    canvas.set({backgroundColor: g});
     canvas.renderAll();
     callback(canvas.lowerCanvasEl);
   }
@@ -170,29 +170,29 @@
 
   function backgroundWithGradientZoom(canvas, callback) {
     canvas.setZoom(0.1);
-    var g = new fabric.Gradient({
+    const g = new fabric.Gradient({
       type: 'linear',
-      gradientTransform: [0.4 , -0.4, 0.2, 0.1, 3, 5],
+      gradientTransform: [0.4, -0.4, 0.2, 0.1, 3, 5],
       coords: {
         x1: 0,
         y1: 0,
         x2: 300,
-        y2: 0
+        y2: 0,
       },
       colorStops: [{
         offset: 0,
-        color: 'green'
+        color: 'green',
       },
       {
         offset: 0.5,
-        color: 'white'
+        color: 'white',
       },
       {
         offset: 1,
-        color: 'blue'
-      }]
+        color: 'blue',
+      }],
     });
-    canvas.set({ backgroundColor: g });
+    canvas.set({backgroundColor: g});
     canvas.renderAll();
     callback(canvas.lowerCanvasEl);
   }
@@ -209,29 +209,29 @@
   function backgroundWithGradientNoVpt(canvas, callback) {
     canvas.setZoom(0.1);
     canvas.backgroundVpt = false;
-    var g = new fabric.Gradient({
+    const g = new fabric.Gradient({
       type: 'linear',
-      gradientTransform: [0.4 , -0.4, 0.2, 0.1, 3, 5],
+      gradientTransform: [0.4, -0.4, 0.2, 0.1, 3, 5],
       coords: {
         x1: 0,
         y1: 0,
         x2: 200,
-        y2: 0
+        y2: 0,
       },
       colorStops: [{
         offset: 0,
-        color: 'green'
+        color: 'green',
       },
       {
         offset: 0.5,
-        color: 'white'
+        color: 'white',
       },
       {
         offset: 1,
-        color: 'blue'
-      }]
+        color: 'blue',
+      }],
     });
-    canvas.set({ backgroundColor: g });
+    canvas.set({backgroundColor: g});
     canvas.renderAll();
     callback(canvas.lowerCanvasEl);
   }
@@ -247,10 +247,10 @@
 
   function objectsInActiveSelections(canvas, callback) {
     canvas.setZoom(0.1);
-    var rect1 = new fabric.Rect({ fill: 'purple', top: 30, left: 50, width: 30, height: 100, angle: 10 });
-    var rect2 = new fabric.Rect({ fill: 'green', top: 150, left: 10, width: 300, height: 30, angle: -10 });
+    const rect1 = new fabric.Rect({fill: 'purple', top: 30, left: 50, width: 30, height: 100, angle: 10});
+    const rect2 = new fabric.Rect({fill: 'green', top: 150, left: 10, width: 300, height: 30, angle: -10});
     new fabric.ActiveSelection([rect1, rect2]);
-    var output = rect1.toCanvasElement();
+    const output = rect1.toCanvasElement();
     callback(output);
   }
 
@@ -265,14 +265,14 @@
 
   function canvasPattern(fabricCanvas, callback) {
     getFixture('diet.jpeg', false, function(img) {
-      var pattern = new fabric.Pattern({
+      const pattern = new fabric.Pattern({
         source: img,
         repeat: 'repeat',
         offsetX: -120,
-        offsetY: 50
+        offsetY: 50,
       });
       fabricCanvas.backgroundColor = pattern;
-      var canvas = fabricCanvas.toCanvasElement();
+      const canvas = fabricCanvas.toCanvasElement();
       callback(canvas);
     });
   }
@@ -289,14 +289,14 @@
 
   function canvasPatternMultiplier(fabricCanvas, callback) {
     getFixture('diet.jpeg', false, function(img2) {
-      var pattern = new fabric.Pattern({
+      const pattern = new fabric.Pattern({
         source: img2,
         repeat: 'repeat',
         offsetX: -120,
-        offsetY: 50
+        offsetY: 50,
       });
       fabricCanvas.backgroundColor = pattern;
-      var canvas = fabricCanvas.toCanvasElement(0.3);
+      const canvas = fabricCanvas.toCanvasElement(0.3);
       callback(canvas);
     });
   }
@@ -313,8 +313,8 @@
 
   function imageSmoothing(fabricCanvas, callback) {
     getFixture('greyfloral.png', false, function(img2) {
-      var fImg = new fabric.Image(img2, { imageSmoothing: false, scaleX: 10, scaleY: 10 });
-      var fImg2 = new fabric.Image(img2, { left: 400, scaleX: 10, scaleY: 10 });
+      const fImg = new fabric.Image(img2, {imageSmoothing: false, scaleX: 10, scaleY: 10});
+      const fImg2 = new fabric.Image(img2, {left: 400, scaleX: 10, scaleY: 10});
       fabricCanvas.add(fImg);
       fabricCanvas.add(fImg2);
       fabricCanvas.renderAll();
@@ -333,19 +333,19 @@
   });
 
   function pathWithGradient(canvas, callback) {
-    var pathWithGradient = new fabric.Path('M 0 0 L 0 100 L 100 100 L 100 0 Z', {
+    const pathWithGradient = new fabric.Path('M 0 0 L 0 100 L 100 100 L 100 0 Z', {
       fill: new fabric.Gradient({
         gradientUnits: 'percentage',
-        coords: { x1: 0, y1: 0, x2: 0, y2: 1 },
+        coords: {x1: 0, y1: 0, x2: 0, y2: 1},
         colorStops: [
-          { offset: 0, color: 'red' },
-          { offset: 1, color: 'black' }
-        ]
+          {offset: 0, color: 'red'},
+          {offset: 1, color: 'black'},
+        ],
       }),
       height: 100,
       width: 100,
       top: 0,
-      left: 0
+      left: 0,
     });
     canvas.add(pathWithGradient);
     canvas.renderAll();
@@ -362,7 +362,7 @@
   });
 
   function gradientStroke(canvas, callback) {
-    var line = new fabric.Line([10, 10, 200, 200], {
+    const line = new fabric.Line([10, 10, 200, 200], {
       stroke: new fabric.Gradient({
         type: 'linear',
         coords: {
@@ -385,16 +385,15 @@
             color: 'red',
           },
         ],
-        gradientTransform: [1, 0, 0, 1, 50, 0]
+        gradientTransform: [1, 0, 0, 1, 50, 0],
       }),
       strokeWidth: 20,
     });
     canvas.add(
-      line
+      line,
     );
     canvas.renderAll();
     callback(canvas.lowerCanvasEl);
-
   }
 
   tests.push({
@@ -408,7 +407,7 @@
   });
 
   function textGradientFill(canvas, callback) {
-    var text = new fabric.Text('Some Text', {
+    const text = new fabric.Text('Some Text', {
       fontSize: 40,
       left: 25,
       top: -25,
@@ -421,7 +420,7 @@
           r1: 100,
           x2: 0,
           y2: 0,
-          r2: 50
+          r2: 50,
         },
         colorStops: [
           {
@@ -437,15 +436,14 @@
             color: 'green',
           },
         ],
-        gradientTransform: [1, 0, 0, 1, 50, 50]
-      })
+        gradientTransform: [1, 0, 0, 1, 50, 50],
+      }),
     });
     canvas.add(
-      text
+      text,
     );
     canvas.renderAll();
     callback(canvas.lowerCanvasEl);
-
   }
 
   tests.push({

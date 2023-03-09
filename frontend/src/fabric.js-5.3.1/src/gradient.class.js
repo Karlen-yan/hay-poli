@@ -1,8 +1,7 @@
 (function() {
-
   /* _FROM_SVG_START_ */
   function getColorStop(el, multiplier) {
-    var style = el.getAttribute('style'),
+    let style = el.getAttribute('style'),
         offset = el.getAttribute('offset') || 0,
         color, colorAlpha, opacity, i;
 
@@ -10,15 +9,14 @@
     offset = parseFloat(offset) / (/%$/.test(offset) ? 100 : 1);
     offset = offset < 0 ? 0 : offset > 1 ? 1 : offset;
     if (style) {
-      var keyValuePairs = style.split(/\s*;\s*/);
+      const keyValuePairs = style.split(/\s*;\s*/);
 
       if (keyValuePairs[keyValuePairs.length - 1] === '') {
         keyValuePairs.pop();
       }
 
       for (i = keyValuePairs.length; i--; ) {
-
-        var split = keyValuePairs[i].split(/\s*:\s*/),
+        const split = keyValuePairs[i].split(/\s*:\s*/),
             key = split[0].trim(),
             value = split[1].trim();
 
@@ -46,7 +44,7 @@
     return {
       offset: offset,
       color: color.toRgb(),
-      opacity: opacity
+      opacity: opacity,
     };
   }
 
@@ -55,7 +53,7 @@
       x1: el.getAttribute('x1') || 0,
       y1: el.getAttribute('y1') || 0,
       x2: el.getAttribute('x2') || '100%',
-      y2: el.getAttribute('y2') || 0
+      y2: el.getAttribute('y2') || 0,
     };
   }
 
@@ -66,12 +64,12 @@
       r1: 0,
       x2: el.getAttribute('cx') || '50%',
       y2: el.getAttribute('cy') || '50%',
-      r2: el.getAttribute('r') || '50%'
+      r2: el.getAttribute('r') || '50%',
     };
   }
   /* _FROM_SVG_END_ */
 
-  var clone = fabric.util.object.clone;
+  const clone = fabric.util.object.clone;
 
   /**
    * Gradient class
@@ -144,7 +142,7 @@
       options || (options = { });
       options.coords || (options.coords = { });
 
-      var coords, _this = this;
+      let coords, _this = this;
 
       // sets everything, then coords and colorstops get sets again
       Object.keys(options).forEach(function(option) {
@@ -162,7 +160,7 @@
         x1: options.coords.x1 || 0,
         y1: options.coords.y1 || 0,
         x2: options.coords.x2 || 0,
-        y2: options.coords.y2 || 0
+        y2: options.coords.y2 || 0,
       };
 
       if (this.type === 'radial') {
@@ -180,12 +178,12 @@
      * @return {fabric.Gradient} thisArg
      */
     addColorStop: function(colorStops) {
-      for (var position in colorStops) {
-        var color = new fabric.Color(colorStops[position]);
+      for (const position in colorStops) {
+        const color = new fabric.Color(colorStops[position]);
         this.colorStops.push({
           offset: parseFloat(position),
           color: color.toRgb(),
-          opacity: color.getAlpha()
+          opacity: color.getAlpha(),
         });
       }
       return this;
@@ -197,14 +195,14 @@
      * @return {Object}
      */
     toObject: function(propertiesToInclude) {
-      var object = {
+      const object = {
         type: this.type,
         coords: this.coords,
         colorStops: this.colorStops,
         offsetX: this.offsetX,
         offsetY: this.offsetY,
         gradientUnits: this.gradientUnits,
-        gradientTransform: this.gradientTransform ? this.gradientTransform.concat() : this.gradientTransform
+        gradientTransform: this.gradientTransform ? this.gradientTransform.concat() : this.gradientTransform,
       };
       fabric.util.populateWithProperties(this, object, propertiesToInclude);
 
@@ -260,7 +258,7 @@
           '" y1="', coords.y1,
           '" x2="', coords.x2,
           '" y2="', coords.y2,
-          '">\n'
+          '">\n',
         ];
       }
       else if (this.type === 'radial') {
@@ -273,7 +271,7 @@
           '" r="', needsSwap ? coords.r1 : coords.r2,
           '" fx="', needsSwap ? coords.x2 : coords.x1,
           '" fy="', needsSwap ? coords.y2 : coords.y1,
-          '">\n'
+          '">\n',
         ];
       }
 
@@ -286,10 +284,10 @@
             colorStops[i].offset = 1 - colorStops[i].offset;
           }
         }
-        var minRadius = Math.min(coords.r1, coords.r2);
+        const minRadius = Math.min(coords.r1, coords.r2);
         if (minRadius > 0) {
           // i have to shift all colorStops and add new one in 0.
-          var maxRadius = Math.max(coords.r1, coords.r2),
+          const maxRadius = Math.max(coords.r1, coords.r2),
               percentageShift = minRadius / maxRadius;
           for (i = 0, len = colorStops.length; i < len; i++) {
             colorStops[i].offset += percentageShift * (1 - colorStops[i].offset);
@@ -298,13 +296,13 @@
       }
 
       for (i = 0, len = colorStops.length; i < len; i++) {
-        var colorStop = colorStops[i];
+        const colorStop = colorStops[i];
         markup.push(
           '<stop ',
           'offset="', (colorStop.offset * 100) + '%',
           '" style="stop-color:', colorStop.color,
           (typeof colorStop.opacity !== 'undefined' ? ';stop-opacity: ' + colorStop.opacity : ';'),
-          '"/>\n'
+          '"/>\n',
         );
       }
 
@@ -320,7 +318,7 @@
      * @return {CanvasGradient}
      */
     toLive: function(ctx) {
-      var gradient, coords = fabric.util.object.clone(this.coords), i, len;
+      let gradient, coords = fabric.util.object.clone(this.coords), i, len;
 
       if (!this.type) {
         return;
@@ -336,7 +334,7 @@
       }
 
       for (i = 0, len = this.colorStops.length; i < len; i++) {
-        var color = this.colorStops[i].color,
+        let color = this.colorStops[i].color,
             opacity = this.colorStops[i].opacity,
             offset = this.colorStops[i].offset;
 
@@ -347,7 +345,7 @@
       }
 
       return gradient;
-    }
+    },
   });
 
   fabric.util.object.extend(fabric.Gradient, {
@@ -404,13 +402,13 @@
        *
        */
 
-      var multiplier = parseFloat(opacityAttr) / (/%$/.test(opacityAttr) ? 100 : 1);
+      let multiplier = parseFloat(opacityAttr) / (/%$/.test(opacityAttr) ? 100 : 1);
       multiplier = multiplier < 0 ? 0 : multiplier > 1 ? 1 : multiplier;
       if (isNaN(multiplier)) {
         multiplier = 1;
       }
 
-      var colorStopEls = el.getElementsByTagName('stop'),
+      let colorStopEls = el.getElementsByTagName('stop'),
           type,
           gradientUnits = el.getAttribute('gradientUnits') === 'userSpaceOnUse' ?
             'pixels' : 'percentage',
@@ -440,7 +438,7 @@
         offsetY = -instance.top;
       }
 
-      var gradient = new fabric.Gradient({
+      const gradient = new fabric.Gradient({
         id: el.getAttribute('id'),
         type: type,
         coords: coords,
@@ -452,7 +450,7 @@
       });
 
       return gradient;
-    }
+    },
     /* _FROM_SVG_END_ */
   });
 
@@ -460,7 +458,7 @@
    * @private
    */
   function __convertPercentUnitsToValues(instance, options, svgOptions, gradientUnits) {
-    var propValue, finalValue;
+    let propValue, finalValue;
     Object.keys(options).forEach(function(prop) {
       propValue = options[prop];
       if (propValue === 'Infinity') {

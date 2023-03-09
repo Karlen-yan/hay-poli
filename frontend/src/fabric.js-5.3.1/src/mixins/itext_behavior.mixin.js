@@ -1,6 +1,5 @@
 (function() {
-
-  var clone = fabric.util.object.clone;
+  const clone = fabric.util.object.clone;
 
   fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.prototype */ {
 
@@ -24,9 +23,9 @@
      * Initializes "added" event handler
      */
     initAddedHandler: function() {
-      var _this = this;
+      const _this = this;
       this.on('added', function() {
-        var canvas = _this.canvas;
+        const canvas = _this.canvas;
         if (canvas) {
           if (!canvas._hasITextHandlers) {
             canvas._hasITextHandlers = true;
@@ -39,9 +38,9 @@
     },
 
     initRemovedHandler: function() {
-      var _this = this;
+      const _this = this;
       this.on('removed', function() {
-        var canvas = _this.canvas;
+        const canvas = _this.canvas;
         if (canvas) {
           canvas._iTextInstances = canvas._iTextInstances || [];
           fabric.util.removeFromArray(canvas._iTextInstances, _this);
@@ -87,8 +86,7 @@
      * @private
      */
     _animateCursor: function(obj, targetOpacity, duration, completeMethod) {
-
-      var tickState;
+      let tickState;
 
       tickState = {
         isAborted: false,
@@ -112,7 +110,7 @@
         },
         abort: function() {
           return tickState.isAborted;
-        }
+        },
       });
       return tickState;
     },
@@ -121,8 +119,7 @@
      * @private
      */
     _onTickComplete: function() {
-
-      var _this = this;
+      const _this = this;
 
       if (this._cursorTimeout1) {
         clearTimeout(this._cursorTimeout1);
@@ -136,7 +133,7 @@
      * Initializes delayed cursor
      */
     initDelayedCursor: function(restart) {
-      var _this = this,
+      const _this = this,
           delay = restart ? 0 : this.cursorDelay;
 
       this.abortCursorAnimation();
@@ -150,7 +147,7 @@
      * Aborts cursor animation and clears all timeouts
      */
     abortCursorAnimation: function() {
-      var shouldClear = this._currentTickState || this._currentTickCompleteState,
+      const shouldClear = this._currentTickState || this._currentTickCompleteState,
           canvas = this.canvas;
       this._currentTickState && this._currentTickState.abort();
       this._currentTickCompleteState && this._currentTickCompleteState.abort();
@@ -164,7 +161,6 @@
       if (shouldClear && canvas) {
         canvas.clearContext(canvas.contextTop || canvas.contextContainer);
       }
-
     },
 
     /**
@@ -194,7 +190,7 @@
      * @return {Number} New selection index
      */
     findWordBoundaryLeft: function(startFrom) {
-      var offset = 0, index = startFrom - 1;
+      let offset = 0, index = startFrom - 1;
 
       // remove space before cursor first
       if (this._reSpace.test(this._text[index])) {
@@ -217,7 +213,7 @@
      * @return {Number} New selection index
      */
     findWordBoundaryRight: function(startFrom) {
-      var offset = 0, index = startFrom;
+      let offset = 0, index = startFrom;
 
       // remove space after cursor first
       if (this._reSpace.test(this._text[index])) {
@@ -240,7 +236,7 @@
      * @return {Number} New selection index
      */
     findLineBoundaryLeft: function(startFrom) {
-      var offset = 0, index = startFrom - 1;
+      let offset = 0, index = startFrom - 1;
 
       while (!/\n/.test(this._text[index]) && index > -1) {
         offset++;
@@ -256,7 +252,7 @@
      * @return {Number} New selection index
      */
     findLineBoundaryRight: function(startFrom) {
-      var offset = 0, index = startFrom;
+      let offset = 0, index = startFrom;
 
       while (!/\n/.test(this._text[index]) && index < this._text.length) {
         offset++;
@@ -273,9 +269,9 @@
      * @return {Number} Index of the beginning or end of a word
      */
     searchWordBoundary: function(selectionStart, direction) {
-      var text = this._text,
-          index     = this._reSpace.test(text[selectionStart]) ? selectionStart - 1 : selectionStart,
-          _char     = text[index],
+      let text = this._text,
+          index = this._reSpace.test(text[selectionStart]) ? selectionStart - 1 : selectionStart,
+          _char = text[index],
           // wrong
           reNonWord = fabric.reNonWord;
 
@@ -295,7 +291,7 @@
      */
     selectWord: function(selectionStart) {
       selectionStart = selectionStart || this.selectionStart;
-      var newSelectionStart = this.searchWordBoundary(selectionStart, -1), /* search backwards */
+      const newSelectionStart = this.searchWordBoundary(selectionStart, -1), /* search backwards */
           newSelectionEnd = this.searchWordBoundary(selectionStart, 1); /* search forward */
 
       this.selectionStart = newSelectionStart;
@@ -313,7 +309,7 @@
      */
     selectLine: function(selectionStart) {
       selectionStart = selectionStart || this.selectionStart;
-      var newSelectionStart = this.findLineBoundaryLeft(selectionStart),
+      const newSelectionStart = this.findLineBoundaryLeft(selectionStart),
           newSelectionEnd = this.findLineBoundaryRight(selectionStart);
 
       this.selectionStart = newSelectionStart;
@@ -354,7 +350,7 @@
       if (!this.canvas) {
         return this;
       }
-      this.canvas.fire('text:editing:entered', { target: this });
+      this.canvas.fire('text:editing:entered', {target: this});
       this.initMouseMoveHandler();
       this.canvas.requestRenderAll();
       return this;
@@ -389,12 +385,11 @@
       // regain focus
       document.activeElement !== this.hiddenTextarea && this.hiddenTextarea.focus();
 
-      var newSelectionStart = this.getSelectionStartFromPointer(options.e),
+      const newSelectionStart = this.getSelectionStartFromPointer(options.e),
           currentStart = this.selectionStart,
           currentEnd = this.selectionEnd;
       if (
-        (newSelectionStart !== this.__selectionStartOnMouseDown || currentStart === currentEnd)
-        &&
+        (newSelectionStart !== this.__selectionStartOnMouseDown || currentStart === currentEnd) &&
         (currentStart === newSelectionStart || currentEnd === newSelectionStart)
       ) {
         return;
@@ -434,28 +429,28 @@
      * convert from textarea to grapheme indexes
      */
     fromStringToGraphemeSelection: function(start, end, text) {
-      var smallerTextStart = text.slice(0, start),
+      const smallerTextStart = text.slice(0, start),
           graphemeStart = fabric.util.string.graphemeSplit(smallerTextStart).length;
       if (start === end) {
-        return { selectionStart: graphemeStart, selectionEnd: graphemeStart };
+        return {selectionStart: graphemeStart, selectionEnd: graphemeStart};
       }
-      var smallerTextEnd = text.slice(start, end),
+      const smallerTextEnd = text.slice(start, end),
           graphemeEnd = fabric.util.string.graphemeSplit(smallerTextEnd).length;
-      return { selectionStart: graphemeStart, selectionEnd: graphemeStart + graphemeEnd };
+      return {selectionStart: graphemeStart, selectionEnd: graphemeStart + graphemeEnd};
     },
 
     /**
      * convert from fabric to textarea values
      */
     fromGraphemeToStringSelection: function(start, end, _text) {
-      var smallerTextStart = _text.slice(0, start),
+      const smallerTextStart = _text.slice(0, start),
           graphemeStart = smallerTextStart.join('').length;
       if (start === end) {
-        return { selectionStart: graphemeStart, selectionEnd: graphemeStart };
+        return {selectionStart: graphemeStart, selectionEnd: graphemeStart};
       }
-      var smallerTextEnd = _text.slice(start, end),
+      const smallerTextEnd = _text.slice(start, end),
           graphemeEnd = smallerTextEnd.join('').length;
-      return { selectionStart: graphemeStart, selectionEnd: graphemeStart + graphemeEnd };
+      return {selectionStart: graphemeStart, selectionEnd: graphemeStart + graphemeEnd};
     },
 
     /**
@@ -467,7 +462,7 @@
         return;
       }
       if (!this.inCompositionMode) {
-        var newSelection = this.fromGraphemeToStringSelection(this.selectionStart, this.selectionEnd, this._text);
+        const newSelection = this.fromGraphemeToStringSelection(this.selectionStart, this.selectionEnd, this._text);
         this.hiddenTextarea.selectionStart = newSelection.selectionStart;
         this.hiddenTextarea.selectionEnd = newSelection.selectionEnd;
       }
@@ -487,7 +482,7 @@
         this.initDimensions();
         this.setCoords();
       }
-      var newSelection = this.fromStringToGraphemeSelection(
+      const newSelection = this.fromStringToGraphemeSelection(
         this.hiddenTextarea.selectionStart, this.hiddenTextarea.selectionEnd, this.hiddenTextarea.value);
       this.selectionEnd = this.selectionStart = newSelection.selectionEnd;
       if (!this.inCompositionMode) {
@@ -501,7 +496,7 @@
      */
     updateTextareaPosition: function() {
       if (this.selectionStart === this.selectionEnd) {
-        var style = this._calcTextareaPosition();
+        const style = this._calcTextareaPosition();
         this.hiddenTextarea.style.left = style.left;
         this.hiddenTextarea.style.top = style.top;
       }
@@ -513,9 +508,9 @@
      */
     _calcTextareaPosition: function() {
       if (!this.canvas) {
-        return { x: 1, y: 1 };
+        return {x: 1, y: 1};
       }
-      var desiredPosition = this.inCompositionMode ? this.compositionStart : this.selectionStart,
+      let desiredPosition = this.inCompositionMode ? this.compositionStart : this.selectionStart,
           boundaries = this._getCursorBoundaries(desiredPosition),
           cursorLocation = this.get2DCursorLocation(desiredPosition),
           lineIndex = cursorLocation.lineIndex,
@@ -525,7 +520,7 @@
           m = this.calcTransformMatrix(),
           p = {
             x: boundaries.left + leftOffset,
-            y: boundaries.top + boundaries.topOffset + charHeight
+            y: boundaries.top + boundaries.topOffset + charHeight,
           },
           retinaScaling = this.canvas.getRetinaScaling(),
           upperCanvas = this.canvas.upperCanvasEl,
@@ -557,7 +552,7 @@
       p.x += this.canvas._offset.left;
       p.y += this.canvas._offset.top;
 
-      return { left: p.x + 'px', top: p.y + 'px', fontSize: charHeight + 'px', charHeight: charHeight };
+      return {left: p.x + 'px', top: p.y + 'px', fontSize: charHeight + 'px', charHeight: charHeight};
     },
 
     /**
@@ -572,7 +567,7 @@
         hoverCursor: this.hoverCursor,
         selectable: this.selectable,
         defaultCursor: this.canvas && this.canvas.defaultCursor,
-        moveCursor: this.canvas && this.canvas.moveCursor
+        moveCursor: this.canvas && this.canvas.moveCursor,
       };
     },
 
@@ -603,8 +598,8 @@
      * @chainable
      */
     exitEditing: function() {
-      var isTextChanged = (this._textBeforeEdit !== this.text);
-      var hiddenTextarea = this.hiddenTextarea;
+      const isTextChanged = (this._textBeforeEdit !== this.text);
+      const hiddenTextarea = this.hiddenTextarea;
       this.selected = false;
       this.isEditing = false;
 
@@ -626,8 +621,8 @@
       isTextChanged && this.fire('modified');
       if (this.canvas) {
         this.canvas.off('mouse:move', this.mouseMoveHandler);
-        this.canvas.fire('text:editing:exited', { target: this });
-        isTextChanged && this.canvas.fire('object:modified', { target: this });
+        this.canvas.fire('text:editing:exited', {target: this});
+        isTextChanged && this.canvas.fire('object:modified', {target: this});
       }
       return this;
     },
@@ -636,7 +631,7 @@
      * @private
      */
     _removeExtraneousStyles: function() {
-      for (var prop in this.styles) {
+      for (const prop in this.styles) {
         if (!this._textLines[prop]) {
           delete this.styles[prop];
         }
@@ -649,7 +644,7 @@
      * @param {Number} end linear end position for removal ( excluded from removal )
      */
     removeStyleFromTo: function(start, end) {
-      var cursorStart = this.get2DCursorLocation(start, true),
+      let cursorStart = this.get2DCursorLocation(start, true),
           cursorEnd = this.get2DCursorLocation(end, true),
           lineStart = cursorStart.lineIndex,
           charStart = cursorStart.charIndex,
@@ -684,7 +679,7 @@
         // remove and shift left on the same line
         if (this.styles[lineStart]) {
           styleObj = this.styles[lineStart];
-          var diff = charEnd - charStart, numericChar, _char;
+          let diff = charEnd - charStart, numericChar, _char;
           for (i = charStart; i < charEnd; i++) {
             delete styleObj[i];
           }
@@ -707,9 +702,9 @@
     shiftLineStyles: function(lineIndex, offset) {
       // shift all line styles by offset upward or downward
       // do not clone deep. we need new array, not new style objects
-      var clonedStyles = clone(this.styles);
-      for (var line in this.styles) {
-        var numericLine = parseInt(line, 10);
+      const clonedStyles = clone(this.styles);
+      for (const line in this.styles) {
+        const numericLine = parseInt(line, 10);
         if (numericLine > lineIndex) {
           this.styles[numericLine + offset] = clonedStyles[numericLine];
           if (!clonedStyles[numericLine - offset]) {
@@ -720,8 +715,8 @@
     },
 
     restartCursorIfNeeded: function() {
-      if (!this._currentTickState || this._currentTickState.isAborted
-        || !this._currentTickCompleteState || this._currentTickCompleteState.isAborted
+      if (!this._currentTickState || this._currentTickState.isAborted ||
+        !this._currentTickCompleteState || this._currentTickCompleteState.isAborted
       ) {
         this.initDelayedCursor();
       }
@@ -738,7 +733,7 @@
      * @param {Array} copiedStyle Array of objects styles
      */
     insertNewlineStyleObject: function(lineIndex, charIndex, qty, copiedStyle) {
-      var currentCharStyle,
+      let currentCharStyle,
           newLineStyles = {},
           somethingAdded = false,
           isEndOfLine = this._unwrappedTextLines[lineIndex].length === charIndex;
@@ -750,8 +745,8 @@
       }
       // we clone styles of all chars
       // after cursor onto the current line
-      for (var index in this.styles[lineIndex]) {
-        var numIndex = parseInt(index, 10);
+      for (const index in this.styles[lineIndex]) {
+        const numIndex = parseInt(index, 10);
         if (numIndex >= charIndex) {
           somethingAdded = true;
           newLineStyles[numIndex - charIndex] = this.styles[lineIndex][index];
@@ -761,7 +756,7 @@
           }
         }
       }
-      var styleCarriedOver = false;
+      let styleCarriedOver = false;
       if (somethingAdded && !isEndOfLine) {
         // if is end of line, the extra style we copied
         // is probably not something we want
@@ -776,10 +771,10 @@
       // we clone current char style onto the next (otherwise empty) line
       while (qty > 0) {
         if (copiedStyle && copiedStyle[qty - 1]) {
-          this.styles[lineIndex + qty] = { 0: clone(copiedStyle[qty - 1]) };
+          this.styles[lineIndex + qty] = {0: clone(copiedStyle[qty - 1])};
         }
         else if (currentCharStyle) {
-          this.styles[lineIndex + qty] = { 0: clone(currentCharStyle) };
+          this.styles[lineIndex + qty] = {0: clone(currentCharStyle)};
         }
         else {
           delete this.styles[lineIndex + qty];
@@ -800,14 +795,14 @@
       if (!this.styles) {
         this.styles = {};
       }
-      var currentLineStyles       = this.styles[lineIndex],
+      const currentLineStyles = this.styles[lineIndex],
           currentLineStylesCloned = currentLineStyles ? clone(currentLineStyles) : {};
 
       quantity || (quantity = 1);
       // shift all char styles by quantity forward
       // 0,1,2,3 -> (charIndex=2) -> 0,1,3,4 -> (insert 2) -> 0,1,2,3,4
-      for (var index in currentLineStylesCloned) {
-        var numericIndex = parseInt(index, 10);
+      for (const index in currentLineStylesCloned) {
+        const numericIndex = parseInt(index, 10);
         if (numericIndex >= charIndex) {
           currentLineStyles[numericIndex + quantity] = currentLineStylesCloned[numericIndex];
           // only delete the style if there was nothing moved there
@@ -832,7 +827,7 @@
       if (!currentLineStyles) {
         return;
       }
-      var newStyle = currentLineStyles[charIndex ? charIndex - 1 : 1];
+      const newStyle = currentLineStyles[charIndex ? charIndex - 1 : 1];
       while (newStyle && quantity--) {
         this.styles[lineIndex][charIndex + quantity] = clone(newStyle);
       }
@@ -845,7 +840,7 @@
      * @param {Array} [copiedStyle] array of style objects to insert.
      */
     insertNewStyleBlock: function(insertedText, start, copiedStyle) {
-      var cursorLoc = this.get2DCursorLocation(start, true),
+      let cursorLoc = this.get2DCursorLocation(start, true),
           addedLines = [0], linesLength = 0;
       // get an array of how many char per lines are being added.
       for (var i = 0; i < insertedText.length; i++) {
@@ -922,7 +917,7 @@
     },
 
     setSelectionInBoundaries: function() {
-      var length = this.text.length;
+      const length = this.text.length;
       if (this.selectionStart > length) {
         this.selectionStart = length;
       }
@@ -935,6 +930,6 @@
       else if (this.selectionEnd < 0) {
         this.selectionEnd = 0;
       }
-    }
+    },
   });
 })();

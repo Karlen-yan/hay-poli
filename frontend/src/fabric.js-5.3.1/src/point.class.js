@@ -1,10 +1,9 @@
 (function(global) {
-
   'use strict';
 
   /* Adaptation of work of Kevin Lindsey (kevin@kevlindev.com) */
 
-  var fabric = global.fabric || (global.fabric = { });
+  const fabric = global.fabric || (global.fabric = { });
 
   if (fabric.Point) {
     fabric.warn('fabric.Point is already defined');
@@ -38,7 +37,7 @@
      * @param {fabric.Point} that
      * @return {fabric.Point} new Point instance with added values
      */
-    add: function (that) {
+    add: function(that) {
       return new Point(this.x + that.x, this.y + that.y);
     },
 
@@ -48,7 +47,7 @@
      * @return {fabric.Point} thisArg
      * @chainable
      */
-    addEquals: function (that) {
+    addEquals: function(that) {
       this.x += that.x;
       this.y += that.y;
       return this;
@@ -59,7 +58,7 @@
      * @param {Number} scalar
      * @return {fabric.Point} new Point with added value
      */
-    scalarAdd: function (scalar) {
+    scalarAdd: function(scalar) {
       return new Point(this.x + scalar, this.y + scalar);
     },
 
@@ -69,7 +68,7 @@
      * @return {fabric.Point} thisArg
      * @chainable
      */
-    scalarAddEquals: function (scalar) {
+    scalarAddEquals: function(scalar) {
       this.x += scalar;
       this.y += scalar;
       return this;
@@ -80,7 +79,7 @@
      * @param {fabric.Point} that
      * @return {fabric.Point} new Point object with subtracted values
      */
-    subtract: function (that) {
+    subtract: function(that) {
       return new Point(this.x - that.x, this.y - that.y);
     },
 
@@ -90,7 +89,7 @@
      * @return {fabric.Point} thisArg
      * @chainable
      */
-    subtractEquals: function (that) {
+    subtractEquals: function(that) {
       this.x -= that.x;
       this.y -= that.y;
       return this;
@@ -101,7 +100,7 @@
      * @param {Number} scalar
      * @return {fabric.Point}
      */
-    scalarSubtract: function (scalar) {
+    scalarSubtract: function(scalar) {
       return new Point(this.x - scalar, this.y - scalar);
     },
 
@@ -111,7 +110,7 @@
      * @return {fabric.Point} thisArg
      * @chainable
      */
-    scalarSubtractEquals: function (scalar) {
+    scalarSubtractEquals: function(scalar) {
       this.x -= scalar;
       this.y -= scalar;
       return this;
@@ -123,7 +122,7 @@
      * @param {Number} scalar
      * @return {fabric.Point}
      */
-    multiply: function (scalar) {
+    multiply: function(scalar) {
       return new Point(this.x * scalar, this.y * scalar);
     },
 
@@ -134,7 +133,7 @@
      * @return {fabric.Point} thisArg
      * @chainable
      */
-    multiplyEquals: function (scalar) {
+    multiplyEquals: function(scalar) {
       this.x *= scalar;
       this.y *= scalar;
       return this;
@@ -146,7 +145,7 @@
      * @param {Number} scalar
      * @return {fabric.Point}
      */
-    divide: function (scalar) {
+    divide: function(scalar) {
       return new Point(this.x / scalar, this.y / scalar);
     },
 
@@ -157,7 +156,7 @@
      * @return {fabric.Point} thisArg
      * @chainable
      */
-    divideEquals: function (scalar) {
+    divideEquals: function(scalar) {
       this.x /= scalar;
       this.y /= scalar;
       return this;
@@ -168,7 +167,7 @@
      * @param {fabric.Point} that
      * @return {Boolean}
      */
-    eq: function (that) {
+    eq: function(that) {
       return (this.x === that.x && this.y === that.y);
     },
 
@@ -177,7 +176,7 @@
      * @param {fabric.Point} that
      * @return {Boolean}
      */
-    lt: function (that) {
+    lt: function(that) {
       return (this.x < that.x && this.y < that.y);
     },
 
@@ -186,7 +185,7 @@
      * @param {fabric.Point} that
      * @return {Boolean}
      */
-    lte: function (that) {
+    lte: function(that) {
       return (this.x <= that.x && this.y <= that.y);
     },
 
@@ -196,7 +195,7 @@
      * @param {fabric.Point} that
      * @return {Boolean}
      */
-    gt: function (that) {
+    gt: function(that) {
       return (this.x > that.x && this.y > that.y);
     },
 
@@ -205,7 +204,7 @@
      * @param {fabric.Point} that
      * @return {Boolean}
      */
-    gte: function (that) {
+    gte: function(that) {
       return (this.x >= that.x && this.y >= that.y);
     },
 
@@ -215,7 +214,7 @@
      * @param {Number} t , position of interpolation, between 0 and 1 default 0.5
      * @return {fabric.Point}
      */
-    lerp: function (that, t) {
+    lerp: function(that, t) {
       if (typeof t === 'undefined') {
         t = 0.5;
       }
@@ -228,8 +227,8 @@
      * @param {fabric.Point} that
      * @return {Number}
      */
-    distanceFrom: function (that) {
-      var dx = this.x - that.x,
+    distanceFrom: function(that) {
+      const dx = this.x - that.x,
           dy = this.y - that.y;
       return Math.sqrt(dx * dx + dy * dy);
     },
@@ -239,7 +238,7 @@
      * @param {fabric.Point} that
      * @return {fabric.Point}
      */
-    midPointFrom: function (that) {
+    midPointFrom: function(that) {
       return this.lerp(that);
     },
 
@@ -248,7 +247,7 @@
      * @param {fabric.Point} that
      * @return {fabric.Point}
      */
-    min: function (that) {
+    min: function(that) {
       return new Point(Math.min(this.x, that.x), Math.min(this.y, that.y));
     },
 
@@ -257,7 +256,7 @@
      * @param {fabric.Point} that
      * @return {fabric.Point}
      */
-    max: function (that) {
+    max: function(that) {
       return new Point(Math.max(this.x, that.x), Math.max(this.y, that.y));
     },
 
@@ -265,7 +264,7 @@
      * Returns string representation of this point
      * @return {String}
      */
-    toString: function () {
+    toString: function() {
       return this.x + ',' + this.y;
     },
 
@@ -275,7 +274,7 @@
      * @param {Number} y
      * @chainable
      */
-    setXY: function (x, y) {
+    setXY: function(x, y) {
       this.x = x;
       this.y = y;
       return this;
@@ -286,7 +285,7 @@
      * @param {Number} x
      * @chainable
      */
-    setX: function (x) {
+    setX: function(x) {
       this.x = x;
       return this;
     },
@@ -296,7 +295,7 @@
      * @param {Number} y
      * @chainable
      */
-    setY: function (y) {
+    setY: function(y) {
       this.y = y;
       return this;
     },
@@ -306,7 +305,7 @@
      * @param {fabric.Point} that
      * @chainable
      */
-    setFromPoint: function (that) {
+    setFromPoint: function(that) {
       this.x = that.x;
       this.y = that.y;
       return this;
@@ -316,8 +315,8 @@
      * Swaps x/y of this point and another point
      * @param {fabric.Point} that
      */
-    swap: function (that) {
-      var x = this.x,
+    swap: function(that) {
+      const x = this.x,
           y = this.y;
       this.x = that.x;
       this.y = that.y;
@@ -329,9 +328,8 @@
      * return a cloned instance of the point
      * @return {fabric.Point}
      */
-    clone: function () {
+    clone: function() {
       return new Point(this.x, this.y);
-    }
+    },
   };
-
 })(typeof exports !== 'undefined' ? exports : this);

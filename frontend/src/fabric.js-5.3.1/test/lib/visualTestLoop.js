@@ -1,27 +1,26 @@
 (function(exports) {
-
   exports.getFixture = function(name, original, callback) {
     getImage(getFixtureName(name), original, callback);
   };
 
   exports.getAsset = function(name, callback) {
-    var finalName = getAssetName(name);
+    const finalName = getAssetName(name);
     if (fabric.isLikelyNode) {
-      var plainFileName = finalName.replace('file://', '');
-      return fs.readFile(plainFileName, { encoding: 'utf8' }, callback);
+      const plainFileName = finalName.replace('file://', '');
+      return fs.readFile(plainFileName, {encoding: 'utf8'}, callback);
     }
     else {
       fabric.util.request(finalName, {
         onComplete: function(xhr) {
           callback(null, xhr.responseText);
-        }
+        },
       });
     }
   };
 
   function createCanvasForTest(opts) {
-    var fabricClass = opts.fabricClass || 'StaticCanvas';
-    var options = { enableRetinaScaling: false, renderOnAddRemove: false, width: 200, height: 200 };
+    const fabricClass = opts.fabricClass || 'StaticCanvas';
+    const options = {enableRetinaScaling: false, renderOnAddRemove: false, width: 200, height: 200};
     if (opts.width) {
       options.width = opts.width;
     }
@@ -32,48 +31,48 @@
   };
 
   function getAbsolutePath(path) {
-    var isAbsolute = /^https?:/.test(path);
-    if (isAbsolute) { return path; };
-    var imgEl = fabric.document.createElement('img');
+    const isAbsolute = /^https?:/.test(path);
+    if (isAbsolute) {return path;};
+    let imgEl = fabric.document.createElement('img');
     imgEl.src = path;
-    var src = imgEl.src;
+    const src = imgEl.src;
     imgEl = null;
     return src;
   }
 
   function localPath(path, filename) {
-    return 'file://' + require('path').join(__dirname, path, filename)
+    return 'file://' + require('path').join(__dirname, path, filename);
   }
 
   function getAssetName(filename) {
-    var finalName = '/assets/' + filename + '.svg';
+    const finalName = '/assets/' + filename + '.svg';
     return fabric.isLikelyNode ? localPath('/../visual', finalName) : getAbsolutePath('/test/visual' + finalName);
   }
   exports.getAssetName = getAssetName;
 
   function getGoldeName(filename) {
-    var finalName = '/golden/' + filename;
+    const finalName = '/golden/' + filename;
     return fabric.isLikelyNode ? localPath('/../visual', finalName) : getAbsolutePath('/test/visual' + finalName);
   }
 
   function getFixtureName(filename) {
-    var finalName = '/fixtures/' + filename;
+    const finalName = '/fixtures/' + filename;
     return fabric.isLikelyNode ? localPath('/..', finalName) : getAbsolutePath('/test' + finalName);
   }
 
   function getImage(filename, original, callback) {
     if (fabric.isLikelyNode && original) {
-      var plainFileName = filename.replace('file://', '');
+      const plainFileName = filename.replace('file://', '');
       try {
         fs.statSync(plainFileName);
       }
       catch (err) {
-        var dataUrl = original.toDataURL().split(',')[1];
+        const dataUrl = original.toDataURL().split(',')[1];
         console.log('creating original for ', filename);
-        fs.writeFileSync(plainFileName, dataUrl, { encoding: 'base64' });
+        fs.writeFileSync(plainFileName, dataUrl, {encoding: 'base64'});
       }
     }
-    var img = fabric.document.createElement('img');
+    const img = fabric.document.createElement('img');
     img.onload = function() {
       img.onload = null;
       callback(img, false);
@@ -87,9 +86,9 @@
   }
 
   exports.visualTestLoop = function(QUnit) {
-    var _pixelMatch;
-    var visualCallback;
-    var imageDataToChalk;
+    let _pixelMatch;
+    let visualCallback;
+    let imageDataToChalk;
     if (fabric.isLikelyNode) {
       _pixelMatch = global.pixelmatch;
       visualCallback = global.visualCallback;
@@ -100,12 +99,12 @@
         _pixelMatch = window.pixelmatch;
         visualCallback = window.visualCallback;
       }
-      imageDataToChalk = function() { return ''; };
+      imageDataToChalk = function() {return '';};
     }
 
-    var pixelmatchOptions = {
+    const pixelmatchOptions = {
       includeAA: false,
-      threshold: 0.095
+      threshold: 0.095,
     };
 
     return function testCallback(testObj) {
@@ -113,48 +112,48 @@
         return;
       }
       fabric.StaticCanvas.prototype.requestRenderAll = fabric.StaticCanvas.prototype.renderAll;
-      var testName = testObj.test;
-      var code = testObj.code;
-      var percentage = testObj.percentage;
-      var golden = testObj.golden;
-      var newModule = testObj.newModule;
+      const testName = testObj.test;
+      const code = testObj.code;
+      const percentage = testObj.percentage;
+      const golden = testObj.golden;
+      const newModule = testObj.newModule;
       if (newModule) {
         QUnit.module(newModule, {
           beforeEach: testObj.beforeEachHandler,
         });
       }
       QUnit.test(testName, function(assert) {
-        var done = assert.async();
-        var fabricCanvas = createCanvasForTest(testObj);
+        const done = assert.async();
+        const fabricCanvas = createCanvasForTest(testObj);
         code(fabricCanvas, function(renderedCanvas) {
-          var width = renderedCanvas.width;
-          var height = renderedCanvas.height;
-          var totalPixels = width * height;
-          var imageDataCanvas = renderedCanvas.getContext('2d').getImageData(0, 0, width, height).data;
-          var canvas = fabric.document.createElement('canvas');
+          const width = renderedCanvas.width;
+          const height = renderedCanvas.height;
+          const totalPixels = width * height;
+          const imageDataCanvas = renderedCanvas.getContext('2d').getImageData(0, 0, width, height).data;
+          const canvas = fabric.document.createElement('canvas');
           canvas.width = width;
           canvas.height = height;
-          var ctx = canvas.getContext('2d');
-          var output = ctx.getImageData(0, 0, width, height);
+          const ctx = canvas.getContext('2d');
+          const output = ctx.getImageData(0, 0, width, height);
           getImage(getGoldeName(golden), renderedCanvas, function(goldenImage) {
             ctx.drawImage(goldenImage, 0, 0);
             visualCallback.addArguments({
               enabled: true,
               golden: canvas,
               fabric: renderedCanvas,
-              diff: output
+              diff: output,
             });
-            var imageDataGolden = ctx.getImageData(0, 0, width, height).data;
-            var differentPixels = _pixelMatch(imageDataCanvas, imageDataGolden, output.data, width, height, pixelmatchOptions);
-            var percDiff = differentPixels / totalPixels * 100;
-            var okDiff = totalPixels * percentage;
-            var isOK = differentPixels < okDiff;
+            const imageDataGolden = ctx.getImageData(0, 0, width, height).data;
+            const differentPixels = _pixelMatch(imageDataCanvas, imageDataGolden, output.data, width, height, pixelmatchOptions);
+            const percDiff = differentPixels / totalPixels * 100;
+            const okDiff = totalPixels * percentage;
+            const isOK = differentPixels < okDiff;
             assert.ok(
               isOK,
-              testName + ' has too many different pixels ' + differentPixels + '(' + okDiff + ') representing ' + percDiff + '%'
+              testName + ' has too many different pixels ' + differentPixels + '(' + okDiff + ') representing ' + percDiff + '%',
             );
             if (!isOK) {
-              var stringa = imageDataToChalk(output);
+              const stringa = imageDataToChalk(output);
               console.log(stringa);
             }
             done();
@@ -162,6 +161,6 @@
           });
         });
       });
-    }
-  }
+    };
+  };
 })(typeof window === 'undefined' ? exports : this);

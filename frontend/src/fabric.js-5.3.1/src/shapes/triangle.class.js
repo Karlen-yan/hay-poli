@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric = global.fabric || (global.fabric = { });
+  const fabric = global.fabric || (global.fabric = { });
 
   if (fabric.Triangle) {
     fabric.warn('fabric.Triangle is already defined');
@@ -44,7 +43,7 @@
      * @param {CanvasRenderingContext2D} ctx Context to render on
      */
     _render: function(ctx) {
-      var widthBy2 = this.width / 2,
+      const widthBy2 = this.width / 2,
           heightBy2 = this.height / 2;
 
       ctx.beginPath();
@@ -63,17 +62,17 @@
      * of the instance
      */
     _toSVG: function() {
-      var widthBy2 = this.width / 2,
+      const widthBy2 = this.width / 2,
           heightBy2 = this.height / 2,
           points = [
             -widthBy2 + ' ' + heightBy2,
             '0 ' + -heightBy2,
-            widthBy2 + ' ' + heightBy2
+            widthBy2 + ' ' + heightBy2,
           ].join(',');
       return [
         '<polygon ', 'COMMON_PARTS',
         'points="', points,
-        '" />'
+        '" />',
       ];
     },
     /* _TO_SVG_END_ */
@@ -89,5 +88,4 @@
   fabric.Triangle.fromObject = function(object, callback) {
     return fabric.Object._fromObject('Triangle', object, callback);
   };
-
 })(typeof exports !== 'undefined' ? exports : this);

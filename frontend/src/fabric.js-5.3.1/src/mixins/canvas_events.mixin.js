@@ -1,9 +1,8 @@
 (function() {
-
-  var addListener = fabric.util.addListener,
+  const addListener = fabric.util.addListener,
       removeListener = fabric.util.removeListener,
       RIGHT_CLICK = 3, MIDDLE_CLICK = 2, LEFT_CLICK = 1,
-      addEventOptions = { passive: false };
+      addEventOptions = {passive: false};
 
   function checkClick(e, value) {
     return e.button && (e.button === value - 1);
@@ -22,7 +21,7 @@
      * Adds mouse listeners to canvas
      * @private
      */
-    _initEventListeners: function () {
+    _initEventListeners: function() {
       // in case we initialized the class twice. This should not happen normally
       // but in some kind of applications where the canvas element may be changed
       // this is a workaround to having double listeners.
@@ -35,12 +34,12 @@
      * return an event prefix pointer or mouse.
      * @private
      */
-    _getEventPrefix: function () {
+    _getEventPrefix: function() {
       return this.enablePointerEvents ? 'pointer' : 'mouse';
     },
 
     addOrRemove: function(functor, eventjsFunctor) {
-      var canvasElement = this.upperCanvasEl,
+      const canvasElement = this.upperCanvasEl,
           eventTypePrefix = this._getEventPrefix();
       functor(fabric.window, 'resize', this._onResize);
       functor(canvasElement, eventTypePrefix + 'down', this._onMouseDown);
@@ -72,7 +71,7 @@
     removeListeners: function() {
       this.addOrRemove(removeListener, 'remove');
       // if you dispose on a mouseDown, before mouse up, you need to clean document to...
-      var eventTypePrefix = this._getEventPrefix();
+      const eventTypePrefix = this._getEventPrefix();
       removeListener(fabric.document, eventTypePrefix + 'up', this._onMouseUp);
       removeListener(fabric.document, 'touchend', this._onTouchEnd, addEventOptions);
       removeListener(fabric.document, eventTypePrefix + 'move', this._onMouseMove, addEventOptions);
@@ -141,15 +140,15 @@
      * @param {Event} e Event object fired on mousedown
      */
     _onMouseOut: function(e) {
-      var target = this._hoveredTarget;
-      this.fire('mouse:out', { target: target, e: e });
+      const target = this._hoveredTarget;
+      this.fire('mouse:out', {target: target, e: e});
       this._hoveredTarget = null;
-      target && target.fire('mouseout', { e: e });
+      target && target.fire('mouseout', {e: e});
 
-      var _this = this;
-      this._hoveredTargets.forEach(function(_target){
-        _this.fire('mouse:out', { target: target, e: e });
-        _target && target.fire('mouseout', { e: e });
+      const _this = this;
+      this._hoveredTargets.forEach(function(_target) {
+        _this.fire('mouse:out', {target: target, e: e});
+        _target && target.fire('mouseout', {e: e});
       });
       this._hoveredTargets = [];
     },
@@ -166,7 +165,7 @@
       // as a long term fix we need to separate the action of finding a target with the
       // side effects we added to it.
       if (!this._currentTransform && !this.findTarget(e)) {
-        this.fire('mouse:over', { target: null, e: e });
+        this.fire('mouse:over', {target: null, e: e});
         this._hoveredTarget = null;
         this._hoveredTargets = [];
       }
@@ -206,7 +205,7 @@
      */
     _onDragOver: function(e) {
       e.preventDefault();
-      var target = this._simpleEventHandler('dragover', e);
+      const target = this._simpleEventHandler('dragover', e);
       this._fireEnterLeaveEvents(target, e);
     },
 
@@ -217,7 +216,7 @@
      * to handle event handlers ordering, use `drop:before`
      * @param {Event} e
      */
-    _onDrop: function (e) {
+    _onDrop: function(e) {
       this._simpleEventHandler('drop:before', e);
       return this._simpleEventHandler('drop', e);
     },
@@ -226,7 +225,7 @@
      * @private
      * @param {Event} e Event object fired on mousedown
      */
-    _onContextMenu: function (e) {
+    _onContextMenu: function(e) {
       if (this.stopContextMenu) {
         e.stopPropagation();
         e.preventDefault();
@@ -238,7 +237,7 @@
      * @private
      * @param {Event} e Event object fired on mousedown
      */
-    _onDoubleClick: function (e) {
+    _onDoubleClick: function(e) {
       this._cacheTransformEventData(e);
       this._handleEvent(e, 'dblclick');
       this._resetTransformEventData(e);
@@ -251,7 +250,7 @@
      * @param {Event} evt Event object
      */
     getPointerId: function(evt) {
-      var changedTouches = evt.changedTouches;
+      const changedTouches = evt.changedTouches;
 
       if (changedTouches) {
         return changedTouches[0] && changedTouches[0].identifier;
@@ -296,7 +295,7 @@
       }
       this.__onMouseDown(e);
       this._resetTransformEventData();
-      var canvasElement = this.upperCanvasEl,
+      const canvasElement = this.upperCanvasEl,
           eventTypePrefix = this._getEventPrefix();
       addListener(fabric.document, 'touchend', this._onTouchEnd, addEventOptions);
       addListener(fabric.document, 'touchmove', this._onMouseMove, addEventOptions);
@@ -308,10 +307,10 @@
      * @private
      * @param {Event} e Event object fired on mousedown
      */
-    _onMouseDown: function (e) {
+    _onMouseDown: function(e) {
       this.__onMouseDown(e);
       this._resetTransformEventData();
-      var canvasElement = this.upperCanvasEl,
+      const canvasElement = this.upperCanvasEl,
           eventTypePrefix = this._getEventPrefix();
       removeListener(canvasElement, eventTypePrefix + 'move', this._onMouseMove, addEventOptions);
       addListener(fabric.document, eventTypePrefix + 'up', this._onMouseUp);
@@ -330,10 +329,10 @@
       this.__onMouseUp(e);
       this._resetTransformEventData();
       this.mainTouchId = null;
-      var eventTypePrefix = this._getEventPrefix();
+      const eventTypePrefix = this._getEventPrefix();
       removeListener(fabric.document, 'touchend', this._onTouchEnd, addEventOptions);
       removeListener(fabric.document, 'touchmove', this._onMouseMove, addEventOptions);
-      var _this = this;
+      const _this = this;
       if (this._willAddMouseDown) {
         clearTimeout(this._willAddMouseDown);
       }
@@ -349,10 +348,10 @@
      * @private
      * @param {Event} e Event object fired on mouseup
      */
-    _onMouseUp: function (e) {
+    _onMouseUp: function(e) {
       this.__onMouseUp(e);
       this._resetTransformEventData();
-      var canvasElement = this.upperCanvasEl,
+      const canvasElement = this.upperCanvasEl,
           eventTypePrefix = this._getEventPrefix();
       if (this._isMainEvent(e)) {
         removeListener(fabric.document, eventTypePrefix + 'up', this._onMouseUp);
@@ -365,7 +364,7 @@
      * @private
      * @param {Event} e Event object fired on mousemove
      */
-    _onMouseMove: function (e) {
+    _onMouseMove: function(e) {
       !this.allowTouchScrolling && e.preventDefault && e.preventDefault();
       this.__onMouseMove(e);
     },
@@ -373,7 +372,7 @@
     /**
      * @private
      */
-    _onResize: function () {
+    _onResize: function() {
       this.calcOffset();
     },
 
@@ -383,7 +382,7 @@
      * @param {Object} target
      */
     _shouldRender: function(target) {
-      var activeObject = this._activeObject;
+      const activeObject = this._activeObject;
 
       if (
         !!activeObject !== !!target ||
@@ -408,8 +407,8 @@
      * @private
      * @param {Event} e Event object fired on mouseup
      */
-    __onMouseUp: function (e) {
-      var target, transform = this._currentTransform,
+    __onMouseUp: function(e) {
+      let target, transform = this._currentTransform,
           groupSelector = this._groupSelector, shouldRender = false,
           isClick = (!groupSelector || (groupSelector.left === 0 && groupSelector.top === 0));
       this._cacheTransformEventData(e);
@@ -445,7 +444,7 @@
         shouldRender = transform.actionPerformed;
       }
       if (!isClick) {
-        var targetWasActive = target === this._activeObject;
+        const targetWasActive = target === this._activeObject;
         this._maybeGroupObjects(e);
         if (!shouldRender) {
           shouldRender = (
@@ -454,11 +453,11 @@
           );
         }
       }
-      var corner, pointer;
+      let corner, pointer;
       if (target) {
         corner = target._findTargetCorner(
           this.getPointer(e, true),
-          fabric.util.isTouchEvent(e)
+          fabric.util.isTouchEvent(e),
         );
         if (target.selectable && target !== this._activeObject && target.activeOn === 'up') {
           this.setActiveObject(target, e);
@@ -477,7 +476,7 @@
       // if we are ending up a transform on a different control or a new object
       // fire the original mouse up from the corner that started the transform
       if (transform && (transform.target !== target || transform.corner !== corner)) {
-        var originalControl = transform.target && transform.target.controls[transform.corner],
+        const originalControl = transform.target && transform.target.controls[transform.corner],
             originalMouseUpHandler = originalControl && originalControl.getMouseUpHandler(e, target, control);
         pointer = pointer || this.getPointer(e);
         originalMouseUpHandler && originalMouseUpHandler(e, transform, pointer.x, pointer.y);
@@ -504,7 +503,7 @@
      * @return {Fabric.Object} target return the the target found, for internal reasons.
      */
     _simpleEventHandler: function(eventType, e) {
-      var target = this.findTarget(e),
+      const target = this.findTarget(e),
           targets = this.targets,
           options = {
             e: e,
@@ -516,7 +515,7 @@
       if (!targets) {
         return target;
       }
-      for (var i = 0; i < targets.length; i++) {
+      for (let i = 0; i < targets.length; i++) {
         targets[i].fire(eventType, options);
       }
       return target;
@@ -532,7 +531,7 @@
      * @param {Boolean} isClick for left button only, indicates that the mouse up happened without move.
      */
     _handleEvent: function(e, eventType, button, isClick) {
-      var target = this._target,
+      const target = this._target,
           targets = this.targets || [],
           options = {
             e: e,
@@ -542,7 +541,7 @@
             isClick: isClick || false,
             pointer: this._pointer,
             absolutePointer: this._absolutePointer,
-            transform: this._currentTransform
+            transform: this._currentTransform,
           };
       if (eventType === 'up') {
         options.currentTarget = this.findTarget(e);
@@ -550,7 +549,7 @@
       }
       this.fire('mouse:' + eventType, options);
       target && target.fire('mouse' + eventType, options);
-      for (var i = 0; i < targets.length; i++) {
+      for (let i = 0; i < targets.length; i++) {
         targets[i].fire('mouse' + eventType, options);
       }
     },
@@ -560,8 +559,7 @@
      * @param {Event} e send the mouse event that generate the finalize down, so it can be used in the event
      */
     _finalizeCurrentTransform: function(e) {
-
-      var transform = this._currentTransform,
+      const transform = this._currentTransform,
           target = transform.target,
           options = {
             e: e,
@@ -590,8 +588,8 @@
       if (this.getActiveObject()) {
         this.discardActiveObject(e).requestRenderAll();
       }
-      var pointer = this.getPointer(e);
-      this.freeDrawingBrush.onMouseDown(pointer, { e: e, pointer: pointer });
+      const pointer = this.getPointer(e);
+      this.freeDrawingBrush.onMouseDown(pointer, {e: e, pointer: pointer});
       this._handleEvent(e, 'down');
     },
 
@@ -601,8 +599,8 @@
      */
     _onMouseMoveInDrawingMode: function(e) {
       if (this._isCurrentlyDrawing) {
-        var pointer = this.getPointer(e);
-        this.freeDrawingBrush.onMouseMove(pointer, { e: e, pointer: pointer });
+        const pointer = this.getPointer(e);
+        this.freeDrawingBrush.onMouseMove(pointer, {e: e, pointer: pointer});
       }
       this.setCursor(this.freeDrawingCursor);
       this._handleEvent(e, 'move');
@@ -613,8 +611,8 @@
      * @param {Event} e Event object fired on mouseup
      */
     _onMouseUpInDrawingMode: function(e) {
-      var pointer = this.getPointer(e);
-      this._isCurrentlyDrawing = this.freeDrawingBrush.onMouseUp({ e: e, pointer: pointer });
+      const pointer = this.getPointer(e);
+      this._isCurrentlyDrawing = this.freeDrawingBrush.onMouseUp({e: e, pointer: pointer});
       this._handleEvent(e, 'up');
     },
 
@@ -626,10 +624,10 @@
      * @private
      * @param {Event} e Event object fired on mousedown
      */
-    __onMouseDown: function (e) {
+    __onMouseDown: function(e) {
       this._cacheTransformEventData(e);
       this._handleEvent(e, 'down:before');
-      var target = this._target;
+      let target = this._target;
       // if right click just fire events
       if (checkClick(e, RIGHT_CLICK)) {
         if (this.fireRightClick) {
@@ -662,7 +660,7 @@
       var pointer = this._pointer;
       // save pointer for check in __onMouseUp event
       this._previousPointer = pointer;
-      var shouldRender = this._shouldRender(target),
+      const shouldRender = this._shouldRender(target),
           shouldGroup = this._shouldGroup(e, target);
       if (this._shouldClearSelection(e, target)) {
         this.discardActiveObject(e);
@@ -678,18 +676,18 @@
           ex: this._absolutePointer.x,
           ey: this._absolutePointer.y,
           top: 0,
-          left: 0
+          left: 0,
         };
       }
 
       if (target) {
-        var alreadySelected = target === this._activeObject;
+        const alreadySelected = target === this._activeObject;
         if (target.selectable && target.activeOn === 'down') {
           this.setActiveObject(target, e);
         }
-        var corner = target._findTargetCorner(
+        const corner = target._findTargetCorner(
           this.getPointer(e, true),
-          fabric.util.isTouchEvent(e)
+          fabric.util.isTouchEvent(e),
         );
         target.__corner = corner;
         if (target === this._activeObject && (corner || !shouldGroup)) {
@@ -734,7 +732,7 @@
      * @private
      */
     _beforeTransform: function(e) {
-      var t = this._currentTransform;
+      const t = this._currentTransform;
       this.stateful && t.target.saveState();
       this.fire('before:transform', {
         e: e,
@@ -751,10 +749,10 @@
      * @private
      * @param {Event} e Event object fired on mousemove
      */
-    __onMouseMove: function (e) {
+    __onMouseMove: function(e) {
       this._handleEvent(e, 'move:before');
       this._cacheTransformEventData(e);
-      var target, pointer;
+      let target, pointer;
 
       if (this.isDrawingMode) {
         this._onMouseMoveInDrawingMode(e);
@@ -765,7 +763,7 @@
         return;
       }
 
-      var groupSelector = this._groupSelector;
+      const groupSelector = this._groupSelector;
 
       // We initially clicked in an empty area, so we draw a box for multiple selection
       if (groupSelector) {
@@ -795,7 +793,7 @@
      * @private
      */
     _fireOverOutEvents: function(target, e) {
-      var _hoveredTarget = this._hoveredTarget,
+      const _hoveredTarget = this._hoveredTarget,
           _hoveredTargets = this._hoveredTargets, targets = this.targets,
           length = Math.max(_hoveredTargets.length, targets.length);
 
@@ -806,7 +804,7 @@
         evtIn: 'mouseover',
         canvasEvtIn: 'mouse:over',
       });
-      for (var i = 0; i < length; i++){
+      for (let i = 0; i < length; i++) {
         this.fireSyntheticInOutEvents(targets[i], e, {
           oldTarget: _hoveredTargets[i],
           evtOut: 'mouseout',
@@ -824,7 +822,7 @@
      * @private
      */
     _fireEnterLeaveEvents: function(target, e) {
-      var _draggedoverTarget = this._draggedoverTarget,
+      const _draggedoverTarget = this._draggedoverTarget,
           _hoveredTargets = this._hoveredTargets, targets = this.targets,
           length = Math.max(_hoveredTargets.length, targets.length);
 
@@ -833,7 +831,7 @@
         evtOut: 'dragleave',
         evtIn: 'dragenter',
       });
-      for (var i = 0; i < length; i++) {
+      for (let i = 0; i < length; i++) {
         this.fireSyntheticInOutEvents(targets[i], e, {
           oldTarget: _hoveredTargets[i],
           evtOut: 'dragleave',
@@ -856,11 +854,11 @@
      * @private
      */
     fireSyntheticInOutEvents: function(target, e, config) {
-      var inOpt, outOpt, oldTarget = config.oldTarget, outFires, inFires,
+      let inOpt, outOpt, oldTarget = config.oldTarget, outFires, inFires,
           targetChanged = oldTarget !== target, canvasEvtIn = config.canvasEvtIn, canvasEvtOut = config.canvasEvtOut;
       if (targetChanged) {
-        inOpt = { e: e, target: target, previousTarget: oldTarget };
-        outOpt = { e: e, target: oldTarget, nextTarget: target };
+        inOpt = {e: e, target: target, previousTarget: oldTarget};
+        outOpt = {e: e, target: oldTarget, nextTarget: target};
       }
       inFires = target && targetChanged;
       outFires = oldTarget && targetChanged;
@@ -889,7 +887,7 @@
      * @param {Event} e Event fired on mousemove
      */
     _transformObject: function(e) {
-      var pointer = this.getPointer(e),
+      const pointer = this.getPointer(e),
           transform = this._currentTransform;
 
       transform.reset = false;
@@ -904,7 +902,7 @@
      * @private
      */
     _performTransformAction: function(e, transform, pointer) {
-      var x = pointer.x,
+      let x = pointer.x,
           y = pointer.y,
           action = transform.action,
           actionPerformed = false,
@@ -933,26 +931,26 @@
      * @param {Event} e Event object
      * @param {Object} target Object that the mouse is hovering, if so.
      */
-    _setCursorFromEvent: function (e, target) {
+    _setCursorFromEvent: function(e, target) {
       if (!target) {
         this.setCursor(this.defaultCursor);
         return false;
       }
-      var hoverCursor = target.hoverCursor || this.hoverCursor,
+      let hoverCursor = target.hoverCursor || this.hoverCursor,
           activeSelection = this._activeObject && this._activeObject.type === 'activeSelection' ?
             this._activeObject : null,
           // only show proper corner when group selection is not active
-          corner = (!activeSelection || !activeSelection.contains(target))
+          corner = (!activeSelection || !activeSelection.contains(target)) &&
           // here we call findTargetCorner always with undefined for the touch parameter.
           // we assume that if you are using a cursor you do not need to interact with
           // the bigger touch area.
-                    && target._findTargetCorner(this.getPointer(e, true));
+                    target._findTargetCorner(this.getPointer(e, true));
 
       if (!corner) {
-        if (target.subTargetCheck){
+        if (target.subTargetCheck) {
           // hoverCursor should come from top-most subTarget,
           // so we walk the array backwards
-          this.targets.concat().reverse().map(function(_target){
+          this.targets.concat().reverse().map(function(_target) {
             hoverCursor = _target.hoverCursor || hoverCursor;
           });
         }
@@ -967,8 +965,8 @@
      * @private
      */
     getCornerCursor: function(corner, target, e) {
-      var control = target.controls[corner];
+      const control = target.controls[corner];
       return control.cursorStyleHandler(e, control, target);
-    }
+    },
   });
 })();

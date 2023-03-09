@@ -1,6 +1,5 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <div >
+    <div>
         <div class="registro">
           
             <h1>Registrate</h1>
@@ -18,11 +17,6 @@
                 </div>
                 <p class="form__input-error">El usuario tiene que ser 4 a 16 digitos</p>
             </div>
-
-
-
-
-
             <!-- grupo  nombre -->
             
             <div class="form__grupo" id="grupo__nombre">
@@ -34,11 +28,6 @@
                 </div>
                 <p class="form__input-error">El  nombre tiene que ser 4 a 16 digitos</p>
             </div>
-
-
-
-
-
             <!-- grupo  telefono -->
             
             <div class="form__grupo" id="grupo__telefono">
@@ -50,10 +39,6 @@
                 </div>
                 <p class="form__input-error">El telefono  tiene que  ser 9 numeros</p>
             </div>
-      
-
-
-
 
         <!-- grupo  correo -->
             
@@ -66,11 +51,7 @@
             </div>
             <p class="form__input-error">En este campo es importante el siguiente  sinvolo @ </p>
         </div>
-   
-   
-   
-
-        <!-- grupo  Contraseña  -->
+       <!-- grupo  Contraseña  -->
             
         <div class="form__grupo" id="grupo__password">
             <label for="password" class="form__label" >Contraseña</label>
@@ -81,8 +62,6 @@
             </div>
             <p class="form__input-error">La contraseña  tiene que ser 4 a 12 digitos.</p>
         </div>
-
-
 
       <!-- Repetición de la contraseña  -->
 
@@ -99,7 +78,6 @@
 
  <!-- Terminos y condiciones  -->
 
-
         <div class="form__grupo-terminos" >
             <label for="terminos" class="form__label" >
           
@@ -108,8 +86,6 @@
             </label>
             
         </div>
-   
-   
 
 <!-- Mensaje error  -->
 
@@ -118,9 +94,6 @@
             <p> <i class="fas fa-exclamation-triangle"></i>   <b>Error:</b>Por favor rellena el formulario correctamente.</p>
 
         </div>
-
-
-
 
         <!-- Btn enviar  -->
 
@@ -138,6 +111,8 @@
 </template>
 
 <script>
+//  eslint-disable vue/multi-word-component-names 
+
     const formulario = document.getElementById('formulario');
 const inputs = document.querySelectorAll('#formulario input');
 

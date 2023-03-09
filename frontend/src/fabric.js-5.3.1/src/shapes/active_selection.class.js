@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric = global.fabric || (global.fabric = { });
+  const fabric = global.fabric || (global.fabric = { });
 
   if (fabric.ActiveSelection) {
     return;
@@ -33,7 +32,7 @@
     initialize: function(objects, options) {
       options = options || {};
       this._objects = objects || [];
-      for (var i = this._objects.length; i--; ) {
+      for (let i = this._objects.length; i--; ) {
         this._objects[i].group = this;
       }
 
@@ -57,10 +56,10 @@
      * @return {fabric.Group}
      */
     toGroup: function() {
-      var objects = this._objects.concat();
+      const objects = this._objects.concat();
       this._objects = [];
-      var options = fabric.Object.prototype.toObject.call(this);
-      var newGroup = new fabric.Group([]);
+      const options = fabric.Object.prototype.toObject.call(this);
+      const newGroup = new fabric.Group([]);
       delete options.type;
       newGroup.set(options);
       objects.forEach(function(object) {
@@ -71,7 +70,7 @@
       if (!this.canvas) {
         return newGroup;
       }
-      var canvas = this.canvas;
+      const canvas = this.canvas;
       canvas.add(newGroup);
       canvas._activeObject = newGroup;
       newGroup.setCoords();
@@ -131,7 +130,7 @@
         childrenOverride.hasControls = false;
       }
       childrenOverride.forActiveSelection = true;
-      for (var i = 0, len = this._objects.length; i < len; i++) {
+      for (let i = 0, len = this._objects.length; i < len; i++) {
         this._objects[i]._renderControls(ctx, childrenOverride);
       }
       ctx.restore();
@@ -151,5 +150,4 @@
       callback && callback(new fabric.ActiveSelection(enlivenedObjects, object, true));
     });
   };
-
 })(typeof exports !== 'undefined' ? exports : this);

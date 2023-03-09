@@ -1,8 +1,7 @@
 (function() {
-
   'use strict';
 
-  var toFixed = fabric.util.toFixed;
+  const toFixed = fabric.util.toFixed;
 
   /**
    * Pattern class
@@ -68,7 +67,7 @@
       }
       else {
         // img src string
-        var _this = this;
+        const _this = this;
         this.source = fabric.util.createImage();
         fabric.util.loadImage(options.source, function(img, isError) {
           _this.source = img;
@@ -83,7 +82,7 @@
      * @return {Object} Object representation of a pattern instance
      */
     toObject: function(propertiesToInclude) {
-      var NUM_FRACTION_DIGITS = fabric.Object.NUM_FRACTION_DIGITS,
+      let NUM_FRACTION_DIGITS = fabric.Object.NUM_FRACTION_DIGITS,
           source, object;
 
       // <img> element
@@ -102,7 +101,7 @@
         crossOrigin: this.crossOrigin,
         offsetX: toFixed(this.offsetX, NUM_FRACTION_DIGITS),
         offsetY: toFixed(this.offsetY, NUM_FRACTION_DIGITS),
-        patternTransform: this.patternTransform ? this.patternTransform.concat() : null
+        patternTransform: this.patternTransform ? this.patternTransform.concat() : null,
       };
       fabric.util.populateWithProperties(this, object, propertiesToInclude);
 
@@ -116,7 +115,7 @@
      * @return {String} SVG representation of a pattern
      */
     toSVG: function(object) {
-      var patternSource = typeof this.source === 'function' ? this.source() : this.source,
+      let patternSource = typeof this.source === 'function' ? this.source() : this.source,
           patternWidth = patternSource.width / object.width,
           patternHeight = patternSource.height / object.height,
           patternOffsetX = this.offsetX / object.width,
@@ -133,7 +132,6 @@
         if (patternOffsetX) {
           patternWidth += Math.abs(patternOffsetX);
         }
-
       }
       if (patternSource.src) {
         patternImgSrc = patternSource.src;
@@ -157,7 +155,7 @@
     /* _TO_SVG_END_ */
 
     setOptions: function(options) {
-      for (var prop in options) {
+      for (const prop in options) {
         this[prop] = options[prop];
       }
     },
@@ -168,7 +166,7 @@
      * @return {CanvasPattern}
      */
     toLive: function(ctx) {
-      var source = this.source;
+      const source = this.source;
       // if the image failed to load, return, and allow rest to continue loading
       if (!source) {
         return '';
@@ -184,6 +182,6 @@
         }
       }
       return ctx.createPattern(source, this.repeat);
-    }
+    },
   });
 })();

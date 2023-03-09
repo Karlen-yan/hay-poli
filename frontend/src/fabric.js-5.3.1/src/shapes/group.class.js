@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       min = fabric.util.array.min,
       max = fabric.util.array.max;
 
@@ -72,12 +71,12 @@
       // Thus we need to set options to group without objects,
       isAlreadyGrouped && this.callSuper('initialize', options);
       this._objects = objects || [];
-      for (var i = this._objects.length; i--; ) {
+      for (let i = this._objects.length; i--; ) {
         this._objects[i].group = this;
       }
 
       if (!isAlreadyGrouped) {
-        var center = options && options.centerPoint;
+        const center = options && options.centerPoint;
         // we want to set origins before calculating the bounding box.
         // so that the topleft can be set with that in mind.
         // if specific top and left are passed, are overwritten later
@@ -106,8 +105,8 @@
      * @private
      */
     _updateObjectsACoords: function() {
-      var skipControls = true;
-      for (var i = this._objects.length; i--; ){
+      const skipControls = true;
+      for (let i = this._objects.length; i--; ) {
         this._objects[i].setCoords(skipControls);
       }
     },
@@ -118,7 +117,7 @@
      */
     _updateObjectsCoords: function(center) {
       var center = center || this.getCenterPoint();
-      for (var i = this._objects.length; i--; ){
+      for (let i = this._objects.length; i--; ) {
         this._updateObjectCoords(this._objects[i], center);
       }
     },
@@ -129,13 +128,13 @@
      * @param {fabric.Point} center, current center of group.
      */
     _updateObjectCoords: function(object, center) {
-      var objectLeft = object.left,
+      const objectLeft = object.left,
           objectTop = object.top,
           skipControls = true;
 
       object.set({
         left: objectLeft - center.x,
-        top: objectTop - center.y
+        top: objectTop - center.y,
       });
       object.group = this;
       object.setCoords(skipControls);
@@ -156,7 +155,7 @@
      * @chainable
      */
     addWithUpdate: function(object) {
-      var nested = !!this.group;
+      const nested = !!this.group;
       this._restoreObjectsState();
       fabric.util.resetObjectTransform(this);
       if (object) {
@@ -219,7 +218,7 @@
      * @private
      */
     _set: function(key, value) {
-      var i = this._objects.length;
+      let i = this._objects.length;
       if (this.useSetOnGroup) {
         while (i--) {
           this._objects[i].setOnGroup(key, value);
@@ -239,19 +238,19 @@
      * @return {Object} object representation of an instance
      */
     toObject: function(propertiesToInclude) {
-      var _includeDefaultValues = this.includeDefaultValues;
-      var objsToObject = this._objects
-        .filter(function (obj) {
+      const _includeDefaultValues = this.includeDefaultValues;
+      const objsToObject = this._objects
+        .filter(function(obj) {
           return !obj.excludeFromExport;
         })
-        .map(function (obj) {
-          var originalDefaults = obj.includeDefaultValues;
+        .map(function(obj) {
+          const originalDefaults = obj.includeDefaultValues;
           obj.includeDefaultValues = _includeDefaultValues;
-          var _obj = obj.toObject(propertiesToInclude);
+          const _obj = obj.toObject(propertiesToInclude);
           obj.includeDefaultValues = originalDefaults;
           return _obj;
         });
-      var obj = fabric.Object.prototype.toObject.call(this, propertiesToInclude);
+      const obj = fabric.Object.prototype.toObject.call(this, propertiesToInclude);
       obj.objects = objsToObject;
       return obj;
     },
@@ -262,21 +261,21 @@
      * @return {Object} object representation of an instance
      */
     toDatalessObject: function(propertiesToInclude) {
-      var objsToObject, sourcePath = this.sourcePath;
+      let objsToObject, sourcePath = this.sourcePath;
       if (sourcePath) {
         objsToObject = sourcePath;
       }
       else {
-        var _includeDefaultValues = this.includeDefaultValues;
+        const _includeDefaultValues = this.includeDefaultValues;
         objsToObject = this._objects.map(function(obj) {
-          var originalDefaults = obj.includeDefaultValues;
+          const originalDefaults = obj.includeDefaultValues;
           obj.includeDefaultValues = _includeDefaultValues;
-          var _obj = obj.toDatalessObject(propertiesToInclude);
+          const _obj = obj.toDatalessObject(propertiesToInclude);
           obj.includeDefaultValues = originalDefaults;
           return _obj;
         });
       }
-      var obj = fabric.Object.prototype.toDatalessObject.call(this, propertiesToInclude);
+      const obj = fabric.Object.prototype.toDatalessObject.call(this, propertiesToInclude);
       obj.objects = objsToObject;
       return obj;
     },
@@ -299,9 +298,9 @@
      * @return {Boolean}
      */
     shouldCache: function() {
-      var ownCache = fabric.Object.prototype.shouldCache.call(this);
+      const ownCache = fabric.Object.prototype.shouldCache.call(this);
       if (ownCache) {
-        for (var i = 0, len = this._objects.length; i < len; i++) {
+        for (let i = 0, len = this._objects.length; i < len; i++) {
           if (this._objects[i].willDrawShadow()) {
             this.ownCaching = false;
             return false;
@@ -319,7 +318,7 @@
       if (fabric.Object.prototype.willDrawShadow.call(this)) {
         return true;
       }
-      for (var i = 0, len = this._objects.length; i < len; i++) {
+      for (let i = 0, len = this._objects.length; i < len; i++) {
         if (this._objects[i].willDrawShadow()) {
           return true;
         }
@@ -340,7 +339,7 @@
      * @param {CanvasRenderingContext2D} ctx Context to render on
      */
     drawObject: function(ctx) {
-      for (var i = 0, len = this._objects.length; i < len; i++) {
+      for (let i = 0, len = this._objects.length; i < len; i++) {
         this._objects[i].render(ctx);
       }
       this._drawClipPath(ctx, this.clipPath);
@@ -356,11 +355,11 @@
       if (!this.statefullCache) {
         return false;
       }
-      for (var i = 0, len = this._objects.length; i < len; i++) {
+      for (let i = 0, len = this._objects.length; i < len; i++) {
         if (this._objects[i].isCacheDirty(true)) {
           if (this._cacheCanvas) {
             // if this group has not a cache canvas there is nothing to clean
-            var x = this.cacheWidth / this.zoomX, y = this.cacheHeight / this.zoomY;
+            const x = this.cacheWidth / this.zoomX, y = this.cacheHeight / this.zoomY;
             this._cacheContext.clearRect(-x / 2, -y / 2, x, y);
           }
           return true;
@@ -379,7 +378,7 @@
      * @chainable
      */
     _restoreObjectsState: function() {
-      var groupMatrix = this.calcOwnMatrix();
+      const groupMatrix = this.calcOwnMatrix();
       this._objects.forEach(function(object) {
         // instead of using _this = this;
         fabric.util.addTransformToObject(object, groupMatrix);
@@ -403,9 +402,9 @@
       return this._restoreObjectsState();
     },
 
-    dispose: function () {
+    dispose: function() {
       this.callSuper('dispose');
-      this.forEachObject(function (object) {
+      this.forEachObject(function(object) {
         object.dispose && object.dispose();
       });
       this._objects = [];
@@ -421,11 +420,11 @@
       if (!this.canvas) {
         return;
       }
-      var objects = this._objects, canvas = this.canvas;
+      const objects = this._objects, canvas = this.canvas;
       this._objects = [];
-      var options = this.toObject();
+      const options = this.toObject();
       delete options.objects;
-      var activeSelection = new fabric.ActiveSelection([]);
+      const activeSelection = new fabric.ActiveSelection([]);
       activeSelection.set(options);
       activeSelection.type = 'activeSelection';
       canvas.remove(this);
@@ -456,7 +455,7 @@
      * @chainable
      */
     setObjectsCoords: function() {
-      var skipControls = true;
+      const skipControls = true;
       this.forEachObject(function(object) {
         object.setCoords(skipControls);
       });
@@ -467,7 +466,7 @@
      * @private
      */
     _calcBounds: function(onlyWidthHeight) {
-      var aX = [],
+      let aX = [],
           aY = [],
           o, prop, coords,
           props = ['tr', 'br', 'bl', 'tl'],
@@ -492,7 +491,7 @@
      * @private
      */
     _getBounds: function(aX, aY, onlyWidthHeight) {
-      var minXY = new fabric.Point(min(aX), min(aY)),
+      const minXY = new fabric.Point(min(aX), min(aY)),
           maxXY = new fabric.Point(max(aX), max(aY)),
           top = minXY.y || 0, left = minXY.x || 0,
           width = (maxXY.x - minXY.x) || 0,
@@ -502,7 +501,7 @@
       if (!onlyWidthHeight) {
         // the bounding box always finds the topleft most corner.
         // whatever is the group origin, we set up here the left/top position.
-        this.setPositionByOrigin({ x: left, y: top }, 'left', 'top');
+        this.setPositionByOrigin({x: left, y: top}, 'left', 'top');
       }
     },
 
@@ -513,9 +512,9 @@
      * @return {String} svg representation of an instance
      */
     _toSVG: function(reviver) {
-      var svgString = ['<g ', 'COMMON_PARTS', ' >\n'];
+      const svgString = ['<g ', 'COMMON_PARTS', ' >\n'];
 
-      for (var i = 0, len = this._objects.length; i < len; i++) {
+      for (let i = 0, len = this._objects.length; i < len; i++) {
         svgString.push('\t\t', this._objects[i].toSVG(reviver));
       }
       svgString.push('</g>\n');
@@ -527,13 +526,13 @@
      * @return {String}
      */
     getSvgStyles: function() {
-      var opacity = typeof this.opacity !== 'undefined' && this.opacity !== 1 ?
+      const opacity = typeof this.opacity !== 'undefined' && this.opacity !== 1 ?
             'opacity: ' + this.opacity + ';' : '',
           visibility = this.visible ? '' : ' visibility: hidden;';
       return [
         opacity,
         this.getSvgFilter(),
-        visibility
+        visibility,
       ].join('');
     },
 
@@ -543,13 +542,13 @@
      * @return {String} svg representation of an instance
      */
     toClipPathSVG: function(reviver) {
-      var svgString = [];
+      const svgString = [];
 
-      for (var i = 0, len = this._objects.length; i < len; i++) {
+      for (let i = 0, len = this._objects.length; i < len; i++) {
         svgString.push('\t', this._objects[i].toClipPathSVG(reviver));
       }
 
-      return this._createBaseClipPathSVGMarkup(svgString, { reviver: reviver });
+      return this._createBaseClipPathSVGMarkup(svgString, {reviver: reviver});
     },
     /* _TO_SVG_END_ */
   });
@@ -562,14 +561,14 @@
    * @param {Function} [callback] Callback to invoke when an group instance is created
    */
   fabric.Group.fromObject = function(object, callback) {
-    var objects = object.objects,
+    const objects = object.objects,
         options = fabric.util.object.clone(object, true);
     delete options.objects;
     if (typeof objects === 'string') {
       // it has to be an url or something went wrong.
-      fabric.loadSVGFromURL(objects, function (elements) {
-        var group = fabric.util.groupSVGElements(elements, object, objects);
-        var clipPath = options.clipPath;
+      fabric.loadSVGFromURL(objects, function(elements) {
+        const group = fabric.util.groupSVGElements(elements, object, objects);
+        const clipPath = options.clipPath;
         delete options.clipPath;
         group.set(options);
         if (clipPath) {
@@ -584,8 +583,8 @@
       });
       return;
     }
-    fabric.util.enlivenObjects(objects, function (enlivenedObjects) {
-      fabric.util.enlivenObjectEnlivables(object, options, function () {
+    fabric.util.enlivenObjects(objects, function(enlivenedObjects) {
+      fabric.util.enlivenObjectEnlivables(object, options, function() {
         callback && callback(new fabric.Group(enlivenedObjects, options, true));
       });
     });

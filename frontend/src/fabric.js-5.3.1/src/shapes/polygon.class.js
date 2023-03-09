@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric = global.fabric || (global.fabric = {}),
+  const fabric = global.fabric || (global.fabric = {}),
       projectStrokeOnPoints = fabric.util.projectStrokeOnPoints;
 
   if (fabric.Polygon) {
@@ -28,7 +27,7 @@
     /**
      * @private
      */
-    _projectStrokeOnPoints: function () {
+    _projectStrokeOnPoints: function() {
       return projectStrokeOnPoints(this.points, this);
     },
 
@@ -77,5 +76,4 @@
   fabric.Polygon.fromObject = function(object, callback) {
     fabric.Object._fromObject('Polygon', object, callback, 'points');
   };
-
 })(typeof exports !== 'undefined' ? exports : this);

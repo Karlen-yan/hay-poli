@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       min = fabric.util.array.min,
       max = fabric.util.array.max,
       extend = fabric.util.object.extend,
@@ -47,7 +46,7 @@
      * @param {Object} [options] Options object
      * @return {fabric.Path} thisArg
      */
-    initialize: function (path, options) {
+    initialize: function(path, options) {
       options = clone(options || {});
       delete options.path;
       this.callSuper('initialize', options);
@@ -59,9 +58,9 @@
     * @param {Array|String} path Path data (sequence of coordinates and corresponding "command" tokens)
     * @param {Object} [options] Options object
     */
-    _setPath: function (path, options) {
+    _setPath: function(path, options) {
       this.path = fabric.util.makePathSimpler(
-        Array.isArray(path) ? path : fabric.util.parsePath(path)
+        Array.isArray(path) ? path : fabric.util.parsePath(path),
       );
 
       fabric.Polyline.prototype._setPositionDimensions.call(this, options || {});
@@ -72,7 +71,7 @@
      * @param {CanvasRenderingContext2D} ctx context to render path on
      */
     _renderPathCommands: function(ctx) {
-      var current, // current instruction
+      let current, // current instruction
           subpathStartX = 0,
           subpathStartY = 0,
           x = 0, // current x
@@ -84,12 +83,10 @@
 
       ctx.beginPath();
 
-      for (var i = 0, len = this.path.length; i < len; ++i) {
-
+      for (let i = 0, len = this.path.length; i < len; ++i) {
         current = this.path[i];
 
         switch (current[0]) { // first letter
-
           case 'L': // lineto, absolute
             x = current[1];
             y = current[2];
@@ -115,7 +112,7 @@
               controlX + l,
               controlY + t,
               x + l,
-              y + t
+              y + t,
             );
             break;
 
@@ -124,7 +121,7 @@
               current[1] + l,
               current[2] + t,
               current[3] + l,
-              current[4] + t
+              current[4] + t,
             );
             x = current[3];
             y = current[4];
@@ -167,7 +164,7 @@
      */
     toObject: function(propertiesToInclude) {
       return extend(this.callSuper('toObject', propertiesToInclude), {
-        path: this.path.map(function(item) { return item.slice(); }),
+        path: this.path.map(function(item) {return item.slice();}),
       });
     },
 
@@ -177,7 +174,7 @@
      * @return {Object} object representation of an instance
      */
     toDatalessObject: function(propertiesToInclude) {
-      var o = this.toObject(['sourcePath'].concat(propertiesToInclude));
+      const o = this.toObject(['sourcePath'].concat(propertiesToInclude));
       if (o.sourcePath) {
         delete o.path;
       }
@@ -191,17 +188,17 @@
      * of the instance
      */
     _toSVG: function() {
-      var path = fabric.util.joinPath(this.path);
+      const path = fabric.util.joinPath(this.path);
       return [
         '<path ', 'COMMON_PARTS',
         'd="', path,
         '" stroke-linecap="round" ',
-        '/>\n'
+        '/>\n',
       ];
     },
 
     _getOffsetTransform: function() {
-      var digits = fabric.Object.NUM_FRACTION_DIGITS;
+      const digits = fabric.Object.NUM_FRACTION_DIGITS;
       return ' translate(' + toFixed(-this.pathOffset.x, digits) + ', ' +
           toFixed(-this.pathOffset.y, digits) + ')';
     },
@@ -212,9 +209,9 @@
      * @return {String} svg representation of an instance
      */
     toClipPathSVG: function(reviver) {
-      var additionalTransform = this._getOffsetTransform();
+      const additionalTransform = this._getOffsetTransform();
       return '\t' + this._createBaseClipPathSVGMarkup(
-        this._toSVG(), { reviver: reviver, additionalTransform: additionalTransform }
+        this._toSVG(), {reviver: reviver, additionalTransform: additionalTransform},
       );
     },
 
@@ -224,8 +221,8 @@
      * @return {String} svg representation of an instance
      */
     toSVG: function(reviver) {
-      var additionalTransform = this._getOffsetTransform();
-      return this._createBaseSVGMarkup(this._toSVG(), { reviver: reviver, additionalTransform: additionalTransform  });
+      const additionalTransform = this._getOffsetTransform();
+      return this._createBaseSVGMarkup(this._toSVG(), {reviver: reviver, additionalTransform: additionalTransform});
     },
     /* _TO_SVG_END_ */
 
@@ -241,8 +238,7 @@
      * @private
      */
     _calcDimensions: function() {
-
-      var aX = [],
+      let aX = [],
           aY = [],
           current, // current instruction
           subpathStartX = 0,
@@ -251,12 +247,10 @@
           y = 0, // current y
           bounds;
 
-      for (var i = 0, len = this.path.length; i < len; ++i) {
-
+      for (let i = 0, len = this.path.length; i < len; ++i) {
         current = this.path[i];
 
         switch (current[0]) { // first letter
-
           case 'L': // lineto, absolute
             x = current[1];
             y = current[2];
@@ -278,7 +272,7 @@
               current[3],
               current[4],
               current[5],
-              current[6]
+              current[6],
             );
             x = current[5];
             y = current[6];
@@ -291,7 +285,7 @@
               current[1],
               current[2],
               current[3],
-              current[4]
+              current[4],
             );
             x = current[3];
             y = current[4];
@@ -303,7 +297,7 @@
             y = subpathStartY;
             break;
         }
-        bounds.forEach(function (point) {
+        bounds.forEach(function(point) {
           aX.push(point.x);
           aY.push(point.y);
         });
@@ -311,7 +305,7 @@
         aY.push(y);
       }
 
-      var minX = min(aX) || 0,
+      const minX = min(aX) || 0,
           minY = min(aY) || 0,
           maxX = max(aX) || 0,
           maxY = max(aY) || 0,
@@ -322,9 +316,9 @@
         left: minX,
         top: minY,
         width: deltaX,
-        height: deltaY
+        height: deltaY,
       };
-    }
+    },
   });
 
   /**
@@ -336,9 +330,9 @@
    */
   fabric.Path.fromObject = function(object, callback) {
     if (typeof object.sourcePath === 'string') {
-      var pathUrl = object.sourcePath;
-      fabric.loadSVGFromURL(pathUrl, function (elements) {
-        var path = elements[0];
+      const pathUrl = object.sourcePath;
+      fabric.loadSVGFromURL(pathUrl, function(elements) {
+        const path = elements[0];
         path.setOptions(object);
         if (object.clipPath) {
           fabric.util.enlivenObjects([object.clipPath], function(elivenedObjects) {
@@ -375,10 +369,9 @@
    * @param {Function} [callback] Options callback invoked after parsing is finished
    */
   fabric.Path.fromElement = function(element, callback, options) {
-    var parsedAttributes = fabric.parseAttributes(element, fabric.Path.ATTRIBUTE_NAMES);
+    const parsedAttributes = fabric.parseAttributes(element, fabric.Path.ATTRIBUTE_NAMES);
     parsedAttributes.fromSVG = true;
     callback(new fabric.Path(parsedAttributes.d, extend(parsedAttributes, options)));
   };
   /* _FROM_SVG_END_ */
-
 })(typeof exports !== 'undefined' ? exports : this);

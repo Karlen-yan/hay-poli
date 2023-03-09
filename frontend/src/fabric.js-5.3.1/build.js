@@ -1,42 +1,42 @@
-var fs = require('fs'),
+const fs = require('fs'),
     exec = require('child_process').exec;
 
-var buildArgs = process.argv.slice(2),
+const buildArgs = process.argv.slice(2),
     buildArgsAsObject = { },
     rootPath = process.cwd();
 
 buildArgs.forEach(function(arg) {
-  var key = arg.split('=')[0],
+  const key = arg.split('=')[0],
       value = arg.split('=')[1];
 
   buildArgsAsObject[key] = value;
 });
 
-var modulesToInclude = buildArgsAsObject.modules ? buildArgsAsObject.modules.split(',') : [];
-var modulesToExclude = buildArgsAsObject.exclude ? buildArgsAsObject.exclude.split(',') : [];
+const modulesToInclude = buildArgsAsObject.modules ? buildArgsAsObject.modules.split(',') : [];
+const modulesToExclude = buildArgsAsObject.exclude ? buildArgsAsObject.exclude.split(',') : [];
 
-var distributionPath = buildArgsAsObject.dest || 'dist/';
-var minifier = buildArgsAsObject.minifier || 'uglifyjs';
-var mininfierCmd;
+const distributionPath = buildArgsAsObject.dest || 'dist/';
+let minifier = buildArgsAsObject.minifier || 'uglifyjs';
+let mininfierCmd;
 
-var noStrict = 'no-strict' in buildArgsAsObject;
-var noSVGExport = 'no-svg-export' in buildArgsAsObject;
-var requirejs = 'requirejs' in buildArgsAsObject ? 'requirejs' : false;
-var sourceMap = 'sourcemap' in buildArgsAsObject;
-var buildFast = 'fast' in buildArgsAsObject;
+const noStrict = 'no-strict' in buildArgsAsObject;
+const noSVGExport = 'no-svg-export' in buildArgsAsObject;
+const requirejs = 'requirejs' in buildArgsAsObject ? 'requirejs' : false;
+const sourceMap = 'sourcemap' in buildArgsAsObject;
+const buildFast = 'fast' in buildArgsAsObject;
 // set amdLib var to encourage later support of other AMD systems
-var amdLib = requirejs;
+const amdLib = requirejs;
 
 // if we want requirejs AMD support, use uglify
-var amdUglifyFlags = '';
+let amdUglifyFlags = '';
 if (amdLib === 'requirejs' && minifier !== 'uglifyjs') {
   console.log('[notice]: require.js support requires uglifyjs as minifier; changed minifier to uglifyjs.');
   minifier = 'uglifyjs';
-  amdUglifyFlags = " -r 'require,exports,window,fabric' -e window:window,undefined ";
+  amdUglifyFlags = ' -r \'require,exports,window,fabric\' -e window:window,undefined ';
 }
 
 // if we want sourceMap support, uglify or google closure compiler are supported
-var sourceMapFlags = '';
+let sourceMapFlags = '';
 if (sourceMap) {
   if (minifier !== 'uglifyjs' && minifier !== 'closure') {
     console.log('[notice]: sourceMap support requires uglifyjs or google closure compiler as minifier; changed minifier to uglifyjs.');
@@ -55,13 +55,13 @@ else if (minifier === 'uglifyjs') {
   mininfierCmd = 'uglifyjs ' + amdUglifyFlags + ' --compress --mangle --output fabric.min.js fabric.js' + sourceMapFlags;
 }
 
-var buildMinified = 'build-minified' in buildArgsAsObject;
+const buildMinified = 'build-minified' in buildArgsAsObject;
 
-var includeAllModules = (modulesToInclude.length === 1 && modulesToInclude[0] === 'ALL') || buildMinified;
+const includeAllModules = (modulesToInclude.length === 1 && modulesToInclude[0] === 'ALL') || buildMinified;
 
-var noSVGImport = (modulesToInclude.indexOf('parser') === -1 && !includeAllModules) || modulesToExclude.indexOf('parser') > -1;
+const noSVGImport = (modulesToInclude.indexOf('parser') === -1 && !includeAllModules) || modulesToExclude.indexOf('parser') > -1;
 
-var distFileContents =
+let distFileContents =
   '/* build: `node build.js modules=' +
     modulesToInclude.join(',') +
     (modulesToExclude.length ? (' exclude=' + modulesToExclude.join(',')) : '') +
@@ -73,22 +73,20 @@ var distFileContents =
   '` */';
 
 function appendFileContents(fileNames, callback) {
-
   (function readNextFile() {
-
     if (fileNames.length <= 0) {
       return callback();
     }
 
-    var fileName = fileNames.shift();
+    const fileName = fileNames.shift();
 
     if (!fileName) {
       return readNextFile();
     }
 
-    fs.readFile(__dirname + '/' + fileName, function (err, data) {
-      if (err) throw err;
-      var strData = String(data);
+    fs.readFile(__dirname + '/' + fileName, function(err, data) {
+      if (err) {throw err;}
+      let strData = String(data);
       if (fileName === 'src/HEADER.js' && amdLib === false) {
         strData = strData.replace(/\/\* _AMD_START_ \*\/[\s\S]*?\/\* _AMD_END_ \*\//g, '');
       }
@@ -104,19 +102,18 @@ function appendFileContents(fileNames, callback) {
       distFileContents += ('\n' + strData + '\n');
       readNextFile();
     });
-
   })();
 }
 
 function ifSpecifiedInclude(moduleName, fileName) {
-  var isInIncludedList = modulesToInclude.indexOf(moduleName) > -1;
-  var isInExcludedList = modulesToExclude.indexOf(moduleName) > -1;
+  const isInIncludedList = modulesToInclude.indexOf(moduleName) > -1;
+  const isInExcludedList = modulesToExclude.indexOf(moduleName) > -1;
 
   // excluded list takes precedence over modules=ALL
   return ((isInIncludedList || includeAllModules) && !isInExcludedList) ? fileName : '';
 }
 
-var filesToInclude = [
+const filesToInclude = [
   'HEADER.js',
   ifSpecifiedInclude('global', 'src/globalFabric.js'),
   ifSpecifiedInclude('gestures', 'lib/event.js'),
@@ -140,7 +137,7 @@ var filesToInclude = [
 
   ifSpecifiedInclude('animation', 'src/util/animate.js'),
   ifSpecifiedInclude('animation', 'src/util/animate_color.js'),
-  //'src/util/animate.js',
+  // 'src/util/animate.js',
   ifSpecifiedInclude('easing', 'src/util/anim_ease.js'),
 
   ifSpecifiedInclude('parser', 'src/parser.js'),
@@ -239,9 +236,9 @@ var filesToInclude = [
 ];
 
 if (buildMinified) {
-  for (var i = 0; i < filesToInclude.length; i++) {
-    if (!filesToInclude[i]) continue;
-    var fileNameWithoutSlashes = filesToInclude[i].replace(/\//g, '^');
+  for (let i = 0; i < filesToInclude.length; i++) {
+    if (!filesToInclude[i]) {continue;}
+    const fileNameWithoutSlashes = filesToInclude[i].replace(/\//g, '^');
     exec('uglifyjs -nc ' + amdUglifyFlags + filesToInclude[i] + ' > tmp/' + fileNameWithoutSlashes);
   }
 }
@@ -250,7 +247,7 @@ else {
   process.chdir(distributionPath);
 
   appendFileContents(filesToInclude, function() {
-    fs.writeFile('fabric.js', distFileContents, function (err) {
+    fs.writeFile('fabric.js', distFileContents, function(err) {
       if (err) {
         console.log(err);
         throw err;
@@ -261,11 +258,12 @@ else {
 
       if (amdLib !== false) {
         console.log('Built distribution to ' + distributionPath + 'fabric.js (' + amdLib + '-compatible)');
-      } else {
+      }
+      else {
         console.log('Built distribution to ' + distributionPath + 'fabric.js');
       }
 
-      exec(mininfierCmd, function (error, output) {
+      exec(mininfierCmd, function(error, output) {
         if (error) {
           console.error('Minification failed using', minifier, 'with', mininfierCmd);
           console.error('Minifier error output:\n' + error);
@@ -277,11 +275,10 @@ else {
           console.log('Built sourceMap to ' + distributionPath + 'fabric.min.js.map');
         }
 
-        exec('gzip -c fabric.min.js > fabric.min.js.gz', function (error, output) {
+        exec('gzip -c fabric.min.js > fabric.min.js.gz', function(error, output) {
           console.log('Gzipped to ' + distributionPath + 'fabric.min.js.gz');
         });
       });
-
     });
   });
 }

@@ -39,7 +39,7 @@
       this._points = [];
     },
 
-    needsFullRender: function () {
+    needsFullRender: function() {
       return this.callSuper('needsFullRender') || this._hasStraightLine;
     },
 
@@ -47,8 +47,8 @@
      * Invoked inside on mouse down and mouse move
      * @param {Object} pointer
      */
-    _drawSegment: function (ctx, p1, p2) {
-      var midPoint = p1.midPointFrom(p2);
+    _drawSegment: function(ctx, p1, p2) {
+      const midPoint = p1.midPointFrom(p2);
       ctx.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y);
       return midPoint;
     },
@@ -89,7 +89,7 @@
           this._render();
         }
         else {
-          var points = this._points, length = points.length, ctx = this.canvas.contextTop;
+          const points = this._points, length = points.length, ctx = this.canvas.contextTop;
           // draw the curve update
           this._saveAndTransform(ctx);
           if (this.oldEnd) {
@@ -121,8 +121,7 @@
      * @param {Object} pointer Actual mouse position related to the canvas.
      */
     _prepareForDrawing: function(pointer) {
-
-      var p = new fabric.Point(pointer.x, pointer.y);
+      const p = new fabric.Point(pointer.x, pointer.y);
 
       this._reset();
       this._addPoint(p);
@@ -161,7 +160,7 @@
      * @param {Object} pointer Actual mouse position related to the canvas.
      */
     _captureDrawingPath: function(pointer) {
-      var pointerPoint = new fabric.Point(pointer.x, pointer.y);
+      const pointerPoint = new fabric.Point(pointer.x, pointer.y);
       return this._addPoint(pointerPoint);
     },
 
@@ -171,18 +170,18 @@
      * @param {CanvasRenderingContext2D} [ctx]
      */
     _render: function(ctx) {
-      var i, len,
+      let i, len,
           p1 = this._points[0],
           p2 = this._points[1];
       ctx = ctx || this.canvas.contextTop;
       this._saveAndTransform(ctx);
       ctx.beginPath();
-      //if we only have 2 points in the path and they are the same
-      //it means that the user only clicked the canvas without moving the mouse
-      //then we should be drawing a dot. A path isn't drawn between two identical dots
-      //that's why we set them apart a bit
+      // if we only have 2 points in the path and they are the same
+      // it means that the user only clicked the canvas without moving the mouse
+      // then we should be drawing a dot. A path isn't drawn between two identical dots
+      // that's why we set them apart a bit
       if (this._points.length === 2 && p1.x === p2.x && p1.y === p2.y) {
-        var width = this.width / 1000;
+        const width = this.width / 1000;
         p1 = new fabric.Point(p1.x, p1.y);
         p2 = new fabric.Point(p2.x, p2.y);
         p1.x -= width;
@@ -210,8 +209,8 @@
      * @param {Array} points Array of points
      * @return {(string|number)[][]} SVG path commands
      */
-    convertPointsToSVGPath: function (points) {
-      var correction = this.width / 1000;
+    convertPointsToSVGPath: function(points) {
+      const correction = this.width / 1000;
       return fabric.util.getSmoothPathFromPoints(points, correction);
     },
 
@@ -220,8 +219,8 @@
      * @param {(string|number)[][]} pathData SVG path commands
      * @returns {boolean}
      */
-    _isEmptySVGPath: function (pathData) {
-      var pathString = fabric.util.joinPath(pathData);
+    _isEmptySVGPath: function(pathData) {
+      const pathString = fabric.util.joinPath(pathData);
       return pathString === 'M 0 0 Q 0 0 0 0 L 0 0';
     },
 
@@ -231,7 +230,7 @@
      * @return {fabric.Path} Path to add on canvas
      */
     createPath: function(pathData) {
-      var path = new fabric.Path(pathData, {
+      const path = new fabric.Path(pathData, {
         fill: null,
         stroke: this.color,
         strokeWidth: this.width,
@@ -255,7 +254,7 @@
       if (points.length <= 2) {
         return points;
       }
-      var zoom = this.canvas.getZoom(), adjustedDistance = Math.pow(distance / zoom, 2),
+      let zoom = this.canvas.getZoom(), adjustedDistance = Math.pow(distance / zoom, 2),
           i, l = points.length - 1, lastPoint = points[0], newPoints = [lastPoint],
           cDistance;
       for (i = 1; i < l - 1; i++) {
@@ -279,12 +278,12 @@
      * and add it to the fabric canvas.
      */
     _finalizeAndAddPath: function() {
-      var ctx = this.canvas.contextTop;
+      const ctx = this.canvas.contextTop;
       ctx.closePath();
       if (this.decimate) {
         this._points = this.decimatePoints(this._points, this.decimate);
       }
-      var pathData = this.convertPointsToSVGPath(this._points);
+      const pathData = this.convertPointsToSVGPath(this._points);
       if (this._isEmptySVGPath(pathData)) {
         // do not create 0 width/height paths, as they are
         // rendered inconsistently across browsers
@@ -294,9 +293,9 @@
         return;
       }
 
-      var path = this.createPath(pathData);
+      const path = this.createPath(pathData);
       this.canvas.clearContext(this.canvas.contextTop);
-      this.canvas.fire('before:path:created', { path: path });
+      this.canvas.fire('before:path:created', {path: path});
       this.canvas.add(path);
       this.canvas.requestRenderAll();
       path.setCoords();
@@ -304,7 +303,7 @@
 
 
       // fire event 'path' created
-      this.canvas.fire('path:created', { path: path });
-    }
+      this.canvas.fire('path:created', {path: path});
+    },
   });
 })();

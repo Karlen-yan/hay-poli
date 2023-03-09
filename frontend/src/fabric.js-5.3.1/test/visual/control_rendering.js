@@ -27,7 +27,7 @@
   fabric.enableGLFiltering = false;
   fabric.isWebglSupported = false;
   fabric.Object.prototype.objectCaching = true;
-  var visualTestLoop;
+  let visualTestLoop;
   if (fabric.isLikelyNode) {
     visualTestLoop = global.visualTestLoop;
   }
@@ -35,10 +35,10 @@
     visualTestLoop = window.visualTestLoop;
   }
 
-  var tests = [];
+  const tests = [];
 
   function defaultControlsRendering(canvas, callback) {
-    var rect = new fabric.Rect({
+    const rect = new fabric.Rect({
       width: 90, height: 90, strokeWidth: 2,
       fill: 'orange', stroke: 'green', top: 55, left: 55,
     });
@@ -60,7 +60,7 @@
   });
 
   function paddingControlsRendering(canvas, callback) {
-    var rect = new fabric.Rect({
+    const rect = new fabric.Rect({
       width: 90, height: 90, strokeWidth: 2, padding: 8,
       fill: 'orange', stroke: 'green', top: 55, left: 55,
     });
@@ -81,7 +81,7 @@
   });
 
   function solidCornerRendering(canvas, callback) {
-    var rect = new fabric.Rect({
+    const rect = new fabric.Rect({
       width: 90, height: 90, strokeWidth: 2, padding: 8,
       transparentCorners: false,
       fill: 'orange', stroke: 'green', top: 55, left: 55,
@@ -104,7 +104,7 @@
 
 
   function circleControls(canvas, callback) {
-    var rect = new fabric.Rect({
+    const rect = new fabric.Rect({
       width: 90, height: 90, strokeWidth: 2, padding: 8,
       cornerStyle: 'circle', cornerColor: 'green',
       fill: 'orange', stroke: 'green', top: 55, left: 55,
@@ -126,7 +126,7 @@
   });
 
   function solidControlsTransparent(canvas, callback) {
-    var rect = new fabric.Rect({
+    const rect = new fabric.Rect({
       width: 90, height: 90, strokeWidth: 2, padding: 8,
       cornerStyle: 'circle', cornerColor: 'red', transparentCorners: false,
       fill: 'orange', stroke: 'green', top: 55, left: 55,
@@ -148,7 +148,7 @@
   });
 
   function corneSizeRect(canvas, callback) {
-    var rect = new fabric.Rect({
+    const rect = new fabric.Rect({
       width: 90, height: 90, strokeWidth: 2, padding: 4,
       cornerSize: 20, cornerColor: 'yellow', transparentCorners: false,
       fill: 'orange', stroke: 'green', top: 55, left: 55,
@@ -170,7 +170,7 @@
   });
 
   function cornerSizeRound(canvas, callback) {
-    var rect = new fabric.Rect({
+    const rect = new fabric.Rect({
       width: 90, height: 90, strokeWidth: 2, padding: 4, cornerStyle: 'circle',
       cornerSize: 20, cornerColor: 'purple', transparentCorners: false,
       fill: 'orange', stroke: 'green', top: 55, left: 55,
@@ -192,7 +192,7 @@
   });
 
   function controlVisibilityTest(canvas, callback) {
-    var rect = new fabric.Rect({
+    const rect = new fabric.Rect({
       width: 90, height: 90, strokeWidth: 2, padding: 4,
       cornerSize: 20, cornerColor: 'blue', transparentCorners: false,
       fill: 'orange', stroke: 'green', top: 55, left: 55,
@@ -216,7 +216,7 @@
   });
 
   function controlsWithFillStroke(canvas, callback) {
-    var rect = new fabric.Rect({
+    const rect = new fabric.Rect({
       width: 90, height: 90, strokeWidth: 2, padding: 4,
       cornerSize: 17, cornerColor: 'green', cornerStrokeColor: 'pink',
       transparentCorners: false, cornerDashArray: [3, 3],
@@ -239,7 +239,7 @@
   });
 
   function controlsWithFillStrokeborderScaleFactor(canvas, callback) {
-    var rect = new fabric.Rect({
+    const rect = new fabric.Rect({
       width: 90, height: 90, strokeWidth: 2, padding: 4,
       cornerSize: 15, cornerColor: 'green', cornerStrokeColor: 'pink',
       transparentCorners: false, cornerDashArray: [3, 3], borderScaleFactor: 3,
@@ -262,7 +262,7 @@
   });
 
   function controlboxFlippedX(canvas, callback) {
-    var rect = new fabric.Rect({
+    const rect = new fabric.Rect({
       width: 90, height: 90, padding: 4, angle: 15, flipX: true,
       cornerSize: 12, cornerColor: 'green', cornerStrokeColor: 'pink',
       transparentCorners: true, borderScaleFactor: 3,

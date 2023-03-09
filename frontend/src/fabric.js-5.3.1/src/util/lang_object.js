@@ -23,7 +23,7 @@
       }
       else if (source instanceof Array) {
         destination = [];
-        for (var i = 0, len = source.length; i < len; i++) {
+        for (let i = 0, len = source.length; i < len; i++) {
           destination[i] = extend({ }, source[i], deep);
         }
       }
@@ -54,14 +54,14 @@
 
   /**
    * Creates an empty object and copies all enumerable properties of another object to it
-   * This method is mostly for internal use, and not intended for duplicating shapes in canvas. 
+   * This method is mostly for internal use, and not intended for duplicating shapes in canvas.
    * @memberOf fabric.util.object
    * @param {Object} object Object to clone
    * @param {Boolean} [deep] Whether to clone nested objects
    * @return {Object}
    */
 
-  //TODO: this function return an empty object if you try to clone null
+  // TODO: this function return an empty object if you try to clone null
   function clone(object, deep) {
     return extend({ }, object, deep);
   }
@@ -69,7 +69,7 @@
   /** @namespace fabric.util.object */
   fabric.util.object = {
     extend: extend,
-    clone: clone
+    clone: clone,
   };
   fabric.util.object.extend(fabric.util, fabric.Observable);
 })();

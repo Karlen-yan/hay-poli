@@ -1,5 +1,5 @@
 (function() {
-  var _join = Array.prototype.join,
+  const _join = Array.prototype.join,
       commandLengths = {
         m: 2,
         l: 2,
@@ -9,14 +9,14 @@
         s: 4,
         q: 4,
         t: 2,
-        a: 7
+        a: 7,
       },
       repeatedCommands = {
         m: 'l',
-        M: 'L'
+        M: 'L',
       };
   function segmentToBezier(th2, th3, cosTh, sinTh, rx, ry, cx1, cy1, mT, fromX, fromY) {
-    var costh2 = fabric.util.cos(th2),
+    const costh2 = fabric.util.cos(th2),
         sinth2 = fabric.util.sin(th2),
         costh3 = fabric.util.cos(th3),
         sinth3 = fabric.util.sin(th3),
@@ -30,7 +30,7 @@
     return ['C',
       cp1X, cp1Y,
       cp2X, cp2Y,
-      toX, toY
+      toX, toY,
     ];
   }
 
@@ -39,7 +39,7 @@
    * http://mozilla.org/MPL/2.0/
    */
   function arcToSegments(toX, toY, rx, ry, large, sweep, rotateX) {
-    var PI = Math.PI, th = rotateX * PI / 180,
+    let PI = Math.PI, th = rotateX * PI / 180,
         sinTh = fabric.util.sin(th),
         cosTh = fabric.util.cos(th),
         fromX = 0, fromY = 0;
@@ -47,14 +47,14 @@
     rx = Math.abs(rx);
     ry = Math.abs(ry);
 
-    var px = -cosTh * toX * 0.5 - sinTh * toY * 0.5,
+    let px = -cosTh * toX * 0.5 - sinTh * toY * 0.5,
         py = -cosTh * toY * 0.5 + sinTh * toX * 0.5,
         rx2 = rx * rx, ry2 = ry * ry, py2 = py * py, px2 = px * px,
         pl = rx2 * ry2 - rx2 * py2 - ry2 * px2,
         root = 0;
 
     if (pl < 0) {
-      var s = Math.sqrt(1 - pl / (rx2 * ry2));
+      const s = Math.sqrt(1 - pl / (rx2 * ry2));
       rx *= s;
       ry *= s;
     }
@@ -63,7 +63,7 @@
               Math.sqrt( pl / (rx2 * py2 + ry2 * px2));
     }
 
-    var cx = root * rx * py / ry,
+    let cx = root * rx * py / ry,
         cy = -root * ry * px / rx,
         cx1 = cosTh * cx - sinTh * cy + toX * 0.5,
         cy1 = sinTh * cx + cosTh * cy + toY * 0.5,
@@ -78,12 +78,12 @@
     }
 
     // Convert into cubic bezier segments <= 90deg
-    var segments = Math.ceil(Math.abs(dtheta / PI * 2)),
+    let segments = Math.ceil(Math.abs(dtheta / PI * 2)),
         result = [], mDelta = dtheta / segments,
         mT = 8 / 3 * Math.sin(mDelta / 4) * Math.sin(mDelta / 4) / Math.sin(mDelta / 2),
         th3 = mTheta + mDelta;
 
-    for (var i = 0; i < segments; i++) {
+    for (let i = 0; i < segments; i++) {
       result[i] = segmentToBezier(mTheta, th3, cosTh, sinTh, rx, ry, cx1, cy1, mT, fromX, fromY);
       fromX = result[i][5];
       fromY = result[i][6];
@@ -97,7 +97,7 @@
    * Private
    */
   function calcVectorAngle(ux, uy, vx, vy) {
-    var ta = Math.atan2(uy, ux),
+    const ta = Math.atan2(uy, ux),
         tb = Math.atan2(vy, vx);
     if (tb >= ta) {
       return tb - ta;
@@ -121,7 +121,7 @@
   // taken from http://jsbin.com/ivomiq/56/edit  no credits available for that.
   // TODO: can we normalize this with the starting points set at 0 and then translated the bbox?
   function getBoundsOfCurve(x0, y0, x1, y1, x2, y2, x3, y3) {
-    var argsString;
+    let argsString;
     if (fabric.cachesBoundsOfCurve) {
       argsString = _join.call(arguments);
       if (fabric.boundsOfCurveCache[argsString]) {
@@ -129,7 +129,7 @@
       }
     }
 
-    var sqrt = Math.sqrt,
+    let sqrt = Math.sqrt,
         min = Math.min, max = Math.max,
         abs = Math.abs, tvalues = [],
         bounds = [[], []],
@@ -139,7 +139,7 @@
     a = -3 * x0 + 9 * x1 - 9 * x2 + 3 * x3;
     c = 3 * x1 - 3 * x0;
 
-    for (var i = 0; i < 2; ++i) {
+    for (let i = 0; i < 2; ++i) {
       if (i > 0) {
         b = 6 * y0 - 12 * y1 + 6 * y2;
         a = -3 * y0 + 9 * y1 - 9 * y2 + 3 * y3;
@@ -171,7 +171,7 @@
       }
     }
 
-    var x, y, j = tvalues.length, jlen = j, mt;
+    let x, y, j = tvalues.length, jlen = j, mt;
     while (j--) {
       t = tvalues[j];
       mt = 1 - t;
@@ -186,15 +186,15 @@
     bounds[1][jlen] = y0;
     bounds[0][jlen + 1] = x3;
     bounds[1][jlen + 1] = y3;
-    var result = [
+    const result = [
       {
         x: min.apply(null, bounds[0]),
-        y: min.apply(null, bounds[1])
+        y: min.apply(null, bounds[1]),
       },
       {
         x: max.apply(null, bounds[0]),
-        y: max.apply(null, bounds[1])
-      }
+        y: max.apply(null, bounds[1]),
+      },
     ];
     if (fabric.cachesBoundsOfCurve) {
       fabric.boundsOfCurveCache[argsString] = result;
@@ -209,7 +209,7 @@
    * @param {Array} coords Arc command
    */
   function fromArcToBeziers(fx, fy, coords) {
-    var rx = coords[1],
+    const rx = coords[1],
         ry = coords[2],
         rot = coords[3],
         large = coords[4],
@@ -218,7 +218,7 @@
         ty = coords[7],
         segsNorm = arcToSegments(tx - fx, ty - fy, rx, ry, large, sweep, rot);
 
-    for (var i = 0, len = segsNorm.length; i < len; i++) {
+    for (let i = 0, len = segsNorm.length; i < len; i++) {
       segsNorm[i][1] += fx;
       segsNorm[i][2] += fy;
       segsNorm[i][3] += fx;
@@ -240,7 +240,7 @@
     // x and y represent the last point of the path. the previous command point.
     // we add them to each relative command to make it an absolute comment.
     // we also swap the v V h H with L, because are easier to transform.
-    var x = 0, y = 0, len = path.length,
+    let x = 0, y = 0, len = path.length,
         // x1 and y1 represent the last point of the subpath. the subpath is started with
         // m or M command. When a z or Z command is drawn, x and y need to be resetted to
         // the last x1 and y1.
@@ -431,17 +431,17 @@
 
   function getPointOnCubicBezierIterator(p1x, p1y, p2x, p2y, p3x, p3y, p4x, p4y) {
     return function(pct) {
-      var c1 = CB1(pct), c2 = CB2(pct), c3 = CB3(pct), c4 = CB4(pct);
+      const c1 = CB1(pct), c2 = CB2(pct), c3 = CB3(pct), c4 = CB4(pct);
       return {
         x: p4x * c1 + p3x * c2 + p2x * c3 + p1x * c4,
-        y: p4y * c1 + p3y * c2 + p2y * c3 + p1y * c4
+        y: p4y * c1 + p3y * c2 + p2y * c3 + p1y * c4,
       };
     };
   }
 
   function getTangentCubicIterator(p1x, p1y, p2x, p2y, p3x, p3y, p4x, p4y) {
-    return function (pct) {
-      var invT = 1 - pct,
+    return function(pct) {
+      const invT = 1 - pct,
           tangentX = (3 * invT * invT * (p2x - p1x)) + (6 * invT * pct * (p3x - p2x)) +
           (3 * pct * pct * (p4x - p3x)),
           tangentY = (3 * invT * invT * (p2y - p1y)) + (6 * invT * pct * (p3y - p2y)) +
@@ -464,17 +464,17 @@
 
   function getPointOnQuadraticBezierIterator(p1x, p1y, p2x, p2y, p3x, p3y) {
     return function(pct) {
-      var c1 = QB1(pct), c2 = QB2(pct), c3 = QB3(pct);
+      const c1 = QB1(pct), c2 = QB2(pct), c3 = QB3(pct);
       return {
         x: p3x * c1 + p2x * c2 + p1x * c3,
-        y: p3y * c1 + p2y * c2 + p1y * c3
+        y: p3y * c1 + p2y * c2 + p1y * c3,
       };
     };
   }
 
   function getTangentQuadraticIterator(p1x, p1y, p2x, p2y, p3x, p3y) {
-    return function (pct) {
-      var invT = 1 - pct,
+    return function(pct) {
+      const invT = 1 - pct,
           tangentX = (2 * invT * (p2x - p1x)) + (2 * pct * (p3x - p2x)),
           tangentY = (2 * invT * (p2y - p1y)) + (2 * pct * (p3y - p2y));
       return Math.atan2(tangentY, tangentX);
@@ -485,7 +485,7 @@
   // this will run over a path segment ( a cubic or quadratic segment) and approximate it
   // with 100 segemnts. This will good enough to calculate the length of the curve
   function pathIterator(iterator, x1, y1) {
-    var tempP = { x: x1, y: y1 }, p, tmpLen = 0, perc;
+    let tempP = {x: x1, y: y1}, p, tmpLen = 0, perc;
     for (perc = 1; perc <= 100; perc += 1) {
       p = iterator(perc / 100);
       tmpLen += calcLineLength(tempP.x, tempP.y, p.x, p.y);
@@ -503,7 +503,7 @@
    * @return {Object} info object with x and y ( the point on canvas ) and angle, the tangent on that point;
    */
   function findPercentageForDistance(segInfo, distance) {
-    var perc = 0, tmpLen = 0, iterator = segInfo.iterator, tempP = { x: segInfo.x, y: segInfo.y },
+    let perc = 0, tmpLen = 0, iterator = segInfo.iterator, tempP = {x: segInfo.x, y: segInfo.y},
         p, nextLen, nextStep = 0.01, angleFinder = segInfo.angleFinder, lastPerc;
     // nextStep > 0.0001 covers 0.00015625 that 1/64th of 1/100
     // the path
@@ -534,18 +534,18 @@
    * @return {Array} path commands informations
    */
   function getPathSegmentsInfo(path) {
-    var totalLength = 0, len = path.length, current,
-        //x2 and y2 are the coords of segment start
-        //x1 and y1 are the coords of the current point
+    let totalLength = 0, len = path.length, current,
+        // x2 and y2 are the coords of segment start
+        // x1 and y1 are the coords of the current point
         x1 = 0, y1 = 0, x2 = 0, y2 = 0, info = [], iterator, tempInfo, angleFinder;
-    for (var i = 0; i < len; i++) {
+    for (let i = 0; i < len; i++) {
       current = path[i];
       tempInfo = {
         x: x1,
         y: y1,
         command: current[0],
       };
-      switch (current[0]) { //first letter
+      switch (current[0]) { // first letter
         case 'M':
           tempInfo.length = 0;
           x2 = x1 = current[1];
@@ -565,7 +565,7 @@
             current[3],
             current[4],
             current[5],
-            current[6]
+            current[6],
           );
           angleFinder = getTangentCubicIterator(
             x1,
@@ -575,7 +575,7 @@
             current[3],
             current[4],
             current[5],
-            current[6]
+            current[6],
           );
           tempInfo.iterator = iterator;
           tempInfo.angleFinder = angleFinder;
@@ -590,7 +590,7 @@
             current[1],
             current[2],
             current[3],
-            current[4]
+            current[4],
           );
           angleFinder = getTangentQuadraticIterator(
             x1,
@@ -598,7 +598,7 @@
             current[1],
             current[2],
             current[3],
-            current[4]
+            current[4],
           );
           tempInfo.iterator = iterator;
           tempInfo.angleFinder = angleFinder;
@@ -619,7 +619,7 @@
       totalLength += tempInfo.length;
       info.push(tempInfo);
     }
-    info.push({ length: totalLength, x: x1, y: y1 });
+    info.push({length: totalLength, x: x1, y: y1});
     return info;
   }
 
@@ -627,30 +627,30 @@
     if (!infos) {
       infos = getPathSegmentsInfo(path);
     }
-    var i = 0;
+    let i = 0;
     while ((distance - infos[i].length > 0) && i < (infos.length - 2)) {
       distance -= infos[i].length;
       i++;
     }
     // var distance = infos[infos.length - 1] * perc;
-    var segInfo = infos[i], segPercent = distance / segInfo.length,
+    let segInfo = infos[i], segPercent = distance / segInfo.length,
         command = segInfo.command, segment = path[i], info;
 
     switch (command) {
       case 'M':
-        return { x: segInfo.x, y: segInfo.y, angle: 0 };
+        return {x: segInfo.x, y: segInfo.y, angle: 0};
       case 'Z':
       case 'z':
         info = new fabric.Point(segInfo.x, segInfo.y).lerp(
           new fabric.Point(segInfo.destX, segInfo.destY),
-          segPercent
+          segPercent,
         );
         info.angle = Math.atan2(segInfo.destY - segInfo.y, segInfo.destX - segInfo.x);
         return info;
       case 'L':
         info = new fabric.Point(segInfo.x, segInfo.y).lerp(
           new fabric.Point(segment[1], segment[2]),
-          segPercent
+          segPercent,
         );
         info.angle = Math.atan2(segment[2] - segInfo.y, segment[1] - segInfo.x);
         return info;
@@ -674,7 +674,7 @@
    *
    */
   function parsePath(pathString) {
-    var result = [],
+    let result = [],
         coords = [],
         currentPath,
         parsed,
@@ -700,7 +700,7 @@
       coordsStr = currentPath.slice(1).trim();
       coords.length = 0;
 
-      var command = currentPath.charAt(0);
+      let command = currentPath.charAt(0);
       coordsParsed = [command];
 
       if (command.toLowerCase() === 'a') {
@@ -724,11 +724,11 @@
         }
       }
 
-      var commandLength = commandLengths[command.toLowerCase()],
+      const commandLength = commandLengths[command.toLowerCase()],
           repeatedCommand = repeatedCommands[command] || command;
 
       if (coordsParsed.length - 1 > commandLength) {
-        for (var k = 1, klen = coordsParsed.length; k < klen; k += commandLength) {
+        for (let k = 1, klen = coordsParsed.length; k < klen; k += commandLength) {
           result.push([command].concat(coordsParsed.slice(k, k + commandLength)));
           command = repeatedCommand;
         }
@@ -749,7 +749,7 @@
    * @return {(string|number)[][]} An array of SVG path commands
    */
   function getSmoothPathFromPoints(points, correction) {
-    var path = [], i,
+    let path = [], i,
         p1 = new fabric.Point(points[0].x, points[0].y),
         p2 = new fabric.Point(points[1].x, points[1].y),
         len = points.length, multSignX = 1, multSignY = 0, manyPoints = len > 2;
@@ -762,7 +762,7 @@
     path.push(['M', p1.x - multSignX * correction, p1.y - multSignY * correction]);
     for (i = 1; i < len; i++) {
       if (!p1.eq(p2)) {
-        var midPoint = p1.midPointFrom(p2);
+        const midPoint = p1.midPointFrom(p2);
         // p1 is our bezier control point
         // midpoint is our endpoint
         // start point is p(i-1) value.
@@ -795,12 +795,12 @@
     if (pathOffset) {
       transform = fabric.util.multiplyTransformMatrices(
         transform,
-        [1, 0, 0, 1, -pathOffset.x, -pathOffset.y]
+        [1, 0, 0, 1, -pathOffset.x, -pathOffset.y],
       );
     }
     return path.map(function(pathSegment) {
-      var newSegment = pathSegment.slice(0), point = {};
-      for (var i = 1; i < pathSegment.length - 1; i += 2) {
+      let newSegment = pathSegment.slice(0), point = {};
+      for (let i = 1; i < pathSegment.length - 1; i += 2) {
         point.x = pathSegment[i];
         point.y = pathSegment[i + 1];
         point = fabric.util.transformPoint(point, transform);
@@ -817,7 +817,7 @@
    * @return {String} joined path 'M 0 0 L 20 30'
    */
   fabric.util.joinPath = function(pathData) {
-    return pathData.map(function (segment) { return segment.join(' '); }).join(' ');
+    return pathData.map(function(segment) {return segment.join(' ');}).join(' ');
   };
   fabric.util.parsePath = parsePath;
   fabric.util.makePathSimpler = makePathSimpler;

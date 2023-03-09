@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric = global.fabric || (global.fabric = { });
+  const fabric = global.fabric || (global.fabric = { });
 
   if (fabric.Color) {
     fabric.warn('fabric.Color is already defined.');
@@ -37,7 +36,7 @@
      * @param {String|Array} color Color value to parse
      */
     _tryParsingColor: function(color) {
-      var source;
+      let source;
 
       if (color in Color.colorNameMap) {
         color = Color.colorNameMap[color];
@@ -57,7 +56,7 @@
         source = Color.sourceFromHsl(color);
       }
       if (!source) {
-        //if color is not recognize let's make black as canvas does
+        // if color is not recognize let's make black as canvas does
         source = [0, 0, 0, 1];
       }
       if (source) {
@@ -76,7 +75,7 @@
     _rgbToHsl: function(r, g, b) {
       r /= 255; g /= 255; b /= 255;
 
-      var h, s, l,
+      let h, s, l,
           max = fabric.util.array.max([r, g, b]),
           min = fabric.util.array.min([r, g, b]);
 
@@ -86,7 +85,7 @@
         h = s = 0; // achromatic
       }
       else {
-        var d = max - min;
+        const d = max - min;
         s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
         switch (max) {
           case r:
@@ -105,7 +104,7 @@
       return [
         Math.round(h * 360),
         Math.round(s * 100),
-        Math.round(l * 100)
+        Math.round(l * 100),
       ];
     },
 
@@ -130,7 +129,7 @@
      * @return {String} ex: rgb(0-255,0-255,0-255)
      */
     toRgb: function() {
-      var source = this.getSource();
+      const source = this.getSource();
       return 'rgb(' + source[0] + ',' + source[1] + ',' + source[2] + ')';
     },
 
@@ -139,7 +138,7 @@
      * @return {String} ex: rgba(0-255,0-255,0-255,0-1)
      */
     toRgba: function() {
-      var source = this.getSource();
+      const source = this.getSource();
       return 'rgba(' + source[0] + ',' + source[1] + ',' + source[2] + ',' + source[3] + ')';
     },
 
@@ -148,7 +147,7 @@
      * @return {String} ex: hsl(0-360,0%-100%,0%-100%)
      */
     toHsl: function() {
-      var source = this.getSource(),
+      const source = this.getSource(),
           hsl = this._rgbToHsl(source[0], source[1], source[2]);
 
       return 'hsl(' + hsl[0] + ',' + hsl[1] + '%,' + hsl[2] + '%)';
@@ -159,7 +158,7 @@
      * @return {String} ex: hsla(0-360,0%-100%,0%-100%,0-1)
      */
     toHsla: function() {
-      var source = this.getSource(),
+      const source = this.getSource(),
           hsl = this._rgbToHsl(source[0], source[1], source[2]);
 
       return 'hsla(' + hsl[0] + ',' + hsl[1] + '%,' + hsl[2] + '%,' + source[3] + ')';
@@ -170,7 +169,7 @@
      * @return {String} ex: FF5555
      */
     toHex: function() {
-      var source = this.getSource(), r, g, b;
+      let source = this.getSource(), r, g, b;
 
       r = source[0].toString(16);
       r = (r.length === 1) ? ('0' + r) : r;
@@ -189,7 +188,7 @@
      * @return {String} ex: FF5555CC
      */
     toHexa: function() {
-      var source = this.getSource(), a;
+      let source = this.getSource(), a;
 
       a = Math.round(source[3] * 255);
       a = a.toString(16);
@@ -212,7 +211,7 @@
      * @return {fabric.Color} thisArg
      */
     setAlpha: function(alpha) {
-      var source = this.getSource();
+      const source = this.getSource();
       source[3] = alpha;
       this.setSource(source);
       return this;
@@ -223,7 +222,7 @@
      * @return {fabric.Color} thisArg
      */
     toGrayscale: function() {
-      var source = this.getSource(),
+      const source = this.getSource(),
           average = parseInt((source[0] * 0.3 + source[1] * 0.59 + source[2] * 0.11).toFixed(0), 10),
           currentAlpha = source[3];
       this.setSource([average, average, average, currentAlpha]);
@@ -236,7 +235,7 @@
      * @return {fabric.Color} thisArg
      */
     toBlackWhite: function(threshold) {
-      var source = this.getSource(),
+      let source = this.getSource(),
           average = (source[0] * 0.3 + source[1] * 0.59 + source[2] * 0.11).toFixed(0),
           currentAlpha = source[3];
 
@@ -257,7 +256,7 @@
         otherColor = new Color(otherColor);
       }
 
-      var result = [],
+      let result = [],
           alpha = this.getAlpha(),
           otherAlpha = 0.5,
           source = this.getSource(),
@@ -270,7 +269,7 @@
       result[3] = alpha;
       this.setSource(result);
       return this;
-    }
+    },
   };
 
   /**
@@ -453,7 +452,7 @@
     white:                '#FFFFFF',
     whitesmoke:           '#F5F5F5',
     yellow:               '#FFFF00',
-    yellowgreen:          '#9ACD32'
+    yellowgreen:          '#9ACD32',
   };
 
   /**
@@ -499,9 +498,9 @@
    * @return {Array} source
    */
   fabric.Color.sourceFromRgb = function(color) {
-    var match = color.match(Color.reRGBa);
+    const match = color.match(Color.reRGBa);
     if (match) {
-      var r = parseInt(match[1], 10) / (/%$/.test(match[1]) ? 100 : 1) * (/%$/.test(match[1]) ? 255 : 1),
+      const r = parseInt(match[1], 10) / (/%$/.test(match[1]) ? 100 : 1) * (/%$/.test(match[1]) ? 255 : 1),
           g = parseInt(match[2], 10) / (/%$/.test(match[2]) ? 100 : 1) * (/%$/.test(match[2]) ? 255 : 1),
           b = parseInt(match[3], 10) / (/%$/.test(match[3]) ? 100 : 1) * (/%$/.test(match[3]) ? 255 : 1);
 
@@ -509,7 +508,7 @@
         parseInt(r, 10),
         parseInt(g, 10),
         parseInt(b, 10),
-        match[4] ? parseFloat(match[4]) : 1
+        match[4] ? parseFloat(match[4]) : 1,
       ];
     }
   };
@@ -543,12 +542,12 @@
    * @see http://http://www.w3.org/TR/css3-color/#hsl-color
    */
   fabric.Color.sourceFromHsl = function(color) {
-    var match = color.match(Color.reHSLa);
+    const match = color.match(Color.reHSLa);
     if (!match) {
       return;
     }
 
-    var h = (((parseFloat(match[1]) % 360) + 360) % 360) / 360,
+    let h = (((parseFloat(match[1]) % 360) + 360) % 360) / 360,
         s = parseFloat(match[2]) / (/%$/.test(match[2]) ? 100 : 1),
         l = parseFloat(match[3]) / (/%$/.test(match[3]) ? 100 : 1),
         r, g, b;
@@ -557,7 +556,7 @@
       r = g = b = l;
     }
     else {
-      var q = l <= 0.5 ? l * (s + 1) : l + s - l * s,
+      const q = l <= 0.5 ? l * (s + 1) : l + s - l * s,
           p = l * 2 - q;
 
       r = hue2rgb(p, q, h + 1 / 3);
@@ -569,7 +568,7 @@
       Math.round(r * 255),
       Math.round(g * 255),
       Math.round(b * 255),
-      match[4] ? parseFloat(match[4]) : 1
+      match[4] ? parseFloat(match[4]) : 1,
     ];
   };
 
@@ -603,7 +602,7 @@
    */
   fabric.Color.sourceFromHex = function(color) {
     if (color.match(Color.reHex)) {
-      var value = color.slice(color.indexOf('#') + 1),
+      const value = color.slice(color.indexOf('#') + 1),
           isShortNotation = (value.length === 3 || value.length === 4),
           isRGBa = (value.length === 8 || value.length === 4),
           r = isShortNotation ? (value.charAt(0) + value.charAt(0)) : value.substring(0, 2),
@@ -615,7 +614,7 @@
         parseInt(r, 16),
         parseInt(g, 16),
         parseInt(b, 16),
-        parseFloat((parseInt(a, 16) / 255).toFixed(2))
+        parseFloat((parseInt(a, 16) / 255).toFixed(2)),
       ];
     }
   };
@@ -628,9 +627,8 @@
    * @return {fabric.Color}
    */
   fabric.Color.fromSource = function(source) {
-    var oColor = new Color();
+    const oColor = new Color();
     oColor.setSource(source);
     return oColor;
   };
-
 })(typeof exports !== 'undefined' ? exports : this);

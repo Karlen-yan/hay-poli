@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var extend = fabric.util.object.extend;
+  const extend = fabric.util.object.extend;
 
   if (!global.fabric) {
     global.fabric = { };
@@ -193,7 +192,7 @@
      * Delete a single texture if in webgl mode
      */
     removeTexture: function(key) {
-      var backend = fabric.filterBackend;
+      const backend = fabric.filterBackend;
       if (backend && backend.evictCachesForKey) {
         backend.evictCachesForKey(key);
       }
@@ -202,7 +201,7 @@
     /**
      * Delete textures, reference to elements and eventually JSDOM cleanup
      */
-    dispose: function () {
+    dispose: function() {
       this.callSuper('dispose');
       this.removeTexture(this.cacheKey);
       this.removeTexture(this.cacheKey + '_filtered');
@@ -225,10 +224,10 @@
      * @return {Object} Object with "width" and "height" properties
      */
     getOriginalSize: function() {
-      var element = this.getElement();
+      const element = this.getElement();
       return {
         width: element.naturalWidth || element.width,
-        height: element.naturalHeight || element.height
+        height: element.naturalHeight || element.height,
       };
     },
 
@@ -240,7 +239,7 @@
       if (!this.stroke || this.strokeWidth === 0) {
         return;
       }
-      var w = this.width / 2, h = this.height / 2;
+      const w = this.width / 2, h = this.height / 2;
       ctx.beginPath();
       ctx.moveTo(-w, -h);
       ctx.lineTo(w, -h);
@@ -256,17 +255,17 @@
      * @return {Object} Object representation of an instance
      */
     toObject: function(propertiesToInclude) {
-      var filters = [];
+      const filters = [];
 
       this.filters.forEach(function(filterObj) {
         if (filterObj) {
           filters.push(filterObj.toObject());
         }
       });
-      var object = extend(
+      const object = extend(
         this.callSuper(
           'toObject',
-          ['cropX', 'cropY'].concat(propertiesToInclude)
+          ['cropX', 'cropY'].concat(propertiesToInclude),
         ), {
           src: this.getSrc(),
           crossOrigin: this.getCrossOrigin(),
@@ -293,17 +292,17 @@
      * of the instance
      */
     _toSVG: function() {
-      var svgString = [], imageMarkup = [], strokeSvg, element = this._element,
+      let svgString = [], imageMarkup = [], strokeSvg, element = this._element,
           x = -this.width / 2, y = -this.height / 2, clipPath = '', imageRendering = '';
       if (!element) {
         return [];
       }
       if (this.hasCrop()) {
-        var clipPathId = fabric.Object.__uid++;
+        const clipPathId = fabric.Object.__uid++;
         svgString.push(
           '<clipPath id="imageCrop_' + clipPathId + '">\n',
           '\t<rect x="' + x + '" y="' + y + '" width="' + this.width + '" height="' + this.height + '" />\n',
-          '</clipPath>\n'
+          '</clipPath>\n',
         );
         clipPath = ' clip-path="url(#imageCrop_' + clipPathId + ')" ';
       }
@@ -322,14 +321,14 @@
         '></image>\n');
 
       if (this.stroke || this.strokeDashArray) {
-        var origFill = this.fill;
+        const origFill = this.fill;
         this.fill = null;
         strokeSvg = [
           '\t<rect ',
           'x="', x, '" y="', y,
           '" width="', this.width, '" height="', this.height,
           '" style="', this.getSvgStyles(),
-          '"/>\n'
+          '"/>\n',
         ];
         this.fill = origFill;
       }
@@ -349,7 +348,7 @@
      * @return {String} Source of an image
      */
     getSrc: function(filtered) {
-      var element = filtered ? this._element : this._originalElement;
+      const element = filtered ? this._element : this._originalElement;
       if (element) {
         if (element.toDataURL) {
           return element.toDataURL();
@@ -395,7 +394,7 @@
     },
 
     applyResizeFilters: function() {
-      var filter = this.resizeFilter,
+      const filter = this.resizeFilter,
           minimumScale = this.minimumScaleTrigger,
           objectScale = this.getTotalObjectScaling(),
           scaleX = objectScale.scaleX,
@@ -415,7 +414,7 @@
       if (!fabric.filterBackend) {
         fabric.filterBackend = fabric.initFilterBackend();
       }
-      var canvasEl = fabric.util.createCanvasElement(),
+      const canvasEl = fabric.util.createCanvasElement(),
           cacheKey = this._filteredEl ? (this.cacheKey + '_filtered') : this.cacheKey,
           sourceWidth = elementToFilter.width, sourceHeight = elementToFilter.height;
       canvasEl.width = sourceWidth;
@@ -438,9 +437,8 @@
      * @chainable
      */
     applyFilters: function(filters) {
-
       filters = filters || this.filters || [];
-      filters = filters.filter(function(filter) { return filter && !filter.isNeutralState(); });
+      filters = filters.filter(function(filter) {return filter && !filter.isNeutralState();});
       this.set('dirty', true);
 
       // needs to clear out or WEBGL will not resize correctly
@@ -454,13 +452,13 @@
         return this;
       }
 
-      var imgElement = this._originalElement,
+      const imgElement = this._originalElement,
           sourceWidth = imgElement.naturalWidth || imgElement.width,
           sourceHeight = imgElement.naturalHeight || imgElement.height;
 
       if (this._element === this._originalElement) {
         // if the element is the same we need to create a new element
-        var canvasEl = fabric.util.createCanvasElement();
+        const canvasEl = fabric.util.createCanvasElement();
         canvasEl.width = sourceWidth;
         canvasEl.height = sourceHeight;
         this._element = canvasEl;
@@ -527,11 +525,11 @@
     },
 
     _renderFill: function(ctx) {
-      var elementToDraw = this._element;
+      const elementToDraw = this._element;
       if (!elementToDraw) {
         return;
       }
-      var scaleX = this._filterScalingX, scaleY = this._filterScalingY,
+      const scaleX = this._filterScalingX, scaleY = this._filterScalingY,
           w = this.width, h = this.height, min = Math.min, max = Math.max,
           // crop values cannot be lesser than 0.
           cropX = max(this.cropX, 0), cropY = max(this.cropY, 0),
@@ -554,7 +552,7 @@
      * @private
      */
     _needsResize: function() {
-      var scale = this.getTotalObjectScaling();
+      const scale = this.getTotalObjectScaling();
       return (scale.scaleX !== this._lastScaleX || scale.scaleY !== this._lastScaleY);
     },
 
@@ -611,7 +609,7 @@
      */
     _setWidthHeight: function(options) {
       options || (options = { });
-      var el = this.getElement();
+      const el = this.getElement();
       this.width = options.width || el.naturalWidth || el.width || 0;
       this.height = options.height || el.naturalHeight || el.height || 0;
     },
@@ -623,10 +621,10 @@
      * @return {Object}
      */
     parsePreserveAspectRatioAttribute: function() {
-      var pAR = fabric.util.parsePreserveAspectRatioAttribute(this.preserveAspectRatio || ''),
+      let pAR = fabric.util.parsePreserveAspectRatioAttribute(this.preserveAspectRatio || ''),
           rWidth = this._element.width, rHeight = this._element.height,
           scaleX = 1, scaleY = 1, offsetLeft = 0, offsetTop = 0, cropX = 0, cropY = 0,
-          offset, pWidth = this.width, pHeight = this.height, parsedAttributes = { width: pWidth, height: pHeight };
+          offset, pWidth = this.width, pHeight = this.height, parsedAttributes = {width: pWidth, height: pHeight};
       if (pAR && (pAR.alignX !== 'none' || pAR.alignY !== 'none')) {
         if (pAR.meetOrSlice === 'meet') {
           scaleX = scaleY = fabric.util.findScaleToFit(this._element, parsedAttributes);
@@ -677,9 +675,9 @@
         offsetLeft: offsetLeft,
         offsetTop: offsetTop,
         cropX: cropX,
-        cropY: cropY
+        cropY: cropY,
       };
-    }
+    },
   });
 
   /**
@@ -703,7 +701,7 @@
    * @param {Function} callback Callback to invoke when an image instance is created
    */
   fabric.Image.fromObject = function(_object, callback) {
-    var object = fabric.util.object.clone(_object);
+    const object = fabric.util.object.clone(_object);
     fabric.util.loadImage(object.src, function(img, isError) {
       if (isError) {
         callback && callback(null, true);
@@ -713,8 +711,8 @@
         object.filters = filters || [];
         fabric.Image.prototype._initFilters.call(object, [object.resizeFilter], function(resizeFilters) {
           object.resizeFilter = resizeFilters[0];
-          fabric.util.enlivenObjectEnlivables(object, object, function () {
-            var image = new fabric.Image(img, object);
+          fabric.util.enlivenObjectEnlivables(object, object, function() {
+            const image = new fabric.Image(img, object);
             callback(image, false);
           });
         });
@@ -743,7 +741,7 @@
    */
   fabric.Image.ATTRIBUTE_NAMES =
     fabric.SHARED_ATTRIBUTES.concat(
-      'x y width height preserveAspectRatio xlink:href crossOrigin image-rendering'.split(' ')
+      'x y width height preserveAspectRatio xlink:href crossOrigin image-rendering'.split(' '),
     );
 
   /**
@@ -755,10 +753,9 @@
    * @return {fabric.Image} Instance of fabric.Image
    */
   fabric.Image.fromElement = function(element, callback, options) {
-    var parsedAttributes = fabric.parseAttributes(element, fabric.Image.ATTRIBUTE_NAMES);
+    const parsedAttributes = fabric.parseAttributes(element, fabric.Image.ATTRIBUTE_NAMES);
     fabric.Image.fromURL(parsedAttributes['xlink:href'], callback,
       extend((options ? fabric.util.object.clone(options) : { }), parsedAttributes));
   };
   /* _FROM_SVG_END_ */
-
 })(typeof exports !== 'undefined' ? exports : this);

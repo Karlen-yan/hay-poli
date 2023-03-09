@@ -1,7 +1,7 @@
 (function() {
   QUnit.module('fabric.util - path.js');
   // eslint-disable-next-line max-len
-  var path = 'M 2 5 l 2 -2 L 4 4 h 3 H 9 C 8 3 10 3 10 3 c 1 -1 2 0 1 1 S 8 5 9 7 v 1 s 2 -1 1 2 Q 9 10 10 11 T 12 11 t -1 -1 v 2 T 10 12 S 9 12 7 11 c 0 -1 0 -1 -2 -2 z m 0 2 l 1 0 l 0 1 l -1 0 z M 1 1 a 1 1 30 1 0 2 2 A 2 2 30 1 0 6 6';
+  const path = 'M 2 5 l 2 -2 L 4 4 h 3 H 9 C 8 3 10 3 10 3 c 1 -1 2 0 1 1 S 8 5 9 7 v 1 s 2 -1 1 2 Q 9 10 10 11 T 12 11 t -1 -1 v 2 T 10 12 S 9 12 7 11 c 0 -1 0 -1 -2 -2 z m 0 2 l 1 0 l 0 1 l -1 0 z M 1 1 a 1 1 30 1 0 2 2 A 2 2 30 1 0 6 6';
   // eslint-disable-next-line
   var expectedParse = [['M',2,5],['l',2,-2],['L',4,4],['h',3],['H',9],['C',8,3,10,3,10,3],['c',1,-1,2,0,1,1],['S',8,5,9,7],['v',1],['s',2,-1,1,2],['Q',9,10,10,11],['T',12,11],['t',-1,-1],['v',2],['T',10,12],['S',9,12,7,11],['c',0,-1,0,-1,-2,-2],['z'],['m',0,2],['l',1,0],['l',0,1],['l',-1,0],['z'],['M', 1, 1], ['a', 1, 1, 30, 1, 0, 2, 2],['A', 2,2,30,1,0,6,6]];
   // eslint-disable-next-line
@@ -9,11 +9,11 @@
   QUnit.test('fabric.util.parsePath', function(assert) {
     assert.ok(typeof fabric.util.parsePath === 'function');
     assert.ok(typeof fabric.util.makePathSimpler === 'function');
-    var parsed = fabric.util.parsePath(path);
+    const parsed = fabric.util.parsePath(path);
     parsed.forEach(function(command, index) {
       assert.deepEqual(command, expectedParse[index], 'should be parsed in an array of commands ' + index);
     });
-    var simplified = fabric.util.makePathSimpler(parsed);
+    const simplified = fabric.util.makePathSimpler(parsed);
     simplified.forEach(function(command, index) {
       if (index > 23) {
         // because firefox i have no idea.
@@ -24,16 +24,16 @@
   });
   QUnit.test('fabric.util.parsePath can parse arcs correctly when no spaces between flags', function(assert) {
     // eslint-disable-next-line max-len
-    var pathWithWeirdArc = 'a10.56 10.56 0 00-1.484-.133';
-    var expected = ['a', 10.56, 10.56, 0, 0, 0, -1.484, -0.133];
-    var parsed = fabric.util.parsePath(pathWithWeirdArc);
-    var command = parsed[0];
+    const pathWithWeirdArc = 'a10.56 10.56 0 00-1.484-.133';
+    const expected = ['a', 10.56, 10.56, 0, 0, 0, -1.484, -0.133];
+    const parsed = fabric.util.parsePath(pathWithWeirdArc);
+    const command = parsed[0];
     assert.deepEqual(command, expected, 'Arc should be parsed correctly.');
   });
   QUnit.test('fabric.util.getPathSegmentsInfo', function(assert) {
     assert.ok(typeof fabric.util.getPathSegmentsInfo === 'function');
-    var parsed = fabric.util.makePathSimpler(fabric.util.parsePath(path));
-    var infos = fabric.util.getPathSegmentsInfo(parsed);
+    const parsed = fabric.util.makePathSimpler(fabric.util.parsePath(path));
+    const infos = fabric.util.getPathSegmentsInfo(parsed);
     assert.deepEqual(infos[0].length, 0, 'the command 0 a M has a length 0');
     assert.deepEqual(infos[1].length, 2.8284271247461903, 'the command 1 a L has a length 2.82');
     assert.deepEqual(infos[2].length, 1, 'the command 2 a L with one step on Y has a length 1');
@@ -50,8 +50,8 @@
 
   QUnit.test('fabric.util.getPathSegmentsInfo test Z command', function(assert) {
     assert.ok(typeof fabric.util.getPathSegmentsInfo === 'function');
-    var parsed = fabric.util.makePathSimpler(fabric.util.parsePath('M 0 0 h 20, v 20 L 0, 20 Z'));
-    var infos = fabric.util.getPathSegmentsInfo(parsed);
+    const parsed = fabric.util.makePathSimpler(fabric.util.parsePath('M 0 0 h 20, v 20 L 0, 20 Z'));
+    const infos = fabric.util.getPathSegmentsInfo(parsed);
     assert.deepEqual(infos[0].length, 0, 'the command 0 a M has a length 0');
     assert.deepEqual(infos[1].length, 20, 'the command 1 a L has length 20');
     assert.deepEqual(infos[2].length, 20, 'the command 2 a L has length 20');

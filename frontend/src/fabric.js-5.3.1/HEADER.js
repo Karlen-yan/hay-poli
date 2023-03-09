@@ -1,12 +1,12 @@
-/*! Fabric.js Copyright 2008-2015, Printio (Juriy Zaytsev, Maxim Chernyak) */
+/* ! Fabric.js Copyright 2008-2015, Printio (Juriy Zaytsev, Maxim Chernyak) */
 
-var fabric = fabric || { version: '5.3.0' };
+var fabric = fabric || {version: '5.3.0'};
 if (typeof exports !== 'undefined') {
   exports.fabric = fabric;
 }
 /* _AMD_START_ */
 else if (typeof define === 'function' && define.amd) {
-  define([], function() { return fabric; });
+  define([], function() {return fabric;});
 }
 /* _AMD_END_ */
 if (typeof document !== 'undefined' && typeof window !== 'undefined') {
@@ -20,14 +20,14 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 }
 else {
   // assume we're running under node.js when document/window are not present
-  var jsdom = require('jsdom');
-  var virtualWindow = new jsdom.JSDOM(
+  const jsdom = require('jsdom');
+  const virtualWindow = new jsdom.JSDOM(
     decodeURIComponent('%3C!DOCTYPE%20html%3E%3Chtml%3E%3Chead%3E%3C%2Fhead%3E%3Cbody%3E%3C%2Fbody%3E%3C%2Fhtml%3E'),
     {
       features: {
-        FetchExternalResources: ['img']
+        FetchExternalResources: ['img'],
       },
-      resources: 'usable'
+      resources: 'usable',
     }).window;
   fabric.document = virtualWindow.document;
   fabric.jsdomImplForWrapper = require('jsdom/lib/jsdom/living/generated/utils').implForWrapper;
@@ -195,7 +195,7 @@ fabric.forceGLPutImageData = false;
 fabric.initFilterBackend = function() {
   if (fabric.enableGLFiltering && fabric.isWebglSupported && fabric.isWebglSupported(fabric.textureSize)) {
     console.log('max texture size: ' + fabric.maxTextureSize);
-    return (new fabric.WebglFilterBackend({ tileSize: fabric.textureSize }));
+    return (new fabric.WebglFilterBackend({tileSize: fabric.textureSize}));
   }
   else if (fabric.Canvas2dFilterBackend) {
     return (new fabric.Canvas2dFilterBackend());

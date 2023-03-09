@@ -11,7 +11,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
     this.hiddenTextarea.setAttribute('spellcheck', 'false');
     this.hiddenTextarea.setAttribute('data-fabric-hiddentextarea', '');
     this.hiddenTextarea.setAttribute('wrap', 'off');
-    var style = this._calcTextareaPosition();
+    const style = this._calcTextareaPosition();
     // line-height: 1px; was removed from the style to fix this:
     // https://bugs.chromium.org/p/chromium/issues/detail?id=870966
     this.hiddenTextarea.style.cssText = 'position: absolute; top: ' + style.top +
@@ -83,14 +83,14 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
    */
   ctrlKeysMapUp: {
     67: 'copy',
-    88: 'cut'
+    88: 'cut',
   },
 
   /**
    * For functionalities on keyDown + ctrl || cmd
    */
   ctrlKeysMapDown: {
-    65: 'selectAll'
+    65: 'selectAll',
   },
 
   onClick: function() {
@@ -107,7 +107,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
     if (!this.isEditing) {
       return;
     }
-    var keyMap = this.direction === 'rtl' ? this.keysMapRtl : this.keysMap;
+    const keyMap = this.direction === 'rtl' ? this.keysMapRtl : this.keysMap;
     if (e.keyCode in keyMap) {
       this[keyMap[e.keyCode]](e);
     }
@@ -157,14 +157,14 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
    * @param {Event} e Event object
    */
   onInput: function(e) {
-    var fromPaste = this.fromPaste;
+    const fromPaste = this.fromPaste;
     this.fromPaste = false;
     e && e.stopPropagation();
     if (!this.isEditing) {
       return;
     }
     // decisions about style changes.
-    var nextText = this._splitTextIntoLines(this.hiddenTextarea.value).graphemeText,
+    let nextText = this._splitTextIntoLines(this.hiddenTextarea.value).graphemeText,
         charCount = this._text.length,
         nextCharCount = nextText.length,
         removedText, insertedText,
@@ -177,18 +177,18 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
       this.updateFromTextArea();
       this.fire('changed');
       if (this.canvas) {
-        this.canvas.fire('text:changed', { target: this });
+        this.canvas.fire('text:changed', {target: this});
         this.canvas.requestRenderAll();
       }
       return;
     }
 
-    var textareaSelection = this.fromStringToGraphemeSelection(
+    const textareaSelection = this.fromStringToGraphemeSelection(
       this.hiddenTextarea.selectionStart,
       this.hiddenTextarea.selectionEnd,
-      this.hiddenTextarea.value
+      this.hiddenTextarea.value,
     );
-    var backDelete = selectionStart > textareaSelection.selectionStart;
+    const backDelete = selectionStart > textareaSelection.selectionStart;
 
     if (selection) {
       removedText = this._text.slice(selectionStart, selectionEnd);
@@ -240,7 +240,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
     this.updateFromTextArea();
     this.fire('changed');
     if (this.canvas) {
-      this.canvas.fire('text:changed', { target: this });
+      this.canvas.fire('text:changed', {target: this});
       this.canvas.requestRenderAll();
     }
   },
@@ -273,7 +273,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
    */
   copy: function() {
     if (this.selectionStart === this.selectionEnd) {
-      //do not cut-copy if no selection
+      // do not cut-copy if no selection
       return;
     }
 
@@ -312,7 +312,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
    * @return {Number} widthBeforeCursor width before cursor
    */
   _getWidthBeforeCursor: function(lineIndex, charIndex) {
-    var widthBeforeCursor = this._getLineLeftOffset(lineIndex), bound;
+    let widthBeforeCursor = this._getLineLeftOffset(lineIndex), bound;
 
     if (charIndex > 0) {
       bound = this.__charBounds[lineIndex][charIndex - 1];
@@ -328,7 +328,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
    * @return {Number}
    */
   getDownCursorOffset: function(e, isRight) {
-    var selectionProp = this._getSelectionForOffset(e, isRight),
+    const selectionProp = this._getSelectionForOffset(e, isRight),
         cursorLocation = this.get2DCursorLocation(selectionProp),
         lineIndex = cursorLocation.lineIndex;
     // if on last line, down cursor goes to end of line
@@ -336,7 +336,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
       // move to the end of a text
       return this._text.length - selectionProp;
     }
-    var charIndex = cursorLocation.charIndex,
+    const charIndex = cursorLocation.charIndex,
         widthBeforeCursor = this._getWidthBeforeCursor(lineIndex, charIndex),
         indexOnOtherLine = this._getIndexOnLine(lineIndex + 1, widthBeforeCursor),
         textAfterCursor = this._textLines[lineIndex].slice(charIndex);
@@ -365,21 +365,21 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
    * @return {Number}
    */
   getUpCursorOffset: function(e, isRight) {
-    var selectionProp = this._getSelectionForOffset(e, isRight),
+    const selectionProp = this._getSelectionForOffset(e, isRight),
         cursorLocation = this.get2DCursorLocation(selectionProp),
         lineIndex = cursorLocation.lineIndex;
     if (lineIndex === 0 || e.metaKey || e.keyCode === 33) {
       // if on first line, up cursor goes to start of line
       return -selectionProp;
     }
-    var charIndex = cursorLocation.charIndex,
+    const charIndex = cursorLocation.charIndex,
         widthBeforeCursor = this._getWidthBeforeCursor(lineIndex, charIndex),
         indexOnOtherLine = this._getIndexOnLine(lineIndex - 1, widthBeforeCursor),
         textBeforeCursor = this._textLines[lineIndex].slice(0, charIndex),
         missingNewlineOffset = this.missingNewlineOffset(lineIndex - 1);
     // return a negative offset
-    return -this._textLines[lineIndex - 1].length
-     + indexOnOtherLine - textBeforeCursor.length + (1 - missingNewlineOffset);
+    return -this._textLines[lineIndex - 1].length +
+     indexOnOtherLine - textBeforeCursor.length + (1 - missingNewlineOffset);
   },
 
   /**
@@ -387,18 +387,17 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
    * @private
    */
   _getIndexOnLine: function(lineIndex, width) {
-
-    var line = this._textLines[lineIndex],
+    let line = this._textLines[lineIndex],
         lineLeftOffset = this._getLineLeftOffset(lineIndex),
         widthOfCharsOnLine = lineLeftOffset,
         indexOnLine = 0, charWidth, foundMatch;
 
-    for (var j = 0, jlen = line.length; j < jlen; j++) {
+    for (let j = 0, jlen = line.length; j < jlen; j++) {
       charWidth = this.__charBounds[lineIndex][j].width;
       widthOfCharsOnLine += charWidth;
       if (widthOfCharsOnLine > width) {
         foundMatch = true;
-        var leftEdge = widthOfCharsOnLine - charWidth,
+        const leftEdge = widthOfCharsOnLine - charWidth,
             rightEdge = widthOfCharsOnLine,
             offsetFromLeftEdge = Math.abs(leftEdge - width),
             offsetFromRightEdge = Math.abs(rightEdge - width);
@@ -447,7 +446,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
   _moveCursorUpOrDown: function(direction, e) {
     // getUpCursorOffset
     // getDownCursorOffset
-    var action = 'get' + direction + 'CursorOffset',
+    const action = 'get' + direction + 'CursorOffset',
         offset = this[action](e, this._selectionDirection === 'right');
     if (e.shiftKey) {
       this.moveCursorWithShift(offset);
@@ -470,9 +469,9 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
    * @param {Number} offset
    */
   moveCursorWithShift: function(offset) {
-    var newSelection = this._selectionDirection === 'left'
-      ? this.selectionStart + offset
-      : this.selectionEnd + offset;
+    const newSelection = this._selectionDirection === 'left' ?
+      this.selectionStart + offset :
+      this.selectionEnd + offset;
     this.setSelectionStartEndWithShift(this.selectionStart, this.selectionEnd, newSelection);
     return offset !== 0;
   },
@@ -509,11 +508,11 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
    * @return {Boolean} true if a change happened
    */
   _move: function(e, prop, direction) {
-    var newValue;
+    let newValue;
     if (e.altKey) {
       newValue = this['findWordBoundary' + direction](this[prop]);
     }
-    else if (e.metaKey || e.keyCode === 35 ||  e.keyCode === 36 ) {
+    else if (e.metaKey || e.keyCode === 35 || e.keyCode === 36 ) {
       newValue = this['findLineBoundary' + direction](this[prop]);
     }
     else {
@@ -545,14 +544,13 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
    * @param {Event} e
    */
   moveCursorLeftWithoutShift: function(e) {
-    var change = true;
+    let change = true;
     this._selectionDirection = 'left';
 
     // only move cursor when there is no selection,
     // otherwise we discard it, and leave cursor on same place
     if (this.selectionEnd === this.selectionStart && this.selectionStart !== 0) {
       change = this._moveLeft(e, 'selectionStart');
-
     }
     this.selectionEnd = this.selectionStart;
     return change;
@@ -566,7 +564,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
     if (this._selectionDirection === 'right' && this.selectionStart !== this.selectionEnd) {
       return this._moveLeft(e, 'selectionEnd');
     }
-    else if (this.selectionStart !== 0){
+    else if (this.selectionStart !== 0) {
       this._selectionDirection = 'left';
       return this._moveLeft(e, 'selectionStart');
     }
@@ -589,7 +587,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
    * @param {Event} e Event object
    */
   _moveCursorLeftOrRight: function(direction, e) {
-    var actionName = 'moveCursor' + direction + 'With';
+    let actionName = 'moveCursor' + direction + 'With';
     this._currentCursorOpacity = 1;
 
     if (e.shiftKey) {
@@ -625,7 +623,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
    * @param {Event} e Event object
    */
   moveCursorRightWithoutShift: function(e) {
-    var changed = true;
+    let changed = true;
     this._selectionDirection = 'right';
 
     if (this.selectionStart === this.selectionEnd) {
@@ -679,7 +677,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
     if (end > start) {
       this.removeStyleFromTo(start, end);
     }
-    var graphemes = fabric.util.string.graphemeSplit(text);
+    const graphemes = fabric.util.string.graphemeSplit(text);
     this.insertNewStyleBlock(graphemes, start, style);
     this._text = [].concat(this._text.slice(0, start), graphemes, this._text.slice(end));
     this.text = this._text.join('');

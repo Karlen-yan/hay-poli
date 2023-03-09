@@ -1,5 +1,4 @@
-(function () {
-
+(function() {
   'use strict';
 
   if (fabric.StaticCanvas) {
@@ -8,7 +7,7 @@
   }
 
   // aliases for faster resolution
-  var extend = fabric.util.object.extend,
+  const extend = fabric.util.object.extend,
       getElementOffset = fabric.util.getElementOffset,
       removeFromArray = fabric.util.removeFromArray,
       toFixed = fabric.util.toFixed,
@@ -204,7 +203,7 @@
      * @param {Object} [options] Options object
      */
     _initStatic: function(el, options) {
-      var cb = this.requestRenderAllBound;
+      const cb = this.requestRenderAllBound;
       this._objects = [];
       this._createLowerCanvas(el);
       this._initOptions(options);
@@ -250,7 +249,7 @@
       if (!this._isRetinaScaling()) {
         return;
       }
-      var scaleRatio = fabric.devicePixelRatio;
+      const scaleRatio = fabric.devicePixelRatio;
       this.__initRetinaScaling(scaleRatio, this.lowerCanvasEl, this.contextContainer);
       if (this.upperCanvasEl) {
         this.__initRetinaScaling(scaleRatio, this.upperCanvasEl, this.contextTop);
@@ -270,7 +269,7 @@
      * @return {fabric.Canvas} instance
      * @chainable
      */
-    calcOffset: function () {
+    calcOffset: function() {
       this._offset = getElementOffset(this.lowerCanvasEl);
       return this;
     },
@@ -322,7 +321,7 @@
      *   crossOrigin: 'anonymous'
      * });
      */
-    setOverlayImage: function (image, callback, options) {
+    setOverlayImage: function(image, callback, options) {
       return this.__setBgOverlayImage('overlayImage', image, callback, options);
     },
 
@@ -374,7 +373,7 @@
      * });
      */
     // TODO: fix stretched examples
-    setBackgroundImage: function (image, callback, options) {
+    setBackgroundImage: function(image, callback, options) {
       return this.__setBgOverlayImage('backgroundImage', image, callback, options);
     },
 
@@ -440,7 +439,7 @@
       if (typeof image === 'string') {
         fabric.util.loadImage(image, function(img, isError) {
           if (img) {
-            var instance = new fabric.Image(img, options);
+            const instance = new fabric.Image(img, options);
             this[property] = instance;
             instance.canvas = this;
           }
@@ -475,7 +474,7 @@
      * @private
      */
     _createCanvasElement: function() {
-      var element = createCanvasElement();
+      const element = createCanvasElement();
       if (!element) {
         throw CANVAS_INIT_ERROR;
       }
@@ -492,8 +491,8 @@
      * @private
      * @param {Object} [options] Options object
      */
-    _initOptions: function (options) {
-      var lowerCanvasEl = this.lowerCanvasEl;
+    _initOptions: function(options) {
+      const lowerCanvasEl = this.lowerCanvasEl;
       this._setOptions(options);
 
       this.width = this.width || parseInt(lowerCanvasEl.width, 10) || 0;
@@ -517,7 +516,7 @@
      * @private
      * @param {HTMLElement} [canvasEl]
      */
-    _createLowerCanvas: function (canvasEl) {
+    _createLowerCanvas: function(canvasEl) {
       // canvasEl === 'HTMLCanvasElement' does not work on jsdom/node
       if (canvasEl && canvasEl.getContext) {
         this.lowerCanvasEl = canvasEl;
@@ -539,7 +538,7 @@
      * Returns canvas width (in px)
      * @return {Number}
      */
-    getWidth: function () {
+    getWidth: function() {
       return this.width;
     },
 
@@ -547,7 +546,7 @@
      * Returns canvas height (in px)
      * @return {Number}
      */
-    getHeight: function () {
+    getHeight: function() {
       return this.height;
     },
 
@@ -560,8 +559,8 @@
      * @return {fabric.Canvas} instance
      * @chainable true
      */
-    setWidth: function (value, options) {
-      return this.setDimensions({ width: value }, options);
+    setWidth: function(value, options) {
+      return this.setDimensions({width: value}, options);
     },
 
     /**
@@ -573,8 +572,8 @@
      * @return {fabric.Canvas} instance
      * @chainable true
      */
-    setHeight: function (value, options) {
-      return this.setDimensions({ height: value }, options);
+    setHeight: function(value, options) {
+      return this.setDimensions({height: value}, options);
     },
 
     /**
@@ -588,12 +587,12 @@
      * @return {fabric.Canvas} thisArg
      * @chainable
      */
-    setDimensions: function (dimensions, options) {
-      var cssValue;
+    setDimensions: function(dimensions, options) {
+      let cssValue;
 
       options = options || {};
 
-      for (var prop in dimensions) {
+      for (const prop in dimensions) {
         cssValue = dimensions[prop];
 
         if (!options.cssOnly) {
@@ -627,7 +626,7 @@
      * @return {fabric.Canvas} instance
      * @chainable true
      */
-    _setBackstoreDimension: function (prop, value) {
+    _setBackstoreDimension: function(prop, value) {
       this.lowerCanvasEl[prop] = value;
 
       if (this.upperCanvasEl) {
@@ -651,7 +650,7 @@
      * @return {fabric.Canvas} instance
      * @chainable true
      */
-    _setCssDimension: function (prop, value) {
+    _setCssDimension: function(prop, value) {
       this.lowerCanvasEl.style[prop] = value;
 
       if (this.upperCanvasEl) {
@@ -669,7 +668,7 @@
      * Returns canvas zoom level
      * @return {Number}
      */
-    getZoom: function () {
+    getZoom: function() {
       return this.viewportTransform[0];
     },
 
@@ -679,8 +678,8 @@
      * @return {fabric.Canvas} instance
      * @chainable true
      */
-    setViewportTransform: function (vpt) {
-      var activeObject = this._activeObject,
+    setViewportTransform: function(vpt) {
+      let activeObject = this._activeObject,
           backgroundObject = this.backgroundImage,
           overlayObject = this.overlayImage,
           object, i, len;
@@ -713,13 +712,13 @@
      * @return {fabric.Canvas} instance
      * @chainable true
      */
-    zoomToPoint: function (point, value) {
+    zoomToPoint: function(point, value) {
       // TODO: just change the scale, preserve other transformations
-      var before = point, vpt = this.viewportTransform.slice(0);
+      const before = point, vpt = this.viewportTransform.slice(0);
       point = transformPoint(point, invertTransform(this.viewportTransform));
       vpt[0] = value;
       vpt[3] = value;
-      var after = transformPoint(point, vpt);
+      const after = transformPoint(point, vpt);
       vpt[4] += before.x - after.x;
       vpt[5] += before.y - after.y;
       return this.setViewportTransform(vpt);
@@ -731,7 +730,7 @@
      * @return {fabric.Canvas} instance
      * @chainable true
      */
-    setZoom: function (value) {
+    setZoom: function(value) {
       this.zoomToPoint(new fabric.Point(0, 0), value);
       return this;
     },
@@ -742,8 +741,8 @@
      * @return {fabric.Canvas} instance
      * @chainable true
      */
-    absolutePan: function (point) {
-      var vpt = this.viewportTransform.slice(0);
+    absolutePan: function(point) {
+      const vpt = this.viewportTransform.slice(0);
       vpt[4] = -point.x;
       vpt[5] = -point.y;
       return this.setViewportTransform(vpt);
@@ -755,10 +754,10 @@
      * @return {fabric.Canvas} instance
      * @chainable true
      */
-    relativePan: function (point) {
+    relativePan: function(point) {
       return this.absolutePan(new fabric.Point(
         -point.x - this.viewportTransform[4],
-        -point.y - this.viewportTransform[5]
+        -point.y - this.viewportTransform[5],
       ));
     },
 
@@ -766,7 +765,7 @@
      * Returns &lt;canvas> element corresponding to this instance
      * @return {HTMLCanvasElement}
      */
-    getElement: function () {
+    getElement: function() {
       return this.lowerCanvasEl;
     },
 
@@ -778,7 +777,7 @@
       this.stateful && obj.setupState();
       obj._set('canvas', this);
       obj.setCoords();
-      this.fire('object:added', { target: obj });
+      this.fire('object:added', {target: obj});
       obj.fire('added');
     },
 
@@ -787,7 +786,7 @@
      * @param {fabric.Object} obj Object that was removed
      */
     _onObjectRemoved: function(obj) {
-      this.fire('object:removed', { target: obj });
+      this.fire('object:removed', {target: obj});
       obj.fire('removed');
       delete obj.canvas;
     },
@@ -807,7 +806,7 @@
      * Returns context of canvas where objects are drawn
      * @return {CanvasRenderingContext2D}
      */
-    getContext: function () {
+    getContext: function() {
       return this.contextContainer;
     },
 
@@ -816,7 +815,7 @@
      * @return {fabric.Canvas} thisArg
      * @chainable
      */
-    clear: function () {
+    clear: function() {
       this.remove.apply(this, this.getObjects());
       this.backgroundImage = null;
       this.overlayImage = null;
@@ -838,8 +837,8 @@
      * @return {fabric.Canvas} instance
      * @chainable
      */
-    renderAll: function () {
-      var canvasToDrawOn = this.contextContainer;
+    renderAll: function() {
+      const canvasToDrawOn = this.contextContainer;
       this.renderCanvas(canvasToDrawOn, this._objects);
       return this;
     },
@@ -866,7 +865,7 @@
      * @return {fabric.Canvas} instance
      * @chainable
      */
-    requestRenderAll: function () {
+    requestRenderAll: function() {
       if (!this.isRendering) {
         this.isRendering = fabric.util.requestAnimFrame(this.renderAndResetBound);
       }
@@ -881,10 +880,10 @@
      * @chainable
      */
     calcViewportBoundaries: function() {
-      var points = { }, width = this.width, height = this.height,
+      const points = { }, width = this.width, height = this.height,
           iVpt = invertTransform(this.viewportTransform);
-      points.tl = transformPoint({ x: 0, y: 0 }, iVpt);
-      points.br = transformPoint({ x: width, y: height }, iVpt);
+      points.tl = transformPoint({x: 0, y: 0}, iVpt);
+      points.br = transformPoint({x: width, y: height}, iVpt);
       points.tr = new fabric.Point(points.br.x, points.tl.y);
       points.bl = new fabric.Point(points.tl.x, points.br.y);
       this.vptCoords = points;
@@ -906,16 +905,16 @@
      * @chainable
      */
     renderCanvas: function(ctx, objects) {
-      var v = this.viewportTransform, path = this.clipPath;
+      const v = this.viewportTransform, path = this.clipPath;
       this.cancelRequestedRender();
       this.calcViewportBoundaries();
       this.clearContext(ctx);
       fabric.util.setImageSmoothing(ctx, this.imageSmoothingEnabled);
-      this.fire('before:render', { ctx: ctx, });
+      this.fire('before:render', {ctx: ctx});
       this._renderBackground(ctx);
 
       ctx.save();
-      //apply viewport transform once for all rendering process
+      // apply viewport transform once for all rendering process
       ctx.transform(v[0], v[1], v[2], v[3], v[4], v[5]);
       this._renderObjects(ctx, objects);
       ctx.restore();
@@ -927,14 +926,14 @@
         // needed to setup a couple of variables
         path.shouldCache();
         path._transformDone = true;
-        path.renderCache({ forClipping: true });
+        path.renderCache({forClipping: true});
         this.drawClipPathOnCanvas(ctx);
       }
       this._renderOverlay(ctx);
       if (this.controlsAboveOverlay && this.interactive) {
         this.drawControls(ctx);
       }
-      this.fire('after:render', { ctx: ctx, });
+      this.fire('after:render', {ctx: ctx});
     },
 
     /**
@@ -942,7 +941,7 @@
      * @param {CanvasRenderingContext2D} ctx Context to render on
      */
     drawClipPathOnCanvas: function(ctx) {
-      var v = this.viewportTransform, path = this.clipPath;
+      const v = this.viewportTransform, path = this.clipPath;
       ctx.save();
       ctx.transform(v[0], v[1], v[2], v[3], v[4], v[5]);
       // DEBUG: uncomment this line, comment the following
@@ -960,7 +959,7 @@
      * @param {Array} objects to render
      */
     _renderObjects: function(ctx, objects) {
-      var i, len;
+      let i, len;
       for (i = 0, len = objects.length; i < len; ++i) {
         objects[i] && objects[i].render(ctx);
       }
@@ -972,7 +971,7 @@
      * @param {string} property 'background' or 'overlay'
      */
     _renderBackgroundOrOverlay: function(ctx, property) {
-      var fill = this[property + 'Color'], object = this[property + 'Image'],
+      const fill = this[property + 'Color'], object = this[property + 'Image'],
           v = this.viewportTransform, needsVpt = this[property + 'Vpt'];
       if (!fill && !object) {
         return;
@@ -985,14 +984,14 @@
         ctx.lineTo(this.width, this.height);
         ctx.lineTo(0, this.height);
         ctx.closePath();
-        ctx.fillStyle = fill.toLive
-          ? fill.toLive(ctx, this)
-          : fill;
+        ctx.fillStyle = fill.toLive ?
+          fill.toLive(ctx, this) :
+          fill;
         if (needsVpt) {
           ctx.transform(v[0], v[1], v[2], v[3], v[4], v[5]);
         }
         ctx.transform(1, 0, 0, 1, fill.offsetX || 0, fill.offsetY || 0);
-        var m = fill.gradientTransform || fill.patternTransform;
+        const m = fill.gradientTransform || fill.patternTransform;
         m && ctx.transform(m[0], m[1], m[2], m[3], m[4], m[5]);
         ctx.fill();
         ctx.restore();
@@ -1029,18 +1028,18 @@
      * @return {Object} object with "top" and "left" number values
      * @deprecated migrate to `getCenterPoint`
      */
-    getCenter: function () {
+    getCenter: function() {
       return {
         top: this.height / 2,
-        left: this.width / 2
+        left: this.width / 2,
       };
     },
 
     /**
      * Returns coordinates of a center of canvas.
-     * @return {fabric.Point} 
+     * @return {fabric.Point}
      */
-    getCenterPoint: function () {
+    getCenterPoint: function() {
       return new fabric.Point(this.width / 2, this.height / 2);
     },
 
@@ -1049,7 +1048,7 @@
      * @param {fabric.Object} object Object to center horizontally
      * @return {fabric.Canvas} thisArg
      */
-    centerObjectH: function (object) {
+    centerObjectH: function(object) {
       return this._centerObject(object, new fabric.Point(this.getCenterPoint().x, object.getCenterPoint().y));
     },
 
@@ -1059,7 +1058,7 @@
      * @return {fabric.Canvas} thisArg
      * @chainable
      */
-    centerObjectV: function (object) {
+    centerObjectV: function(object) {
       return this._centerObject(object, new fabric.Point(object.getCenterPoint().x, this.getCenterPoint().y));
     },
 
@@ -1070,7 +1069,7 @@
      * @chainable
      */
     centerObject: function(object) {
-      var center = this.getCenterPoint();
+      const center = this.getCenterPoint();
       return this._centerObject(object, center);
     },
 
@@ -1081,7 +1080,7 @@
      * @chainable
      */
     viewportCenterObject: function(object) {
-      var vpCenter = this.getVpCenter();
+      const vpCenter = this.getVpCenter();
       return this._centerObject(object, vpCenter);
     },
 
@@ -1092,7 +1091,7 @@
      * @chainable
      */
     viewportCenterObjectH: function(object) {
-      var vpCenter = this.getVpCenter();
+      const vpCenter = this.getVpCenter();
       this._centerObject(object, new fabric.Point(vpCenter.x, object.getCenterPoint().y));
       return this;
     },
@@ -1104,7 +1103,7 @@
      * @chainable
      */
     viewportCenterObjectV: function(object) {
-      var vpCenter = this.getVpCenter();
+      const vpCenter = this.getVpCenter();
 
       return this._centerObject(object, new fabric.Point(object.getCenterPoint().x, vpCenter.y));
     },
@@ -1115,7 +1114,7 @@
      * @chainable
      */
     getVpCenter: function() {
-      var center = this.getCenterPoint(),
+      const center = this.getCenterPoint(),
           iVpt = invertTransform(this.viewportTransform);
       return transformPoint(center, iVpt);
     },
@@ -1139,7 +1138,7 @@
      * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
      * @return {String} json string
      */
-    toDatalessJSON: function (propertiesToInclude) {
+    toDatalessJSON: function(propertiesToInclude) {
       return this.toDatalessObject(propertiesToInclude);
     },
 
@@ -1148,7 +1147,7 @@
      * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
      * @return {Object} object representation of an instance
      */
-    toObject: function (propertiesToInclude) {
+    toObject: function(propertiesToInclude) {
       return this._toObjectMethod('toObject', propertiesToInclude);
     },
 
@@ -1157,16 +1156,15 @@
      * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
      * @return {Object} object representation of an instance
      */
-    toDatalessObject: function (propertiesToInclude) {
+    toDatalessObject: function(propertiesToInclude) {
       return this._toObjectMethod('toDatalessObject', propertiesToInclude);
     },
 
     /**
      * @private
      */
-    _toObjectMethod: function (methodName, propertiesToInclude) {
-
-      var clipPath = this.clipPath, data = {
+    _toObjectMethod: function(methodName, propertiesToInclude) {
+      const clipPath = this.clipPath, data = {
         version: fabric.version,
         objects: this._toObjects(methodName, propertiesToInclude),
       };
@@ -1195,14 +1193,14 @@
      * @private
      */
     _toObject: function(instance, methodName, propertiesToInclude) {
-      var originalValue;
+      let originalValue;
 
       if (!this.includeDefaultValues) {
         originalValue = instance.includeDefaultValues;
         instance.includeDefaultValues = false;
       }
 
-      var object = instance[methodName](propertiesToInclude);
+      const object = instance[methodName](propertiesToInclude);
       if (!this.includeDefaultValues) {
         instance.includeDefaultValues = originalValue;
       }
@@ -1213,7 +1211,7 @@
      * @private
      */
     __serializeBgOverlay: function(methodName, propertiesToInclude) {
-      var data = {}, bgImage = this.backgroundImage, overlayImage = this.overlayImage,
+      const data = {}, bgImage = this.backgroundImage, overlayImage = this.overlayImage,
           bgColor = this.backgroundColor, overlayColor = this.overlayColor;
 
       if (bgColor && bgColor.toObject) {
@@ -1293,7 +1291,7 @@
     toSVG: function(options, reviver) {
       options || (options = { });
       options.reviver = reviver;
-      var markup = [];
+      const markup = [];
 
       this._setSVGPreamble(markup, options);
       this._setSVGHeader(markup, options);
@@ -1324,7 +1322,7 @@
       markup.push(
         '<?xml version="1.0" encoding="', (options.encoding || 'UTF-8'), '" standalone="no" ?>\n',
         '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" ',
-        '"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n'
+        '"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n',
       );
     },
 
@@ -1332,7 +1330,7 @@
      * @private
      */
     _setSVGHeader: function(markup, options) {
-      var width = options.width || this.width,
+      let width = options.width || this.width,
           height = options.height || this.height,
           vpt, viewBox = 'viewBox="0 0 ' + this.width + ' ' + this.height + '" ',
           NUM_FRACTION_DIGITS = fabric.Object.NUM_FRACTION_DIGITS;
@@ -1369,15 +1367,15 @@
         this.createSVGFontFacesMarkup(),
         this.createSVGRefElementsMarkup(),
         this.createSVGClipPathMarkup(options),
-        '</defs>\n'
+        '</defs>\n',
       );
     },
 
     createSVGClipPathMarkup: function(options) {
-      var clipPath = this.clipPath;
+      const clipPath = this.clipPath;
       if (clipPath) {
         clipPath.clipPathId = 'CLIPPATH_' + fabric.Object.__uid++;
-        return  '<clipPath id="' + clipPath.clipPathId + '" >\n' +
+        return '<clipPath id="' + clipPath.clipPathId + '" >\n' +
           this.clipPath.toClipPathSVG(options.reviver) +
           '</clipPath>\n';
       }
@@ -1389,18 +1387,18 @@
      * @return {String}
      */
     createSVGRefElementsMarkup: function() {
-      var _this = this,
+      const _this = this,
           markup = ['background', 'overlay'].map(function(prop) {
-            var fill = _this[prop + 'Color'];
+            const fill = _this[prop + 'Color'];
             if (fill && fill.toLive) {
-              var shouldTransform = _this[prop + 'Vpt'], vpt = _this.viewportTransform,
+              const shouldTransform = _this[prop + 'Vpt'], vpt = _this.viewportTransform,
                   object = {
                     width: _this.width / (shouldTransform ? vpt[0] : 1),
-                    height: _this.height / (shouldTransform ? vpt[3] : 1)
+                    height: _this.height / (shouldTransform ? vpt[3] : 1),
                   };
               return fill.toSVG(
                 object,
-                { additionalTransform: shouldTransform ? fabric.util.matrixToSVG(vpt) : '' }
+                {additionalTransform: shouldTransform ? fabric.util.matrixToSVG(vpt) : ''},
               );
             }
           });
@@ -1415,7 +1413,7 @@
      * @return {String}
      */
     createSVGFontFacesMarkup: function() {
-      var markup = '', fontList = { }, obj, fontFamily,
+      let markup = '', fontList = { }, obj, fontFamily,
           style, row, rowIndex, _char, charIndex, i, len,
           fontPaths = fabric.fontPaths, objects = [];
 
@@ -1449,12 +1447,12 @@
         }
       }
 
-      for (var j in fontList) {
+      for (const j in fontList) {
         markup += [
           '\t\t@font-face {\n',
           '\t\t\tfont-family: \'', j, '\';\n',
           '\t\t\tsrc: url(\'', fontPaths[j], '\');\n',
-          '\t\t}\n'
+          '\t\t}\n',
         ].join('');
       }
 
@@ -1464,7 +1462,7 @@
           '<![CDATA[\n',
           markup,
           ']]>',
-          '</style>\n'
+          '</style>\n',
         ].join('');
       }
 
@@ -1475,7 +1473,7 @@
      * @private
      */
     _setSVGObjects: function(markup, reviver) {
-      var instance, i, len, objects = this._objects;
+      let instance, i, len, objects = this._objects;
       for (i = 0, len = objects.length; i < len; i++) {
         instance = objects[i];
         if (instance.excludeFromExport) {
@@ -1505,35 +1503,35 @@
      * @private
      */
     _setSVGBgOverlayColor: function(markup, property) {
-      var filler = this[property + 'Color'], vpt = this.viewportTransform, finalWidth = this.width,
+      const filler = this[property + 'Color'], vpt = this.viewportTransform, finalWidth = this.width,
           finalHeight = this.height;
       if (!filler) {
         return;
       }
       if (filler.toLive) {
-        var repeat = filler.repeat, iVpt = fabric.util.invertTransform(vpt), shouldInvert = this[property + 'Vpt'],
+        const repeat = filler.repeat, iVpt = fabric.util.invertTransform(vpt), shouldInvert = this[property + 'Vpt'],
             additionalTransform = shouldInvert ? fabric.util.matrixToSVG(iVpt) : '';
         markup.push(
           '<rect transform="' + additionalTransform + ' translate(', finalWidth / 2, ',', finalHeight / 2, ')"',
           ' x="', filler.offsetX - finalWidth / 2,
           '" y="', filler.offsetY - finalHeight / 2, '" ',
           'width="',
-          (repeat === 'repeat-y' || repeat === 'no-repeat'
-            ? filler.source.width
-            : finalWidth ),
+          (repeat === 'repeat-y' || repeat === 'no-repeat' ?
+            filler.source.width :
+            finalWidth ),
           '" height="',
-          (repeat === 'repeat-x' || repeat === 'no-repeat'
-            ? filler.source.height
-            : finalHeight),
+          (repeat === 'repeat-x' || repeat === 'no-repeat' ?
+            filler.source.height :
+            finalHeight),
           '" fill="url(#SVGID_' + filler.id + ')"',
-          '></rect>\n'
+          '></rect>\n',
         );
       }
       else {
         markup.push(
           '<rect x="0" y="0" width="100%" height="100%" ',
           'fill="', filler, '"',
-          '></rect>\n'
+          '></rect>\n',
         );
       }
     },
@@ -1546,11 +1544,11 @@
      * @return {fabric.Canvas} thisArg
      * @chainable
      */
-    sendToBack: function (object) {
+    sendToBack: function(object) {
       if (!object) {
         return this;
       }
-      var activeSelection = this._activeObject,
+      let activeSelection = this._activeObject,
           i, obj, objs;
       if (object === activeSelection && object.type === 'activeSelection') {
         objs = activeSelection._objects;
@@ -1575,11 +1573,11 @@
      * @return {fabric.Canvas} thisArg
      * @chainable
      */
-    bringToFront: function (object) {
+    bringToFront: function(object) {
       if (!object) {
         return this;
       }
-      var activeSelection = this._activeObject,
+      let activeSelection = this._activeObject,
           i, obj, objs;
       if (object === activeSelection && object.type === 'activeSelection') {
         objs = activeSelection._objects;
@@ -1608,11 +1606,11 @@
      * @return {fabric.Canvas} thisArg
      * @chainable
      */
-    sendBackwards: function (object, intersecting) {
+    sendBackwards: function(object, intersecting) {
       if (!object) {
         return this;
       }
-      var activeSelection = this._activeObject,
+      let activeSelection = this._activeObject,
           i, obj, idx, newIdx, objs, objsMoved = 0;
 
       if (object === activeSelection && object.type === 'activeSelection') {
@@ -1645,15 +1643,14 @@
      * @private
      */
     _findNewLowerIndex: function(object, idx, intersecting) {
-      var newIdx, i;
+      let newIdx, i;
 
       if (intersecting) {
         newIdx = idx;
 
         // traverse down the stack looking for the nearest intersecting object
         for (i = idx - 1; i >= 0; --i) {
-
-          var isIntersecting = object.intersectsWithObject(this._objects[i]) ||
+          const isIntersecting = object.intersectsWithObject(this._objects[i]) ||
                                object.isContainedWithinObject(this._objects[i]) ||
                                this._objects[i].isContainedWithinObject(object);
 
@@ -1681,11 +1678,11 @@
      * @return {fabric.Canvas} thisArg
      * @chainable
      */
-    bringForward: function (object, intersecting) {
+    bringForward: function(object, intersecting) {
       if (!object) {
         return this;
       }
-      var activeSelection = this._activeObject,
+      let activeSelection = this._activeObject,
           i, obj, idx, newIdx, objs, objsMoved = 0;
 
       if (object === activeSelection && object.type === 'activeSelection') {
@@ -1718,15 +1715,14 @@
      * @private
      */
     _findNewUpperIndex: function(object, idx, intersecting) {
-      var newIdx, i, len;
+      let newIdx, i, len;
 
       if (intersecting) {
         newIdx = idx;
 
         // traverse up the stack looking for the nearest intersecting object
         for (i = idx + 1, len = this._objects.length; i < len; ++i) {
-
-          var isIntersecting = object.intersectsWithObject(this._objects[i]) ||
+          const isIntersecting = object.intersectsWithObject(this._objects[i]) ||
                                object.isContainedWithinObject(this._objects[i]) ||
                                this._objects[i].isContainedWithinObject(object);
 
@@ -1750,7 +1746,7 @@
      * @return {fabric.Canvas} thisArg
      * @chainable
      */
-    moveTo: function (object, index) {
+    moveTo: function(object, index) {
       removeFromArray(this._objects, object);
       this._objects.splice(index, 0, object);
       return this.renderOnAddRemove && this.requestRenderAll();
@@ -1761,7 +1757,7 @@
      * @return {fabric.Canvas} thisArg
      * @chainable
      */
-    dispose: function () {
+    dispose: function() {
       // cancel eventually ongoing renders
       if (this.isRendering) {
         fabric.util.cancelAnimFrame(this.isRendering);
@@ -1797,10 +1793,10 @@
      * Returns a string representation of an instance
      * @return {String} string representation of an instance
      */
-    toString: function () {
+    toString: function() {
       return '#<fabric.Canvas (' + this.complexity() + '): ' +
                '{ objects: ' + this._objects.length + ' }>';
-    }
+    },
   });
 
   extend(fabric.StaticCanvas.prototype, fabric.Observable);
@@ -1825,27 +1821,26 @@
      * @return {Boolean | null} `true` if method is supported (or at least exists),
      *                          `null` if canvas element or context can not be initialized
      */
-    supports: function (methodName) {
-      var el = createCanvasElement();
+    supports: function(methodName) {
+      const el = createCanvasElement();
 
       if (!el || !el.getContext) {
         return null;
       }
 
-      var ctx = el.getContext('2d');
+      const ctx = el.getContext('2d');
       if (!ctx) {
         return null;
       }
 
       switch (methodName) {
-
         case 'setLineDash':
           return typeof ctx.setLineDash !== 'undefined';
 
         default:
           return null;
       }
-    }
+    },
   });
 
   /**
@@ -1870,11 +1865,11 @@
 
   if (fabric.isLikelyNode) {
     fabric.StaticCanvas.prototype.createPNGStream = function() {
-      var impl = getNodeCanvas(this.lowerCanvasEl);
+      const impl = getNodeCanvas(this.lowerCanvasEl);
       return impl && impl.createPNGStream();
     };
     fabric.StaticCanvas.prototype.createJPEGStream = function(opts) {
-      var impl = getNodeCanvas(this.lowerCanvasEl);
+      const impl = getNodeCanvas(this.lowerCanvasEl);
       return impl && impl.createJPEGStream(opts);
     };
   }

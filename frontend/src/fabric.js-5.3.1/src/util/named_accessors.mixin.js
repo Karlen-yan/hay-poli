@@ -1,5 +1,4 @@
 (function() {
-
   /**
    * Creates accessors (getXXX, setXXX) for a "class", based on "stateProperties" array
    * @static
@@ -7,11 +6,10 @@
    * @param {Object} klass "Class" to create accessors for
    */
   fabric.util.createAccessors = function(klass) {
-    var proto = klass.prototype, i, propName,
+    let proto = klass.prototype, i, propName,
         capitalizedPropName, setterName, getterName;
 
     for (i = proto.stateProperties.length; i--; ) {
-
       propName = proto.stateProperties[i];
       capitalizedPropName = propName.charAt(0).toUpperCase() + propName.slice(1);
       setterName = 'set' + capitalizedPropName;
@@ -424,5 +422,4 @@
    * @return {fabric.Object} thisArg
    * @chainable
    */
-
 })(typeof exports !== 'undefined' ? exports : this);

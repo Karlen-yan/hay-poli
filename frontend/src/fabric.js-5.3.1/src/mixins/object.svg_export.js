@@ -8,18 +8,18 @@
       return prop + ': url(#SVGID_' + value.id + '); ';
     }
     else {
-      var color = new fabric.Color(value),
+      let color = new fabric.Color(value),
           str = prop + ': ' + color.toRgb() + '; ',
           opacity = color.getAlpha();
       if (opacity !== 1) {
-        //change the color in rgb + opacity
+        // change the color in rgb + opacity
         str += prop + '-opacity: ' + opacity.toString() + '; ';
       }
       return str;
     }
   }
 
-  var toFixed = fabric.util.toFixed;
+  const toFixed = fabric.util.toFixed;
 
   fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prototype */ {
     /**
@@ -28,8 +28,7 @@
      * @return {String}
      */
     getSvgStyles: function(skipShadow) {
-
-      var fillRule = this.fillRule ? this.fillRule : 'nonzero',
+      const fillRule = this.fillRule ? this.fillRule : 'nonzero',
           strokeWidth = this.strokeWidth ? this.strokeWidth : '0',
           strokeDashArray = this.strokeDashArray ? this.strokeDashArray.join(' ') : 'none',
           strokeDashOffset = this.strokeDashOffset ? this.strokeDashOffset : '0',
@@ -54,7 +53,7 @@
         'fill-rule: ', fillRule, '; ',
         'opacity: ', opacity, ';',
         filter,
-        visibility
+        visibility,
       ].join('');
     },
 
@@ -65,10 +64,10 @@
      * @return {String}
      */
     getSvgSpanStyles: function(style, useWhiteSpace) {
-      var term = '; ';
+      const term = '; ';
       var fontFamily = style.fontFamily ?
         'font-family: ' + (((style.fontFamily.indexOf('\'') === -1 && style.fontFamily.indexOf('"') === -1) ?
-          '\'' + style.fontFamily  + '\'' : style.fontFamily)) + term : '';
+          '\'' + style.fontFamily + '\'' : style.fontFamily)) + term : '';
       var strokeWidth = style.strokeWidth ? 'stroke-width: ' + style.strokeWidth + term : '',
           fontFamily = fontFamily,
           fontSize = style.fontSize ? 'font-size: ' + style.fontSize + 'px' + term : '',
@@ -92,7 +91,7 @@
         textDecoration,
         fill,
         deltaY,
-        useWhiteSpace ? 'white-space: pre; ' : ''
+        useWhiteSpace ? 'white-space: pre; ' : '',
       ].join('');
     },
 
@@ -132,7 +131,7 @@
      * @return {String}
      */
     getSvgTransform: function(full, additionalTransform) {
-      var transform = full ? this.calcTransformMatrix() : this.calcOwnMatrix(),
+      const transform = full ? this.calcTransformMatrix() : this.calcOwnMatrix(),
           svgTransform = 'transform="' + fabric.util.matrixToSVG(transform);
       return svgTransform +
         (additionalTransform || '') + '" ';
@@ -140,7 +139,7 @@
 
     _setSVGBg: function(textBgRects) {
       if (this.backgroundColor) {
-        var NUM_FRACTION_DIGITS = fabric.Object.NUM_FRACTION_DIGITS;
+        const NUM_FRACTION_DIGITS = fabric.Object.NUM_FRACTION_DIGITS;
         textBgRects.push(
           '\t\t<rect ',
           this._getFillAttributes(this.backgroundColor),
@@ -162,7 +161,7 @@
      * @return {String} svg representation of an instance
      */
     toSVG: function(reviver) {
-      return this._createBaseSVGMarkup(this._toSVG(reviver), { reviver: reviver });
+      return this._createBaseSVGMarkup(this._toSVG(reviver), {reviver: reviver});
     },
 
     /**
@@ -171,7 +170,7 @@
      * @return {String} svg representation of an instance
      */
     toClipPathSVG: function(reviver) {
-      return '\t' + this._createBaseClipPathSVGMarkup(this._toSVG(reviver), { reviver: reviver });
+      return '\t' + this._createBaseClipPathSVGMarkup(this._toSVG(reviver), {reviver: reviver});
     },
 
     /**
@@ -179,7 +178,7 @@
      */
     _createBaseClipPathSVGMarkup: function(objectMarkup, options) {
       options = options || {};
-      var reviver = options.reviver,
+      const reviver = options.reviver,
           additionalTransform = options.additionalTransform || '',
           commonPieces = [
             this.getSvgTransform(true, additionalTransform),
@@ -196,7 +195,7 @@
      */
     _createBaseSVGMarkup: function(objectMarkup, options) {
       options = options || {};
-      var noStyle = options.noStyle,
+      let noStyle = options.noStyle,
           reviver = options.reviver,
           styleInfo = noStyle ? '' : 'style="' + this.getSvgStyles() + '" ',
           shadowInfo = options.withShadow ? 'style="' + this.getSvgFilter() + '" ' : '',
@@ -216,14 +215,14 @@
       }
       if (absoluteClipPath) {
         markup.push(
-          '<g ', shadowInfo, this.getSvgCommons(), ' >\n'
+          '<g ', shadowInfo, this.getSvgCommons(), ' >\n',
         );
       }
       markup.push(
         '<g ',
         this.getSvgTransform(false),
         !absoluteClipPath ? shadowInfo + this.getSvgCommons() : '',
-        ' >\n'
+        ' >\n',
       );
       commonPieces = [
         styleInfo,
@@ -252,7 +251,7 @@
 
     addPaintOrder: function() {
       return this.paintFirst !== 'fill' ? ' paint-order="' + this.paintFirst + '" ' : '';
-    }
+    },
   });
 })();
 /* _TO_SVG_END_ */

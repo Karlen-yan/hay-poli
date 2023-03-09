@@ -1,5 +1,4 @@
 (function(global) {
-
   'use strict';
 
   /**
@@ -7,7 +6,7 @@
    * @namespace
    */
 
-  var fabric = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       extend = fabric.util.object.extend,
       clone = fabric.util.object.clone,
       toFixed = fabric.util.toFixed,
@@ -55,7 +54,7 @@
 
       colorAttributes = {
         stroke: 'strokeOpacity',
-        fill:   'fillOpacity'
+        fill:   'fillOpacity',
       },
 
       fSize = 'font-size', cPath = 'clip-path';
@@ -78,7 +77,7 @@
   }
 
   function normalizeValue(attr, value, parentAttributes, fontSize) {
-    var isArray = Array.isArray(value), parsed;
+    let isArray = Array.isArray(value), parsed;
 
     if ((attr === 'fill' || attr === 'stroke') && value === 'none') {
       value = '';
@@ -124,8 +123,8 @@
       parsed = parseUnit(value, fontSize) / fontSize * 1000;
     }
     else if (attr === 'paintFirst') {
-      var fillIndex = value.indexOf('fill');
-      var strokeIndex = value.indexOf('stroke');
+      const fillIndex = value.indexOf('fill');
+      const strokeIndex = value.indexOf('stroke');
       var value = 'fill';
       if (fillIndex > -1 && strokeIndex > -1 && strokeIndex < fillIndex) {
         value = 'stroke';
@@ -159,8 +158,7 @@
    * @param {Object} attributes Array of attributes to parse
    */
   function _setStrokeFillOpacity(attributes) {
-    for (var attr in colorAttributes) {
-
+    for (const attr in colorAttributes) {
       if (typeof attributes[colorAttributes[attr]] === 'undefined' || attributes[attr] === '') {
         continue;
       }
@@ -176,7 +174,7 @@
         continue;
       }
 
-      var color = new fabric.Color(attributes[attr]);
+      const color = new fabric.Color(attributes[attr]);
       attributes[attr] = color.setAlpha(toFixed(color.getAlpha() * attributes[colorAttributes[attr]], 2)).toRgba();
     }
     return attributes;
@@ -186,7 +184,7 @@
    * @private
    */
   function _getMultipleNodes(doc, nodeNames) {
-    var nodeName, nodeArray = [], nodeList, i, len;
+    let nodeName, nodeArray = [], nodeList, i, len;
     for (i = 0, len = nodeNames.length; i < len; i++) {
       nodeName = nodeNames[i];
       nodeList = doc.getElementsByTagName(nodeName);
@@ -205,7 +203,7 @@
    */
   fabric.parseTransformAttribute = (function() {
     function rotateMatrix(matrix, args) {
-      var cos = fabric.util.cos(args[0]), sin = fabric.util.sin(args[0]),
+      let cos = fabric.util.cos(args[0]), sin = fabric.util.sin(args[0]),
           x = 0, y = 0;
       if (args.length === 3) {
         x = args[1];
@@ -221,7 +219,7 @@
     }
 
     function scaleMatrix(matrix, args) {
-      var multiplierX = args[0],
+      const multiplierX = args[0],
           multiplierY = (args.length === 2) ? args[1] : args[0];
 
       matrix[0] = multiplierX;
@@ -240,7 +238,7 @@
     }
 
     // identity matrix
-    var iMatrix = fabric.iMatrix,
+    const iMatrix = fabric.iMatrix,
 
         // == begin transform regexp
         number = fabric.reNum,
@@ -290,9 +288,8 @@
         reTransform = new RegExp(transform, 'g');
 
     return function(attributeValue) {
-
       // start with identity matrix
-      var matrix = iMatrix.concat(),
+      let matrix = iMatrix.concat(),
           matrices = [];
 
       // return if no argument was given or
@@ -302,8 +299,7 @@
       }
 
       attributeValue.replace(reTransform, function(match) {
-
-        var m = new RegExp(transform).exec(match).filter(function (match) {
+        const m = new RegExp(transform).exec(match).filter(function(match) {
               // match !== '' && match != null
               return (!!match);
             }),
@@ -338,7 +334,7 @@
         matrix = iMatrix.concat();
       });
 
-      var combinedMatrix = matrices[0];
+      let combinedMatrix = matrices[0];
       while (matrices.length > 1) {
         matrices.shift();
         combinedMatrix = fabric.util.multiplyTransformMatrices(combinedMatrix, matrices[0]);
@@ -351,12 +347,12 @@
    * @private
    */
   function parseStyleString(style, oStyle) {
-    var attr, value;
-    style.replace(/;\s*$/, '').split(';').forEach(function (chunk) {
-      var pair = chunk.split(':');
+    let attr, value;
+    style.replace(/;\s*$/, '').split(';').forEach(function(chunk) {
+      const pair = chunk.split(':');
 
       attr = pair[0].trim().toLowerCase();
-      value =  pair[1].trim();
+      value = pair[1].trim();
 
       oStyle[attr] = value;
     });
@@ -366,8 +362,8 @@
    * @private
    */
   function parseStyleObject(style, oStyle) {
-    var attr, value;
-    for (var prop in style) {
+    let attr, value;
+    for (const prop in style) {
       if (typeof style[prop] === 'undefined') {
         continue;
       }
@@ -383,10 +379,10 @@
    * @private
    */
   function getGlobalStylesForElement(element, svgUid) {
-    var styles = { };
-    for (var rule in fabric.cssRules[svgUid]) {
+    const styles = { };
+    for (const rule in fabric.cssRules[svgUid]) {
       if (elementMatchesRule(element, rule.split(' '))) {
-        for (var property in fabric.cssRules[svgUid][rule]) {
+        for (const property in fabric.cssRules[svgUid][rule]) {
           styles[property] = fabric.cssRules[svgUid][rule][property];
         }
       }
@@ -398,8 +394,8 @@
    * @private
    */
   function elementMatchesRule(element, selectors) {
-    var firstMatching, parentMatching = true;
-    //start from rightmost selector.
+    let firstMatching, parentMatching = true;
+    // start from rightmost selector.
     firstMatching = selectorMatches(element, selectors.pop());
     if (firstMatching && selectors.length) {
       parentMatching = doesSomeParentMatch(element, selectors);
@@ -408,7 +404,7 @@
   }
 
   function doesSomeParentMatch(element, selectors) {
-    var selector, parentMatching = true;
+    let selector, parentMatching = true;
     while (element.parentNode && element.parentNode.nodeType === 1 && selectors.length) {
       if (parentMatching) {
         selector = selectors.pop();
@@ -423,7 +419,7 @@
    * @private
    */
   function selectorMatches(element, selector) {
-    var nodeName = element.nodeName,
+    let nodeName = element.nodeName,
         classNames = element.getAttribute('class'),
         id = element.getAttribute('id'), matcher, i;
     // i check if a selector matches slicing away part from it.
@@ -449,12 +445,12 @@
    * to support IE8 missing getElementById on SVGdocument and on node xmlDOM
    */
   function elementById(doc, id) {
-    var el;
+    let el;
     doc.getElementById && (el = doc.getElementById(id));
     if (el) {
       return el;
     }
-    var node, i, len, nodelist = doc.getElementsByTagName('*');
+    let node, i, len, nodelist = doc.getElementsByTagName('*');
     for (i = 0, len = nodelist.length; i < len; i++) {
       node = nodelist[i];
       if (id === node.getAttribute('id')) {
@@ -467,9 +463,9 @@
    * @private
    */
   function parseUseDirectives(doc) {
-    var nodelist = _getMultipleNodes(doc, ['use', 'svg:use']), i = 0;
+    let nodelist = _getMultipleNodes(doc, ['use', 'svg:use']), i = 0;
     while (nodelist.length && i < nodelist.length) {
-      var el = nodelist[i],
+      const el = nodelist[i],
           xlinkAttribute = el.getAttribute('xlink:href') || el.getAttribute('href');
 
       if (xlinkAttribute === null) {
@@ -490,7 +486,7 @@
 
       applyViewboxTransform(el2);
       if (/^svg$/i.test(el2.nodeName)) {
-        var el3 = el2.ownerDocument.createElementNS(namespace, 'g');
+        const el3 = el2.ownerDocument.createElementNS(namespace, 'g');
         for (j = 0, attrs = el2.attributes, len = attrs.length; j < len; j++) {
           attr = attrs.item(j);
           el3.setAttributeNS(namespace, attr.nodeName, attr.nodeValue);
@@ -531,13 +527,13 @@
 
   // http://www.w3.org/TR/SVG/coords.html#ViewBoxAttribute
   // matches, e.g.: +14.56e-12, etc.
-  var reViewBoxAttrValue = new RegExp(
+  const reViewBoxAttrValue = new RegExp(
     '^' +
     '\\s*(' + fabric.reNum + '+)\\s*,?' +
     '\\s*(' + fabric.reNum + '+)\\s*,?' +
     '\\s*(' + fabric.reNum + '+)\\s*,?' +
     '\\s*(' + fabric.reNum + '+)\\s*' +
-    '$'
+    '$',
   );
 
   /**
@@ -547,7 +543,7 @@
     if (!fabric.svgViewBoxElementsRegEx.test(element.nodeName)) {
       return {};
     }
-    var viewBoxAttr = element.getAttribute('viewBox'),
+    let viewBoxAttr = element.getAttribute('viewBox'),
         scaleX = 1,
         scaleY = 1,
         minX = 0,
@@ -609,7 +605,7 @@
     // default is to preserve aspect ratio
     preserveAspectRatio = fabric.util.parsePreserveAspectRatioAttribute(preserveAspectRatio);
     if (preserveAspectRatio.alignX !== 'none') {
-      //translate all container for the effect of Mid, Min, Max
+      // translate all container for the effect of Mid, Min, Max
       if (preserveAspectRatio.meetOrSlice === 'meet') {
         scaleY = scaleX = (scaleX > scaleY ? scaleY : scaleX);
         // calculate additional translation to move the viewbox
@@ -669,8 +665,8 @@
 
   function hasAncestorWithNodeName(element, nodeName) {
     while (element && (element = element.parentNode)) {
-      if (element.nodeName && nodeName.test(element.nodeName.replace('svg:', ''))
-        && !element.getAttribute('instantiated_by_use')) {
+      if (element.nodeName && nodeName.test(element.nodeName.replace('svg:', '')) &&
+        !element.getAttribute('instantiated_by_use')) {
         return true;
       }
     }
@@ -696,7 +692,7 @@
 
     parseUseDirectives(doc);
 
-    var svgUid =  fabric.Object.__uid++, i, len,
+    let svgUid = fabric.Object.__uid++, i, len,
         options = applyViewboxTransform(doc),
         descendants = fabric.util.toArray(doc.getElementsByTagName('*'));
     options.crossOrigin = parsingOptions && parsingOptions.crossOrigin;
@@ -706,14 +702,14 @@
       // we're likely in node, where "o3-xml" library fails to gEBTN("*")
       // https://github.com/ajaxorg/node-o3-xml/issues/21
       descendants = doc.selectNodes('//*[name(.)!="svg"]');
-      var arr = [];
+      const arr = [];
       for (i = 0, len = descendants.length; i < len; i++) {
         arr[i] = descendants[i];
       }
       descendants = arr;
     }
 
-    var elements = descendants.filter(function(el) {
+    const elements = descendants.filter(function(el) {
       applyViewboxTransform(el);
       return fabric.svgValidTagNamesRegEx.test(el.nodeName.replace('svg:', '')) &&
             !hasAncestorWithNodeName(el, fabric.svgInvalidAncestorsRegEx); // http://www.w3.org/TR/SVG/struct.html#DefsElement
@@ -722,11 +718,11 @@
       callback && callback([], {});
       return;
     }
-    var clipPaths = { };
+    const clipPaths = { };
     descendants.filter(function(el) {
       return el.nodeName.replace('svg:', '') === 'clipPath';
     }).forEach(function(el) {
-      var id = el.getAttribute('id');
+      const id = el.getAttribute('id');
       clipPaths[id] = fabric.util.toArray(el.getElementsByTagName('*')).filter(function(el) {
         return fabric.svgValidTagNamesRegEx.test(el.nodeName.replace('svg:', ''));
       });
@@ -746,7 +742,7 @@
   };
 
   function recursivelyParseGradientsXlink(doc, gradient) {
-    var gradientsAttrs = ['gradientTransform', 'x1', 'x2', 'y1', 'y2', 'gradientUnits', 'cx', 'cy', 'r', 'fx', 'fy'],
+    const gradientsAttrs = ['gradientTransform', 'x1', 'x2', 'y1', 'y2', 'gradientUnits', 'cx', 'cy', 'r', 'fx', 'fy'],
         xlinkAttr = 'xlink:href',
         xLink = gradient.getAttribute(xlinkAttr).slice(1),
         referencedGradient = elementById(doc, xLink);
@@ -759,7 +755,7 @@
       }
     });
     if (!gradient.children.length) {
-      var referenceClone = referencedGradient.cloneNode(true);
+      const referenceClone = referencedGradient.cloneNode(true);
       while (referenceClone.firstChild) {
         gradient.appendChild(referenceClone.firstChild);
       }
@@ -767,7 +763,7 @@
     gradient.removeAttribute(xlinkAttr);
   }
 
-  var reFontDeclaration = new RegExp(
+  const reFontDeclaration = new RegExp(
     '(normal|italic)?\\s*(normal|small-caps)?\\s*' +
     '(normal|bold|bolder|lighter|100|200|300|400|500|600|700|800|900)?\\s*(' +
       fabric.reNum +
@@ -783,12 +779,12 @@
      * @param {Object} oStyle definition
      */
     parseFontDeclaration: function(value, oStyle) {
-      var match = value.match(reFontDeclaration);
+      const match = value.match(reFontDeclaration);
 
       if (!match) {
         return;
       }
-      var fontStyle = match[1],
+      const fontStyle = match[1],
           // font variant is not used
           // fontVariant = match[2],
           fontWeight = match[3],
@@ -822,7 +818,7 @@
      * @return {Object} Gradient definitions; key corresponds to element id, value -- to gradient definition element
      */
     getGradientDefs: function(doc) {
-      var tagArray = [
+      let tagArray = [
             'linearGradient',
             'radialGradient',
             'svg:linearGradient',
@@ -850,12 +846,11 @@
      * @return {Object} object containing parsed attributes' names/values
      */
     parseAttributes: function(element, attributes, svgUid) {
-
       if (!element) {
         return;
       }
 
-      var value,
+      let value,
           parentAttributes = { },
           fontSize, parentFontSize;
 
@@ -867,7 +862,7 @@
         parentAttributes = fabric.parseAttributes(element.parentNode, attributes, svgUid);
       }
 
-      var ownAttributes = attributes.reduce(function(memo, attr) {
+      let ownAttributes = attributes.reduce(function(memo, attr) {
         value = element.getAttribute(attr);
         if (value) { // eslint-disable-line
           memo[attr] = value;
@@ -876,13 +871,13 @@
       }, { });
       // add values parsed from style, which take precedence over attributes
       // (see: http://www.w3.org/TR/SVG/styling.html#UsingPresentationAttributes)
-      var cssAttrs = extend(
+      const cssAttrs = extend(
         getGlobalStylesForElement(element, svgUid),
-        fabric.parseStyleAttribute(element)
+        fabric.parseStyleAttribute(element),
       );
       ownAttributes = extend(
         ownAttributes,
-        cssAttrs
+        cssAttrs,
       );
       if (cssAttrs[cPath]) {
         element.setAttribute(cPath, cssAttrs[cPath]);
@@ -893,8 +888,8 @@
         ownAttributes[fSize] = fontSize = parseUnit(ownAttributes[fSize], parentFontSize);
       }
 
-      var normalizedAttr, normalizedValue, normalizedStyle = {};
-      for (var attr in ownAttributes) {
+      let normalizedAttr, normalizedValue, normalizedStyle = {};
+      for (const attr in ownAttributes) {
         normalizedAttr = normalizeAttr(attr);
         normalizedValue = normalizeValue(normalizedAttr, ownAttributes[attr], parentAttributes, fontSize);
         normalizedStyle[normalizedAttr] = normalizedValue;
@@ -902,7 +897,7 @@
       if (normalizedStyle && normalizedStyle.font) {
         fabric.parseFontDeclaration(normalizedStyle.font, normalizedStyle);
       }
-      var mergedAttrs = extend(parentAttributes, normalizedStyle);
+      const mergedAttrs = extend(parentAttributes, normalizedStyle);
       return fabric.svgValidParentsRegEx.test(element.nodeName) ? mergedAttrs : _setStrokeFillOpacity(mergedAttrs);
     },
 
@@ -927,7 +922,7 @@
      * @return {Object} Objects with values parsed from style attribute of an element
      */
     parseStyleAttribute: function(element) {
-      var oStyle = { },
+      const oStyle = { },
           style = element.getAttribute('style');
 
       if (!style) {
@@ -952,7 +947,6 @@
      * @return {Array} array of points
      */
     parsePointsAttribute: function(points) {
-
       // points attribute is required and must not be empty
       if (!points) {
         return null;
@@ -962,12 +956,12 @@
       points = points.replace(/,/g, ' ').trim();
 
       points = points.split(/\s+/);
-      var parsedPoints = [], i, len;
+      let parsedPoints = [], i, len;
 
       for (i = 0, len = points.length; i < len; i += 2) {
         parsedPoints.push({
           x: parseFloat(points[i]),
-          y: parseFloat(points[i + 1])
+          y: parseFloat(points[i + 1]),
         });
       }
 
@@ -988,12 +982,12 @@
      * @return {Object} CSS rules of this document
      */
     getCSSRules: function(doc) {
-      var styles = doc.getElementsByTagName('style'), i, len,
+      let styles = doc.getElementsByTagName('style'), i, len,
           allRules = { }, rules;
 
       // very crude parsing of style contents
       for (i = 0, len = styles.length; i < len; i++) {
-        var styleContents = styles[i].textContent;
+        let styleContents = styles[i].textContent;
 
         // remove comments
         styleContents = styleContents.replace(/\/\*[\s\S]*?\*\//g, '');
@@ -1004,17 +998,16 @@
         // rules = styleContents.match(/[^{]*\{[\s\S]*?\}/g);
         rules = styleContents.split('}');
         // remove empty rules.
-        rules = rules.filter(function(rule) { return rule.trim(); });
+        rules = rules.filter(function(rule) {return rule.trim();});
         // at this point we have hopefully an array of rules `body { style code... `
         // eslint-disable-next-line no-loop-func
         rules.forEach(function(rule) {
-
-          var match = rule.split('{'),
+          const match = rule.split('{'),
               ruleObj = { }, declaration = match[1].trim(),
-              propertyValuePairs = declaration.split(';').filter(function(pair) { return pair.trim(); });
+              propertyValuePairs = declaration.split(';').filter(function(pair) {return pair.trim();});
 
           for (i = 0, len = propertyValuePairs.length; i < len; i++) {
-            var pair = propertyValuePairs[i].split(':'),
+            const pair = propertyValuePairs[i].split(':'),
                 property = pair[0].trim(),
                 value = pair[1].trim();
             ruleObj[property] = value;
@@ -1048,22 +1041,20 @@
      * @param {String} [options.crossOrigin] crossOrigin crossOrigin setting to use for external resources
      */
     loadSVGFromURL: function(url, callback, reviver, options) {
-
       url = url.replace(/^\n\s*/, '').trim();
       new fabric.util.request(url, {
         method: 'get',
-        onComplete: onComplete
+        onComplete: onComplete,
       });
 
       function onComplete(r) {
-
-        var xml = r.responseXML;
+        const xml = r.responseXML;
         if (!xml || !xml.documentElement) {
           callback && callback(null);
           return false;
         }
 
-        fabric.parseSVGDocument(xml.documentElement, function (results, _options, elements, allElements) {
+        fabric.parseSVGDocument(xml.documentElement, function(results, _options, elements, allElements) {
           callback && callback(results, _options, elements, allElements);
         }, reviver, options);
       }
@@ -1079,12 +1070,11 @@
      * @param {String} [options.crossOrigin] crossOrigin crossOrigin setting to use for external resources
      */
     loadSVGFromString: function(string, callback, reviver, options) {
-      var parser = new fabric.window.DOMParser(),
+      const parser = new fabric.window.DOMParser(),
           doc = parser.parseFromString(string.trim(), 'text/xml');
-      fabric.parseSVGDocument(doc.documentElement, function (results, _options, elements, allElements) {
+      fabric.parseSVGDocument(doc.documentElement, function(results, _options, elements, allElements) {
         callback(results, _options, elements, allElements);
       }, reviver, options);
-    }
+    },
   });
-
 })(typeof exports !== 'undefined' ? exports : this);

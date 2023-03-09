@@ -1,9 +1,9 @@
-(function(){
-  var canvas = fabric.document.createElement('canvas'),
+(function() {
+  const canvas = fabric.document.createElement('canvas'),
       ctx = canvas.getContext('2d');
 
   QUnit.test('event selection:changed firing', function(assert) {
-    var iText = new fabric.IText('test neei some word\nsecond line'),
+    let iText = new fabric.IText('test neei some word\nsecond line'),
         selection = 0;
     iText.ctx = ctx;
     function countSelectionChange() {
@@ -40,7 +40,7 @@
 
     iText.selectionStart = 2;
     iText.selectionEnd = 2;
-    iText.moveCursorLeft({ shiftKey: false});
+    iText.moveCursorLeft({shiftKey: false});
     assert.equal(selection, 1, 'should fire once on moveCursorLeft');
     assert.equal(iText.selectionStart, 1, 'should be 1 less than 2');
     assert.equal(iText.selectionEnd, 1, 'should be 1 less than 2');
@@ -48,7 +48,7 @@
 
     iText.selectionStart = 2;
     iText.selectionEnd = 2;
-    iText.moveCursorRight({ shiftKey: false});
+    iText.moveCursorRight({shiftKey: false});
     assert.equal(selection, 1, 'should fire once on moveCursorRight');
     assert.equal(iText.selectionStart, 3, 'should be 1 more than 2');
     assert.equal(iText.selectionEnd, 3, 'should be 1 more than 2');
@@ -56,11 +56,11 @@
 
     iText.selectionStart = 2;
     iText.selectionEnd = 2;
-    iText.moveCursorDown({ shiftKey: false});
+    iText.moveCursorDown({shiftKey: false});
     assert.equal(selection, 1, 'should fire once on moveCursorDown');
     assert.equal(iText.selectionStart, 22, 'should be on second line');
     assert.equal(iText.selectionEnd, 22, 'should be on second line');
-    iText.moveCursorDown({ shiftKey: false});
+    iText.moveCursorDown({shiftKey: false});
     assert.equal(selection, 2, 'should fire once on moveCursorDown');
     assert.equal(iText.selectionStart, 31, 'should be at end of text');
     assert.equal(iText.selectionEnd, 31, 'should be at end of text');
@@ -68,11 +68,11 @@
 
     iText.selectionStart = 22;
     iText.selectionEnd = 22;
-    iText.moveCursorUp({ shiftKey: false});
+    iText.moveCursorUp({shiftKey: false});
     assert.equal(selection, 1, 'should fire once on moveCursorUp');
     assert.equal(iText.selectionStart, 2, 'should be back to first line');
     assert.equal(iText.selectionEnd, 2, 'should be back on first line');
-    iText.moveCursorUp({ shiftKey: false});
+    iText.moveCursorUp({shiftKey: false});
     assert.equal(selection, 2, 'should fire once on moveCursorUp');
     assert.equal(iText.selectionStart, 0, 'should be back to first line');
     assert.equal(iText.selectionEnd, 0, 'should be back on first line');
@@ -80,11 +80,11 @@
 
     iText.selectionStart = 0;
     iText.selectionEnd = 0;
-    iText.moveCursorLeft({ shiftKey: false});
+    iText.moveCursorLeft({shiftKey: false});
     assert.equal(selection, 0, 'should not fire with no change');
     assert.equal(iText.selectionStart, 0, 'should not move');
     assert.equal(iText.selectionEnd, 0, 'should not move');
-    iText.moveCursorUp({ shiftKey: false});
+    iText.moveCursorUp({shiftKey: false});
     assert.equal(selection, 0, 'should not fire with no change');
     assert.equal(iText.selectionStart, 0, 'should not move');
     assert.equal(iText.selectionEnd, 0, 'should not move');
@@ -92,11 +92,11 @@
 
     iText.selectionStart = 31;
     iText.selectionEnd = 31;
-    iText.moveCursorRight({ shiftKey: false});
+    iText.moveCursorRight({shiftKey: false});
     assert.equal(selection, 0, 'should not fire with no change');
     assert.equal(iText.selectionStart, 31, 'should not move');
     assert.equal(iText.selectionEnd, 31, 'should not move');
-    iText.moveCursorDown({ shiftKey: false});
+    iText.moveCursorDown({shiftKey: false});
     assert.equal(selection, 0, 'should not fire with no change');
     assert.equal(iText.selectionStart, 31, 'should not move');
     assert.equal(iText.selectionEnd, 31, 'should not move');
@@ -104,7 +104,7 @@
 
     iText.selectionStart = 28;
     iText.selectionEnd = 31;
-    iText.moveCursorUp({ shiftKey: false });
+    iText.moveCursorUp({shiftKey: false});
     assert.equal(selection, 1, 'should fire');
     assert.equal(iText.selectionStart, 9, 'should move to upper line start');
     assert.equal(iText.selectionEnd, 9, 'should move to upper line end');
@@ -112,7 +112,7 @@
 
     iText.selectionStart = 1;
     iText.selectionEnd = 4;
-    iText.moveCursorDown({ shiftKey: false });
+    iText.moveCursorDown({shiftKey: false});
     assert.equal(selection, 1, 'should fire');
     assert.equal(iText.selectionStart, 24, 'should move to down line');
     assert.equal(iText.selectionEnd, 24, 'should move to down line');
@@ -120,7 +120,7 @@
 
     iText.selectionStart = 28;
     iText.selectionEnd = 31;
-    iText.moveCursorLeft({ shiftKey: false });
+    iText.moveCursorLeft({shiftKey: false});
     assert.equal(selection, 1, 'should fire');
     assert.equal(iText.selectionStart, 28, 'should move to selection Start');
     assert.equal(iText.selectionEnd, 28, 'should move to selection Start');
@@ -137,7 +137,7 @@
   });
 
   QUnit.test('moving cursor with shift', function(assert) {
-    var iText = new fabric.IText('test need some word\nsecond line'),
+    let iText = new fabric.IText('test need some word\nsecond line'),
         selection = 0;
     iText.ctx = ctx;
     function countSelectionChange() {
@@ -174,7 +174,7 @@
 
     iText.selectionStart = 2;
     iText.selectionEnd = 2;
-    iText.moveCursorLeft({ shiftKey: false});
+    iText.moveCursorLeft({shiftKey: false});
     assert.equal(selection, 1, 'should fire once on moveCursorLeft');
     assert.equal(iText.selectionStart, 1, 'should be 1 less than 2');
     assert.equal(iText.selectionEnd, 1, 'should be 1 less than 2');
@@ -182,7 +182,7 @@
 
     iText.selectionStart = 2;
     iText.selectionEnd = 2;
-    iText.moveCursorRight({ shiftKey: false});
+    iText.moveCursorRight({shiftKey: false});
     assert.equal(selection, 1, 'should fire once on moveCursorRight');
     assert.equal(iText.selectionStart, 3, 'should be 1 more than 2');
     assert.equal(iText.selectionEnd, 3, 'should be 1 more than 2');
@@ -190,11 +190,11 @@
 
     iText.selectionStart = 2;
     iText.selectionEnd = 2;
-    iText.moveCursorDown({ shiftKey: false});
+    iText.moveCursorDown({shiftKey: false});
     assert.equal(selection, 1, 'should fire once on moveCursorDown');
     assert.equal(iText.selectionStart, 22, 'should be on second line');
     assert.equal(iText.selectionEnd, 22, 'should be on second line');
-    iText.moveCursorDown({ shiftKey: false});
+    iText.moveCursorDown({shiftKey: false});
     assert.equal(selection, 2, 'should fire once on moveCursorDown');
     assert.equal(iText.selectionStart, 31, 'should be at end of text');
     assert.equal(iText.selectionEnd, 31, 'should be at end of text');
@@ -202,11 +202,11 @@
 
     iText.selectionStart = 22;
     iText.selectionEnd = 22;
-    iText.moveCursorUp({ shiftKey: false});
+    iText.moveCursorUp({shiftKey: false});
     assert.equal(selection, 1, 'should fire once on moveCursorUp');
     assert.equal(iText.selectionStart, 2, 'should be back to first line');
     assert.equal(iText.selectionEnd, 2, 'should be back on first line');
-    iText.moveCursorUp({ shiftKey: false});
+    iText.moveCursorUp({shiftKey: false});
     assert.equal(selection, 2, 'should fire once on moveCursorUp');
     assert.equal(iText.selectionStart, 0, 'should be back to first line');
     assert.equal(iText.selectionEnd, 0, 'should be back on first line');
@@ -215,11 +215,11 @@
     iText.selectionStart = 0;
     iText.selectionEnd = 1;
     iText._selectionDirection = 'left';
-    iText.moveCursorLeft({ shiftKey: true});
+    iText.moveCursorLeft({shiftKey: true});
     assert.equal(selection, 0, 'should not fire with no change');
     assert.equal(iText.selectionStart, 0, 'should not move');
     assert.equal(iText.selectionEnd, 1, 'should not move');
-    iText.moveCursorUp({ shiftKey: true});
+    iText.moveCursorUp({shiftKey: true});
     assert.equal(selection, 0, 'should not fire with no change');
     assert.equal(iText.selectionStart, 0, 'should not move');
     assert.equal(iText.selectionEnd, 1, 'should not move');
@@ -229,11 +229,11 @@
     iText.selectionStart = 30;
     iText.selectionEnd = 31;
     iText._selectionDirection = 'right';
-    iText.moveCursorRight({ shiftKey: true});
+    iText.moveCursorRight({shiftKey: true});
     assert.equal(selection, 0, 'should not fire with no change');
     assert.equal(iText.selectionStart, 30, 'should not move');
     assert.equal(iText.selectionEnd, 31, 'should not move');
-    iText.moveCursorDown({ shiftKey: true});
+    iText.moveCursorDown({shiftKey: true});
     assert.equal(selection, 0, 'should not fire with no change');
     assert.equal(iText.selectionStart, 30, 'should not move');
     assert.equal(iText.selectionEnd, 31, 'should not move');
@@ -264,8 +264,8 @@
   //   assert.deepEqual(iText.styles[0][1], iText.styles[0][3], 'style is copied');
   // });
   QUnit.test('copy', function(assert) {
-    var event = { stopPropagation: function(){}, preventDefault: function(){} };
-    var iText = new fabric.IText('test', { fontSize: 25, styles: { 0: { 0: { fill: 'red' }, 1: { fill: 'blue' }}}});
+    const event = {stopPropagation: function() {}, preventDefault: function() {}};
+    const iText = new fabric.IText('test', {fontSize: 25, styles: {0: {0: {fill: 'red'}, 1: {fill: 'blue'}}}});
     iText.selectionStart = 0;
     iText.selectionEnd = 2;
     iText.copy(event);
@@ -277,8 +277,8 @@
   });
 
   QUnit.test('copy with fabric.disableStyleCopyPaste', function(assert) {
-    var event = { stopPropagation: function(){}, preventDefault: function(){} };
-    var iText = new fabric.IText('test', { fontSize: 25, styles: { 0: { 0: { fill: 'red' }, 1: { fill: 'blue' }}}});
+    const event = {stopPropagation: function() {}, preventDefault: function() {}};
+    const iText = new fabric.IText('test', {fontSize: 25, styles: {0: {0: {fill: 'red'}, 1: {fill: 'blue'}}}});
     iText.selectionStart = 0;
     iText.selectionEnd = 2;
     fabric.disableStyleCopyPaste = true;
@@ -289,16 +289,16 @@
   });
 
   QUnit.test('removeChars', function(assert) {
-    var iText = new fabric.IText('test', { fontSize: 25, styles: { 0: { 0: { fill: 'red' }, 1: { fill: 'blue' }}}});
+    const iText = new fabric.IText('test', {fontSize: 25, styles: {0: {0: {fill: 'red'}, 1: {fill: 'blue'}}}});
     assert.ok(typeof iText.removeChars === 'function');
-    iText.removeChars(1,3);
+    iText.removeChars(1, 3);
     assert.equal(iText.text, 'tt', 'text has been removed');
-    assert.deepEqual(iText._text, ['t','t'], 'text has been removed');
+    assert.deepEqual(iText._text, ['t', 't'], 'text has been removed');
     assert.equal(iText.styles[0][1], undefined, 'style has been removed');
   });
 
   QUnit.test('insertChars', function(assert) {
-    var iText = new fabric.IText('test');
+    const iText = new fabric.IText('test');
     assert.ok(typeof iText.insertChars === 'function');
     iText.insertChars('ab', null, 1);
     assert.equal(iText.text, 'tabest', 'text has been added');
@@ -317,7 +317,7 @@
   });
 
   QUnit.test('insertChars pick up the style of the character behind and replicates it', function(assert) {
-    var iText = new fabric.IText('test', { fontSize: 25, styles: { 0: { 0: { fill: 'red' }, 1: { fill: 'blue' }}}});
+    const iText = new fabric.IText('test', {fontSize: 25, styles: {0: {0: {fill: 'red'}, 1: {fill: 'blue'}}}});
     iText.insertChars('ab', null, 1);
     assert.equal(iText.styles[0][0].fill, 'red', 'style 0 0 did not change');
     assert.equal(iText.styles[0][1].fill, 'red', 'style 0 1 has been inserted red');
@@ -326,7 +326,7 @@
   });
 
   QUnit.test('insertChars removes style from the removed text', function(assert) {
-    var iText = new fabric.IText('test', { fontSize: 25, styles: { 0: { 0: { fill: 'red' }, 1: { fill: 'blue' }}}});
+    const iText = new fabric.IText('test', {fontSize: 25, styles: {0: {0: {fill: 'red'}, 1: {fill: 'blue'}}}});
     iText.insertChars('ab', null, 1, 2);
     assert.equal(iText.styles[0][0].fill, 'red', 'style 0 0 did not change');
     assert.equal(iText.styles[0][1].fill, 'red', 'style 0 1 has been inserted red');
@@ -335,7 +335,7 @@
   });
 
   QUnit.test('insertChars handles new lines correctly', function(assert) {
-    var iText = new fabric.IText('test', { fontSize: 25, styles: { 0: { 0: { fill: 'red' }, 1: { fill: 'blue' }}}});
+    const iText = new fabric.IText('test', {fontSize: 25, styles: {0: {0: {fill: 'red'}, 1: {fill: 'blue'}}}});
     iText.insertChars('ab\n\n', null, 1);
     assert.equal(iText.styles[0][0].fill, 'red', 'style 0 0 did not change');
     assert.equal(iText.styles[0][1].fill, 'red', 'style 0 1 has been inserted red');
@@ -344,8 +344,8 @@
   });
 
   QUnit.test('insertChars can accept some style for the new text', function(assert) {
-    var iText = new fabric.IText('test', { fontSize: 25, styles: { 0: { 0: { fill: 'red' }, 1: { fill: 'blue' }}}});
-    iText.insertChars('ab\n\na', [{ fill: 'col1'},{ fill: 'col2'},{ fill: 'col3'},{ fill: 'col4'},{ fill: 'col5'}], 1);
+    const iText = new fabric.IText('test', {fontSize: 25, styles: {0: {0: {fill: 'red'}, 1: {fill: 'blue'}}}});
+    iText.insertChars('ab\n\na', [{fill: 'col1'}, {fill: 'col2'}, {fill: 'col3'}, {fill: 'col4'}, {fill: 'col5'}], 1);
     assert.equal(iText.styles[0][0].fill, 'red', 'style 0 0 did not change');
     assert.equal(iText.styles[0][1].fill, 'col1', 'style 0 1 has been inserted col1');
     assert.equal(iText.styles[0][2].fill, 'col2', 'style 0 2 has been inserted col2');
@@ -355,9 +355,9 @@
   });
 
   QUnit.test('missingNewlineOffset', function(assert) {
-    var iText = new fabric.IText('由石墨\n分裂的石墨分\n裂\n由石墨分裂由石墨分裂的石\n墨分裂');
+    const iText = new fabric.IText('由石墨\n分裂的石墨分\n裂\n由石墨分裂由石墨分裂的石\n墨分裂');
 
-    var offset = iText.missingNewlineOffset(0);
+    const offset = iText.missingNewlineOffset(0);
     assert.equal(offset, 1, 'it returns always 1');
   });
 })();

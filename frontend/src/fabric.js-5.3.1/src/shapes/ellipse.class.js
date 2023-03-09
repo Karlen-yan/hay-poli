@@ -1,9 +1,8 @@
 (function(global) {
-
   'use strict';
 
-  var fabric = global.fabric || (global.fabric = { }),
-      piBy2   = Math.PI * 2;
+  const fabric = global.fabric || (global.fabric = { }),
+      piBy2 = Math.PI * 2;
 
   if (fabric.Ellipse) {
     fabric.warn('fabric.Ellipse is already defined.');
@@ -62,7 +61,6 @@
     _set: function(key, value) {
       this.callSuper('_set', key, value);
       switch (key) {
-
         case 'rx':
           this.rx = value;
           this.set('width', value * 2);
@@ -72,7 +70,6 @@
           this.ry = value;
           this.set('height', value * 2);
           break;
-
       }
       return this;
     },
@@ -114,7 +111,7 @@
         'cx="0" cy="0" ',
         'rx="', this.rx,
         '" ry="', this.ry,
-        '" />\n'
+        '" />\n',
       ];
     },
     /* _TO_SVG_END_ */
@@ -157,8 +154,7 @@
    * @return {fabric.Ellipse}
    */
   fabric.Ellipse.fromElement = function(element, callback) {
-
-    var parsedAttributes = fabric.parseAttributes(element, fabric.Ellipse.ATTRIBUTE_NAMES);
+    const parsedAttributes = fabric.parseAttributes(element, fabric.Ellipse.ATTRIBUTE_NAMES);
 
     parsedAttributes.left = (parsedAttributes.left || 0) - parsedAttributes.rx;
     parsedAttributes.top = (parsedAttributes.top || 0) - parsedAttributes.ry;
@@ -177,5 +173,4 @@
   fabric.Ellipse.fromObject = function(object, callback) {
     fabric.Object._fromObject('Ellipse', object, callback);
   };
-
 })(typeof exports !== 'undefined' ? exports : this);

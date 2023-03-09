@@ -8,7 +8,7 @@ fabric.CommonMethods = {
    * @param {Object} [options] Options object
    */
   _setOptions: function(options) {
-    for (var prop in options) {
+    for (const prop in options) {
       this.set(prop, options[prop]);
     }
   },
@@ -43,7 +43,7 @@ fabric.CommonMethods = {
    * @private
    */
   _setObject: function(obj) {
-    for (var prop in obj) {
+    for (const prop in obj) {
       this._set(prop, obj[prop]);
     }
   },
@@ -76,7 +76,7 @@ fabric.CommonMethods = {
    * @chainable
    */
   toggle: function(property) {
-    var value = this.get(property);
+    const value = this.get(property);
     if (typeof value === 'boolean') {
       this.set(property, !value);
     }
@@ -90,5 +90,5 @@ fabric.CommonMethods = {
    */
   get: function(property) {
     return this[property];
-  }
+  },
 };

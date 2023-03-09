@@ -1,7 +1,7 @@
 (function(global) {
   'use strict';
 
-  var fabric = global.fabric,
+  const fabric = global.fabric,
       filters = fabric.Image.filters,
       createClass = fabric.util.createClass;
 
@@ -95,8 +95,8 @@
      * @param {Object} options.programCache A map of compiled shader programs, keyed by filter type.
      */
     retrieveShader: function(options) {
-      var cacheKey = this.type + '_' + this.mode;
-      var shaderSource = this.fragmentSource[this.mode];
+      const cacheKey = this.type + '_' + this.mode;
+      const shaderSource = this.fragmentSource[this.mode];
       if (!options.programCache.hasOwnProperty(cacheKey)) {
         options.programCache[cacheKey] = this.createProgram(options.context, shaderSource);
       }
@@ -105,7 +105,7 @@
 
     applyToWebGL: function(options) {
       // load texture to blend.
-      var gl = options.context,
+      const gl = options.context,
           texture = this.createTexture(options.filterBackend, this.image);
       this.bindAdditionalTexture(gl, texture, gl.TEXTURE1);
       this.callSuper('applyToWebGL', options);
@@ -123,13 +123,13 @@
      * @param {Object} options.programCache A map of compiled shader programs, keyed by filter type.
      */
     calculateMatrix: function() {
-      var image = this.image,
+      const image = this.image,
           width = image._element.width,
           height = image._element.height;
       return [
         1 / image.scaleX, 0, 0,
         0, 1 / image.scaleY, 0,
-        -image.left / width, -image.top / height, 1
+        -image.left / width, -image.top / height, 1,
       ];
     },
 
@@ -140,7 +140,7 @@
      * @param {ImageData} options.imageData The Uint8ClampedArray to be filtered.
      */
     applyTo2d: function(options) {
-      var imageData = options.imageData,
+      let imageData = options.imageData,
           resources = options.filterBackend.resources,
           data = imageData.data, iLen = data.length,
           width = imageData.width,
@@ -164,8 +164,7 @@
       context.setTransform(image.scaleX, 0, 0, image.scaleY, image.left, image.top);
       context.drawImage(image._element, 0, 0, width, height);
       blendData = context.getImageData(0, 0, width, height).data;
-      for (var i = 0; i < iLen; i += 4) {
-
+      for (let i = 0; i < iLen; i += 4) {
         r = data[i];
         g = data[i + 1];
         b = data[i + 2];
@@ -210,7 +209,7 @@
      * @param {Object} uniformLocations A map of string uniform names to WebGLUniformLocation objects
      */
     sendUniformData: function(gl, uniformLocations) {
-      var matrix = this.calculateMatrix();
+      const matrix = this.calculateMatrix();
       gl.uniform1i(uniformLocations.uImage, 1); // texture unit 1.
       gl.uniformMatrix3fv(uniformLocations.uTransformMatrix, false, matrix);
     },
@@ -224,9 +223,9 @@
         type: this.type,
         image: this.image && this.image.toObject(),
         mode: this.mode,
-        alpha: this.alpha
+        alpha: this.alpha,
       };
-    }
+    },
   });
 
   /**
@@ -238,10 +237,9 @@
    */
   fabric.Image.filters.BlendImage.fromObject = function(object, callback) {
     fabric.Image.fromObject(object.image, function(image) {
-      var options = fabric.util.object.clone(object);
+      const options = fabric.util.object.clone(object);
       options.image = image;
       callback(new fabric.Image.filters.BlendImage(options));
     });
   };
-
 })(typeof exports !== 'undefined' ? exports : this);

@@ -1,6 +1,5 @@
 (function() {
-
-  var min = Math.min,
+  const min = Math.min,
       max = Math.max;
 
   fabric.util.object.extend(fabric.Canvas.prototype, /** @lends fabric.Canvas.prototype */ {
@@ -12,9 +11,9 @@
      * @return {Boolean}
      */
     _shouldGroup: function(e, target) {
-      var activeObject = this._activeObject;
+      const activeObject = this._activeObject;
       return activeObject && this._isSelectionKeyPressed(e) && target && target.selectable && this.selection &&
-            (activeObject !== target || activeObject.type === 'activeSelection') && !target.onSelect({ e: e });
+            (activeObject !== target || activeObject.type === 'activeSelection') && !target.onSelect({e: e});
     },
 
     /**
@@ -22,8 +21,8 @@
      * @param {Event} e Event object
      * @param {fabric.Object} target
      */
-    _handleGrouping: function (e, target) {
-      var activeObject = this._activeObject;
+    _handleGrouping: function(e, target) {
+      const activeObject = this._activeObject;
       // avoid multi select when shift click on a corner
       if (activeObject.__corner) {
         return;
@@ -48,7 +47,7 @@
      * @private
      */
     _updateActiveSelection: function(target, e) {
-      var activeSelection = this._activeObject,
+      const activeSelection = this._activeObject,
           currentActiveObjects = activeSelection._objects.slice(0);
       if (activeSelection.contains(target)) {
         activeSelection.removeWithUpdate(target);
@@ -71,7 +70,7 @@
      * @private
      */
     _createActiveSelection: function(target, e) {
-      var currentActives = this.getActiveObjects(), group = this._createGroup(target);
+      const currentActives = this.getActiveObjects(), group = this._createGroup(target);
       this._hoveredTarget = group;
       // ISSUE 4115: should we consider subTargets here?
       // this._hoveredTargets = [];
@@ -85,14 +84,14 @@
      * @param {Object} target
      */
     _createGroup: function(target) {
-      var objects = this._objects,
+      const objects = this._objects,
           isActiveLower = objects.indexOf(this._activeObject) < objects.indexOf(target),
-          groupObjects = isActiveLower
-            ? [this._activeObject, target]
-            : [target, this._activeObject];
+          groupObjects = isActiveLower ?
+            [this._activeObject, target] :
+            [target, this._activeObject];
       this._activeObject.isEditing && this._activeObject.exitEditing();
       return new fabric.ActiveSelection(groupObjects, {
-        canvas: this
+        canvas: this,
       });
     },
 
@@ -100,9 +99,8 @@
      * @private
      * @param {Event} e mouse event
      */
-    _groupSelectedObjects: function (e) {
-
-      var group = this._collectObjects(e),
+    _groupSelectedObjects: function(e) {
+      let group = this._collectObjects(e),
           aGroup;
 
       // do not create group for 1 element only
@@ -111,7 +109,7 @@
       }
       else if (group.length > 1) {
         aGroup = new fabric.ActiveSelection(group.reverse(), {
-          canvas: this
+          canvas: this,
         });
         this.setActiveObject(aGroup, e);
       }
@@ -121,7 +119,7 @@
      * @private
      */
     _collectObjects: function(e) {
-      var group = [],
+      let group = [],
           currentObject,
           x1 = this._groupSelector.ex,
           y1 = this._groupSelector.ey,
@@ -132,7 +130,7 @@
           allowIntersect = !this.selectionFullyContained,
           isClick = x1 === x2 && y1 === y2;
       // we iterate reverse order to collect top first in case of click.
-      for (var i = this._objects.length; i--; ) {
+      for (let i = this._objects.length; i--; ) {
         currentObject = this._objects[i];
 
         if (!currentObject || !currentObject.selectable || !currentObject.visible) {
@@ -154,7 +152,7 @@
 
       if (group.length > 1) {
         group = group.filter(function(object) {
-          return !object.onSelect({ e: e });
+          return !object.onSelect({e: e});
         });
       }
 
@@ -171,7 +169,6 @@
       this.setCursor(this.defaultCursor);
       // clear selection and current transformation
       this._groupSelector = null;
-    }
+    },
   });
-
 })();

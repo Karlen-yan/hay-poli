@@ -1,5 +1,4 @@
 (function() {
-
   'use strict';
 
   /**
@@ -8,9 +7,9 @@
    * @param {String} Precision to test can be any of following: 'lowp', 'mediump', 'highp'
    * @returns {Boolean} Whether the user's browser WebGL supports given precision.
    */
-  function testPrecision(gl, precision){
-    var fragmentSource = 'precision ' + precision + ' float;\nvoid main(){}';
-    var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+  function testPrecision(gl, precision) {
+    const fragmentSource = 'precision ' + precision + ' float;\nvoid main(){}';
+    const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
     gl.shaderSource(fragmentShader, fragmentSource);
     gl.compileShader(fragmentShader);
     if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
@@ -29,16 +28,16 @@
       return false;
     }
     tileSize = tileSize || fabric.WebglFilterBackend.prototype.tileSize;
-    var canvas = document.createElement('canvas');
-    var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-    var isSupported = false;
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    let isSupported = false;
     // eslint-disable-next-line
     if (gl) {
       fabric.maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE);
       isSupported = fabric.maxTextureSize >= tileSize;
-      var precisions = ['highp', 'mediump', 'lowp'];
-      for (var i = 0; i < 3; i++){
-        if (testPrecision(gl, precisions[i])){
+      const precisions = ['highp', 'mediump', 'lowp'];
+      for (let i = 0; i < 3; i++) {
+        if (testPrecision(gl, precisions[i])) {
           fabric.webGlPrecision = precisions[i];
           break;
         };
@@ -92,7 +91,7 @@
      * putImageData is faster than drawImage for that specific operation.
      */
     chooseFastestCopyGLTo2DMethod: function(width, height) {
-      var canMeasurePerf = typeof window.performance !== 'undefined', canUseImageData;
+      let canMeasurePerf = typeof window.performance !== 'undefined', canUseImageData;
       try {
         new ImageData(1, 1);
         canUseImageData = true;
@@ -101,29 +100,29 @@
         canUseImageData = false;
       }
       // eslint-disable-next-line no-undef
-      var canUseArrayBuffer = typeof ArrayBuffer !== 'undefined';
+      const canUseArrayBuffer = typeof ArrayBuffer !== 'undefined';
       // eslint-disable-next-line no-undef
-      var canUseUint8Clamped = typeof Uint8ClampedArray !== 'undefined';
+      const canUseUint8Clamped = typeof Uint8ClampedArray !== 'undefined';
 
       if (!(canMeasurePerf && canUseImageData && canUseArrayBuffer && canUseUint8Clamped)) {
         return;
       }
 
-      var targetCanvas = fabric.util.createCanvasElement();
+      const targetCanvas = fabric.util.createCanvasElement();
       // eslint-disable-next-line no-undef
-      var imageBuffer = new ArrayBuffer(width * height * 4);
+      const imageBuffer = new ArrayBuffer(width * height * 4);
       if (fabric.forceGLPutImageData) {
         this.imageBuffer = imageBuffer;
         this.copyGLTo2D = copyGLTo2DPutImageData;
         return;
       }
-      var testContext = {
+      const testContext = {
         imageBuffer: imageBuffer,
         destinationWidth: width,
         destinationHeight: height,
-        targetCanvas: targetCanvas
+        targetCanvas: targetCanvas,
       };
-      var startTime, drawImageTime, putImageDataTime;
+      let startTime, drawImageTime, putImageDataTime;
       targetCanvas.width = width;
       targetCanvas.height = height;
 
@@ -149,15 +148,15 @@
      * class properties to the GLFilterBackend class.
      */
     createWebGLCanvas: function(width, height) {
-      var canvas = fabric.util.createCanvasElement();
+      const canvas = fabric.util.createCanvasElement();
       canvas.width = width;
       canvas.height = height;
-      var glOptions = {
+      let glOptions = {
             alpha: true,
             premultipliedAlpha: false,
             depth: false,
             stencil: false,
-            antialias: false
+            antialias: false,
           },
           gl = canvas.getContext('webgl', glOptions);
       if (!gl) {
@@ -185,12 +184,12 @@
      * omitted, caching will be skipped.
      */
     applyFilters: function(filters, source, width, height, targetCanvas, cacheKey) {
-      var gl = this.gl;
-      var cachedTexture;
+      const gl = this.gl;
+      let cachedTexture;
       if (cacheKey) {
         cachedTexture = this.getCachedTexture(cacheKey, source);
       }
-      var pipelineState = {
+      const pipelineState = {
         originalWidth: source.width || source.originalWidth,
         originalHeight: source.height || source.originalHeight,
         sourceWidth: width,
@@ -208,11 +207,11 @@
         programCache: this.programCache,
         pass: 0,
         filterBackend: this,
-        targetCanvas: targetCanvas
+        targetCanvas: targetCanvas,
       };
-      var tempFbo = gl.createFramebuffer();
+      const tempFbo = gl.createFramebuffer();
       gl.bindFramebuffer(gl.FRAMEBUFFER, tempFbo);
-      filters.forEach(function(filter) { filter && filter.applyTo(pipelineState); });
+      filters.forEach(function(filter) {filter && filter.applyTo(pipelineState);});
       resizeCanvasIfNeeded(pipelineState);
       this.copyGLTo2D(gl, pipelineState);
       gl.bindTexture(gl.TEXTURE_2D, null);
@@ -255,7 +254,7 @@
      * @returns {WebGLTexture}
      */
     createTexture: function(gl, width, height, textureImageSource, filterType) {
-      var texture = gl.createTexture();
+      const texture = gl.createTexture();
       gl.bindTexture(gl.TEXTURE_2D, texture);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, filterType || gl.NEAREST);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, filterType || gl.NEAREST);
@@ -284,7 +283,7 @@
         return this.textureCache[uniqueId];
       }
       else {
-        var texture = this.createTexture(
+        const texture = this.createTexture(
           this.gl, textureImageSource.width, textureImageSource.height, textureImageSource);
         this.textureCache[uniqueId] = texture;
         return texture;
@@ -317,14 +316,14 @@
       if (this.gpuInfo) {
         return this.gpuInfo;
       }
-      var gl = this.gl, gpuInfo = { renderer: '', vendor: '' };
+      const gl = this.gl, gpuInfo = {renderer: '', vendor: ''};
       if (!gl) {
         return gpuInfo;
       }
-      var ext = gl.getExtension('WEBGL_debug_renderer_info');
+      const ext = gl.getExtension('WEBGL_debug_renderer_info');
       if (ext) {
-        var renderer = gl.getParameter(ext.UNMASKED_RENDERER_WEBGL);
-        var vendor = gl.getParameter(ext.UNMASKED_VENDOR_WEBGL);
+        const renderer = gl.getParameter(ext.UNMASKED_RENDERER_WEBGL);
+        const vendor = gl.getParameter(ext.UNMASKED_VENDOR_WEBGL);
         if (renderer) {
           gpuInfo.renderer = renderer.toLowerCase();
         }
@@ -339,7 +338,7 @@
 })();
 
 function resizeCanvasIfNeeded(pipelineState) {
-  var targetCanvas = pipelineState.targetCanvas,
+  const targetCanvas = pipelineState.targetCanvas,
       width = targetCanvas.width, height = targetCanvas.height,
       dWidth = pipelineState.destinationWidth,
       dHeight = pipelineState.destinationHeight;
@@ -361,12 +360,12 @@ function resizeCanvasIfNeeded(pipelineState) {
  * @param {Object} pipelineState The 2D target canvas to copy on to.
  */
 function copyGLTo2DDrawImage(gl, pipelineState) {
-  var glCanvas = gl.canvas, targetCanvas = pipelineState.targetCanvas,
+  const glCanvas = gl.canvas, targetCanvas = pipelineState.targetCanvas,
       ctx = targetCanvas.getContext('2d');
   ctx.translate(0, targetCanvas.height); // move it down again
   ctx.scale(1, -1); // vertical flip
   // where is my image on the big glcanvas?
-  var sourceY = glCanvas.height - targetCanvas.height;
+  const sourceY = glCanvas.height - targetCanvas.height;
   ctx.drawImage(glCanvas, 0, sourceY, targetCanvas.width, targetCanvas.height, 0, 0,
     targetCanvas.width, targetCanvas.height);
 }
@@ -380,17 +379,17 @@ function copyGLTo2DDrawImage(gl, pipelineState) {
  * @param {Object} pipelineState The 2D target canvas to copy on to.
  */
 function copyGLTo2DPutImageData(gl, pipelineState) {
-  var targetCanvas = pipelineState.targetCanvas, ctx = targetCanvas.getContext('2d'),
+  const targetCanvas = pipelineState.targetCanvas, ctx = targetCanvas.getContext('2d'),
       dWidth = pipelineState.destinationWidth,
       dHeight = pipelineState.destinationHeight,
       numBytes = dWidth * dHeight * 4;
 
   // eslint-disable-next-line no-undef
-  var u8 = new Uint8Array(this.imageBuffer, 0, numBytes);
+  const u8 = new Uint8Array(this.imageBuffer, 0, numBytes);
   // eslint-disable-next-line no-undef
-  var u8Clamped = new Uint8ClampedArray(this.imageBuffer, 0, numBytes);
+  const u8Clamped = new Uint8ClampedArray(this.imageBuffer, 0, numBytes);
 
   gl.readPixels(0, 0, dWidth, dHeight, gl.RGBA, gl.UNSIGNED_BYTE, u8);
-  var imgData = new ImageData(u8Clamped, dWidth, dHeight);
+  const imgData = new ImageData(u8Clamped, dWidth, dHeight);
   ctx.putImageData(imgData, 0, 0);
 }

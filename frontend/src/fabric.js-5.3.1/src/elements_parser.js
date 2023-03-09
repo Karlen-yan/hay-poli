@@ -17,7 +17,7 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
   };
 
   proto.createObjects = function() {
-    var _this = this;
+    const _this = this;
     this.elements.forEach(function(element, i) {
       element.setAttribute('svgUid', _this.svgUid);
       _this.createObject(element, i);
@@ -29,7 +29,7 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
   };
 
   proto.createObject = function(el, index) {
-    var klass = this.findTag(el);
+    const klass = this.findTag(el);
     if (klass && klass.fromElement) {
       try {
         klass.fromElement(el, this.createCallback(index, el), this.options);
@@ -44,9 +44,9 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
   };
 
   proto.createCallback = function(index, el) {
-    var _this = this;
+    const _this = this;
     return function(obj) {
-      var _options;
+      let _options;
       _this.resolveGradient(obj, el, 'fill');
       _this.resolveGradient(obj, el, 'stroke');
       if (obj instanceof fabric.Image && obj._originalElement) {
@@ -61,21 +61,21 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
   };
 
   proto.extractPropertyDefinition = function(obj, property, storage) {
-    var value = obj[property], regex = this.regexUrl;
+    const value = obj[property], regex = this.regexUrl;
     if (!regex.test(value)) {
       return;
     }
     regex.lastIndex = 0;
-    var id = regex.exec(value)[1];
+    const id = regex.exec(value)[1];
     regex.lastIndex = 0;
     return fabric[storage][this.svgUid][id];
   };
 
   proto.resolveGradient = function(obj, el, property) {
-    var gradientDef = this.extractPropertyDefinition(obj, property, 'gradientDefs');
+    const gradientDef = this.extractPropertyDefinition(obj, property, 'gradientDefs');
     if (gradientDef) {
-      var opacityAttr = el.getAttribute(property + '-opacity');
-      var gradient = fabric.Gradient.fromElement(gradientDef, obj, opacityAttr, this.options);
+      const opacityAttr = el.getAttribute(property + '-opacity');
+      const gradient = fabric.Gradient.fromElement(gradientDef, obj, opacityAttr, this.options);
       obj.set(property, gradient);
     }
   };
@@ -95,19 +95,19 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
       container = [];
       objTransformInv = fabric.util.invertTransform(obj.calcTransformMatrix());
       // move the clipPath tag as sibling to the real element that is using it
-      var clipPathTag = clipPath[0].parentNode;
-      var clipPathOwner = usingElement;
+      const clipPathTag = clipPath[0].parentNode;
+      let clipPathOwner = usingElement;
       while (clipPathOwner.parentNode && clipPathOwner.getAttribute('clip-path') !== obj.clipPath) {
         clipPathOwner = clipPathOwner.parentNode;
       }
       clipPathOwner.parentNode.appendChild(clipPathTag);
-      for (var i = 0; i < clipPath.length; i++) {
+      for (let i = 0; i < clipPath.length; i++) {
         element = clipPath[i];
         klass = this.findTag(element);
         klass.fromElement(
           element,
           this.createClipPathCallback(obj, container),
-          this.options
+          this.options,
         );
       }
       if (container.length === 1) {
@@ -118,7 +118,7 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
       }
       gTransform = fabric.util.multiplyTransformMatrices(
         objTransformInv,
-        clipPath.calcTransformMatrix()
+        clipPath.calcTransformMatrix(),
       );
       if (clipPath.clipPath) {
         this.resolveClipPath(clipPath, clipPathOwner);
@@ -131,7 +131,7 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
       clipPath.angle = options.angle;
       clipPath.skewX = options.skewX;
       clipPath.skewY = 0;
-      clipPath.setPositionByOrigin({ x: options.translateX, y: options.translateY }, 'center', 'center');
+      clipPath.setPositionByOrigin({x: options.translateX, y: options.translateY}, 'center', 'center');
       obj.clipPath = clipPath;
     }
     else {

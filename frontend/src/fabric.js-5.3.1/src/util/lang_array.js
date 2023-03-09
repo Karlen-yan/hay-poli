@@ -1,6 +1,5 @@
 (function() {
-
-  var slice = Array.prototype.slice;
+  const slice = Array.prototype.slice;
 
   /**
    * Invokes method on all items in a given array
@@ -10,8 +9,8 @@
    * @return {Array}
    */
   function invoke(array, method) {
-    var args = slice.call(arguments, 2), result = [];
-    for (var i = 0, len = array.length; i < len; i++) {
+    const args = slice.call(arguments, 2), result = [];
+    for (let i = 0, len = array.length; i < len; i++) {
       result[i] = args.length ? array[i][method].apply(array[i], args) : array[i][method].call(array[i]);
     }
     return result;
@@ -47,7 +46,7 @@
    * @private
    */
   function fill(array, value) {
-    var k = array.length;
+    let k = array.length;
     while (k--) {
       array[k] = value;
     }
@@ -62,7 +61,7 @@
       return;
     }
 
-    var i = array.length - 1,
+    let i = array.length - 1,
         result = byProperty ? array[i][byProperty] : array[i];
     if (byProperty) {
       while (i--) {
@@ -88,7 +87,6 @@
     fill: fill,
     invoke: invoke,
     min: min,
-    max: max
+    max: max,
   };
-
 })();

@@ -1,6 +1,5 @@
 (function(global) {
-
-  var sqrt = Math.sqrt,
+  const sqrt = Math.sqrt,
       atan2 = Math.atan2,
       pow = Math.pow,
       PiBy180 = Math.PI / 180,
@@ -19,12 +18,12 @@
      * @return {Number}
      */
     cos: function(angle) {
-      if (angle === 0) { return 1; }
+      if (angle === 0) {return 1;}
       if (angle < 0) {
         // cos(a) = cos(-a)
         angle = -angle;
       }
-      var angleSlice = angle / PiBy2;
+      const angleSlice = angle / PiBy2;
       switch (angleSlice) {
         case 1: case 3: return 0;
         case 2: return -1;
@@ -40,8 +39,8 @@
      * @return {Number}
      */
     sin: function(angle) {
-      if (angle === 0) { return 0; }
-      var angleSlice = angle / PiBy2, sign = 1;
+      if (angle === 0) {return 0;}
+      let angleSlice = angle / PiBy2, sign = 1;
       if (angle < 0) {
         // sin(-a) = -sin(a)
         sign = -1;
@@ -64,7 +63,7 @@
      * @return {Array} original array
      */
     removeFromArray: function(array, value) {
-      var idx = array.indexOf(value);
+      const idx = array.indexOf(value);
       if (idx !== -1) {
         array.splice(idx, 1);
       }
@@ -115,7 +114,7 @@
      * @return {fabric.Point} The new rotated point
      */
     rotatePoint: function(point, origin, radians) {
-      var newPoint = new fabric.Point(point.x - origin.x, point.y - origin.y),
+      const newPoint = new fabric.Point(point.x - origin.x, point.y - origin.y),
           v = fabric.util.rotateVector(newPoint, radians);
       return new fabric.Point(v.x, v.y).addEquals(origin);
     },
@@ -129,13 +128,13 @@
      * @return {Object} The new rotated point
      */
     rotateVector: function(vector, radians) {
-      var sin = fabric.util.sin(radians),
+      const sin = fabric.util.sin(radians),
           cos = fabric.util.cos(radians),
           rx = vector.x * cos - vector.y * sin,
           ry = vector.x * sin + vector.y * cos;
       return {
         x: rx,
-        y: ry
+        y: ry,
       };
     },
 
@@ -152,7 +151,7 @@
      * @param {Point} to
      * @returns {Point} vector
      */
-    createVector: function (from, to) {
+    createVector: function(from, to) {
       return new fabric.Point(to.x - from.x, to.y - from.y);
     },
 
@@ -164,7 +163,7 @@
      * @param {Point} b
      * @returns the angle in radian between the vectors
      */
-    calcAngleBetweenVectors: function (a, b) {
+    calcAngleBetweenVectors: function(a, b) {
       return Math.acos((a.x * b.x + a.y * b.y) / (Math.hypot(a.x, a.y) * Math.hypot(b.x, b.y)));
     },
 
@@ -174,7 +173,7 @@
      * @param {Point} v
      * @returns {Point} vector representing the unit vector of pointing to the direction of `v`
      */
-    getHatVector: function (v) {
+    getHatVector: function(v) {
       return new fabric.Point(v.x, v.y).multiply(1 / Math.hypot(v.x, v.y));
     },
 
@@ -186,15 +185,15 @@
      * @param {Point} C
      * @returns {{ vector: Point, angle: number }} vector representing the bisector of A and A's angle
      */
-    getBisector: function (A, B, C) {
-      var AB = fabric.util.createVector(A, B), AC = fabric.util.createVector(A, C);
-      var alpha = fabric.util.calcAngleBetweenVectors(AB, AC);
+    getBisector: function(A, B, C) {
+      const AB = fabric.util.createVector(A, B), AC = fabric.util.createVector(A, C);
+      const alpha = fabric.util.calcAngleBetweenVectors(AB, AC);
       //  check if alpha is relative to AB->BC
-      var ro = fabric.util.calcAngleBetweenVectors(fabric.util.rotateVector(AB, alpha), AC);
-      var phi = alpha * (ro === 0 ? 1 : -1) / 2;
+      const ro = fabric.util.calcAngleBetweenVectors(fabric.util.rotateVector(AB, alpha), AC);
+      const phi = alpha * (ro === 0 ? 1 : -1) / 2;
       return {
         vector: fabric.util.getHatVector(fabric.util.rotateVector(AB, phi)),
-        angle: alpha
+        angle: alpha,
       };
     },
 
@@ -217,17 +216,17 @@
      * @param {boolean} [openPath] whether the shape is open or not, affects the calculations of the first and last points
      * @returns {fabric.Point[]} array of size 2n/4n of all suspected points
      */
-    projectStrokeOnPoints: function (points, options, openPath) {
-      var coords = [], s = options.strokeWidth / 2,
+    projectStrokeOnPoints: function(points, options, openPath) {
+      const coords = [], s = options.strokeWidth / 2,
           strokeUniformScalar = options.strokeUniform ?
             new fabric.Point(1 / options.scaleX, 1 / options.scaleY) : new fabric.Point(1, 1),
-          getStrokeHatVector = function (v) {
-            var scalar = s / (Math.hypot(v.x, v.y));
+          getStrokeHatVector = function(v) {
+            const scalar = s / (Math.hypot(v.x, v.y));
             return new fabric.Point(v.x * scalar * strokeUniformScalar.x, v.y * scalar * strokeUniformScalar.y);
           };
       if (points.length <= 1) {return coords;}
-      points.forEach(function (p, index) {
-        var A = new fabric.Point(p.x, p.y), B, C;
+      points.forEach(function(p, index) {
+        let A = new fabric.Point(p.x, p.y), B, C;
         if (index === 0) {
           C = points[index + 1];
           B = openPath ? getStrokeHatVector(fabric.util.createVector(C, A)).addEquals(A) : points[points.length - 1];
@@ -240,7 +239,7 @@
           B = points[index - 1];
           C = points[index + 1];
         }
-        var bisector = fabric.util.getBisector(A, B, C),
+        let bisector = fabric.util.getBisector(A, B, C),
             bisectorVector = bisector.vector,
             alpha = bisector.angle,
             scalar,
@@ -249,7 +248,7 @@
           scalar = -s / Math.sin(alpha / 2);
           miterVector = new fabric.Point(
             bisectorVector.x * scalar * strokeUniformScalar.x,
-            bisectorVector.y * scalar * strokeUniformScalar.y
+            bisectorVector.y * scalar * strokeUniformScalar.y,
           );
           if (Math.hypot(miterVector.x, miterVector.y) / s <= options.strokeMiterLimit) {
             coords.push(A.add(miterVector));
@@ -260,7 +259,7 @@
         scalar = -s * Math.SQRT2;
         miterVector = new fabric.Point(
           bisectorVector.x * scalar * strokeUniformScalar.x,
-          bisectorVector.y * scalar * strokeUniformScalar.y
+          bisectorVector.y * scalar * strokeUniformScalar.y,
         );
         coords.push(A.add(miterVector));
         coords.push(A.subtract(miterVector));
@@ -281,12 +280,12 @@
       if (ignoreOffset) {
         return new fabric.Point(
           t[0] * p.x + t[2] * p.y,
-          t[1] * p.x + t[3] * p.y
+          t[1] * p.x + t[3] * p.y,
         );
       }
       return new fabric.Point(
         t[0] * p.x + t[2] * p.y + t[4],
-        t[1] * p.x + t[3] * p.y + t[5]
+        t[1] * p.x + t[3] * p.y + t[5],
       );
     },
 
@@ -298,11 +297,11 @@
      */
     makeBoundingBoxFromPoints: function(points, transform) {
       if (transform) {
-        for (var i = 0; i < points.length; i++) {
+        for (let i = 0; i < points.length; i++) {
           points[i] = fabric.util.transformPoint(points[i], transform);
         }
       }
-      var xPoints = [points[0].x, points[1].x, points[2].x, points[3].x],
+      const xPoints = [points[0].x, points[1].x, points[2].x, points[3].x],
           minX = fabric.util.array.min(xPoints),
           maxX = fabric.util.array.max(xPoints),
           width = maxX - minX,
@@ -315,7 +314,7 @@
         left: minX,
         top: minY,
         width: width,
-        height: height
+        height: height,
       };
     },
 
@@ -327,9 +326,9 @@
      * @return {Array} The inverted transform
      */
     invertTransform: function(t) {
-      var a = 1 / (t[0] * t[3] - t[1] * t[2]),
+      const a = 1 / (t[0] * t[3] - t[1] * t[2]),
           r = [a * t[3], -a * t[1], -a * t[2], a * t[0]],
-          o = fabric.util.transformPoint({ x: t[4], y: t[5] }, r, true);
+          o = fabric.util.transformPoint({x: t[4], y: t[5]}, r, true);
       r[4] = -o.x;
       r[5] = -o.y;
       return r;
@@ -355,7 +354,7 @@
      * @return {Number|String}
      */
     parseUnit: function(value, fontSize) {
-      var unit = /\D{0,2}$/.exec(value),
+      const unit = /\D{0,2}$/.exec(value),
           number = parseFloat(value);
       if (!fontSize) {
         fontSize = fabric.Text.DEFAULT_SVG_FONT_SIZE;
@@ -414,11 +413,11 @@
      * @return {Array} string names of supported attributes
      */
     getSvgAttributes: function(type) {
-      var attributes = [
+      let attributes = [
         'instantiated_by_use',
         'style',
         'id',
-        'class'
+        'class',
       ];
       switch (type) {
         case 'linearGradient':
@@ -445,7 +444,7 @@
         return fabric;
       }
 
-      var parts = namespace.split('.'),
+      let parts = namespace.split('.'),
           len = parts.length, i,
           obj = global || fabric.window;
 
@@ -470,10 +469,10 @@
         return;
       }
 
-      var img = fabric.util.createImage();
+      let img = fabric.util.createImage();
 
       /** @ignore */
-      var onLoadCallback = function () {
+      const onLoadCallback = function() {
         callback && callback.call(context, img, false);
         img = img.onload = img.onerror = null;
       };
@@ -500,7 +499,7 @@
       // IE10 / IE11-Fix: SVG contents from data: URI
       // will only be available if the IMG is present
       // in the DOM (and visible)
-      if (url.substring(0,14) === 'data:image/svg') {
+      if (url.substring(0, 14) === 'data:image/svg') {
         img.onload = null;
         fabric.util.loadImageInDom(img, onLoadCallback);
       }
@@ -516,7 +515,7 @@
      * @return {Object} DOM element (div containing the SVG image)
      */
     loadImageInDom: function(img, onLoadCallback) {
-      var div = fabric.document.createElement('div');
+      let div = fabric.document.createElement('div');
       div.style.width = div.style.height = '1px';
       div.style.left = div.style.top = '-100%';
       div.style.position = 'absolute';
@@ -527,7 +526,7 @@
        *   1. Call existing callback
        *   2. Cleanup DOM
        */
-      img.onload = function () {
+      img.onload = function() {
         onLoadCallback();
         div.parentNode.removeChild(div);
         div = null;
@@ -547,7 +546,7 @@
     enlivenObjects: function(objects, callback, namespace, reviver) {
       objects = objects || [];
 
-      var enlivenedObjects = [],
+      let enlivenedObjects = [],
           numLoadedObjects = 0,
           numTotalObjects = objects.length;
 
@@ -565,14 +564,14 @@
         return;
       }
 
-      objects.forEach(function (o, index) {
+      objects.forEach(function(o, index) {
         // if sparse array
         if (!o || !o.type) {
           onLoaded();
           return;
         }
-        var klass = fabric.util.getKlass(o.type, namespace);
-        klass.fromObject(o, function (obj, error) {
+        const klass = fabric.util.getKlass(o.type, namespace);
+        klass.fromObject(o, function(obj, error) {
           error || (enlivenedObjects[index] = obj);
           reviver && reviver(o, obj, error);
           onLoaded();
@@ -587,11 +586,11 @@
      * @param {Object} [context] assign enlived props to this object (pass null to skip this)
      * @param {(objects:fabric.Object[]) => void} callback
      */
-    enlivenObjectEnlivables: function (object, context, callback) {
-      var enlivenProps = fabric.Object.ENLIVEN_PROPS.filter(function (key) { return !!object[key]; });
-      fabric.util.enlivenObjects(enlivenProps.map(function (key) { return object[key]; }), function (enlivedProps) {
-        var objects = {};
-        enlivenProps.forEach(function (key, index) {
+    enlivenObjectEnlivables: function(object, context, callback) {
+      const enlivenProps = fabric.Object.ENLIVEN_PROPS.filter(function(key) {return !!object[key];});
+      fabric.util.enlivenObjects(enlivenProps.map(function(key) {return object[key];}), function(enlivedProps) {
+        const objects = {};
+        enlivenProps.forEach(function(key, index) {
           objects[key] = enlivedProps[index];
           context && (context[key] = enlivedProps[index]);
         });
@@ -625,7 +624,7 @@
         return;
       }
 
-      patterns.forEach(function (p, index) {
+      patterns.forEach(function(p, index) {
         if (p && p.source) {
           new fabric.Pattern(p, function(pattern) {
             enlivenedPatterns[index] = pattern;
@@ -649,7 +648,7 @@
      * @return {fabric.Object|fabric.Group}
      */
     groupSVGElements: function(elements, options, path) {
-      var object;
+      let object;
       if (elements && elements.length === 1) {
         if (typeof path !== 'undefined') {
           elements[0].sourcePath = path;
@@ -660,7 +659,7 @@
         if (options.width && options.height) {
           options.centerPoint = {
             x: options.width / 2,
-            y: options.height / 2
+            y: options.height / 2,
           };
         }
         else {
@@ -685,7 +684,7 @@
      */
     populateWithProperties: function(source, destination, properties) {
       if (properties && Array.isArray(properties)) {
-        for (var i = 0, len = properties.length; i < len; i++) {
+        for (let i = 0, len = properties.length; i < len; i++) {
           if (properties[i] in source) {
             destination[properties[i]] = source[properties[i]];
           }
@@ -711,7 +710,7 @@
      * @return {CanvasElement} initialized canvas element
      */
     copyCanvasElement: function(canvas) {
-      var newCanvas = fabric.util.createCanvasElement();
+      const newCanvas = fabric.util.createCanvasElement();
       newCanvas.width = canvas.width;
       newCanvas.height = canvas.height;
       newCanvas.getContext('2d').drawImage(canvas, 0, 0);
@@ -758,7 +757,7 @@
         a[0] * b[2] + a[2] * b[3],
         a[1] * b[2] + a[3] * b[3],
         is2x2 ? 0 : a[0] * b[4] + a[2] * b[5] + a[4],
-        is2x2 ? 0 : a[1] * b[4] + a[3] * b[5] + a[5]
+        is2x2 ? 0 : a[1] * b[4] + a[3] * b[5] + a[5],
       ];
     },
 
@@ -770,7 +769,7 @@
      * @return {Object} Components of transform
      */
     qrDecompose: function(a) {
-      var angle = atan2(a[1], a[0]),
+      const angle = atan2(a[1], a[0]),
           denom = pow(a[0], 2) + pow(a[1], 2),
           scaleX = sqrt(denom),
           scaleY = (a[0] * a[3] - a[2] * a[1]) / scaleX,
@@ -782,7 +781,7 @@
         skewX: skewX / PiBy180,
         skewY: 0,
         translateX: a[4],
-        translateY: a[5]
+        translateY: a[5],
       };
     },
 
@@ -800,7 +799,7 @@
       if (!options.angle) {
         return fabric.iMatrix.concat();
       }
-      var theta = fabric.util.degreesToRadians(options.angle),
+      const theta = fabric.util.degreesToRadians(options.angle),
           cos = fabric.util.cos(theta),
           sin = fabric.util.sin(theta);
       return [cos, sin, -sin, cos, 0, 0];
@@ -824,7 +823,7 @@
      * @return {Number[]} transform matrix
      */
     calcDimensionsMatrix: function(options) {
-      var scaleX = typeof options.scaleX === 'undefined' ? 1 : options.scaleX,
+      let scaleX = typeof options.scaleX === 'undefined' ? 1 : options.scaleX,
           scaleY = typeof options.scaleY === 'undefined' ? 1 : options.scaleY,
           scaleMatrix = [
             options.flipX ? -scaleX : scaleX,
@@ -869,7 +868,7 @@
      * @return {Number[]} transform matrix
      */
     composeMatrix: function(options) {
-      var matrix = [1, 0, 0, 1, options.translateX || 0, options.translateY || 0],
+      let matrix = [1, 0, 0, 1, options.translateX || 0, options.translateY || 0],
           multiply = fabric.util.multiplyTransformMatrices;
       if (options.angle) {
         matrix = multiply(matrix, fabric.util.calcRotateMatrix(options));
@@ -887,7 +886,7 @@
      * @memberOf fabric.util
      * @param  {fabric.Object} target object to transform
      */
-    resetObjectTransform: function (target) {
+    resetObjectTransform: function(target) {
       target.scaleX = 1;
       target.scaleY = 1;
       target.skewX = 0;
@@ -904,7 +903,7 @@
      * @param  {fabric.Object} target object to read from
      * @return {Object} Components of transform
      */
-    saveObjectTransform: function (target) {
+    saveObjectTransform: function(target) {
       return {
         scaleX: target.scaleX,
         scaleY: target.scaleY,
@@ -914,7 +913,7 @@
         left: target.left,
         flipX: target.flipX,
         flipY: target.flipY,
-        top: target.top
+        top: target.top,
       };
     },
 
@@ -927,7 +926,6 @@
      * @param {Number} tolerance Tolerance
      */
     isTransparent: function(ctx, x, y, tolerance) {
-
       // If tolerance is > 0 adjust start coords to take into account.
       // If moves off Canvas fix to 0
       if (tolerance > 0) {
@@ -945,7 +943,7 @@
         }
       }
 
-      var _isTransparent = true, i, temp,
+      let _isTransparent = true, i, temp,
           imageData = ctx.getImageData(x, y, (tolerance * 2) || 1, (tolerance * 2) || 1),
           l = imageData.data.length;
 
@@ -969,7 +967,7 @@
      * @return {Object} an object containing align and meetOrSlice attribute
      */
     parsePreserveAspectRatioAttribute: function(attribute) {
-      var meetOrSlice = 'meet', alignX = 'Mid', alignY = 'Mid',
+      let meetOrSlice = 'meet', alignX = 'Mid', alignY = 'Mid',
           aspectRatioAttrs = attribute.split(' '), align;
 
       if (aspectRatioAttrs && aspectRatioAttrs.length) {
@@ -982,13 +980,13 @@
           align = aspectRatioAttrs.pop();
         }
       }
-      //divide align in alignX and alignY
+      // divide align in alignX and alignY
       alignX = align !== 'none' ? align.slice(1, 4) : 'none';
       alignY = align !== 'none' ? align.slice(5, 8) : 'none';
       return {
         meetOrSlice: meetOrSlice,
         alignX: alignX,
-        alignY: alignY
+        alignY: alignY,
       };
     },
 
@@ -1024,9 +1022,9 @@
      * @return {Object.y} Limited dimensions by Y
      */
     limitDimsByArea: function(ar, maximumArea) {
-      var roughWidth = Math.sqrt(maximumArea * ar),
+      const roughWidth = Math.sqrt(maximumArea * ar),
           perfLimitSizeY = Math.floor(maximumArea / roughWidth);
-      return { x: Math.floor(roughWidth), y: perfLimitSizeY };
+      return {x: Math.floor(roughWidth), y: perfLimitSizeY};
     },
 
     capValue: function(min, value, max) {
@@ -1093,7 +1091,7 @@
      * @param {Array} transform the destination transform
      */
     removeTransformFromObject: function(object, transform) {
-      var inverted = fabric.util.invertTransform(transform),
+      const inverted = fabric.util.invertTransform(transform),
           finalTransform = fabric.util.multiplyTransformMatrices(inverted, object.calcOwnMatrix());
       fabric.util.applyTransformToObject(object, finalTransform);
     },
@@ -1110,7 +1108,7 @@
     addTransformToObject: function(object, transform) {
       fabric.util.applyTransformToObject(
         object,
-        fabric.util.multiplyTransformMatrices(transform, object.calcOwnMatrix())
+        fabric.util.multiplyTransformMatrices(transform, object.calcOwnMatrix()),
       );
     },
 
@@ -1121,7 +1119,7 @@
      * @param {Array} transform the destination transform
      */
     applyTransformToObject: function(object, transform) {
-      var options = fabric.util.qrDecompose(transform),
+      const options = fabric.util.qrDecompose(transform),
           center = new fabric.Point(options.translateX, options.translateY);
       object.flipX = false;
       object.flipY = false;
@@ -1150,23 +1148,23 @@
      * @return {Object.y} height of containing
      */
     sizeAfterTransform: function(width, height, options) {
-      var dimX = width / 2, dimY = height / 2,
+      const dimX = width / 2, dimY = height / 2,
           points = [
             {
               x: -dimX,
-              y: -dimY
+              y: -dimY,
             },
             {
               x: dimX,
-              y: -dimY
+              y: -dimY,
             },
             {
               x: -dimX,
-              y: dimY
+              y: dimY,
             },
             {
               x: dimX,
-              y: dimY
+              y: dimY,
             }],
           transformMatrix = fabric.util.calcDimensionsMatrix(options),
           bbox = fabric.util.makeBoundingBoxFromPoints(points, transformMatrix);
@@ -1195,8 +1193,8 @@
      * @param {fabric.Object} c2
      * @returns {fabric.Object} merged clip path
      */
-    mergeClipPaths: function (c1, c2) {
-      var a = c1, b = c2;
+    mergeClipPaths: function(c1, c2) {
+      let a = c1, b = c2;
       if (a.inverted && !b.inverted) {
         //  case (2)
         a = c2;
@@ -1207,16 +1205,16 @@
         b,
         fabric.util.multiplyTransformMatrices(
           fabric.util.invertTransform(a.calcTransformMatrix()),
-          b.calcTransformMatrix()
-        )
+          b.calcTransformMatrix(),
+        ),
       );
       //  assign the `inverted` prop to the wrapping group
-      var inverted = a.inverted && b.inverted;
+      const inverted = a.inverted && b.inverted;
       if (inverted) {
         //  case (1)
         a.inverted = b.inverted = false;
       }
-      return new fabric.Group([a], { clipPath: b, inverted: inverted });
+      return new fabric.Group([a], {clipPath: b, inverted: inverted});
     },
 
     /**
@@ -1257,29 +1255,29 @@
       var styles = fabric.util.object.clone(styles, true),
           textLines = text.split('\n'),
           charIndex = -1, prevStyle = {}, stylesArray = [];
-      //loop through each textLine
-      for (var i = 0; i < textLines.length; i++) {
+      // loop through each textLine
+      for (let i = 0; i < textLines.length; i++) {
         if (!styles[i]) {
-          //no styles exist for this line, so add the line's length to the charIndex total
+          // no styles exist for this line, so add the line's length to the charIndex total
           charIndex += textLines[i].length;
           continue;
         }
-        //loop through each character of the current line
-        for (var c = 0; c < textLines[i].length; c++) {
+        // loop through each character of the current line
+        for (let c = 0; c < textLines[i].length; c++) {
           charIndex++;
-          var thisStyle = styles[i][c];
-          //check if style exists for this character
+          const thisStyle = styles[i][c];
+          // check if style exists for this character
           if (thisStyle && Object.keys(thisStyle).length > 0) {
-            var styleChanged = fabric.util.hasStyleChanged(prevStyle, thisStyle, true);
+            const styleChanged = fabric.util.hasStyleChanged(prevStyle, thisStyle, true);
             if (styleChanged) {
               stylesArray.push({
                 start: charIndex,
                 end: charIndex + 1,
-                style: thisStyle
+                style: thisStyle,
               });
             }
             else {
-              //if style is the same as previous character, increase end index
+              // if style is the same as previous character, increase end index
               stylesArray[stylesArray.length - 1].end++;
             }
           }
@@ -1302,22 +1300,22 @@
       if (!Array.isArray(styles)) {
         return styles;
       }
-      var textLines = text.split('\n'),
+      let textLines = text.split('\n'),
           charIndex = -1, styleIndex = 0, stylesObject = {};
-      //loop through each textLine
-      for (var i = 0; i < textLines.length; i++) {
-        //loop through each character of the current line
-        for (var c = 0; c < textLines[i].length; c++) {
+      // loop through each textLine
+      for (let i = 0; i < textLines.length; i++) {
+        // loop through each character of the current line
+        for (let c = 0; c < textLines[i].length; c++) {
           charIndex++;
-          //check if there's a style collection that includes the current character
-          if (styles[styleIndex]
-            && styles[styleIndex].start <= charIndex
-            && charIndex < styles[styleIndex].end) {
-            //create object for line index if it doesn't exist
+          // check if there's a style collection that includes the current character
+          if (styles[styleIndex] &&
+            styles[styleIndex].start <= charIndex &&
+            charIndex < styles[styleIndex].end) {
+            // create object for line index if it doesn't exist
             stylesObject[i] = stylesObject[i] || {};
-            //assign a style at this character's index
+            // assign a style at this character's index
             stylesObject[i][c] = Object.assign({}, styles[styleIndex].style);
-            //if character is at the end of the current style collection, move to the next
+            // if character is at the end of the current style collection, move to the next
             if (charIndex === styles[styleIndex].end - 1) {
               styleIndex++;
             }
@@ -1325,6 +1323,6 @@
         }
       }
       return stylesObject;
-    }
+    },
   };
 })(typeof exports !== 'undefined' ? exports : this);

@@ -1,26 +1,25 @@
 (function() {
-
-  var canvas = this.canvas = new fabric.Canvas(null, {enableRetinaScaling: false, width: 600, height: 600});
+  const canvas = this.canvas = new fabric.Canvas(null, {enableRetinaScaling: false, width: 600, height: 600});
 
   function makeAsWith2Objects() {
-    var rect1 = new fabric.Rect({ top: 100, left: 100, width: 30, height: 10, strokeWidth: 0 }),
-        rect2 = new fabric.Rect({ top: 120, left: 50, width: 10, height: 40, strokeWidth: 0 });
+    const rect1 = new fabric.Rect({top: 100, left: 100, width: 30, height: 10, strokeWidth: 0}),
+        rect2 = new fabric.Rect({top: 120, left: 50, width: 10, height: 40, strokeWidth: 0});
 
     return new fabric.ActiveSelection([rect1, rect2], {strokeWidth: 0});
   }
 
   function makeAsWith2ObjectsWithOpacity() {
-    var rect1 = new fabric.Rect({ top: 100, left: 100, width: 30, height: 10, strokeWidth: 0, opacity: 0.5 }),
-        rect2 = new fabric.Rect({ top: 120, left: 50, width: 10, height: 40, strokeWidth: 0, opacity: 0.8 });
+    const rect1 = new fabric.Rect({top: 100, left: 100, width: 30, height: 10, strokeWidth: 0, opacity: 0.5}),
+        rect2 = new fabric.Rect({top: 120, left: 50, width: 10, height: 40, strokeWidth: 0, opacity: 0.8});
 
     return new fabric.ActiveSelection([rect1, rect2], {strokeWidth: 0});
   }
 
   function makeAsWith4Objects() {
-    var rect1 = new fabric.Rect({ top: 100, left: 100, width: 30, height: 10 }),
-        rect2 = new fabric.Rect({ top: 120, left: 50, width: 10, height: 40 }),
-        rect3 = new fabric.Rect({ top: 40, left: 0, width: 20, height: 40 }),
-        rect4 = new fabric.Rect({ top: 75, left: 75, width: 40, height: 40 });
+    const rect1 = new fabric.Rect({top: 100, left: 100, width: 30, height: 10}),
+        rect2 = new fabric.Rect({top: 120, left: 50, width: 10, height: 40}),
+        rect3 = new fabric.Rect({top: 40, left: 0, width: 20, height: 40}),
+        rect4 = new fabric.Rect({top: 75, left: 75, width: 40, height: 40});
 
     return new fabric.ActiveSelection([rect1, rect2, rect3, rect4]);
   }
@@ -30,29 +29,29 @@
       canvas.clear();
       canvas.backgroundColor = fabric.Canvas.prototype.backgroundColor;
       canvas.calcOffset();
-    }
+    },
   });
 
   QUnit.test('constructor', function(assert) {
-    var group = makeAsWith2Objects();
+    const group = makeAsWith2Objects();
 
     assert.ok(group);
     assert.ok(group instanceof fabric.ActiveSelection, 'should be instance of fabric.ActiveSelection');
   });
 
   QUnit.test('toString', function(assert) {
-    var group = makeAsWith2Objects();
+    const group = makeAsWith2Objects();
     assert.equal(group.toString(), '#<fabric.ActiveSelection: (2)>', 'should return proper representation');
   });
 
   QUnit.test('toObject', function(assert) {
-    var group = makeAsWith2Objects();
+    const group = makeAsWith2Objects();
 
     assert.ok(typeof group.toObject === 'function');
 
-    var clone = group.toObject();
+    const clone = group.toObject();
 
-    var expectedObject = {
+    const expectedObject = {
       version:                  fabric.version,
       type:                     'activeSelection',
       originX:                  'left',
@@ -84,7 +83,7 @@
       skewX:                    0,
       skewY:                    0,
       strokeUniform:            false,
-      objects:                  clone.objects
+      objects:                  clone.objects,
     };
 
     assert.deepEqual(clone, expectedObject);
@@ -95,17 +94,17 @@
   });
 
   QUnit.test('toObject without default values', function(assert) {
-    var group = makeAsWith2Objects();
+    const group = makeAsWith2Objects();
     group.includeDefaultValues = false;
-    var clone = group.toObject();
-    var objects = [{
+    const clone = group.toObject();
+    const objects = [{
       version:                  fabric.version,
       type: 'rect',
       left: 10,
       top: -30,
       width: 30,
       height: 10,
-      strokeWidth: 0
+      strokeWidth: 0,
     }, {
       version:                  fabric.version,
       type: 'rect',
@@ -113,16 +112,16 @@
       top: -10,
       width: 10,
       height: 40,
-      strokeWidth: 0
+      strokeWidth: 0,
     }];
-    var expectedObject = {
+    const expectedObject = {
       version:            fabric.version,
       type:               'activeSelection',
       left:               50,
       top:                100,
       width:              80,
       height:             60,
-      objects:            objects
+      objects:            objects,
     };
     assert.deepEqual(clone, expectedObject);
   });
@@ -132,16 +131,15 @@
   });
 
   QUnit.test('fromObject', function(assert) {
-    var done = assert.async();
-    var group = makeAsWith2ObjectsWithOpacity();
+    const done = assert.async();
+    const group = makeAsWith2ObjectsWithOpacity();
 
     assert.ok(typeof fabric.ActiveSelection.fromObject === 'function');
-    var groupObject = group.toObject();
+    const groupObject = group.toObject();
 
     fabric.ActiveSelection.fromObject(groupObject, function(newGroupFromObject) {
-
-      var objectFromOldGroup = group.toObject();
-      var objectFromNewGroup = newGroupFromObject.toObject();
+      const objectFromOldGroup = group.toObject();
+      const objectFromNewGroup = newGroupFromObject.toObject();
 
       assert.ok(newGroupFromObject instanceof fabric.ActiveSelection);
 
@@ -159,7 +157,7 @@
   });
 
   QUnit.test('get with locked objects', function(assert) {
-    var group = makeAsWith2Objects();
+    const group = makeAsWith2Objects();
 
     assert.equal(group.get('lockMovementX'), false);
 
@@ -182,7 +180,7 @@
   });
 
   QUnit.test('insertAt', function(assert) {
-    var rect1 = new fabric.Rect(),
+    const rect1 = new fabric.Rect(),
         rect2 = new fabric.Rect(),
         group = new fabric.Group();
 
@@ -198,37 +196,37 @@
   });
 
   QUnit.test('group addWithUpdate', function(assert) {
-    var rect1 = new fabric.Rect({ top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
-        rect2 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+    const rect1 = new fabric.Rect({top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+        rect2 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
         group = new fabric.Group([rect1]);
 
-    var coords = group.oCoords;
+    const coords = group.oCoords;
     group.addWithUpdate(rect2);
-    var newCoords = group.oCoords;
+    const newCoords = group.oCoords;
     assert.notEqual(coords, newCoords, 'object coords have been recalculated - add');
   });
 
   QUnit.test('group removeWithUpdate', function(assert) {
-    var rect1 = new fabric.Rect({ top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
-        rect2 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+    const rect1 = new fabric.Rect({top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+        rect2 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
         group = new fabric.Group([rect1, rect2]);
 
-    var coords = group.oCoords;
+    const coords = group.oCoords;
     group.removeWithUpdate(rect2);
-    var newCoords = group.oCoords;
+    const newCoords = group.oCoords;
     assert.notEqual(coords, newCoords, 'object coords have been recalculated - remove');
   });
 
   QUnit.test('ActiveSelection shouldCache', function(assert) {
-    var rect1 = new fabric.Rect({ top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
-        rect2 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
-        group = new fabric.ActiveSelection([rect1, rect2], { objectCaching: true});
+    const rect1 = new fabric.Rect({top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
+        rect2 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
+        group = new fabric.ActiveSelection([rect1, rect2], {objectCaching: true});
 
     assert.equal(group.shouldCache(), false, 'Active selection do not cache');
   });
 
   QUnit.test('canvas property propagation', function(assert) {
-    var g2 = makeAsWith4Objects();
+    const g2 = makeAsWith4Objects();
 
     canvas.add(g2);
     assert.equal(g2.canvas, canvas);
@@ -236,7 +234,7 @@
   });
 
   QUnit.test('moveTo on activeSelection', function(assert) {
-    var group = makeAsWith4Objects({ canvas: canvas }),
+    const group = makeAsWith4Objects({canvas: canvas}),
         groupEl1 = group.getObjects()[0],
         groupEl2 = group.getObjects()[1],
         groupEl3 = group.getObjects()[2],
@@ -271,5 +269,4 @@
     assert.equal(canvas.item(2), groupEl4, 'item 4 shifted down to 3');
     assert.equal(canvas.item(9999), undefined);
   });
-
 })();

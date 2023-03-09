@@ -1,6 +1,5 @@
 (function() {
-
-  var getPointer = fabric.util.getPointer,
+  const getPointer = fabric.util.getPointer,
       degreesToRadians = fabric.util.degreesToRadians,
       isTouchEvent = fabric.util.isTouchEvent;
 
@@ -375,13 +374,13 @@
      * @return {Array} objects to render immediately and pushes the other in the activeGroup.
      */
     _chooseObjectsToRender: function() {
-      var activeObjects = this.getActiveObjects(),
+      let activeObjects = this.getActiveObjects(),
           object, objsToRender, activeGroupObjects;
 
       if (activeObjects.length > 0 && !this.preserveObjectStacking) {
         objsToRender = [];
         activeGroupObjects = [];
-        for (var i = 0, length = this._objects.length; i < length; i++) {
+        for (let i = 0, length = this._objects.length; i < length; i++) {
           object = this._objects[i];
           if (activeObjects.indexOf(object) === -1 ) {
             objsToRender.push(object);
@@ -406,7 +405,7 @@
      * @return {fabric.Canvas} instance
      * @chainable
      */
-    renderAll: function () {
+    renderAll: function() {
       if (this.contextTopDirty && !this._groupSelector && !this.isDrawingMode) {
         this.clearContext(this.contextTop);
         this.contextTopDirty = false;
@@ -415,7 +414,7 @@
         this.renderTopLayer(this.contextTop);
         this.hasLostContext = false;
       }
-      var canvasToDrawOn = this.contextContainer;
+      const canvasToDrawOn = this.contextContainer;
       this.renderCanvas(canvasToDrawOn, this._chooseObjectsToRender());
       return this;
     },
@@ -440,8 +439,8 @@
      * @return {fabric.Canvas} thisArg
      * @chainable
      */
-    renderTop: function () {
-      var ctx = this.contextTop;
+    renderTop: function() {
+      const ctx = this.contextTop;
       this.clearContext(ctx);
       this.renderTopLayer(ctx);
       this.fire('after:render');
@@ -451,8 +450,8 @@
     /**
      * @private
      */
-    _normalizePointer: function (object, pointer) {
-      var m = object.calcTransformMatrix(),
+    _normalizePointer: function(object, pointer) {
+      const m = object.calcTransformMatrix(),
           invertedM = fabric.util.invertTransform(m),
           vptPointer = this.restorePointerVpt(pointer);
       return fabric.util.transformPoint(vptPointer, invertedM);
@@ -465,11 +464,11 @@
      * @param {Number} y Top coordinate
      * @return {Boolean}
      */
-    isTargetTransparent: function (target, x, y) {
+    isTargetTransparent: function(target, x, y) {
       // in case the target is the activeObject, we cannot execute this optimization
       // because we need to draw controls too.
       if (target.shouldCache() && target._cacheCanvas && target !== this._activeObject) {
-        var normalizedPointer = this._normalizePointer(target, {x: x, y: y}),
+        const normalizedPointer = this._normalizePointer(target, {x: x, y: y}),
             targetRelativeX = Math.max(target.cacheTranslationX + (normalizedPointer.x * target.zoomX), 0),
             targetRelativeY = Math.max(target.cacheTranslationY + (normalizedPointer.y * target.zoomY), 0);
 
@@ -479,7 +478,7 @@
         return isTransparent;
       }
 
-      var ctx = this.contextCache,
+      const ctx = this.contextCache,
           originalColor = target.selectionBackgroundColor, v = this.viewportTransform;
 
       target.selectionBackgroundColor = '';
@@ -505,10 +504,10 @@
      * @param {Event} e Event object
      */
     _isSelectionKeyPressed: function(e) {
-      var selectionKeyPressed = false;
+      let selectionKeyPressed = false;
 
       if (Array.isArray(this.selectionKey)) {
-        selectionKeyPressed = !!this.selectionKey.find(function(key) { return e[key] === true; });
+        selectionKeyPressed = !!this.selectionKey.find(function(key) {return e[key] === true;});
       }
       else {
         selectionKeyPressed = e[this.selectionKey];
@@ -522,22 +521,19 @@
      * @param {Event} e Event object
      * @param {fabric.Object} target
      */
-    _shouldClearSelection: function (e, target) {
-      var activeObjects = this.getActiveObjects(),
+    _shouldClearSelection: function(e, target) {
+      const activeObjects = this.getActiveObjects(),
           activeObject = this._activeObject;
 
       return (
-        !target
-        ||
+        !target ||
         (target &&
           activeObject &&
           activeObjects.length > 1 &&
           activeObjects.indexOf(target) === -1 &&
           activeObject !== target &&
-          !this._isSelectionKeyPressed(e))
-        ||
-        (target && !target.evented)
-        ||
+          !this._isSelectionKeyPressed(e)) ||
+        (target && !target.evented) ||
         (target &&
           !target.selectable &&
           activeObject &&
@@ -555,12 +551,12 @@
      * @param {String} action
      * @param {Boolean} altKey
      */
-    _shouldCenterTransform: function (target, action, altKey) {
+    _shouldCenterTransform: function(target, action, altKey) {
       if (!target) {
         return;
       }
 
-      var centerTransform;
+      let centerTransform;
 
       if (action === 'scale' || action === 'scaleX' || action === 'scaleY' || action === 'resizing') {
         centerTransform = this.centeredScaling || target.centeredScaling;
@@ -577,9 +573,9 @@
      * @private
      */
     _getOriginFromCorner: function(target, corner) {
-      var origin = {
+      const origin = {
         x: target.originX,
-        y: target.originY
+        y: target.originY,
       };
 
       if (corner === 'ml' || corner === 'tl' || corner === 'bl') {
@@ -609,7 +605,7 @@
       if (!corner || !alreadySelected) {
         return 'drag';
       }
-      var control = target.controls[corner];
+      const control = target.controls[corner];
       return control.getActionName(e, control, target);
     },
 
@@ -618,12 +614,12 @@
      * @param {Event} e Event object
      * @param {fabric.Object} target
      */
-    _setupCurrentTransform: function (e, target, alreadySelected) {
+    _setupCurrentTransform: function(e, target, alreadySelected) {
       if (!target) {
         return;
       }
 
-      var pointer = this.getPointer(e), corner = target.__corner,
+      const pointer = this.getPointer(e), corner = target.__corner,
           control = target.controls[corner],
           actionHandler = (alreadySelected && corner) ?
             control.getActionHandler(e, target, control) : fabric.controlsUtils.dragHandler,
@@ -674,7 +670,7 @@
      * @param {String} value Cursor type of the canvas element.
      * @see http://www.w3.org/TR/css3-ui/#cursor
      */
-    setCursor: function (value) {
+    setCursor: function(value) {
       this.upperCanvasEl.style.cursor = value;
     },
 
@@ -682,8 +678,8 @@
      * @private
      * @param {CanvasRenderingContext2D} ctx to draw the selection on
      */
-    _drawSelection: function (ctx) {
-      var selector = this._groupSelector,
+    _drawSelection: function(ctx) {
+      let selector = this._groupSelector,
           viewportStart = new fabric.Point(selector.ex, selector.ey),
           start = fabric.util.transformPoint(viewportStart, this.viewportTransform),
           viewportExtent = new fabric.Point(selector.ex + selector.left, selector.ey + selector.top),
@@ -723,12 +719,12 @@
      * @param {Boolean} skipGroup when true, activeGroup is skipped and only objects are traversed through
      * @return {fabric.Object} the target found
      */
-    findTarget: function (e, skipGroup) {
+    findTarget: function(e, skipGroup) {
       if (this.skipTargetFind) {
         return;
       }
 
-      var ignoreZoom = true,
+      let ignoreZoom = true,
           pointer = this.getPointer(e, ignoreZoom),
           activeObject = this._activeObject,
           aObjects = this.getActiveObjects(),
@@ -759,7 +755,7 @@
           this.targets = [];
         }
       }
-      var target = this._searchPossibleTargets(this._objects, pointer);
+      let target = this._searchPossibleTargets(this._objects, pointer);
       if (e[this.altSelectionKey] && target && activeTarget && target !== activeTarget) {
         target = activeTarget;
         this.targets = activeTargetSubs;
@@ -784,7 +780,7 @@
           obj.containsPoint(pointer)
       ) {
         if ((this.perPixelTargetFind || obj.perPixelTargetFind) && !obj.isEditing) {
-          var isTransparent = this.isTargetTransparent(obj, globalPointer.x, globalPointer.y);
+          const isTransparent = this.isTargetTransparent(obj, globalPointer.x, globalPointer.y);
           if (!isTransparent) {
             return true;
           }
@@ -804,12 +800,12 @@
      */
     _searchPossibleTargets: function(objects, pointer) {
       // Cache all targets where their bounding box contains point.
-      var target, i = objects.length, subTarget;
+      let target, i = objects.length, subTarget;
       // Do not check for currently grouped objects, since we check the parent group itself.
       // until we call this function specifically to search inside the activeGroup
       while (i--) {
-        var objToCheck = objects[i];
-        var pointerToUse = objToCheck.group ?
+        const objToCheck = objects[i];
+        const pointerToUse = objToCheck.group ?
           this._normalizePointer(objToCheck.group, pointer) : pointer;
         if (this._checkTarget(pointerToUse, objToCheck, pointer)) {
           target = objects[i];
@@ -831,7 +827,7 @@
     restorePointerVpt: function(pointer) {
       return fabric.util.transformPoint(
         pointer,
-        fabric.util.invertTransform(this.viewportTransform)
+        fabric.util.invertTransform(this.viewportTransform),
       );
     },
 
@@ -853,7 +849,7 @@
      * @param {Boolean} ignoreZoom
      * @return {Object} object with "x" and "y" number values
      */
-    getPointer: function (e, ignoreZoom) {
+    getPointer: function(e, ignoreZoom) {
       // return cached values if we are in the event processing chain
       if (this._absolutePointer && !ignoreZoom) {
         return this._absolutePointer;
@@ -862,7 +858,7 @@
         return this._pointer;
       }
 
-      var pointer = getPointer(e),
+      let pointer = getPointer(e),
           upperCanvasEl = this.upperCanvasEl,
           bounds = upperCanvasEl.getBoundingClientRect(),
           boundsWidth = bounds.width || 0,
@@ -885,7 +881,7 @@
         pointer = this.restorePointerVpt(pointer);
       }
 
-      var retinaScaling = this.getRetinaScaling();
+      const retinaScaling = this.getRetinaScaling();
       if (retinaScaling !== 1) {
         pointer.x /= retinaScaling;
         pointer.y /= retinaScaling;
@@ -893,18 +889,18 @@
 
       if (boundsWidth === 0 || boundsHeight === 0) {
         // If bounds are not available (i.e. not visible), do not apply scale.
-        cssScale = { width: 1, height: 1 };
+        cssScale = {width: 1, height: 1};
       }
       else {
         cssScale = {
           width: upperCanvasEl.width / boundsWidth,
-          height: upperCanvasEl.height / boundsHeight
+          height: upperCanvasEl.height / boundsHeight,
         };
       }
 
       return {
         x: pointer.x * cssScale.width,
-        y: pointer.y * cssScale.height
+        y: pointer.y * cssScale.height,
       };
     },
 
@@ -912,8 +908,8 @@
      * @private
      * @throws {CANVAS_INIT_ERROR} If canvas can not be initialized
      */
-    _createUpperCanvas: function () {
-      var lowerCanvasClass = this.lowerCanvasEl.className.replace(/\s*lower-canvas\s*/, ''),
+    _createUpperCanvas: function() {
+      let lowerCanvasClass = this.lowerCanvasEl.className.replace(/\s*lower-canvas\s*/, ''),
           lowerCanvasEl = this.lowerCanvasEl, upperCanvasEl = this.upperCanvasEl;
 
       // there is no need to create a new upperCanvas element if we have already one.
@@ -937,14 +933,14 @@
      * Returns context of top canvas where interactions are drawn
      * @returns {CanvasRenderingContext2D}
      */
-    getTopContext: function () {
+    getTopContext: function() {
       return this.contextTop;
     },
 
     /**
      * @private
      */
-    _createCacheCanvas: function () {
+    _createCacheCanvas: function() {
       this.cacheCanvasEl = this._createCanvasElement();
       this.cacheCanvasEl.setAttribute('width', this.width);
       this.cacheCanvasEl.setAttribute('height', this.height);
@@ -954,14 +950,14 @@
     /**
      * @private
      */
-    _initWrapperElement: function () {
+    _initWrapperElement: function() {
       this.wrapperEl = fabric.util.wrapElement(this.lowerCanvasEl, 'div', {
-        'class': this.containerClass
+        'class': this.containerClass,
       });
       fabric.util.setStyle(this.wrapperEl, {
         width: this.width + 'px',
         height: this.height + 'px',
-        position: 'relative'
+        position: 'relative',
       });
       fabric.util.makeElementUnselectable(this.wrapperEl);
     },
@@ -970,8 +966,8 @@
      * @private
      * @param {HTMLElement} element canvas element to apply styles on
      */
-    _applyCanvasStyle: function (element) {
-      var width = this.width || element.width,
+    _applyCanvasStyle: function(element) {
+      const width = this.width || element.width,
           height = this.height || element.height;
 
       fabric.util.setStyle(element, {
@@ -981,7 +977,7 @@
         left: 0,
         top: 0,
         'touch-action': this.allowTouchScrolling ? 'manipulation' : 'none',
-        '-ms-touch-action': this.allowTouchScrolling ? 'manipulation' : 'none'
+        '-ms-touch-action': this.allowTouchScrolling ? 'manipulation' : 'none',
       });
       element.width = width;
       element.height = height;
@@ -994,7 +990,7 @@
      * @param {Element} fromEl Element style is copied from
      * @param {Element} toEl Element copied style is applied to
      */
-    _copyCanvasStyle: function (fromEl, toEl) {
+    _copyCanvasStyle: function(fromEl, toEl) {
       toEl.style.cssText = fromEl.style.cssText;
     },
 
@@ -1010,7 +1006,7 @@
      * Returns &lt;canvas> element on which object selection is drawn
      * @return {HTMLCanvasElement}
      */
-    getSelectionElement: function () {
+    getSelectionElement: function() {
       return this.upperCanvasEl;
     },
 
@@ -1018,7 +1014,7 @@
      * Returns currently active object
      * @return {fabric.Object} active object
      */
-    getActiveObject: function () {
+    getActiveObject: function() {
       return this._activeObject;
     },
 
@@ -1026,8 +1022,8 @@
      * Returns an array with the current selected objects
      * @return {fabric.Object} active object
      */
-    getActiveObjects: function () {
-      var active = this._activeObject;
+    getActiveObjects: function() {
+      const active = this._activeObject;
       if (active) {
         if (active.type === 'activeSelection' && active._objects) {
           return active._objects.slice(0);
@@ -1046,12 +1042,12 @@
     _onObjectRemoved: function(obj) {
       // removing active object should fire "selection:cleared" events
       if (obj === this._activeObject) {
-        this.fire('before:selection:cleared', { target: obj });
+        this.fire('before:selection:cleared', {target: obj});
         this._discardActiveObject();
-        this.fire('selection:cleared', { target: obj });
+        this.fire('selection:cleared', {target: obj});
         obj.fire('deselected');
       }
-      if (obj === this._hoveredTarget){
+      if (obj === this._hoveredTarget) {
         this._hoveredTarget = null;
         this._hoveredTargets = [];
       }
@@ -1064,14 +1060,14 @@
      * @param {fabric.Object} obj old activeObject
      */
     _fireSelectionEvents: function(oldObjects, e) {
-      var somethingChanged = false, objects = this.getActiveObjects(),
+      let somethingChanged = false, objects = this.getActiveObjects(),
           added = [], removed = [];
       oldObjects.forEach(function(oldObject) {
         if (objects.indexOf(oldObject) === -1) {
           somethingChanged = true;
           oldObject.fire('deselected', {
             e: e,
-            target: oldObject
+            target: oldObject,
           });
           removed.push(oldObject);
         }
@@ -1081,7 +1077,7 @@
           somethingChanged = true;
           object.fire('selected', {
             e: e,
-            target: object
+            target: object,
           });
           added.push(object);
         }
@@ -1114,8 +1110,8 @@
      * @return {fabric.Canvas} thisArg
      * @chainable
      */
-    setActiveObject: function (object, e) {
-      var currentActives = this.getActiveObjects();
+    setActiveObject: function(object, e) {
+      const currentActives = this.getActiveObjects();
       this._setActiveObject(object, e);
       this._fireSelectionEvents(currentActives, e);
       return this;
@@ -1138,7 +1134,7 @@
       if (!this._discardActiveObject(e, object)) {
         return false;
       }
-      if (object.onSelect({ e: e })) {
+      if (object.onSelect({e: e})) {
         return false;
       }
       this._activeObject = object;
@@ -1156,10 +1152,10 @@
      * @private
      */
     _discardActiveObject: function(e, object) {
-      var obj = this._activeObject;
+      const obj = this._activeObject;
       if (obj) {
         // onDeselect return TRUE to cancel selection;
-        if (obj.onDeselect({ e: e, object: object })) {
+        if (obj.onDeselect({e: e, object: object})) {
           return false;
         }
         this._activeObject = null;
@@ -1176,10 +1172,10 @@
      * @return {fabric.Canvas} thisArg
      * @chainable
      */
-    discardActiveObject: function (e) {
-      var currentActives = this.getActiveObjects(), activeObject = this.getActiveObject();
+    discardActiveObject: function(e) {
+      const currentActives = this.getActiveObjects(), activeObject = this.getActiveObject();
       if (currentActives.length) {
-        this.fire('before:selection:cleared', { target: activeObject, e: e });
+        this.fire('before:selection:cleared', {target: activeObject, e: e});
       }
       this._discardActiveObject(e);
       this._fireSelectionEvents(currentActives, e);
@@ -1191,8 +1187,8 @@
      * @return {fabric.Canvas} thisArg
      * @chainable
      */
-    dispose: function () {
-      var wrapper = this.wrapperEl;
+    dispose: function() {
+      const wrapper = this.wrapperEl;
       this.removeListeners();
       wrapper.removeChild(this.upperCanvasEl);
       wrapper.removeChild(this.lowerCanvasEl);
@@ -1215,7 +1211,7 @@
      * @return {fabric.Canvas} thisArg
      * @chainable
      */
-    clear: function () {
+    clear: function() {
       // this.discardActiveGroup();
       this.discardActiveObject();
       this.clearContext(this.contextTop);
@@ -1227,7 +1223,7 @@
      * @param {CanvasRenderingContext2D} ctx Context to render controls on
      */
     drawControls: function(ctx) {
-      var activeObject = this._activeObject;
+      const activeObject = this._activeObject;
 
       if (activeObject) {
         activeObject._renderControls(ctx);
@@ -1238,13 +1234,13 @@
      * @private
      */
     _toObject: function(instance, methodName, propertiesToInclude) {
-      //If the object is part of the current selection group, it should
-      //be transformed appropriately
-      //i.e. it should be serialised as it would appear if the selection group
-      //were to be destroyed.
-      var originalProperties = this._realizeGroupTransformOnObject(instance),
+      // If the object is part of the current selection group, it should
+      // be transformed appropriately
+      // i.e. it should be serialised as it would appear if the selection group
+      // were to be destroyed.
+      const originalProperties = this._realizeGroupTransformOnObject(instance),
           object = this.callSuper('_toObject', instance, methodName, propertiesToInclude);
-      //Undo the damage we did by changing all of its properties
+      // Undo the damage we did by changing all of its properties
       this._unwindGroupTransformOnObject(instance, originalProperties);
       return object;
     },
@@ -1257,9 +1253,9 @@
      */
     _realizeGroupTransformOnObject: function(instance) {
       if (instance.group && instance.group.type === 'activeSelection' && this._activeObject === instance.group) {
-        var layoutProps = ['angle', 'flipX', 'flipY', 'left', 'scaleX', 'scaleY', 'skewX', 'skewY', 'top'];
-        //Copy all the positionally relevant properties across now
-        var originalValues = {};
+        const layoutProps = ['angle', 'flipX', 'flipY', 'left', 'scaleX', 'scaleY', 'skewX', 'skewY', 'top'];
+        // Copy all the positionally relevant properties across now
+        const originalValues = {};
         layoutProps.forEach(function(prop) {
           originalValues[prop] = instance[prop];
         });
@@ -1287,24 +1283,24 @@
      * @private
      */
     _setSVGObject: function(markup, instance, reviver) {
-      //If the object is in a selection group, simulate what would happen to that
-      //object when the group is deselected
-      var originalProperties = this._realizeGroupTransformOnObject(instance);
+      // If the object is in a selection group, simulate what would happen to that
+      // object when the group is deselected
+      const originalProperties = this._realizeGroupTransformOnObject(instance);
       this.callSuper('_setSVGObject', markup, instance, reviver);
       this._unwindGroupTransformOnObject(instance, originalProperties);
     },
 
-    setViewportTransform: function (vpt) {
+    setViewportTransform: function(vpt) {
       if (this.renderOnAddRemove && this._activeObject && this._activeObject.isEditing) {
         this._activeObject.clearContextTop();
       }
       fabric.StaticCanvas.prototype.setViewportTransform.call(this, vpt);
-    }
+    },
   });
 
   // copying static properties manually to work around Opera's bug,
   // where "prototype" property is enumerable and overrides existing prototype
-  for (var prop in fabric.StaticCanvas) {
+  for (const prop in fabric.StaticCanvas) {
     if (prop !== 'prototype') {
       fabric.Canvas[prop] = fabric.StaticCanvas[prop];
     }

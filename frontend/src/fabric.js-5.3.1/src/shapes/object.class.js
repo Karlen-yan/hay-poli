@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       extend = fabric.util.object.extend,
       clone = fabric.util.object.clone,
       toFixed = fabric.util.toFixed,
@@ -684,7 +683,7 @@
      * @return {Object}.zoomY zoomY zoom value to unscale the canvas before drawing cache
      */
     _limitCacheSize: function(dims) {
-      var perfLimitSizeTotal = fabric.perfLimitSizeTotal,
+      const perfLimitSizeTotal = fabric.perfLimitSizeTotal,
           width = dims.width, height = dims.height,
           max = fabric.maxCacheSideLimit, min = fabric.minCacheSideLimit;
       if (width <= max && height <= max && width * height <= perfLimitSizeTotal) {
@@ -696,7 +695,7 @@
         }
         return dims;
       }
-      var ar = width / height, limitedDims = fabric.util.limitDimsByArea(ar, perfLimitSizeTotal),
+      const ar = width / height, limitedDims = fabric.util.limitDimsByArea(ar, perfLimitSizeTotal),
           capValue = fabric.util.capValue,
           x = capValue(min, limitedDims.x, max),
           y = capValue(min, limitedDims.y, max);
@@ -725,7 +724,7 @@
      * @return {Object}.zoomY zoomY zoom value to unscale the canvas before drawing cache
      */
     _getCacheCanvasDimensions: function() {
-      var objectScale = this.getTotalObjectScaling(),
+      const objectScale = this.getTotalObjectScaling(),
           // caculate dimensions without skewing
           dim = this._getTransformedDimensions(0, 0),
           neededX = dim.x * objectScale.scaleX / this.scaleX,
@@ -739,7 +738,7 @@
         zoomX: objectScale.scaleX,
         zoomY: objectScale.scaleY,
         x: neededX,
-        y: neededY
+        y: neededY,
       };
     },
 
@@ -750,15 +749,15 @@
      * @return {Boolean} true if the canvas has been resized
      */
     _updateCacheCanvas: function() {
-      var targetCanvas = this.canvas;
+      const targetCanvas = this.canvas;
       if (this.noScaleCache && targetCanvas && targetCanvas._currentTransform) {
-        var target = targetCanvas._currentTransform.target,
+        const target = targetCanvas._currentTransform.target,
             action = targetCanvas._currentTransform.action;
         if (this === target && action.slice && action.slice(0, 5) === 'scale') {
           return false;
         }
       }
-      var canvas = this._cacheCanvas,
+      let canvas = this._cacheCanvas,
           dims = this._limitCacheSize(this._getCacheCanvasDimensions()),
           minCacheSize = fabric.minCacheSideLimit,
           width = dims.width, height = dims.height, drawingWidth, drawingHeight,
@@ -768,7 +767,7 @@
           shouldRedraw = dimensionsChanged || zoomChanged,
           additionalWidth = 0, additionalHeight = 0, shouldResizeCanvas = false;
       if (dimensionsChanged) {
-        var canvasWidth = this._cacheCanvas.width,
+        const canvasWidth = this._cacheCanvas.width,
             canvasHeight = this._cacheCanvas.height,
             sizeGrowing = width > canvasWidth || height > canvasHeight,
             sizeShrinking = (width < canvasWidth * 0.9 || height < canvasHeight * 0.9) &&
@@ -826,9 +825,9 @@
      * @param {CanvasRenderingContext2D} ctx Context
      */
     transform: function(ctx) {
-      var needFullTransform = (this.group && !this.group._transformDone) ||
+      const needFullTransform = (this.group && !this.group._transformDone) ||
          (this.group && this.canvas && ctx === this.canvas.contextTop);
-      var m = this.calcTransformMatrix(!needFullTransform);
+      const m = this.calcTransformMatrix(!needFullTransform);
       ctx.transform(m[0], m[1], m[2], m[3], m[4], m[5]);
     },
 
@@ -838,7 +837,7 @@
      * @return {Object} Object representation of an instance
      */
     toObject: function(propertiesToInclude) {
-      var NUM_FRACTION_DIGITS = fabric.Object.NUM_FRACTION_DIGITS,
+      let NUM_FRACTION_DIGITS = fabric.Object.NUM_FRACTION_DIGITS,
 
           object = {
             type:                     this.type,
@@ -903,7 +902,7 @@
      * @param {Object} object
      */
     _removeDefaultValues: function(object) {
-      var prototype = fabric.util.getKlass(object.type).prototype,
+      const prototype = fabric.util.getKlass(object.type).prototype,
           stateProperties = prototype.stateProperties;
       stateProperties.forEach(function(prop) {
         if (prop === 'left' || prop === 'top') {
@@ -913,8 +912,8 @@
           delete object[prop];
         }
         // basically a check for [] === []
-        if (Array.isArray(object[prop]) && Array.isArray(prototype[prop])
-          && object[prop].length === 0 && prototype[prop].length === 0) {
+        if (Array.isArray(object[prop]) && Array.isArray(prototype[prop]) &&
+          object[prop].length === 0 && prototype[prop].length === 0) {
           delete object[prop];
         }
       });
@@ -946,8 +945,8 @@
         };
       }
       // if we are inside a group total zoom calculation is complex, we defer to generic matrices
-      var options = fabric.util.qrDecompose(this.calcTransformMatrix());
-      return { scaleX: Math.abs(options.scaleX), scaleY: Math.abs(options.scaleY) };
+      const options = fabric.util.qrDecompose(this.calcTransformMatrix());
+      return {scaleX: Math.abs(options.scaleX), scaleY: Math.abs(options.scaleY)};
     },
 
     /**
@@ -955,14 +954,14 @@
      * @return {Object} object with scaleX and scaleY properties
      */
     getTotalObjectScaling: function() {
-      var scale = this.getObjectScaling(), scaleX = scale.scaleX, scaleY = scale.scaleY;
+      let scale = this.getObjectScaling(), scaleX = scale.scaleX, scaleY = scale.scaleY;
       if (this.canvas) {
-        var zoom = this.canvas.getZoom();
-        var retina = this.canvas.getRetinaScaling();
+        const zoom = this.canvas.getZoom();
+        const retina = this.canvas.getRetinaScaling();
         scaleX *= zoom * retina;
         scaleY *= zoom * retina;
       }
-      return { scaleX: scaleX, scaleY: scaleY };
+      return {scaleX: scaleX, scaleY: scaleY};
     },
 
     /**
@@ -970,7 +969,7 @@
      * @return {Number}
      */
     getObjectOpacity: function() {
-      var opacity = this.opacity;
+      let opacity = this.opacity;
       if (this.group) {
         opacity *= this.group.getObjectOpacity();
       }
@@ -984,7 +983,7 @@
      * @return {fabric.Object} thisArg
      */
     _set: function(key, value) {
-      var shouldConstrainValue = (key === 'scaleX' || key === 'scaleY'),
+      let shouldConstrainValue = (key === 'scaleX' || key === 'scaleY'),
           isChanged = this[key] !== value, groupNeedsUpdate = false;
 
       if (shouldConstrainValue) {
@@ -1082,7 +1081,7 @@
         this.dirty = false;
         this.drawObject(ctx);
         if (this.objectCaching && this.statefullCache) {
-          this.saveState({ propertySet: 'cacheProperties' });
+          this.saveState({propertySet: 'cacheProperties'});
         }
       }
       ctx.restore();
@@ -1094,7 +1093,7 @@
         this._createCacheCanvas();
       }
       if (this.isCacheDirty()) {
-        this.statefullCache && this.saveState({ propertySet: 'cacheProperties' });
+        this.statefullCache && this.saveState({propertySet: 'cacheProperties'});
         this.drawObject(this._cacheContext, options.forClipping);
         this.dirty = false;
       }
@@ -1198,9 +1197,9 @@
       else {
         ctx.globalCompositeOperation = 'destination-in';
       }
-      //ctx.scale(1 / 2, 1 / 2);
+      // ctx.scale(1 / 2, 1 / 2);
       if (clipPath.absolutePositioned) {
-        var m = fabric.util.invertTransform(this.calcTransformMatrix());
+        const m = fabric.util.invertTransform(this.calcTransformMatrix());
         ctx.transform(m[0], m[1], m[2], m[3], m[4], m[5]);
       }
       clipPath.transform(ctx);
@@ -1214,7 +1213,7 @@
      * @param {CanvasRenderingContext2D} ctx Context to render on
      */
     drawObject: function(ctx, forClipping) {
-      var originalFill = this.fill, originalStroke = this.stroke;
+      const originalFill = this.fill, originalStroke = this.stroke;
       if (forClipping) {
         this.fill = 'black';
         this.stroke = '';
@@ -1234,15 +1233,15 @@
      * @param {CanvasRenderingContext2D} ctx
      * @param {fabric.Object} clipPath
      */
-    _drawClipPath: function (ctx, clipPath) {
-      if (!clipPath) { return; }
+    _drawClipPath: function(ctx, clipPath) {
+      if (!clipPath) {return;}
       // needed to setup a couple of variables
       // path canvas gets overridden with this one.
       // TODO find a better solution?
       clipPath.canvas = this.canvas;
       clipPath.shouldCache();
       clipPath._transformDone = true;
-      clipPath.renderCache({ forClipping: true });
+      clipPath.renderCache({forClipping: true});
       this.drawClipPathOnCache(ctx, clipPath);
     },
 
@@ -1274,8 +1273,8 @@
           (this.statefullCache && this.hasStateChanged('cacheProperties'))
         ) {
           if (this._cacheCanvas && this._cacheContext && !skipCanvas) {
-            var width = this.cacheWidth / this.zoomX;
-            var height = this.cacheHeight / this.zoomY;
+            const width = this.cacheWidth / this.zoomX;
+            const height = this.cacheHeight / this.zoomY;
             this._cacheContext.clearRect(-width / 2, -height / 2, width, height);
           }
           return true;
@@ -1293,14 +1292,14 @@
       if (!this.backgroundColor) {
         return;
       }
-      var dim = this._getNonTransformedDimensions();
+      const dim = this._getNonTransformedDimensions();
       ctx.fillStyle = this.backgroundColor;
 
       ctx.fillRect(
         -dim.x / 2,
         -dim.y / 2,
         dim.x,
-        dim.y
+        dim.y,
       );
       // if there is background color no other shadows
       // should be casted
@@ -1321,7 +1320,7 @@
     },
 
     _setStrokeStyles: function(ctx, decl) {
-      var stroke = decl.stroke;
+      const stroke = decl.stroke;
       if (stroke) {
         ctx.lineWidth = decl.strokeWidth;
         ctx.lineCap = decl.strokeLineCap;
@@ -1350,7 +1349,7 @@
     },
 
     _setFillStyles: function(ctx, decl) {
-      var fill = decl.fill;
+      const fill = decl.fill;
       if (fill) {
         if (fill.toLive) {
           ctx.fillStyle = fill.toLive(ctx, this);
@@ -1392,7 +1391,7 @@
      * @param {Object} [styleOverride] properties to override the object style
      */
     _renderControls: function(ctx, styleOverride) {
-      var vpt = this.getViewportTransform(),
+      let vpt = this.getViewportTransform(),
           matrix = this.calcTransformMatrix(),
           options, drawBorders, drawControls;
       styleOverride = styleOverride || { };
@@ -1429,11 +1428,11 @@
         return;
       }
 
-      var shadow = this.shadow, canvas = this.canvas, scaling,
+      let shadow = this.shadow, canvas = this.canvas, scaling,
           multX = (canvas && canvas.viewportTransform[0]) || 1,
           multY = (canvas && canvas.viewportTransform[3]) || 1;
       if (shadow.nonScaling) {
-        scaling = { scaleX: 1, scaleY: 1 };
+        scaling = {scaleX: 1, scaleY: 1};
       }
       else {
         scaling = this.getObjectScaling();
@@ -1471,10 +1470,10 @@
      */
     _applyPatternGradientTransform: function(ctx, filler) {
       if (!filler || !filler.toLive) {
-        return { offsetX: 0, offsetY: 0 };
+        return {offsetX: 0, offsetY: 0};
       }
-      var t = filler.gradientTransform || filler.patternTransform;
-      var offsetX = -this.width / 2 + filler.offsetX || 0,
+      const t = filler.gradientTransform || filler.patternTransform;
+      const offsetX = -this.width / 2 + filler.offsetX || 0,
           offsetY = -this.height / 2 + filler.offsetY || 0;
 
       if (filler.gradientUnits === 'percentage') {
@@ -1486,7 +1485,7 @@
       if (t) {
         ctx.transform(t[0], t[1], t[2], t[3], t[4], t[5]);
       }
-      return { offsetX: offsetX, offsetY: offsetY };
+      return {offsetX: offsetX, offsetY: offsetY};
     },
 
     /**
@@ -1550,7 +1549,7 @@
 
       ctx.save();
       if (this.strokeUniform && this.group) {
-        var scaling = this.getObjectScaling();
+        const scaling = this.getObjectScaling();
         ctx.scale(1 / scaling.scaleX, 1 / scaling.scaleY);
       }
       else if (this.strokeUniform) {
@@ -1574,7 +1573,7 @@
      * @param {fabric.Gradient} filler a fabric gradient instance
      */
     _applyPatternForTransformedGradient: function(ctx, filler) {
-      var dims = this._limitCacheSize(this._getCacheCanvasDimensions()),
+      let dims = this._limitCacheSize(this._getCacheCanvasDimensions()),
           pCanvas = fabric.util.createCanvasElement(), pCtx, retinaScaling = this.canvas.getRetinaScaling(),
           width = dims.x / this.scaleX / retinaScaling, height = dims.y / this.scaleY / retinaScaling;
       pCanvas.width = width;
@@ -1585,7 +1584,7 @@
       pCtx.translate(width / 2, height / 2);
       pCtx.scale(
         dims.zoomX / this.scaleX / retinaScaling,
-        dims.zoomY / this.scaleY / retinaScaling
+        dims.zoomY / this.scaleY / retinaScaling,
       );
       this._applyPatternGradientTransform(pCtx, filler);
       pCtx.fillStyle = filler.toLive(ctx);
@@ -1593,7 +1592,7 @@
       ctx.translate(-this.width / 2 - this.strokeWidth / 2, -this.height / 2 - this.strokeWidth / 2);
       ctx.scale(
         retinaScaling * this.scaleX / dims.zoomX,
-        retinaScaling * this.scaleY / dims.zoomY
+        retinaScaling * this.scaleY / dims.zoomY,
       );
       ctx.strokeStyle = pCtx.createPattern(pCanvas, 'no-repeat');
     },
@@ -1605,7 +1604,7 @@
      * @return {Object} center point from element coordinates
      */
     _findCenterFromElement: function() {
-      return { x: this.left + this.width / 2, y: this.top + this.height / 2 };
+      return {x: this.left + this.width / 2, y: this.top + this.height / 2};
     },
 
     /**
@@ -1617,7 +1616,7 @@
      */
     _assignTransformMatrixProps: function() {
       if (this.transformMatrix) {
-        var options = fabric.util.qrDecompose(this.transformMatrix);
+        const options = fabric.util.qrDecompose(this.transformMatrix);
         this.flipX = false;
         this.flipY = false;
         this.set('scaleX', options.scaleX);
@@ -1636,7 +1635,7 @@
      * @return {thisArg}
      */
     _removeTransformMatrix: function(preserveAspectRatioOptions) {
-      var center = this._findCenterFromElement();
+      let center = this._findCenterFromElement();
       if (this.transformMatrix) {
         this._assignTransformMatrixProps();
         center = fabric.util.transformPoint(center, this.transformMatrix);
@@ -1661,7 +1660,7 @@
      * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
      */
     clone: function(callback, propertiesToInclude) {
-      var objectForm = this.toObject(propertiesToInclude);
+      const objectForm = this.toObject(propertiesToInclude);
       if (this.constructor.fromObject) {
         this.constructor.fromObject(objectForm, callback);
       }
@@ -1692,7 +1691,7 @@
      * @return {fabric.Object} thisArg
      */
     cloneAsImage: function(callback, options) {
-      var canvasEl = this.toCanvasElement(options);
+      const canvasEl = this.toCanvasElement(options);
       if (callback) {
         callback(new fabric.Image(canvasEl));
       }
@@ -1715,7 +1714,7 @@
     toCanvasElement: function(options) {
       options || (options = { });
 
-      var utils = fabric.util, origParams = utils.saveObjectTransform(this),
+      const utils = fabric.util, origParams = utils.saveObjectTransform(this),
           originalGroup = this.group,
           originalShadow = this.shadow, abs = Math.abs,
           multiplier = (options.multiplier || 1) * (options.enableRetinaScaling ? fabric.devicePixelRatio : 1);
@@ -1727,17 +1726,17 @@
         this.shadow = null;
       }
 
-      var el = fabric.util.createCanvasElement(),
+      let el = fabric.util.createCanvasElement(),
           // skip canvas zoom and calculate with setCoords now.
           boundingRect = this.getBoundingRect(true, true),
           shadow = this.shadow, scaling,
-          shadowOffset = { x: 0, y: 0 }, shadowBlur,
+          shadowOffset = {x: 0, y: 0}, shadowBlur,
           width, height;
 
       if (shadow) {
         shadowBlur = shadow.blur;
         if (shadow.nonScaling) {
-          scaling = { scaleX: 1, scaleY: 1 };
+          scaling = {scaleX: 1, scaleY: 1};
         }
         else {
           scaling = this.getObjectScaling();
@@ -1752,7 +1751,7 @@
       // we need to make it so.
       el.width = Math.ceil(width);
       el.height = Math.ceil(height);
-      var canvas = new fabric.StaticCanvas(el, {
+      let canvas = new fabric.StaticCanvas(el, {
         enableRetinaScaling: false,
         renderOnAddRemove: false,
         skipOffscreen: false,
@@ -1762,9 +1761,9 @@
       }
       this.setPositionByOrigin(new fabric.Point(canvas.width / 2, canvas.height / 2), 'center', 'center');
 
-      var originalCanvas = this.canvas;
+      const originalCanvas = this.canvas;
       canvas.add(this);
-      var canvasEl = canvas.toCanvasElement(multiplier || 1, options);
+      const canvasEl = canvas.toCanvasElement(multiplier || 1, options);
       this.shadow = originalShadow;
       this.set('canvas', originalCanvas);
       if (originalGroup) {
@@ -1835,7 +1834,7 @@
      * @chainable
      */
     rotate: function(angle) {
-      var shouldCenterOrigin = (this.originX !== 'center' || this.originY !== 'center') && this.centeredRotation;
+      const shouldCenterOrigin = (this.originX !== 'center' || this.originY !== 'center') && this.centeredRotation;
 
       if (shouldCenterOrigin) {
         this._setOriginToCenter();
@@ -1856,7 +1855,7 @@
      * @return {fabric.Object} thisArg
      * @chainable
      */
-    centerH: function () {
+    centerH: function() {
       this.canvas && this.canvas.centerObjectH(this);
       return this;
     },
@@ -1867,7 +1866,7 @@
      * @return {fabric.Object} thisArg
      * @chainable
      */
-    viewportCenterH: function () {
+    viewportCenterH: function() {
       this.canvas && this.canvas.viewportCenterObjectH(this);
       return this;
     },
@@ -1878,7 +1877,7 @@
      * @return {fabric.Object} thisArg
      * @chainable
      */
-    centerV: function () {
+    centerV: function() {
       this.canvas && this.canvas.centerObjectV(this);
       return this;
     },
@@ -1889,7 +1888,7 @@
      * @return {fabric.Object} thisArg
      * @chainable
      */
-    viewportCenterV: function () {
+    viewportCenterV: function() {
       this.canvas && this.canvas.viewportCenterObjectV(this);
       return this;
     },
@@ -1900,7 +1899,7 @@
      * @return {fabric.Object} thisArg
      * @chainable
      */
-    center: function () {
+    center: function() {
       this.canvas && this.canvas.centerObject(this);
       return this;
     },
@@ -1911,7 +1910,7 @@
      * @return {fabric.Object} thisArg
      * @chainable
      */
-    viewportCenter: function () {
+    viewportCenter: function() {
       this.canvas && this.canvas.viewportCenterObject(this);
       return this;
     },
@@ -1924,7 +1923,7 @@
      */
     getLocalPointer: function(e, pointer) {
       pointer = pointer || this.canvas.getPointer(e);
-      var pClicked = new fabric.Point(pointer.x, pointer.y),
+      let pClicked = new fabric.Point(pointer.x, pointer.y),
           objectLeftTop = this._getLeftTopCoords();
       if (this.angle) {
         pClicked = fabric.util.rotatePoint(
@@ -1932,7 +1931,7 @@
       }
       return {
         x: pClicked.x - objectLeftTop.x,
-        y: pClicked.y - objectLeftTop.y
+        y: pClicked.y - objectLeftTop.y,
       };
     },
 
@@ -1941,7 +1940,7 @@
      * custom composition operation for the particular object can be specified using globalCompositeOperation property
      * @param {CanvasRenderingContext2D} ctx Rendering canvas context
      */
-    _setupCompositeOperation: function (ctx) {
+    _setupCompositeOperation: function(ctx) {
       if (this.globalCompositeOperation) {
         ctx.globalCompositeOperation = this.globalCompositeOperation;
       }
@@ -1951,11 +1950,11 @@
      * cancel instance's running animations
      * override if necessary to dispose artifacts such as `clipPath`
      */
-    dispose: function () {
+    dispose: function() {
       if (fabric.runningAnimations) {
         fabric.runningAnimations.cancelByTarget(this);
       }
-    }
+    },
   });
 
   fabric.util.createAccessors && fabric.util.createAccessors(fabric.Object);
@@ -1982,7 +1981,7 @@
   fabric.Object.ENLIVEN_PROPS = ['clipPath'];
 
   fabric.Object._fromObject = function(className, object, callback, extraParam) {
-    var klass = fabric[className];
+    const klass = fabric[className];
     object = clone(object, true);
     fabric.util.enlivenPatterns([object.fill, object.stroke], function(patterns) {
       if (typeof patterns[0] !== 'undefined') {
@@ -1991,8 +1990,8 @@
       if (typeof patterns[1] !== 'undefined') {
         object.stroke = patterns[1];
       }
-      fabric.util.enlivenObjectEnlivables(object, object, function () {
-        var instance = extraParam ? new klass(object[extraParam], object) : new klass(object);
+      fabric.util.enlivenObjectEnlivables(object, object, function() {
+        const instance = extraParam ? new klass(object[extraParam], object) : new klass(object);
         callback && callback(instance);
       });
     });

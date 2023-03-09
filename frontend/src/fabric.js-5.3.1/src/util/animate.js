@@ -1,6 +1,5 @@
-(function () {
-
-  var extend = fabric.util.object.extend,
+(function() {
+  const extend = fabric.util.object.extend,
       clone = fabric.util.object.clone;
 
   /**
@@ -44,16 +43,16 @@
    * @memberof fabric
    * @type {AnimationContext[]}
    */
-  var RUNNING_ANIMATIONS = [];
+  const RUNNING_ANIMATIONS = [];
   fabric.util.object.extend(RUNNING_ANIMATIONS, {
 
     /**
      * cancel all running animations at the next requestAnimFrame
      * @returns {AnimationContext[]}
      */
-    cancelAll: function () {
-      var animations = this.splice(0);
-      animations.forEach(function (animation) {
+    cancelAll: function() {
+      const animations = this.splice(0);
+      animations.forEach(function(animation) {
         animation.cancel();
       });
       return animations;
@@ -64,14 +63,14 @@
      * @param {fabric.Canvas} canvas
      * @returns {AnimationContext[]}
      */
-    cancelByCanvas: function (canvas) {
+    cancelByCanvas: function(canvas) {
       if (!canvas) {
         return [];
       }
-      var cancelled = this.filter(function (animation) {
+      const cancelled = this.filter(function(animation) {
         return typeof animation.target === 'object' && animation.target.canvas === canvas;
       });
-      cancelled.forEach(function (animation) {
+      cancelled.forEach(function(animation) {
         animation.cancel();
       });
       return cancelled;
@@ -82,9 +81,9 @@
      * @param {*} target
      * @returns {AnimationContext[]}
      */
-    cancelByTarget: function (target) {
-      var cancelled = this.findAnimationsByTarget(target);
-      cancelled.forEach(function (animation) {
+    cancelByTarget: function(target) {
+      const cancelled = this.findAnimationsByTarget(target);
+      cancelled.forEach(function(animation) {
         animation.cancel();
       });
       return cancelled;
@@ -95,7 +94,7 @@
      * @param {CancelFunction} cancelFunc the function returned by animate
      * @returns {number}
      */
-    findAnimationIndex: function (cancelFunc) {
+    findAnimationIndex: function(cancelFunc) {
       return this.indexOf(this.findAnimation(cancelFunc));
     },
 
@@ -104,8 +103,8 @@
      * @param {CancelFunction} cancelFunc the function returned by animate
      * @returns {AnimationContext | undefined} animation's options object
      */
-    findAnimation: function (cancelFunc) {
-      return this.find(function (animation) {
+    findAnimation: function(cancelFunc) {
+      return this.find(function(animation) {
         return animation.cancel === cancelFunc;
       });
     },
@@ -115,14 +114,14 @@
      * @param {*} target the object that is assigned to the target property of the animation context
      * @returns {AnimationContext[]} array of animation options object associated with target
      */
-    findAnimationsByTarget: function (target) {
+    findAnimationsByTarget: function(target) {
       if (!target) {
         return [];
       }
-      return this.filter(function (animation) {
+      return this.filter(function(animation) {
         return animation.target === target;
       });
-    }
+    },
   });
 
   function noop() {
@@ -145,26 +144,26 @@
    */
   function animate(options) {
     options || (options = {});
-    var cancel = false,
+    let cancel = false,
         context,
-        removeFromRegistry = function () {
-          var index = fabric.runningAnimations.indexOf(context);
+        removeFromRegistry = function() {
+          const index = fabric.runningAnimations.indexOf(context);
           return index > -1 && fabric.runningAnimations.splice(index, 1)[0];
         };
 
     context = extend(clone(options), {
-      cancel: function () {
+      cancel: function() {
         cancel = true;
         return removeFromRegistry();
       },
       currentValue: 'startValue' in options ? options.startValue : 0,
       completionRate: 0,
-      durationRate: 0
+      durationRate: 0,
     });
     fabric.runningAnimations.push(context);
 
     requestAnimFrame(function(timestamp) {
-      var start = timestamp || +new Date(),
+      let start = timestamp || +new Date(),
           duration = options.duration || 500,
           finish = start + duration, time,
           onChange = options.onChange || noop,
@@ -182,13 +181,13 @@
 
       (function tick(ticktime) {
         time = ticktime || +new Date();
-        var currentTime = time > finish ? duration : (time - start),
+        const currentTime = time > finish ? duration : (time - start),
             timePerc = currentTime / duration,
             current = isMany ? startValue.map(function(_value, i) {
               return easing(currentTime, startValue[i], byValue[i], duration);
             }) : easing(currentTime, startValue, byValue, duration),
-            valuePerc = isMany ? Math.abs((current[0] - startValue[0]) / byValue[0])
-              : Math.abs((current - startValue) / byValue);
+            valuePerc = isMany ? Math.abs((current[0] - startValue[0]) / byValue[0]) :
+              Math.abs((current - startValue) / byValue);
         //  update context
         context.currentValue = isMany ? current.slice() : current;
         context.completionRate = valuePerc;
@@ -221,16 +220,16 @@
     return context.cancel;
   }
 
-  var _requestAnimFrame = fabric.window.requestAnimationFrame       ||
+  const _requestAnimFrame = fabric.window.requestAnimationFrame ||
                           fabric.window.webkitRequestAnimationFrame ||
-                          fabric.window.mozRequestAnimationFrame    ||
-                          fabric.window.oRequestAnimationFrame      ||
-                          fabric.window.msRequestAnimationFrame     ||
+                          fabric.window.mozRequestAnimationFrame ||
+                          fabric.window.oRequestAnimationFrame ||
+                          fabric.window.msRequestAnimationFrame ||
                           function(callback) {
                             return fabric.window.setTimeout(callback, 1000 / 60);
                           };
 
-  var _cancelAnimFrame = fabric.window.cancelAnimationFrame || fabric.window.clearTimeout;
+  const _cancelAnimFrame = fabric.window.cancelAnimationFrame || fabric.window.clearTimeout;
 
   /**
    * requestAnimationFrame polyfill based on http://paulirish.com/2011/requestanimationframe-for-smart-animating/

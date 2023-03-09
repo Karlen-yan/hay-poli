@@ -1,11 +1,10 @@
 (function() {
-
   QUnit.module('fabric.Point');
 
   QUnit.test('constructor & properties', function(assert) {
     assert.ok(typeof fabric.Point === 'function');
 
-    var point = new fabric.Point();
+    let point = new fabric.Point();
 
     assert.ok(point);
     assert.ok(point instanceof fabric.Point);
@@ -15,21 +14,21 @@
     assert.equal(point.x, undefined, 'no default values for x');
     assert.equal(point.y, undefined, 'no default values for y');
 
-    var x = 5, y = 6;
+    const x = 5, y = 6;
     point = new fabric.Point(x, y);
     assert.equal(point.x, x, 'constructor pass x value');
     assert.equal(point.y, y, 'constructor pass y value');
   });
 
   QUnit.test('point add', function(assert) {
-    var x1 = 2, y1 = 3, x2 = 4, y2 = 5,
+    const x1 = 2, y1 = 3, x2 = 4, y2 = 5,
         point = new fabric.Point(x1, y1),
         point2 = new fabric.Point(x2, y2);
 
     assert.ok(typeof point.add === 'function');
     assert.equal(point.x, x1, 'constructor pass x value');
     assert.equal(point.y, y1, 'constructor pass y value');
-    var returned = point.add(point2);
+    const returned = point.add(point2);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.notEqual(returned, point, 'is not chainable');
     assert.equal(returned.x, x1 + x2, 'x coords should be added');
@@ -41,14 +40,14 @@
   });
 
   QUnit.test('point addEquals', function(assert) {
-    var x1 = 2, y1 = 3, x2 = 4, y2 = 5,
+    const x1 = 2, y1 = 3, x2 = 4, y2 = 5,
         point = new fabric.Point(x1, y1),
         point2 = new fabric.Point(x2, y2);
 
     assert.ok(typeof point.addEquals === 'function');
     assert.equal(point.x, x1, 'constructor pass x value');
     assert.equal(point.y, y1, 'constructor pass y value');
-    var returned = point.addEquals(point2);
+    const returned = point.addEquals(point2);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.equal(returned, point, 'is chainable');
     assert.equal(point.x, x1 + x2, 'x coords should be added');
@@ -58,13 +57,13 @@
   });
 
   QUnit.test('scalarAdd', function(assert) {
-    var x1 = 2, y1 = 3, scalar = 3,
+    const x1 = 2, y1 = 3, scalar = 3,
         point = new fabric.Point(x1, y1);
 
     assert.ok(typeof point.scalarAdd === 'function');
     assert.equal(point.x, x1, 'constructor pass x value');
     assert.equal(point.y, y1, 'constructor pass y value');
-    var returned = point.scalarAdd(scalar);
+    const returned = point.scalarAdd(scalar);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.notEqual(returned, point, 'is not chainable');
     assert.equal(returned.x, x1 + scalar, 'x coords should be added');
@@ -72,13 +71,13 @@
   });
 
   QUnit.test('scalarAddEquals', function(assert) {
-    var x1 = 2, y1 = 3, scalar = 3,
+    const x1 = 2, y1 = 3, scalar = 3,
         point = new fabric.Point(x1, y1);
 
     assert.ok(typeof point.scalarAddEquals === 'function');
     assert.equal(point.x, x1, 'constructor pass x value');
     assert.equal(point.y, y1, 'constructor pass y value');
-    var returned = point.scalarAddEquals(scalar);
+    const returned = point.scalarAddEquals(scalar);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.equal(returned, point, 'is chainable');
     assert.equal(point.x, x1 + scalar, 'x coords should be added');
@@ -86,14 +85,14 @@
   });
 
   QUnit.test('point subtract', function(assert) {
-    var x1 = 2, y1 = 3, x2 = 4, y2 = 5,
+    const x1 = 2, y1 = 3, x2 = 4, y2 = 5,
         point = new fabric.Point(x1, y1),
         point2 = new fabric.Point(x2, y2);
 
     assert.ok(typeof point.subtract === 'function');
     assert.equal(point.x, x1, 'constructor pass x value');
     assert.equal(point.y, y1, 'constructor pass y value');
-    var returned = point.subtract(point2);
+    const returned = point.subtract(point2);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.notEqual(returned, point, 'is not chainable');
     assert.equal(returned.x, x1 - x2, 'x coords should be added');
@@ -105,14 +104,14 @@
   });
 
   QUnit.test('point subtractEquals', function(assert) {
-    var x1 = 2, y1 = 3, x2 = 4, y2 = 5,
+    const x1 = 2, y1 = 3, x2 = 4, y2 = 5,
         point = new fabric.Point(x1, y1),
         point2 = new fabric.Point(x2, y2);
 
     assert.ok(typeof point.subtractEquals === 'function');
     assert.equal(point.x, x1, 'constructor pass x value');
     assert.equal(point.y, y1, 'constructor pass y value');
-    var returned = point.subtractEquals(point2);
+    const returned = point.subtractEquals(point2);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.equal(returned, point, 'is chainable');
     assert.equal(point.x, x1 - x2, 'x coords should be added');
@@ -122,13 +121,13 @@
   });
 
   QUnit.test('scalarSubtract', function(assert) {
-    var x1 = 2, y1 = 3, scalar = 3,
+    const x1 = 2, y1 = 3, scalar = 3,
         point = new fabric.Point(x1, y1);
 
     assert.ok(typeof point.scalarSubtract === 'function');
     assert.equal(point.x, x1, 'constructor pass x value');
     assert.equal(point.y, y1, 'constructor pass y value');
-    var returned = point.scalarSubtract(scalar);
+    const returned = point.scalarSubtract(scalar);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.notEqual(returned, point, 'is not chainable');
     assert.equal(returned.x, x1 - scalar, 'x coords should be added');
@@ -136,13 +135,13 @@
   });
 
   QUnit.test('scalarSubtractEquals', function(assert) {
-    var x1 = 2, y1 = 3, scalar = 3,
+    const x1 = 2, y1 = 3, scalar = 3,
         point = new fabric.Point(x1, y1);
 
     assert.ok(typeof point.scalarSubtractEquals === 'function');
     assert.equal(point.x, x1, 'constructor pass x value');
     assert.equal(point.y, y1, 'constructor pass y value');
-    var returned = point.scalarSubtractEquals(scalar);
+    const returned = point.scalarSubtractEquals(scalar);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.equal(returned, point, 'is chainable');
     assert.equal(point.x, x1 - scalar, 'x coords should be added');
@@ -150,13 +149,13 @@
   });
 
   QUnit.test('multiply', function(assert) {
-    var x1 = 2, y1 = 3, scalar = 3,
+    const x1 = 2, y1 = 3, scalar = 3,
         point = new fabric.Point(x1, y1);
 
     assert.ok(typeof point.multiply === 'function');
     assert.equal(point.x, x1, 'constructor pass x value');
     assert.equal(point.y, y1, 'constructor pass y value');
-    var returned = point.multiply(scalar);
+    const returned = point.multiply(scalar);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.notEqual(returned, point, 'is not chainable');
     assert.equal(returned.x, x1 * scalar, 'x coords should be added');
@@ -164,13 +163,13 @@
   });
 
   QUnit.test('multiplyEquals', function(assert) {
-    var x1 = 2, y1 = 3, scalar = 3,
+    const x1 = 2, y1 = 3, scalar = 3,
         point = new fabric.Point(x1, y1);
 
     assert.ok(typeof point.multiplyEquals === 'function');
     assert.equal(point.x, x1, 'constructor pass x value');
     assert.equal(point.y, y1, 'constructor pass y value');
-    var returned = point.multiplyEquals(scalar);
+    const returned = point.multiplyEquals(scalar);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.equal(returned, point, 'is chainable');
     assert.equal(point.x, x1 * scalar, 'x coords should be added');
@@ -178,13 +177,13 @@
   });
 
   QUnit.test('divide', function(assert) {
-    var x1 = 2, y1 = 3, scalar = 3,
+    const x1 = 2, y1 = 3, scalar = 3,
         point = new fabric.Point(x1, y1);
 
     assert.ok(typeof point.divide === 'function');
     assert.equal(point.x, x1, 'constructor pass x value');
     assert.equal(point.y, y1, 'constructor pass y value');
-    var returned = point.divide(scalar);
+    const returned = point.divide(scalar);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.notEqual(returned, point, 'is not chainable');
     assert.equal(returned.x, x1 / scalar, 'x coords should be added');
@@ -192,13 +191,13 @@
   });
 
   QUnit.test('divideEquals', function(assert) {
-    var x1 = 2, y1 = 3, scalar = 3,
+    const x1 = 2, y1 = 3, scalar = 3,
         point = new fabric.Point(x1, y1);
 
     assert.ok(typeof point.divideEquals === 'function');
     assert.equal(point.x, x1, 'constructor pass x value');
     assert.equal(point.y, y1, 'constructor pass y value');
-    var returned = point.divideEquals(scalar);
+    const returned = point.divideEquals(scalar);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.equal(returned, point, 'is chainable');
     assert.equal(point.x, x1 / scalar, 'x coords should be added');
@@ -206,7 +205,7 @@
   });
 
   QUnit.test('point eq', function(assert) {
-    var x1 = 2, y1 = 3, x2 = 4, y2 = 5,
+    const x1 = 2, y1 = 3, x2 = 4, y2 = 5,
         point = new fabric.Point(x1, y1),
         point3 = new fabric.Point(x1, y1),
         point2 = new fabric.Point(x2, y2);
@@ -218,7 +217,7 @@
   });
 
   QUnit.test('point lt', function(assert) {
-    var x1 = 2, y1 = 3, x2 = 4, y2 = 5,
+    const x1 = 2, y1 = 3, x2 = 4, y2 = 5,
         point = new fabric.Point(x1, y1),
         point2 = new fabric.Point(x2, y2);
 
@@ -229,7 +228,7 @@
   });
 
   QUnit.test('point gt', function(assert) {
-    var x1 = 2, y1 = 3, x2 = 4, y2 = 5,
+    const x1 = 2, y1 = 3, x2 = 4, y2 = 5,
         point = new fabric.Point(x1, y1),
         point2 = new fabric.Point(x2, y2);
 
@@ -240,7 +239,7 @@
   });
 
   QUnit.test('point lte', function(assert) {
-    var x1 = 2, y1 = 3, x2 = 4, y2 = 5,
+    const x1 = 2, y1 = 3, x2 = 4, y2 = 5,
         point = new fabric.Point(x1, y1),
         point3 = new fabric.Point(x1, y1),
         point2 = new fabric.Point(x2, y2);
@@ -256,7 +255,7 @@
   });
 
   QUnit.test('point gte', function(assert) {
-    var x1 = 2, y1 = 3, x2 = 4, y2 = 5,
+    const x1 = 2, y1 = 3, x2 = 4, y2 = 5,
         point = new fabric.Point(x1, y1),
         point3 = new fabric.Point(x1, y1),
         point2 = new fabric.Point(x2, y2);
@@ -272,12 +271,12 @@
   });
 
   QUnit.test('point lerp', function(assert) {
-    var x1 = 2, y1 = 3, x2 = 4, y2 = 5,
+    const x1 = 2, y1 = 3, x2 = 4, y2 = 5,
         point = new fabric.Point(x1, y1),
         point2 = new fabric.Point(x2, y2);
 
     assert.ok(typeof point.lerp === 'function');
-    var returned = point.lerp(point2);
+    let returned = point.lerp(point2);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.notEqual(returned, point, 'not chainable');
     assert.equal(returned.x, point.x + (point2.x - point.x) / 2, 'default is in the middle');
@@ -293,23 +292,23 @@
   });
 
   QUnit.test('point distance from', function(assert) {
-    var x1 = 2, y1 = 3, x2 = 4, y2 = 5,
+    const x1 = 2, y1 = 3, x2 = 4, y2 = 5,
         point = new fabric.Point(x1, y1),
         point2 = new fabric.Point(x2, y2);
 
     assert.ok(typeof point.distanceFrom === 'function');
-    var returned = point.distanceFrom(point2, 0.5);
+    const returned = point.distanceFrom(point2, 0.5);
     assert.ok(typeof returned === 'number', 'returns a number');
     assert.equal(returned, Math.sqrt(Math.pow(point2.x - point.x, 2) + Math.pow(point2.y - point.y, 2)), 'return the geometric distance between coords');
   });
 
   QUnit.test('midPointFrom', function(assert) {
-    var x1 = 2, y1 = 3, x2 = 4, y2 = 5,
+    const x1 = 2, y1 = 3, x2 = 4, y2 = 5,
         point = new fabric.Point(x1, y1),
         point2 = new fabric.Point(x2, y2);
 
     assert.ok(typeof point.midPointFrom === 'function');
-    var returned = point.midPointFrom(point2);
+    const returned = point.midPointFrom(point2);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.notEqual(returned, point, 'not chainable');
     assert.equal(returned.x, point.x + (point2.x - point.x) / 2, 'point.x is in the middle');
@@ -317,12 +316,12 @@
   });
 
   QUnit.test('min', function(assert) {
-    var x1 = 2, y1 = 3, x2 = 4, y2 = 1,
+    const x1 = 2, y1 = 3, x2 = 4, y2 = 1,
         point = new fabric.Point(x1, y1),
         point2 = new fabric.Point(x2, y2);
 
     assert.ok(typeof point.min === 'function');
-    var returned = point.min(point2);
+    const returned = point.min(point2);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.notEqual(returned, point, 'not chainable');
     assert.equal(returned.x, Math.min(point.x, point2.x), 'point.x is the min from the points');
@@ -330,12 +329,12 @@
   });
 
   QUnit.test('max', function(assert) {
-    var x1 = 2, y1 = 3, x2 = 4, y2 = 1,
+    const x1 = 2, y1 = 3, x2 = 4, y2 = 1,
         point = new fabric.Point(x1, y1),
         point2 = new fabric.Point(x2, y2);
 
     assert.ok(typeof point.max === 'function');
-    var returned = point.max(point2);
+    const returned = point.max(point2);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.notEqual(returned, point, 'not chainable');
     assert.equal(returned.x, Math.max(point.x, point2.x), 'point.x is the max from the points');
@@ -343,21 +342,21 @@
   });
 
   QUnit.test('toString', function(assert) {
-    var x1 = 2, y1 = 3,
+    const x1 = 2, y1 = 3,
         point = new fabric.Point(x1, y1);
 
     assert.ok(typeof point.toString === 'function');
-    var returned = point.toString();
+    const returned = point.toString();
     assert.ok(typeof returned === 'string', 'returns a string');
     assert.equal(returned, point.x + ',' + point.y, 'coords concat with ,');
   });
 
   QUnit.test('setXY', function(assert) {
-    var x1 = 2, y1 = 3, x2 = 4, y2 = 8,
+    const x1 = 2, y1 = 3, x2 = 4, y2 = 8,
         point = new fabric.Point(x1, y1);
 
     assert.ok(typeof point.setXY === 'function');
-    var returned = point.setXY(x2, y2);
+    const returned = point.setXY(x2, y2);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.equal(returned, point, 'chainable');
     assert.equal(returned.x, x2, 'it changed x property');
@@ -365,34 +364,34 @@
   });
 
   QUnit.test('setX', function(assert) {
-    var x1 = 2, y1 = 3, x2 = 4,
+    const x1 = 2, y1 = 3, x2 = 4,
         point = new fabric.Point(x1, y1);
 
     assert.ok(typeof point.setX === 'function');
-    var returned = point.setX(x2);
+    const returned = point.setX(x2);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.equal(returned, point, 'chainable');
     assert.equal(returned.x, x2, 'it changed x property');
   });
 
   QUnit.test('setY', function(assert) {
-    var x1 = 2, y1 = 3, y2 = 8,
+    const x1 = 2, y1 = 3, y2 = 8,
         point = new fabric.Point(x1, y1);
 
     assert.ok(typeof point.setY === 'function');
-    var returned = point.setY(y2);
+    const returned = point.setY(y2);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.equal(returned, point, 'chainable');
     assert.equal(returned.y, y2, 'it changed y property');
   });
 
   QUnit.test('setFromPoint', function(assert) {
-    var x1 = 2, y1 = 3, x2 = 4, y2 = 8,
+    const x1 = 2, y1 = 3, x2 = 4, y2 = 8,
         point = new fabric.Point(x1, y1),
         point2 = new fabric.Point(x2, y2);
 
     assert.ok(typeof point.setFromPoint === 'function');
-    var returned = point.setFromPoint(point2);
+    const returned = point.setFromPoint(point2);
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.equal(returned, point, 'chainable');
     assert.equal(returned.x, point2.x, 'it changed x property');
@@ -400,12 +399,12 @@
   });
 
   QUnit.test('swap', function(assert) {
-    var x1 = 2, y1 = 3, x2 = 4, y2 = 8,
+    const x1 = 2, y1 = 3, x2 = 4, y2 = 8,
         point = new fabric.Point(x1, y1),
         point2 = new fabric.Point(x2, y2);
 
     assert.ok(typeof point.swap === 'function');
-    var returned = point.swap(point2);
+    const returned = point.swap(point2);
     assert.equal(returned, undefined, 'it does not return anything');
     assert.equal(point.x, x2, 'swapped x');
     assert.equal(point.y, y2, 'swapped y');
@@ -414,15 +413,14 @@
   });
 
   QUnit.test('clone', function(assert) {
-    var x1 = 2, y1 = 3,
+    const x1 = 2, y1 = 3,
         point = new fabric.Point(x1, y1);
 
     assert.ok(typeof point.clone === 'function');
-    var returned = point.clone();
+    const returned = point.clone();
     assert.ok(returned instanceof fabric.Point, 'returns a point class');
     assert.notEqual(returned, point, 'is not chainable');
     assert.equal(returned.x, point.x, 'x coords should be same');
     assert.equal(returned.y, point.y, 'y coords should be same');
   });
-
 })();

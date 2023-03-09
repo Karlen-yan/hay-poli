@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric  = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       filters = fabric.Image.filters,
       createClass = fabric.util.createClass;
 
@@ -45,13 +44,13 @@
     mainParameter: 'rotation',
 
     calculateMatrix: function() {
-      var rad = this.rotation * Math.PI, cos = fabric.util.cos(rad), sin = fabric.util.sin(rad),
+      const rad = this.rotation * Math.PI, cos = fabric.util.cos(rad), sin = fabric.util.sin(rad),
           aThird = 1 / 3, aThirdSqtSin = Math.sqrt(aThird) * sin, OneMinusCos = 1 - cos;
       this.matrix = [
         1, 0, 0, 0, 0,
         0, 1, 0, 0, 0,
         0, 0, 1, 0, 0,
-        0, 0, 0, 1, 0
+        0, 0, 0, 1, 0,
       ];
       this.matrix[0] = cos + OneMinusCos / 3;
       this.matrix[1] = aThird * OneMinusCos - aThirdSqtSin;
@@ -103,5 +102,4 @@
    * @return {fabric.Image.filters.HueRotation} Instance of fabric.Image.filters.HueRotation
    */
   fabric.Image.filters.HueRotation.fromObject = fabric.Image.filters.BaseFilter.fromObject;
-
 })(typeof exports !== 'undefined' ? exports : this);

@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       degreesToRadians = fabric.util.degreesToRadians,
       controls = fabric.controlsUtils;
 
@@ -17,9 +16,9 @@
    * @param {Object} styleOverride override for fabric.Object controls style
    * @param {fabric.Object} fabricObject the fabric object for which we are rendering controls
    */
-  function renderCircleControl (ctx, left, top, styleOverride, fabricObject) {
+  function renderCircleControl(ctx, left, top, styleOverride, fabricObject) {
     styleOverride = styleOverride || {};
-    var xSize = this.sizeX || styleOverride.cornerSize || fabricObject.cornerSize,
+    let xSize = this.sizeX || styleOverride.cornerSize || fabricObject.cornerSize,
         ySize = this.sizeY || styleOverride.cornerSize || fabricObject.cornerSize,
         transparentCorners = typeof styleOverride.transparentCorners !== 'undefined' ?
           styleOverride.transparentCorners : fabricObject.transparentCorners,
@@ -68,7 +67,7 @@
    */
   function renderSquareControl(ctx, left, top, styleOverride, fabricObject) {
     styleOverride = styleOverride || {};
-    var xSize = this.sizeX || styleOverride.cornerSize || fabricObject.cornerSize,
+    const xSize = this.sizeX || styleOverride.cornerSize || fabricObject.cornerSize,
         ySize = this.sizeY || styleOverride.cornerSize || fabricObject.cornerSize,
         transparentCorners = typeof styleOverride.transparentCorners !== 'undefined' ?
           styleOverride.transparentCorners : fabricObject.transparentCorners,
@@ -95,5 +94,4 @@
 
   controls.renderCircleControl = renderCircleControl;
   controls.renderSquareControl = renderSquareControl;
-
 })(typeof exports !== 'undefined' ? exports : this);

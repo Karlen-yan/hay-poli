@@ -1,6 +1,6 @@
-(function () {
+(function() {
   // since ie11 can use addEventListener but they do not support options, i need to check
-  var couldUseAttachEvent = !!fabric.document.createElement('div').attachEvent,
+  const couldUseAttachEvent = !!fabric.document.createElement('div').attachEvent,
       touchEvents = ['touchstart', 'touchmove', 'touchend'];
   /**
    * Adds an event listener to an element
@@ -27,7 +27,7 @@
   };
 
   function getTouchInfo(event) {
-    var touchProp = event.changedTouches;
+    const touchProp = event.changedTouches;
     if (touchProp && touchProp[0]) {
       return touchProp[0];
     }
@@ -35,12 +35,12 @@
   }
 
   fabric.util.getPointer = function(event) {
-    var element = event.target,
+    const element = event.target,
         scroll = fabric.util.getScrollLeftTop(element),
         _evt = getTouchInfo(event);
     return {
       x: _evt.clientX + scroll.left,
-      y: _evt.clientY + scroll.top
+      y: _evt.clientY + scroll.top,
     };
   };
 

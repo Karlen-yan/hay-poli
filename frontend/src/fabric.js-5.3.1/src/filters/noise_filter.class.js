@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric  = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       extend = fabric.util.object.extend,
       filters = fabric.Image.filters,
       createClass = fabric.util.createClass;
@@ -73,12 +72,11 @@
       if (this.noise === 0) {
         return;
       }
-      var imageData = options.imageData,
+      let imageData = options.imageData,
           data = imageData.data, i, len = data.length,
           noise = this.noise, rand;
 
       for (i = 0, len = data.length; i < len; i += 4) {
-
         rand = (0.5 - Math.random()) * noise;
 
         data[i] += rand;
@@ -117,9 +115,9 @@
      */
     toObject: function() {
       return extend(this.callSuper('toObject'), {
-        noise: this.noise
+        noise: this.noise,
       });
-    }
+    },
   });
 
   /**
@@ -130,5 +128,4 @@
    * @return {fabric.Image.filters.Noise} Instance of fabric.Image.filters.Noise
    */
   fabric.Image.filters.Noise.fromObject = fabric.Image.filters.BaseFilter.fromObject;
-
 })(typeof exports !== 'undefined' ? exports : this);

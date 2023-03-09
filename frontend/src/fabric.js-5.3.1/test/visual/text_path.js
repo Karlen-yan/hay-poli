@@ -1,15 +1,15 @@
 (function() {
-  var visualTestLoop;
+  let visualTestLoop;
   if (fabric.isLikelyNode) {
     visualTestLoop = global.visualTestLoop;
   }
   else {
     visualTestLoop = window.visualTestLoop;
   }
-  var tests = [];
+  const tests = [];
   function textpath1(canvas, callback) {
-    var circlePath = new fabric.Path('M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0', { visible: false });
-    var text = new fabric.Text('Hello this is a test of text on a path', {
+    const circlePath = new fabric.Path('M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0', {visible: false});
+    const text = new fabric.Text('Hello this is a test of text on a path', {
       path: circlePath,
       fontSize: 24,
     });
@@ -29,8 +29,8 @@
   });
 
   function textpath2(canvas, callback) {
-    var path = new fabric.Path('M100 5 L 5 195 L 195 195 z', { visible: false });
-    var text = new fabric.Text('wrapping with thigh corners it is what it is. Maybe one day it will look better', {
+    const path = new fabric.Path('M100 5 L 5 195 L 195 195 z', {visible: false});
+    const text = new fabric.Text('wrapping with thigh corners it is what it is. Maybe one day it will look better', {
       left: 0,
       top: 0,
       fontSize: 16,
@@ -42,7 +42,7 @@
       fill: 'blue',
       stroke: 'red',
       path: path,
-      textBackgroundColor: 'yellow'
+      textBackgroundColor: 'yellow',
     });
     canvas.add(text);
     canvas.renderAll();
@@ -59,8 +59,8 @@
   });
 
   function textpath3(canvas, callback) {
-    var path = new fabric.Path('M -194 -109 C 538 -300 154 50 98 29', { visible: false });
-    var text = new fabric.Text('Testing constant distance on bezier curve.', { path: path, top: 30, left: 30 });
+    const path = new fabric.Path('M -194 -109 C 538 -300 154 50 98 29', {visible: false});
+    const text = new fabric.Text('Testing constant distance on bezier curve.', {path: path, top: 30, left: 30});
     canvas.add(text);
     canvas.renderAll();
     callback(canvas.lowerCanvasEl);
@@ -76,22 +76,22 @@
   });
 
   function textpath4(canvas, callback) {
-    var path = new fabric.Path('M 0 0 Q 180 0 180 -101.25 Q 180 -180 90 -180 Q 0 -180 0 -112.5 Q 0 -45 78.75 -45 Q 135 -45 146.25 -90', { visible: false });
-    var text = new fabric.Text('Text on a swirl path with textAlign right', {
+    const path = new fabric.Path('M 0 0 Q 180 0 180 -101.25 Q 180 -180 90 -180 Q 0 -180 0 -112.5 Q 0 -45 78.75 -45 Q 135 -45 146.25 -90', {visible: false});
+    const text = new fabric.Text('Text on a swirl path with textAlign right', {
       left: 50,
       top: 50,
       fontSize: 28,
       textAlign: 'right',
       charSpacing: 50,
-      path: path
+      path: path,
     });
-    var text2 = new fabric.Text('Text on a swirl path with textAlign center', {
+    const text2 = new fabric.Text('Text on a swirl path with textAlign center', {
       left: 50,
       top: 50,
       fontSize: 28,
       textAlign: 'center',
       charSpacing: 50,
-      path: path
+      path: path,
     });
     canvas.add(text);
     canvas.add(text2);
@@ -125,21 +125,21 @@
   });
 
   function textpath6(canvas, callback) {
-    var path = new fabric.Path('M 0 0 A 150 350 0 0 1 250 0', {
+    const path = new fabric.Path('M 0 0 A 150 350 0 0 1 250 0', {
       strokeWidth: 2,
       stroke: 'blue',
       opacity: 0.5,
       left: 25,
       top: 25,
-      fill: 'transparent'
+      fill: 'transparent',
     });
-    var text = new fabric.Text('Text on the right side of a curve', {
+    const text = new fabric.Text('Text on the right side of a curve', {
       left: 25,
       top: 25,
       fontSize: 28,
       pathSide: 'right',
       pathStartOffset: 100,
-      path: path
+      path: path,
     });
     canvas.add(text);
     canvas.renderAll();

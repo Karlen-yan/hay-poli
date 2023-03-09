@@ -1,6 +1,5 @@
 (function() {
-
-  var controlsUtils = fabric.controlsUtils,
+  const controlsUtils = fabric.controlsUtils,
       scaleSkewStyleHandler = controlsUtils.scaleSkewCursorStyleHandler,
       scaleStyleHandler = controlsUtils.scaleCursorStyleHandler,
       scalingEqually = controlsUtils.scalingEqually,
@@ -45,28 +44,28 @@
     x: -0.5,
     y: -0.5,
     cursorStyleHandler: scaleStyleHandler,
-    actionHandler: scalingEqually
+    actionHandler: scalingEqually,
   });
 
   objectControls.tr = new fabric.Control({
     x: 0.5,
     y: -0.5,
     cursorStyleHandler: scaleStyleHandler,
-    actionHandler: scalingEqually
+    actionHandler: scalingEqually,
   });
 
   objectControls.bl = new fabric.Control({
     x: -0.5,
     y: 0.5,
     cursorStyleHandler: scaleStyleHandler,
-    actionHandler: scalingEqually
+    actionHandler: scalingEqually,
   });
 
   objectControls.br = new fabric.Control({
     x: 0.5,
     y: 0.5,
     cursorStyleHandler: scaleStyleHandler,
-    actionHandler: scalingEqually
+    actionHandler: scalingEqually,
   });
 
   objectControls.mtr = new fabric.Control({
@@ -85,7 +84,7 @@
     // specific custom control, you have to add it to Object prototype and to Textbox
     // prototype. The controls are shared as references. So changes to control `tr`
     // can still apply to all objects if needed.
-    var textBoxControls = fabric.Textbox.prototype.controls = { };
+    const textBoxControls = fabric.Textbox.prototype.controls = { };
 
     textBoxControls.mtr = objectControls.mtr;
     textBoxControls.tr = objectControls.tr;

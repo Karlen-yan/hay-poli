@@ -1,32 +1,32 @@
 (function() {
-  var canvas = this.canvas = new fabric.StaticCanvas(null, {enableRetinaScaling: false, width: 600, height: 600});
+  const canvas = this.canvas = new fabric.StaticCanvas(null, {enableRetinaScaling: false, width: 600, height: 600});
 
   function makeGroupWith2Objects() {
-    var rect1 = new fabric.Rect({ top: 100, left: 100, width: 30, height: 10, strokeWidth: 0 }),
-        rect2 = new fabric.Rect({ top: 120, left: 50, width: 10, height: 40, strokeWidth: 0 });
+    const rect1 = new fabric.Rect({top: 100, left: 100, width: 30, height: 10, strokeWidth: 0}),
+        rect2 = new fabric.Rect({top: 120, left: 50, width: 10, height: 40, strokeWidth: 0});
 
     return new fabric.Group([rect1, rect2], {strokeWidth: 0});
   }
 
   function makeGroupWith2ObjectsWithOpacity() {
-    var rect1 = new fabric.Rect({ top: 100, left: 100, width: 30, height: 10, strokeWidth: 0, opacity: 0.5 }),
-        rect2 = new fabric.Rect({ top: 120, left: 50, width: 10, height: 40, strokeWidth: 0, opacity: 0.8 });
+    const rect1 = new fabric.Rect({top: 100, left: 100, width: 30, height: 10, strokeWidth: 0, opacity: 0.5}),
+        rect2 = new fabric.Rect({top: 120, left: 50, width: 10, height: 40, strokeWidth: 0, opacity: 0.8});
 
     return new fabric.Group([rect1, rect2], {strokeWidth: 0});
   }
 
   function makeGroupWith2ObjectsAndNoExport() {
-    var rect1 = new fabric.Rect({ top: 100, left: 100, width: 30, height: 10, strokeWidth: 0 }),
-      rect2 = new fabric.Rect({ top: 120, left: 50, width: 10, height: 40, strokeWidth: 0, excludeFromExport: true });
+    const rect1 = new fabric.Rect({top: 100, left: 100, width: 30, height: 10, strokeWidth: 0}),
+        rect2 = new fabric.Rect({top: 120, left: 50, width: 10, height: 40, strokeWidth: 0, excludeFromExport: true});
 
-    return new fabric.Group([rect1, rect2], { strokeWidth: 0 });
+    return new fabric.Group([rect1, rect2], {strokeWidth: 0});
   }
 
   function makeGroupWith4Objects() {
-    var rect1 = new fabric.Rect({ top: 100, left: 100, width: 30, height: 10 }),
-        rect2 = new fabric.Rect({ top: 120, left: 50, width: 10, height: 40 }),
-        rect3 = new fabric.Rect({ top: 40, left: 0, width: 20, height: 40 }),
-        rect4 = new fabric.Rect({ top: 75, left: 75, width: 40, height: 40 });
+    const rect1 = new fabric.Rect({top: 100, left: 100, width: 30, height: 10}),
+        rect2 = new fabric.Rect({top: 120, left: 50, width: 10, height: 40}),
+        rect3 = new fabric.Rect({top: 40, left: 0, width: 20, height: 40}),
+        rect4 = new fabric.Rect({top: 75, left: 75, width: 40, height: 40});
 
     return new fabric.Group([rect1, rect2, rect3, rect4]);
   }
@@ -37,26 +37,26 @@
       canvas.clear();
       canvas.backgroundColor = fabric.Canvas.prototype.backgroundColor;
       canvas.calcOffset();
-    }
+    },
   });
 
   QUnit.test('constructor', function(assert) {
-    var group = makeGroupWith2Objects();
+    const group = makeGroupWith2Objects();
 
     assert.ok(group);
     assert.ok(group instanceof fabric.Group, 'should be instance of fabric.Group');
   });
 
   QUnit.test('toString', function(assert) {
-    var group = makeGroupWith2Objects();
+    const group = makeGroupWith2Objects();
     assert.equal(group.toString(), '#<fabric.Group: (2)>', 'should return proper representation');
   });
 
   QUnit.test('getObjects', function(assert) {
-    var rect1 = new fabric.Rect(),
+    const rect1 = new fabric.Rect(),
         rect2 = new fabric.Rect();
 
-    var group = new fabric.Group([rect1, rect2]);
+    const group = new fabric.Group([rect1, rect2]);
 
     assert.ok(typeof group.getObjects === 'function');
     assert.ok(Array.isArray(group.getObjects()), 'should be an array');
@@ -65,10 +65,10 @@
   });
 
   QUnit.test('getObjects with type', function(assert) {
-    var rect = new fabric.Rect({ width: 10, height: 20 }),
-        circle = new fabric.Circle({ radius: 30 });
+    const rect = new fabric.Rect({width: 10, height: 20}),
+        circle = new fabric.Circle({radius: 30});
 
-    var group = new fabric.Group([rect, circle]);
+    const group = new fabric.Group([rect, circle]);
 
     assert.equal(group.size(), 2, 'should have length=2 initially');
 
@@ -77,8 +77,8 @@
   });
 
   QUnit.test('add', function(assert) {
-    var group = makeGroupWith2Objects();
-    var rect1 = new fabric.Rect(),
+    const group = makeGroupWith2Objects();
+    const rect1 = new fabric.Rect(),
         rect2 = new fabric.Rect(),
         rect3 = new fabric.Rect();
 
@@ -93,7 +93,7 @@
   });
 
   QUnit.test('remove', function(assert) {
-    var rect1 = new fabric.Rect(),
+    const rect1 = new fabric.Rect(),
         rect2 = new fabric.Rect(),
         rect3 = new fabric.Rect(),
         group = new fabric.Group([rect1, rect2, rect3]);
@@ -107,7 +107,7 @@
   });
 
   QUnit.test('size', function(assert) {
-    var group = makeGroupWith2Objects();
+    const group = makeGroupWith2Objects();
 
     assert.ok(typeof group.size === 'function');
     assert.equal(group.size(), 2);
@@ -119,7 +119,7 @@
   });
 
   QUnit.test('set', function(assert) {
-    var group = makeGroupWith2Objects(),
+    const group = makeGroupWith2Objects(),
         firstObject = group.getObjects()[0];
 
     assert.ok(typeof group.set === 'function');
@@ -132,16 +132,16 @@
     assert.equal(group.get('left'), 1234, 'group\'s own "left" property should be set properly');
     assert.ok(firstObject.get('left') !== 1234, 'objects\' value should not be affected');
 
-    group.set({ left: 888, top: 999 });
+    group.set({left: 888, top: 999});
     assert.equal(group.get('left'), 888, 'group\'s own "left" property should be set properly via object');
     assert.equal(group.get('top'), 999, 'group\'s own "top" property should be set properly via object');
   });
 
   QUnit.test('contains', function(assert) {
-    var rect1           = new fabric.Rect(),
-        rect2           = new fabric.Rect(),
+    const rect1 = new fabric.Rect(),
+        rect2 = new fabric.Rect(),
         notIncludedRect = new fabric.Rect(),
-        group           = new fabric.Group([rect1, rect2]);
+        group = new fabric.Group([rect1, rect2]);
 
     assert.ok(typeof group.contains === 'function');
 
@@ -152,13 +152,13 @@
   });
 
   QUnit.test('toObject', function(assert) {
-    var group = makeGroupWith2Objects();
+    const group = makeGroupWith2Objects();
 
     assert.ok(typeof group.toObject === 'function');
 
-    var clone = group.toObject();
+    const clone = group.toObject();
 
-    var expectedObject = {
+    const expectedObject = {
       version: fabric.version,
       type:                     'group',
       originX:                  'left',
@@ -190,7 +190,7 @@
       skewX:                    0,
       skewY:                    0,
       objects:                  clone.objects,
-      strokeUniform:            false
+      strokeUniform:            false,
     };
 
     assert.deepEqual(clone, expectedObject);
@@ -201,17 +201,17 @@
   });
 
   QUnit.test('toObject without default values', function(assert) {
-    var group = makeGroupWith2Objects();
+    const group = makeGroupWith2Objects();
     group.includeDefaultValues = false;
-    var clone = group.toObject();
-    var objects = [{
+    const clone = group.toObject();
+    const objects = [{
       version: fabric.version,
       type: 'rect',
       left: 10,
       top: -30,
       width: 30,
       height: 10,
-      strokeWidth: 0
+      strokeWidth: 0,
     }, {
       version: fabric.version,
       type: 'rect',
@@ -219,39 +219,39 @@
       top: -10,
       width: 10,
       height: 40,
-      strokeWidth: 0
+      strokeWidth: 0,
     }];
-    var expectedObject = {
+    const expectedObject = {
       version: fabric.version,
       type: 'group',
       left: 50,
       top: 100,
       width: 80,
       height: 60,
-      objects: objects
+      objects: objects,
     };
     assert.deepEqual(clone, expectedObject);
   });
 
 
-  QUnit.test('toObject with excludeFromExport set on an object', function (assert) {
-    var group = makeGroupWith2Objects();
-    var group2 = makeGroupWith2ObjectsAndNoExport();
-    var clone = group.toObject();
-    var clone2 = group2.toObject();
-    assert.deepEqual(clone2.objects, group2._objects.filter(obj => !obj.excludeFromExport).map(obj => obj.toObject()));
+  QUnit.test('toObject with excludeFromExport set on an object', function(assert) {
+    const group = makeGroupWith2Objects();
+    const group2 = makeGroupWith2ObjectsAndNoExport();
+    const clone = group.toObject();
+    const clone2 = group2.toObject();
+    assert.deepEqual(clone2.objects, group2._objects.filter((obj) => !obj.excludeFromExport).map((obj) => obj.toObject()));
     delete clone.objects;
     delete clone2.objects;
     assert.deepEqual(clone, clone2);
   });
 
   QUnit.test('render', function(assert) {
-    var group = makeGroupWith2Objects();
+    const group = makeGroupWith2Objects();
     assert.ok(typeof group.render === 'function');
   });
 
   QUnit.test('item', function(assert) {
-    var group = makeGroupWith2Objects();
+    const group = makeGroupWith2Objects();
 
     assert.ok(typeof group.item === 'function');
     assert.equal(group.item(0), group.getObjects()[0]);
@@ -260,7 +260,7 @@
   });
 
   QUnit.test('moveTo', function(assert) {
-    var group = makeGroupWith4Objects(),
+    const group = makeGroupWith4Objects(),
         groupEl1 = group.getObjects()[0],
         groupEl2 = group.getObjects()[1],
         groupEl3 = group.getObjects()[2],
@@ -295,14 +295,14 @@
   });
 
   QUnit.test('complexity', function(assert) {
-    var group = makeGroupWith2Objects();
+    const group = makeGroupWith2Objects();
 
     assert.ok(typeof group.complexity === 'function');
     assert.equal(group.complexity(), 2);
   });
 
   QUnit.test('destroy', function(assert) {
-    var group = makeGroupWith2Objects(),
+    const group = makeGroupWith2Objects(),
         firstObject = group.item(0),
         initialLeftValue = 100,
         initialTopValue = 100;
@@ -318,12 +318,12 @@
   });
 
   QUnit.test('setObjectCoords', function(assert) {
-    var group = makeGroupWith2Objects();
+    const group = makeGroupWith2Objects();
 
     assert.ok(typeof group.setObjectsCoords === 'function');
 
-    var invokedObjects = [];
-    group.forEachObject(function(groupObject){
+    const invokedObjects = [];
+    group.forEachObject(function(groupObject) {
       groupObject.setCoords = function() {
         invokedObjects.push(this);
       };
@@ -334,37 +334,36 @@
   });
 
   QUnit.test('containsPoint', function(assert) {
-
-    var group = makeGroupWith2Objects();
-    group.set({ originX: 'center', originY: 'center' }).setCoords();
+    const group = makeGroupWith2Objects();
+    group.set({originX: 'center', originY: 'center'}).setCoords();
 
     //  Rect #1     top: 100, left: 100, width: 30, height: 10
     //  Rect #2     top: 120, left: 50, width: 10, height: 40
 
     assert.ok(typeof group.containsPoint === 'function');
 
-    assert.ok(!group.containsPoint({ x: 0, y: 0 }));
+    assert.ok(!group.containsPoint({x: 0, y: 0}));
 
     group.scale(2);
-    assert.ok(group.containsPoint({ x: 50, y: 120 }));
-    assert.ok(group.containsPoint({ x: 100, y: 160 }));
-    assert.ok(!group.containsPoint({ x: 0, y: 0 }));
+    assert.ok(group.containsPoint({x: 50, y: 120}));
+    assert.ok(group.containsPoint({x: 100, y: 160}));
+    assert.ok(!group.containsPoint({x: 0, y: 0}));
 
     group.scale(1);
     group.padding = 30;
     group.setCoords();
-    assert.ok(group.containsPoint({ x: 50, y: 120 }));
-    assert.ok(!group.containsPoint({ x: 100, y: 170 }));
-    assert.ok(!group.containsPoint({ x: 0, y: 0 }));
+    assert.ok(group.containsPoint({x: 50, y: 120}));
+    assert.ok(!group.containsPoint({x: 100, y: 170}));
+    assert.ok(!group.containsPoint({x: 0, y: 0}));
   });
 
   QUnit.test('forEachObject', function(assert) {
-    var group = makeGroupWith2Objects();
+    const group = makeGroupWith2Objects();
 
     assert.ok(typeof group.forEachObject === 'function');
-    assert.equal(group.forEachObject(function(){}), group, 'should be chainable');
+    assert.equal(group.forEachObject(function() {}), group, 'should be chainable');
 
-    var iteratedObjects = [];
+    const iteratedObjects = [];
     group.forEachObject(function(groupObject) {
       iteratedObjects.push(groupObject);
     });
@@ -374,16 +373,15 @@
   });
 
   QUnit.test('fromObject', function(assert) {
-    var done = assert.async();
-    var group = makeGroupWith2ObjectsWithOpacity();
+    const done = assert.async();
+    const group = makeGroupWith2ObjectsWithOpacity();
 
     assert.ok(typeof fabric.Group.fromObject === 'function');
-    var groupObject = group.toObject();
+    const groupObject = group.toObject();
 
     fabric.Group.fromObject(groupObject, function(newGroupFromObject) {
-
-      var objectFromOldGroup = group.toObject();
-      var objectFromNewGroup = newGroupFromObject.toObject();
+      const objectFromOldGroup = group.toObject();
+      const objectFromNewGroup = newGroupFromObject.toObject();
 
       assert.ok(newGroupFromObject instanceof fabric.Group);
 
@@ -401,28 +399,27 @@
   });
 
   QUnit.test('fromObject with clipPath', function(assert) {
-    var done = assert.async();
-    var clipPath = new fabric.Rect({
+    const done = assert.async();
+    const clipPath = new fabric.Rect({
       width: 500,
       height: 250,
       top: 0,
       left: 0,
-      absolutePositioned: true
+      absolutePositioned: true,
     });
 
-    var groupObject = new fabric.Group([
-      new fabric.Rect({ width: 100, height: 100, fill: 'red' }),
-      new fabric.Rect({ width: 100, height: 100, fill: 'yellow', left: 100 }),
-      new fabric.Rect({ width: 100, height: 100, fill: 'blue', top: 100 }),
-      new fabric.Rect({ width: 100, height: 100, fill: 'green', left: 100, top: 100 })
+    const groupObject = new fabric.Group([
+      new fabric.Rect({width: 100, height: 100, fill: 'red'}),
+      new fabric.Rect({width: 100, height: 100, fill: 'yellow', left: 100}),
+      new fabric.Rect({width: 100, height: 100, fill: 'blue', top: 100}),
+      new fabric.Rect({width: 100, height: 100, fill: 'green', left: 100, top: 100}),
     ]);
     groupObject.clipPath = clipPath;
 
-    var groupToObject = groupObject.toObject();
+    const groupToObject = groupObject.toObject();
 
     fabric.Group.fromObject(groupToObject, function(newGroupFromObject) {
-
-      var objectFromNewGroup = newGroupFromObject.toObject();
+      const objectFromNewGroup = newGroupFromObject.toObject();
 
       assert.ok(newGroupFromObject instanceof fabric.Group);
       assert.ok(newGroupFromObject.clipPath instanceof fabric.Rect, 'clipPath has been restored');
@@ -433,10 +430,10 @@
   });
 
   QUnit.test('fromObject restores oCoords', function(assert) {
-    var done = assert.async();
-    var group = makeGroupWith2ObjectsWithOpacity();
+    const done = assert.async();
+    const group = makeGroupWith2ObjectsWithOpacity();
 
-    var groupObject = group.toObject();
+    const groupObject = group.toObject();
 
     fabric.Group.fromObject(groupObject, function(newGroupFromObject) {
       assert.ok(newGroupFromObject._objects[0].lineCoords.tl, 'acoords 0 are restored');
@@ -447,9 +444,9 @@
   });
 
   QUnit.test('fromObject does not delete objects from source', function(assert) {
-    var done = assert.async();
-    var group = makeGroupWith2ObjectsWithOpacity();
-    var groupObject = group.toObject();
+    const done = assert.async();
+    const group = makeGroupWith2ObjectsWithOpacity();
+    const groupObject = group.toObject();
 
     fabric.Group.fromObject(groupObject, function(newGroupFromObject) {
       assert.equal(newGroupFromObject.objects, undefined, 'the objects array has not been pulled in');
@@ -459,12 +456,12 @@
   });
 
   QUnit.test('fromObject with svg url', function(assert) {
-    var done = assert.async();
-    var url = 'data:image/svg+xml,%3csvg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="502.174px" viewBox="0 65.326 612 502.174" enable-background="new 0 65.326 612 502.174" xml:space="preserve"%3e %3cellipse fill="%23C6C6C6" cx="283.5" cy="487.5" rx="259" ry="80"/%3e %3cpath id="bird" d="M210.333%2c65.331C104.367%2c66.105-12.349%2c150.637%2c1.056%2c276.449c4.303%2c40.393%2c18.533%2c63.704%2c52.171%2c79.03 c36.307%2c16.544%2c57.022%2c54.556%2c50.406%2c112.954c-9.935%2c4.88-17.405%2c11.031-19.132%2c20.015c7.531-0.17%2c14.943-0.312%2c22.59%2c4.341 c20.333%2c12.375%2c31.296%2c27.363%2c42.979%2c51.72c1.714%2c3.572%2c8.192%2c2.849%2c8.312-3.078c0.17-8.467-1.856-17.454-5.226-26.933 c-2.955-8.313%2c3.059-7.985%2c6.917-6.106c6.399%2c3.115%2c16.334%2c9.43%2c30.39%2c13.098c5.392%2c1.407%2c5.995-3.877%2c5.224-6.991 c-1.864-7.522-11.009-10.862-24.519-19.229c-4.82-2.984-0.927-9.736%2c5.168-8.351l20.234%2c2.415c3.359%2c0.763%2c4.555-6.114%2c0.882-7.875 c-14.198-6.804-28.897-10.098-53.864-7.799c-11.617-29.265-29.811-61.617-15.674-81.681c12.639-17.938%2c31.216-20.74%2c39.147%2c43.489 c-5.002%2c3.107-11.215%2c5.031-11.332%2c13.024c7.201-2.845%2c11.207-1.399%2c14.791%2c0c17.912%2c6.998%2c35.462%2c21.826%2c52.982%2c37.309 c3.739%2c3.303%2c8.413-1.718%2c6.991-6.034c-2.138-6.494-8.053-10.659-14.791-20.016c-3.239-4.495%2c5.03-7.045%2c10.886-6.876 c13.849%2c0.396%2c22.886%2c8.268%2c35.177%2c11.218c4.483%2c1.076%2c9.741-1.964%2c6.917-6.917c-3.472-6.085-13.015-9.124-19.18-13.413 c-4.357-3.029-3.025-7.132%2c2.697-6.602c3.905%2c0.361%2c8.478%2c2.271%2c13.908%2c1.767c9.946-0.925%2c7.717-7.169-0.883-9.566 c-19.036-5.304-39.891-6.311-61.665-5.225c-43.837-8.358-31.554-84.887%2c0-90.363c29.571-5.132%2c62.966-13.339%2c99.928-32.156 c32.668-5.429%2c64.835-12.446%2c92.939-33.85c48.106-14.469%2c111.903%2c16.113%2c204.241%2c149.695c3.926%2c5.681%2c15.819%2c9.94%2c9.524-6.351 c-15.893-41.125-68.176-93.328-92.13-132.085c-24.581-39.774-14.34-61.243-39.957-91.247 c-21.326-24.978-47.502-25.803-77.339-17.365c-23.461%2c6.634-39.234-7.117-52.98-31.273C318.42%2c87.525%2c265.838%2c64.927%2c210.333%2c65.331 z M445.731%2c203.01c6.12%2c0%2c11.112%2c4.919%2c11.112%2c11.038c0%2c6.119-4.994%2c11.111-11.112%2c11.111s-11.038-4.994-11.038-11.111 C434.693%2c207.929%2c439.613%2c203.01%2c445.731%2c203.01z"/%3e %3c/svg%3e';
-    var groupObject = {
+    const done = assert.async();
+    const url = 'data:image/svg+xml,%3csvg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="502.174px" viewBox="0 65.326 612 502.174" enable-background="new 0 65.326 612 502.174" xml:space="preserve"%3e %3cellipse fill="%23C6C6C6" cx="283.5" cy="487.5" rx="259" ry="80"/%3e %3cpath id="bird" d="M210.333%2c65.331C104.367%2c66.105-12.349%2c150.637%2c1.056%2c276.449c4.303%2c40.393%2c18.533%2c63.704%2c52.171%2c79.03 c36.307%2c16.544%2c57.022%2c54.556%2c50.406%2c112.954c-9.935%2c4.88-17.405%2c11.031-19.132%2c20.015c7.531-0.17%2c14.943-0.312%2c22.59%2c4.341 c20.333%2c12.375%2c31.296%2c27.363%2c42.979%2c51.72c1.714%2c3.572%2c8.192%2c2.849%2c8.312-3.078c0.17-8.467-1.856-17.454-5.226-26.933 c-2.955-8.313%2c3.059-7.985%2c6.917-6.106c6.399%2c3.115%2c16.334%2c9.43%2c30.39%2c13.098c5.392%2c1.407%2c5.995-3.877%2c5.224-6.991 c-1.864-7.522-11.009-10.862-24.519-19.229c-4.82-2.984-0.927-9.736%2c5.168-8.351l20.234%2c2.415c3.359%2c0.763%2c4.555-6.114%2c0.882-7.875 c-14.198-6.804-28.897-10.098-53.864-7.799c-11.617-29.265-29.811-61.617-15.674-81.681c12.639-17.938%2c31.216-20.74%2c39.147%2c43.489 c-5.002%2c3.107-11.215%2c5.031-11.332%2c13.024c7.201-2.845%2c11.207-1.399%2c14.791%2c0c17.912%2c6.998%2c35.462%2c21.826%2c52.982%2c37.309 c3.739%2c3.303%2c8.413-1.718%2c6.991-6.034c-2.138-6.494-8.053-10.659-14.791-20.016c-3.239-4.495%2c5.03-7.045%2c10.886-6.876 c13.849%2c0.396%2c22.886%2c8.268%2c35.177%2c11.218c4.483%2c1.076%2c9.741-1.964%2c6.917-6.917c-3.472-6.085-13.015-9.124-19.18-13.413 c-4.357-3.029-3.025-7.132%2c2.697-6.602c3.905%2c0.361%2c8.478%2c2.271%2c13.908%2c1.767c9.946-0.925%2c7.717-7.169-0.883-9.566 c-19.036-5.304-39.891-6.311-61.665-5.225c-43.837-8.358-31.554-84.887%2c0-90.363c29.571-5.132%2c62.966-13.339%2c99.928-32.156 c32.668-5.429%2c64.835-12.446%2c92.939-33.85c48.106-14.469%2c111.903%2c16.113%2c204.241%2c149.695c3.926%2c5.681%2c15.819%2c9.94%2c9.524-6.351 c-15.893-41.125-68.176-93.328-92.13-132.085c-24.581-39.774-14.34-61.243-39.957-91.247 c-21.326-24.978-47.502-25.803-77.339-17.365c-23.461%2c6.634-39.234-7.117-52.98-31.273C318.42%2c87.525%2c265.838%2c64.927%2c210.333%2c65.331 z M445.731%2c203.01c6.12%2c0%2c11.112%2c4.919%2c11.112%2c11.038c0%2c6.119-4.994%2c11.111-11.112%2c11.111s-11.038-4.994-11.038-11.111 C434.693%2c207.929%2c439.613%2c203.01%2c445.731%2c203.01z"/%3e %3c/svg%3e';
+    const groupObject = {
       left: 10,
       top: 10,
-      objects: url
+      objects: url,
     };
     fabric.Group.fromObject(groupObject, function(newGroupFromObject) {
       assert.equal(newGroupFromObject.sourcePath, url, 'the url is copied in sourcePath');
@@ -474,39 +471,38 @@
   });
 
   QUnit.test('toSVG', function(assert) {
-    var group = makeGroupWith2Objects();
+    const group = makeGroupWith2Objects();
     assert.ok(typeof group.toSVG === 'function');
-    var expectedSVG = '<g transform=\"matrix(1 0 0 1 90 130)\"  >\n<g style=\"\"   >\n\t\t<g transform=\"matrix(1 0 0 1 25 -25)\"  >\n<rect style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  x=\"-15\" y=\"-5\" rx=\"0\" ry=\"0\" width=\"30\" height=\"10\" />\n</g>\n\t\t<g transform=\"matrix(1 0 0 1 -35 10)\"  >\n<rect style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  x=\"-5\" y=\"-20\" rx=\"0\" ry=\"0\" width=\"10\" height=\"40\" />\n</g>\n</g>\n</g>\n';
+    const expectedSVG = '<g transform=\"matrix(1 0 0 1 90 130)\"  >\n<g style=\"\"   >\n\t\t<g transform=\"matrix(1 0 0 1 25 -25)\"  >\n<rect style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  x=\"-15\" y=\"-5\" rx=\"0\" ry=\"0\" width=\"30\" height=\"10\" />\n</g>\n\t\t<g transform=\"matrix(1 0 0 1 -35 10)\"  >\n<rect style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  x=\"-5\" y=\"-20\" rx=\"0\" ry=\"0\" width=\"10\" height=\"40\" />\n</g>\n</g>\n</g>\n';
     assert.equal(group.toSVG(), expectedSVG);
   });
 
   QUnit.test('toSVG with a clipPath', function(assert) {
-    var group = makeGroupWith2Objects();
-    group.clipPath = new fabric.Rect({ width: 100, height: 100 });
-    var expectedSVG = '<g transform=\"matrix(1 0 0 1 90 130)\" clip-path=\"url(#CLIPPATH_0)\"  >\n<clipPath id=\"CLIPPATH_0\" >\n\t<rect transform=\"matrix(1 0 0 1 50.5 50.5)\" x=\"-50\" y=\"-50\" rx=\"0\" ry=\"0\" width=\"100\" height=\"100\" />\n</clipPath>\n<g style=\"\"   >\n\t\t<g transform=\"matrix(1 0 0 1 25 -25)\"  >\n<rect style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  x=\"-15\" y=\"-5\" rx=\"0\" ry=\"0\" width=\"30\" height=\"10\" />\n</g>\n\t\t<g transform=\"matrix(1 0 0 1 -35 10)\"  >\n<rect style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  x=\"-5\" y=\"-20\" rx=\"0\" ry=\"0\" width=\"10\" height=\"40\" />\n</g>\n</g>\n</g>\n';
+    const group = makeGroupWith2Objects();
+    group.clipPath = new fabric.Rect({width: 100, height: 100});
+    const expectedSVG = '<g transform=\"matrix(1 0 0 1 90 130)\" clip-path=\"url(#CLIPPATH_0)\"  >\n<clipPath id=\"CLIPPATH_0\" >\n\t<rect transform=\"matrix(1 0 0 1 50.5 50.5)\" x=\"-50\" y=\"-50\" rx=\"0\" ry=\"0\" width=\"100\" height=\"100\" />\n</clipPath>\n<g style=\"\"   >\n\t\t<g transform=\"matrix(1 0 0 1 25 -25)\"  >\n<rect style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  x=\"-15\" y=\"-5\" rx=\"0\" ry=\"0\" width=\"30\" height=\"10\" />\n</g>\n\t\t<g transform=\"matrix(1 0 0 1 -35 10)\"  >\n<rect style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  x=\"-5\" y=\"-20\" rx=\"0\" ry=\"0\" width=\"10\" height=\"40\" />\n</g>\n</g>\n</g>\n';
     assert.equal(group.toSVG(), expectedSVG);
   });
 
   QUnit.test('toSVG with a clipPath absolutePositioned', function(assert) {
-    var group = makeGroupWith2Objects();
-    group.clipPath = new fabric.Rect({ width: 100, height: 100 });
+    const group = makeGroupWith2Objects();
+    group.clipPath = new fabric.Rect({width: 100, height: 100});
     group.clipPath.absolutePositioned = true;
-    var expectedSVG = '<g clip-path=\"url(#CLIPPATH_0)\"  >\n<g transform=\"matrix(1 0 0 1 90 130)\"  >\n<clipPath id=\"CLIPPATH_0\" >\n\t<rect transform=\"matrix(1 0 0 1 50.5 50.5)\" x=\"-50\" y=\"-50\" rx=\"0\" ry=\"0\" width=\"100\" height=\"100\" />\n</clipPath>\n<g style=\"\"   >\n\t\t<g transform=\"matrix(1 0 0 1 25 -25)\"  >\n<rect style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  x=\"-15\" y=\"-5\" rx=\"0\" ry=\"0\" width=\"30\" height=\"10\" />\n</g>\n\t\t<g transform=\"matrix(1 0 0 1 -35 10)\"  >\n<rect style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  x=\"-5\" y=\"-20\" rx=\"0\" ry=\"0\" width=\"10\" height=\"40\" />\n</g>\n</g>\n</g>\n</g>\n';
+    const expectedSVG = '<g clip-path=\"url(#CLIPPATH_0)\"  >\n<g transform=\"matrix(1 0 0 1 90 130)\"  >\n<clipPath id=\"CLIPPATH_0\" >\n\t<rect transform=\"matrix(1 0 0 1 50.5 50.5)\" x=\"-50\" y=\"-50\" rx=\"0\" ry=\"0\" width=\"100\" height=\"100\" />\n</clipPath>\n<g style=\"\"   >\n\t\t<g transform=\"matrix(1 0 0 1 25 -25)\"  >\n<rect style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  x=\"-15\" y=\"-5\" rx=\"0\" ry=\"0\" width=\"30\" height=\"10\" />\n</g>\n\t\t<g transform=\"matrix(1 0 0 1 -35 10)\"  >\n<rect style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  x=\"-5\" y=\"-20\" rx=\"0\" ry=\"0\" width=\"10\" height=\"40\" />\n</g>\n</g>\n</g>\n</g>\n';
     assert.equal(group.toSVG(), expectedSVG);
   });
 
   QUnit.test('toSVG with a group as a clipPath', function(assert) {
-    var group = makeGroupWith2Objects();
+    const group = makeGroupWith2Objects();
     group.clipPath = makeGroupWith2Objects();
-    var expectedSVG = '<g transform=\"matrix(1 0 0 1 90 130)\" clip-path=\"url(#CLIPPATH_0)\"  >\n<clipPath id=\"CLIPPATH_0\" >\n\t\t<rect transform=\"matrix(1 0 0 1 115 105)\" x=\"-15\" y=\"-5\" rx=\"0\" ry=\"0\" width=\"30\" height=\"10\" />\n\t\t<rect transform=\"matrix(1 0 0 1 55 140)\" x=\"-5\" y=\"-20\" rx=\"0\" ry=\"0\" width=\"10\" height=\"40\" />\n</clipPath>\n<g style=\"\"   >\n\t\t<g transform=\"matrix(1 0 0 1 25 -25)\"  >\n<rect style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  x=\"-15\" y=\"-5\" rx=\"0\" ry=\"0\" width=\"30\" height=\"10\" />\n</g>\n\t\t<g transform=\"matrix(1 0 0 1 -35 10)\"  >\n<rect style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  x=\"-5\" y=\"-20\" rx=\"0\" ry=\"0\" width=\"10\" height=\"40\" />\n</g>\n</g>\n</g>\n';
+    const expectedSVG = '<g transform=\"matrix(1 0 0 1 90 130)\" clip-path=\"url(#CLIPPATH_0)\"  >\n<clipPath id=\"CLIPPATH_0\" >\n\t\t<rect transform=\"matrix(1 0 0 1 115 105)\" x=\"-15\" y=\"-5\" rx=\"0\" ry=\"0\" width=\"30\" height=\"10\" />\n\t\t<rect transform=\"matrix(1 0 0 1 55 140)\" x=\"-5\" y=\"-20\" rx=\"0\" ry=\"0\" width=\"10\" height=\"40\" />\n</clipPath>\n<g style=\"\"   >\n\t\t<g transform=\"matrix(1 0 0 1 25 -25)\"  >\n<rect style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  x=\"-15\" y=\"-5\" rx=\"0\" ry=\"0\" width=\"30\" height=\"10\" />\n</g>\n\t\t<g transform=\"matrix(1 0 0 1 -35 10)\"  >\n<rect style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  x=\"-5\" y=\"-20\" rx=\"0\" ry=\"0\" width=\"10\" height=\"40\" />\n</g>\n</g>\n</g>\n';
     assert.equal(group.toSVG(), expectedSVG);
   });
 
   QUnit.test('cloning group with 2 objects', function(assert) {
-    var done = assert.async();
-    var group = makeGroupWith2Objects();
+    const done = assert.async();
+    const group = makeGroupWith2Objects();
     group.clone(function(clone) {
-
       assert.ok(clone !== group);
       assert.deepEqual(clone.toObject(), group.toObject());
 
@@ -515,7 +511,7 @@
   });
 
   QUnit.test('get with locked objects', function(assert) {
-    var group = makeGroupWith2Objects();
+    const group = makeGroupWith2Objects();
 
     assert.equal(group.get('lockMovementX'), false);
 
@@ -538,15 +534,14 @@
   });
 
   QUnit.test('z-index methods with group objects', function(assert) {
-
-    var textBg = new fabric.Rect({
+    const textBg = new fabric.Rect({
       fill: '#abc',
       width: 100,
-      height: 100
+      height: 100,
     });
 
-    var text = new fabric.Text('text');
-    var group = new fabric.Group([textBg, text]);
+    const text = new fabric.Text('text');
+    const group = new fabric.Group([textBg, text]);
 
     canvas.add(group);
 
@@ -565,9 +560,9 @@
   });
 
   QUnit.test('group reference on an object', function(assert) {
-    var group = makeGroupWith2Objects();
-    var firstObjInGroup = group.getObjects()[0];
-    var secondObjInGroup = group.getObjects()[1];
+    const group = makeGroupWith2Objects();
+    const firstObjInGroup = group.getObjects()[0];
+    const secondObjInGroup = group.getObjects()[1];
 
     assert.equal(firstObjInGroup.group, group);
     assert.equal(secondObjInGroup.group, group);
@@ -577,7 +572,7 @@
   });
 
   QUnit.test('insertAt', function(assert) {
-    var rect1 = new fabric.Rect(),
+    const rect1 = new fabric.Rect(),
         rect2 = new fabric.Rect(),
         group = new fabric.Group();
 
@@ -593,8 +588,8 @@
   });
 
   QUnit.test('dirty flag propagation from children up', function(assert) {
-    var g1 = makeGroupWith4Objects();
-    var obj = g1.item(0);
+    const g1 = makeGroupWith4Objects();
+    const obj = g1.item(0);
     g1.dirty = false;
     obj.dirty = false;
     g1.ownCaching = true;
@@ -605,8 +600,8 @@
   });
 
   QUnit.test('dirty flag propagation from children up is stopped if group is not caching', function(assert) {
-    var g1 = makeGroupWith4Objects();
-    var obj = g1.item(0);
+    const g1 = makeGroupWith4Objects();
+    const obj = g1.item(0);
     g1.dirty = false;
     obj.dirty = false;
     g1.ownCaching = false;
@@ -617,8 +612,8 @@
   });
 
   QUnit.test('dirty flag propagation from children up does not happen if value does not change really', function(assert) {
-    var g1 = makeGroupWith4Objects();
-    var obj = g1.item(0);
+    const g1 = makeGroupWith4Objects();
+    const obj = g1.item(0);
     obj.fill = 'red';
     g1.dirty = false;
     obj.dirty = false;
@@ -631,8 +626,8 @@
   });
 
   QUnit.test('dirty flag propagation from children up with', function(assert) {
-    var g1 = makeGroupWith4Objects();
-    var obj = g1.item(0);
+    const g1 = makeGroupWith4Objects();
+    const obj = g1.item(0);
     g1.dirty = false;
     obj.dirty = false;
     // specify that the group is caching or the test will fail under node since the
@@ -645,17 +640,17 @@
   });
 
   QUnit.test('_getCacheCanvasDimensions returns dimensions and zoom for cache canvas are influenced by group', function(assert) {
-    var g1 = makeGroupWith4Objects();
-    var obj = g1.item(0);
-    var dims = obj._getCacheCanvasDimensions();
+    const g1 = makeGroupWith4Objects();
+    const obj = g1.item(0);
+    const dims = obj._getCacheCanvasDimensions();
     g1.scaleX = 2;
-    var dims2 = obj._getCacheCanvasDimensions();
+    const dims2 = obj._getCacheCanvasDimensions();
     assert.equal((dims2.width - 2), (dims.width - 2) * g1.scaleX, 'width of cache has increased with group scale');
   });
 
   QUnit.test('test group - pixels.', function(assert) {
-    var rect1 = new fabric.Rect({ top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
-        rect2 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+    const rect1 = new fabric.Rect({top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+        rect2 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
         group = new fabric.Group([rect1, rect2], {opacity: 1, fill: 'blue', strokeWidth: 0, objectCaching: false}),
         isTransparent = fabric.util.isTransparent,
         ctx = canvas.contextContainer;
@@ -673,9 +668,9 @@
   });
 
   QUnit.test('group toDatalessObject', function(assert) {
-    var rect1 = new fabric.Rect({ top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
-        rect2 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
-        pathGroup = new fabric.Group([rect1, rect2], { sourcePath: 'sourcePath'}),
+    const rect1 = new fabric.Rect({top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+        rect2 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+        pathGroup = new fabric.Group([rect1, rect2], {sourcePath: 'sourcePath'}),
         group = new fabric.Group([pathGroup]),
         dataless = group.toDatalessObject();
 
@@ -683,13 +678,13 @@
   });
 
   QUnit.test('group toDatalessObject with clipPath', function(assert) {
-    var svgWithClipPath = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" fill="#DEDEDE"  viewBox="0 0 75 75" ><defs><clipPath id="a"><path d="M 16.769531 0 L 58 0 L 58 74.996094 L 16.769531 74.996094 Z M 16.769531 0"/></clipPath></defs><g clip-path="url(#a)"><path d="M 57.1875 1.625 C 56.972656 1.625 56.789062 1.550781 56.640625 1.402344 C 56.488281 1.25 56.414062 1.070312 56.414062 0.855469 C 56.414062 0.644531 56.488281 0.460938 56.640625 0.3125 C 56.792969 0.160156 56.972656 0.0859375 57.1875 0.0859375 C 57.402344 0.0859375 57.582031 0.164062 57.734375 0.3125 C 57.886719 0.464844 57.960938 0.644531 57.960938 0.859375 C 57.960938 1.070312 57.882812 1.253906 57.734375 1.402344 C 57.582031 1.550781 57.398438 1.625 57.1875 1.625 Z M 57.960938 9 C 57.960938 8.785156 57.886719 8.605469 57.734375 8.453125 C 57.582031 8.304688 57.402344 8.230469 57.1875 8.226562 C 56.972656 8.226562 56.792969 8.300781 56.640625 8.453125 C 56.488281 8.601562 56.414062 8.785156 56.414062 8.996094 C 56.414062 9.210938 56.488281 9.390625 56.640625 9.542969 C 56.789062 9.691406 56.972656 9.765625 57.1875 9.765625 C 57.398438 9.765625 57.582031 9.691406 57.734375 9.542969 C 57.882812 9.394531 57.960938 9.210938 57.960938 9 Z M 57.960938 17.136719 C 57.960938 16.925781 57.882812 16.746094 57.734375 16.59375 C 57.582031 16.445312 57.398438 16.367188 57.1875 16.367188 C 56.972656 16.367188 56.789062 16.445312 56.640625 16.59375 C 56.488281 16.746094 56.414062 16.925781 56.414062 17.136719 C 56.414062 17.351562 56.488281 17.53125 56.640625 17.683594 C 56.789062 17.832031 56.972656 17.910156 57.1875 17.910156 C 57.398438 17.910156 57.582031 17.832031 57.734375 17.683594 C 57.882812 17.53125 57.960938 17.351562 57.960938 17.136719 Z M 57.960938 25.285156 C 57.960938 25.070312 57.882812 24.890625 57.734375 24.738281 C 57.582031 24.589844 57.398438 24.515625 57.1875 24.515625 C 56.972656 24.515625 56.789062 24.589844 56.640625 24.738281 C 56.488281 24.890625 56.414062 25.070312 56.414062 25.285156 C 56.414062 25.496094 56.488281 25.675781 56.640625 25.828125 C 56.789062 25.976562 56.972656 26.054688 57.1875 26.054688 C 57.398438 26.054688 57.582031 25.976562 57.734375 25.828125 C 57.882812 25.675781 57.960938 25.496094 57.960938 25.285156 Z M 57.960938 33.425781 C 57.960938 33.210938 57.882812 33.03125 57.734375 32.878906 C 57.582031 32.730469 57.398438 32.65625 57.1875 32.65625 C 56.972656 32.65625 56.789062 32.730469 56.640625 32.878906 C 56.488281 33.03125 56.414062 33.210938 56.414062 33.425781 C 56.414062 33.636719 56.488281 33.816406 56.640625 33.96875 C 56.789062 34.117188 56.972656 34.195312 57.1875 34.195312 C 57.402344 34.195312 57.582031 34.117188 57.734375 33.96875 C 57.886719 33.816406 57.960938 33.632812 57.960938 33.421875 Z" /></g></svg>');
-    var done = assert.async();
-    var canvas2 = new fabric.StaticCanvas();
+    const svgWithClipPath = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" fill="#DEDEDE"  viewBox="0 0 75 75" ><defs><clipPath id="a"><path d="M 16.769531 0 L 58 0 L 58 74.996094 L 16.769531 74.996094 Z M 16.769531 0"/></clipPath></defs><g clip-path="url(#a)"><path d="M 57.1875 1.625 C 56.972656 1.625 56.789062 1.550781 56.640625 1.402344 C 56.488281 1.25 56.414062 1.070312 56.414062 0.855469 C 56.414062 0.644531 56.488281 0.460938 56.640625 0.3125 C 56.792969 0.160156 56.972656 0.0859375 57.1875 0.0859375 C 57.402344 0.0859375 57.582031 0.164062 57.734375 0.3125 C 57.886719 0.464844 57.960938 0.644531 57.960938 0.859375 C 57.960938 1.070312 57.882812 1.253906 57.734375 1.402344 C 57.582031 1.550781 57.398438 1.625 57.1875 1.625 Z M 57.960938 9 C 57.960938 8.785156 57.886719 8.605469 57.734375 8.453125 C 57.582031 8.304688 57.402344 8.230469 57.1875 8.226562 C 56.972656 8.226562 56.792969 8.300781 56.640625 8.453125 C 56.488281 8.601562 56.414062 8.785156 56.414062 8.996094 C 56.414062 9.210938 56.488281 9.390625 56.640625 9.542969 C 56.789062 9.691406 56.972656 9.765625 57.1875 9.765625 C 57.398438 9.765625 57.582031 9.691406 57.734375 9.542969 C 57.882812 9.394531 57.960938 9.210938 57.960938 9 Z M 57.960938 17.136719 C 57.960938 16.925781 57.882812 16.746094 57.734375 16.59375 C 57.582031 16.445312 57.398438 16.367188 57.1875 16.367188 C 56.972656 16.367188 56.789062 16.445312 56.640625 16.59375 C 56.488281 16.746094 56.414062 16.925781 56.414062 17.136719 C 56.414062 17.351562 56.488281 17.53125 56.640625 17.683594 C 56.789062 17.832031 56.972656 17.910156 57.1875 17.910156 C 57.398438 17.910156 57.582031 17.832031 57.734375 17.683594 C 57.882812 17.53125 57.960938 17.351562 57.960938 17.136719 Z M 57.960938 25.285156 C 57.960938 25.070312 57.882812 24.890625 57.734375 24.738281 C 57.582031 24.589844 57.398438 24.515625 57.1875 24.515625 C 56.972656 24.515625 56.789062 24.589844 56.640625 24.738281 C 56.488281 24.890625 56.414062 25.070312 56.414062 25.285156 C 56.414062 25.496094 56.488281 25.675781 56.640625 25.828125 C 56.789062 25.976562 56.972656 26.054688 57.1875 26.054688 C 57.398438 26.054688 57.582031 25.976562 57.734375 25.828125 C 57.882812 25.675781 57.960938 25.496094 57.960938 25.285156 Z M 57.960938 33.425781 C 57.960938 33.210938 57.882812 33.03125 57.734375 32.878906 C 57.582031 32.730469 57.398438 32.65625 57.1875 32.65625 C 56.972656 32.65625 56.789062 32.730469 56.640625 32.878906 C 56.488281 33.03125 56.414062 33.210938 56.414062 33.425781 C 56.414062 33.636719 56.488281 33.816406 56.640625 33.96875 C 56.789062 34.117188 56.972656 34.195312 57.1875 34.195312 C 57.402344 34.195312 57.582031 34.117188 57.734375 33.96875 C 57.886719 33.816406 57.960938 33.632812 57.960938 33.421875 Z" /></g></svg>');
+    const done = assert.async();
+    const canvas2 = new fabric.StaticCanvas();
     fabric.loadSVGFromURL(svgWithClipPath, function(objects, d) {
-      var group = fabric.util.groupSVGElements(objects, d, svgWithClipPath);
+      const group = fabric.util.groupSVGElements(objects, d, svgWithClipPath);
       canvas.add(group);
-      var jsonData = canvas.toDatalessJSON();
+      const jsonData = canvas.toDatalessJSON();
       canvas.clear();
       canvas2.loadFromJSON(jsonData, function() {
         assert.ok(canvas2._objects[0] instanceof fabric.Path, 'is enlived properly');
@@ -700,90 +695,89 @@
   });
 
   QUnit.test('group addWithUpdate', function(assert) {
-    var rect1 = new fabric.Rect({ top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
-        rect2 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+    const rect1 = new fabric.Rect({top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+        rect2 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
         group = new fabric.Group([rect1]);
 
-    var coords = group.oCoords;
+    const coords = group.oCoords;
     group.addWithUpdate(rect2);
-    var newCoords = group.oCoords;
+    const newCoords = group.oCoords;
     assert.notEqual(coords, newCoords, 'object coords have been recalculated - add');
   });
 
   QUnit.test('group removeWithUpdate', function(assert) {
-    var rect1 = new fabric.Rect({ top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
-        rect2 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+    const rect1 = new fabric.Rect({top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+        rect2 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
         group = new fabric.Group([rect1, rect2]);
 
-    var coords = group.oCoords;
+    const coords = group.oCoords;
     group.removeWithUpdate(rect2);
-    var newCoords = group.oCoords;
+    const newCoords = group.oCoords;
     assert.notEqual(coords, newCoords, 'object coords have been recalculated - remove');
   });
 
   QUnit.test('group willDrawShadow', function(assert) {
-    var rect1 = new fabric.Rect({ top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
-        rect2 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
-        rect3 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
-        rect4 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+    const rect1 = new fabric.Rect({top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+        rect2 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+        rect3 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+        rect4 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
         group = new fabric.Group([rect1, rect2]),
         group2 = new fabric.Group([rect3, rect4]),
         group3 = new fabric.Group([group, group2]);
 
     assert.equal(group3.willDrawShadow(), false, 'group will not cast shadow because objects do not have it');
-    group3.shadow = { offsetX: 1, offsetY: 2, };
+    group3.shadow = {offsetX: 1, offsetY: 2};
     assert.equal(group3.willDrawShadow(), true, 'group will cast shadow because group itself has shadow');
     delete group3.shadow;
-    group2.shadow = { offsetX: 1, offsetY: 2, };
+    group2.shadow = {offsetX: 1, offsetY: 2};
     assert.equal(group3.willDrawShadow(), true, 'group will cast shadow because inner group2 has shadow');
     delete group2.shadow;
-    rect1.shadow = { offsetX: 1, offsetY: 2, };
+    rect1.shadow = {offsetX: 1, offsetY: 2};
     assert.equal(group3.willDrawShadow(), true, 'group will cast shadow because inner rect1 has shadow');
     assert.equal(group.willDrawShadow(), true, 'group will cast shadow because inner rect1 has shadow');
     assert.equal(group2.willDrawShadow(), false, 'group will not cast shadow because no child has shadow');
   });
 
   QUnit.test('group willDrawShadow with no offsets', function(assert) {
-    var rect1 = new fabric.Rect({ top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
-        rect2 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
-        rect3 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
-        rect4 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+    const rect1 = new fabric.Rect({top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+        rect2 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+        rect3 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
+        rect4 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: false}),
         group = new fabric.Group([rect1, rect2]),
         group2 = new fabric.Group([rect3, rect4]),
         group3 = new fabric.Group([group, group2]);
 
     assert.equal(group3.willDrawShadow(), false, 'group will not cast shadow because objects do not have it');
-    group3.shadow = { offsetX: 0, offsetY: 0 };
+    group3.shadow = {offsetX: 0, offsetY: 0};
     assert.equal(group3.willDrawShadow(), false, 'group will NOT cast shadow because group itself has shadow but not offsets');
-    group3.shadow = { offsetX: 2, offsetY: 0 };
+    group3.shadow = {offsetX: 2, offsetY: 0};
     assert.equal(group3.willDrawShadow(), true, 'group will cast shadow because group itself has shadow and one offsetX different than 0');
-    group3.shadow = { offsetX: 0, offsetY: 2 };
+    group3.shadow = {offsetX: 0, offsetY: 2};
     assert.equal(group3.willDrawShadow(), true, 'group will cast shadow because group itself has shadow and one offsetY different than 0');
-    group3.shadow = { offsetX: -2, offsetY: 0 };
+    group3.shadow = {offsetX: -2, offsetY: 0};
     assert.equal(group3.willDrawShadow(), true, 'group will cast shadow because group itself has shadow and one offsetX different than 0');
-    group3.shadow = { offsetX: 0, offsetY: -2 };
+    group3.shadow = {offsetX: 0, offsetY: -2};
     assert.equal(group3.willDrawShadow(), true, 'group will cast shadow because group itself has shadow and one offsetY different than 0');
-    rect1.shadow = { offsetX: 1, offsetY: 2, };
-    group3.shadow = { offsetX: 0, offsetY: 0 };
+    rect1.shadow = {offsetX: 1, offsetY: 2};
+    group3.shadow = {offsetX: 0, offsetY: 0};
     assert.equal(group3.willDrawShadow(), true, 'group will cast shadow because group itself will not, but rect 1 will');
-
   });
 
   QUnit.test('group shouldCache', function(assert) {
-    var rect1 = new fabric.Rect({ top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
-        rect2 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
-        rect3 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
-        rect4 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
-        group = new fabric.Group([rect1, rect2], { objectCaching: true}),
-        group2 = new fabric.Group([rect3, rect4], { objectCaching: true}),
-        group3 = new fabric.Group([group, group2], { objectCaching: true});
+    const rect1 = new fabric.Rect({top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
+        rect2 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
+        rect3 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
+        rect4 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
+        group = new fabric.Group([rect1, rect2], {objectCaching: true}),
+        group2 = new fabric.Group([rect3, rect4], {objectCaching: true}),
+        group3 = new fabric.Group([group, group2], {objectCaching: true});
 
     assert.equal(group3.shouldCache(), true, 'group3 will cache because no child has shadow');
     assert.equal(group2.shouldCache(), false, 'group2 will not cache because is drawing on parent group3 cache');
     assert.equal(rect3.shouldCache(), false, 'rect3 will not cache because is drawing on parent2 group cache');
 
-    group2.shadow = { offsetX: 2, offsetY: 0 };
-    rect1.shadow = { offsetX: 0, offsetY: 2 };
+    group2.shadow = {offsetX: 2, offsetY: 0};
+    rect1.shadow = {offsetX: 0, offsetY: 2};
 
     assert.equal(group3.shouldCache(), false, 'group3 will cache because children have shadow');
     assert.equal(group2.shouldCache(), true, 'group2 will cache because is not drawing on parent group3 cache and no children have shadow');
@@ -791,17 +785,16 @@
 
     assert.equal(rect1.shouldCache(), true, 'rect1 will cache because none of its parent is caching');
     assert.equal(rect3.shouldCache(), false, 'rect3 will not cache because group2 is caching');
-
   });
 
   QUnit.test('useSetOnGroup', function(assert) {
-    var rect1 = new fabric.Rect({ top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
-        rect2 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
+    const rect1 = new fabric.Rect({top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
+        rect2 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
         group = new fabric.Group([rect1, rect2]);
 
-    var count = 0;
-    var inspectKey = '';
-    var inspectValue = '';
+    let count = 0;
+    let inspectKey = '';
+    let inspectValue = '';
     rect1.setOnGroup = function(key, value) {
       count++;
       inspectKey = key;
@@ -820,8 +813,8 @@
   });
 
   QUnit.test('canvas prop propagation with set', function(assert) {
-    var rect1 = new fabric.Rect({ top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
-        rect2 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
+    const rect1 = new fabric.Rect({top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
+        rect2 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
         group = new fabric.Group([rect1, rect2]);
 
     group.set('canvas', 'a-canvas');
@@ -831,8 +824,8 @@
   });
 
   QUnit.test('canvas prop propagation with add', function(assert) {
-    var rect1 = new fabric.Rect({ top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
-        rect2 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
+    const rect1 = new fabric.Rect({top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
+        rect2 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
         group = new fabric.Group([rect1, rect2]);
 
     canvas.add(group);
@@ -842,8 +835,8 @@
   });
 
   QUnit.test('canvas prop propagation with add to group', function(assert) {
-    var rect1 = new fabric.Rect({ top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
-        rect2 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
+    const rect1 = new fabric.Rect({top: 1, left: 1, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
+        rect2 = new fabric.Rect({top: 5, left: 5, width: 2, height: 2, strokeWidth: 0, fill: 'red', opacity: 1, objectCaching: true}),
         group = new fabric.Group();
 
     canvas.add(group);
@@ -855,8 +848,8 @@
   });
 
   QUnit.test('addWithUpdate and coordinates', function(assert) {
-    var rect1 = new fabric.Rect({ top: 1, left: 1, width: 3, height: 2, strokeWidth: 0, fill: 'red' }),
-        rect2 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 6, angle: 90, strokeWidth: 0, fill: 'red' }),
+    const rect1 = new fabric.Rect({top: 1, left: 1, width: 3, height: 2, strokeWidth: 0, fill: 'red'}),
+        rect2 = new fabric.Rect({top: 5, left: 5, width: 2, height: 6, angle: 90, strokeWidth: 0, fill: 'red'}),
         group = new fabric.Group([]);
     group.addWithUpdate(rect1);
     group.addWithUpdate(rect2);
@@ -876,14 +869,14 @@
   });
 
   QUnit.test('addWithUpdate and coordinates with nested groups', function(assert) {
-    var rect1 = new fabric.Rect({ top: 1, left: 1, width: 3, height: 2, strokeWidth: 0, fill: 'red' }),
-        rect2 = new fabric.Rect({ top: 5, left: 5, width: 2, height: 6, angle: 90, strokeWidth: 0, fill: 'red' }),
+    const rect1 = new fabric.Rect({top: 1, left: 1, width: 3, height: 2, strokeWidth: 0, fill: 'red'}),
+        rect2 = new fabric.Rect({top: 5, left: 5, width: 2, height: 6, angle: 90, strokeWidth: 0, fill: 'red'}),
         group0 = new fabric.Group([rect1, rect2]),
-        rect3 = new fabric.Rect({ top: 2, left: 9, width: 3, height: 2, strokeWidth: 0, fill: 'red' }),
-        rect4 = new fabric.Rect({ top: 3, left: 5, width: 2, height: 6, angle: 90, strokeWidth: 0, fill: 'red' }),
-        group1 = new fabric.Group([rect3, rect4], { scaleX: 3, scaleY: 4 }),
-        group = new fabric.Group([group0, group1], { angle: 90, scaleX: 2, scaleY: 0.5 }),
-        rect5 = new fabric.Rect({ top: 1, left: 1, width: 3, height: 2, strokeWidth: 0, fill: 'red' });
+        rect3 = new fabric.Rect({top: 2, left: 9, width: 3, height: 2, strokeWidth: 0, fill: 'red'}),
+        rect4 = new fabric.Rect({top: 3, left: 5, width: 2, height: 6, angle: 90, strokeWidth: 0, fill: 'red'}),
+        group1 = new fabric.Group([rect3, rect4], {scaleX: 3, scaleY: 4}),
+        group = new fabric.Group([group0, group1], {angle: 90, scaleX: 2, scaleY: 0.5}),
+        rect5 = new fabric.Rect({top: 1, left: 1, width: 3, height: 2, strokeWidth: 0, fill: 'red'});
 
     group1.addWithUpdate(rect5);
     assert.equal(rect5.top, -5.5, 'top has been moved');
@@ -913,5 +906,4 @@
   //     done();
   //   });
   // });
-
 })();

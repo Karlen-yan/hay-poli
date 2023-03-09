@@ -1,8 +1,8 @@
 (function() {
   fabric.enableGLFiltering = false;
   fabric.isWebglSupported = false;
-  var visualTestLoop;
-  var getFixture;
+  let visualTestLoop;
+  let getFixture;
   if (fabric.isLikelyNode) {
     visualTestLoop = global.visualTestLoop;
     getFixture = global.getFixture;
@@ -12,13 +12,13 @@
     getFixture = window.getFixture;
   }
 
-  var tests = [];
+  const tests = [];
 
   function imageResizeTest(canvas, callback) {
     getFixture('parrot.png', false, function(img) {
-      var zoom = 8;
-      var image = new fabric.Image(img);
-      image.resizeFilter = new fabric.Image.filters.Resize({ resizeType: 'lanczos' });
+      const zoom = 8;
+      const image = new fabric.Image(img);
+      image.resizeFilter = new fabric.Image.filters.Resize({resizeType: 'lanczos'});
       canvas.setZoom(zoom);
       image.scaleToWidth(canvas.width / zoom);
       canvas.add(image);
@@ -38,13 +38,13 @@
     height: 200,
     beforeEachHandler: function() {
       fabric.Object.prototype.objectCaching = false;
-    }
+    },
   });
 
   function imageResizeTestNoZoom(canvas, callback) {
     getFixture('parrot.png', false, function(img) {
-      var image = new fabric.Image(img);
-      image.resizeFilter = new fabric.Image.filters.Resize({ resizeType: 'lanczos' });
+      const image = new fabric.Image(img);
+      image.resizeFilter = new fabric.Image.filters.Resize({resizeType: 'lanczos'});
       image.scaleToWidth(canvas.width);
       canvas.add(image);
       canvas.renderAll();
@@ -64,8 +64,8 @@
 
   function imageResizeTestAnamorphic(canvas, callback) {
     getFixture('parrot.png', false, function(img) {
-      var image = new fabric.Image(img);
-      image.resizeFilter = new fabric.Image.filters.Resize({ resizeType: 'lanczos' });
+      const image = new fabric.Image(img);
+      image.resizeFilter = new fabric.Image.filters.Resize({resizeType: 'lanczos'});
       image.scaleY = 0.3;
       image.scaleX = 1;
       canvas.add(image);
@@ -86,9 +86,9 @@
 
   function imageResizeTestGroup(canvas, callback) {
     getFixture('parrot.png', false, function(img) {
-      var image = new fabric.Image(img, { strokeWidth: 0 });
-      image.resizeFilter = new fabric.Image.filters.Resize({ resizeType: 'lanczos' });
-      var group = new fabric.Group([image]);
+      const image = new fabric.Image(img, {strokeWidth: 0});
+      image.resizeFilter = new fabric.Image.filters.Resize({resizeType: 'lanczos'});
+      const group = new fabric.Group([image]);
       group.strokeWidth = 0;
       group.scaleToWidth(canvas.width);
       canvas.add(group);
@@ -109,11 +109,11 @@
 
   function blendImageTest2(canvas, callback) {
     getFixture('parrot.png', false, function(img) {
-      var image = new fabric.Image(img);
-      var backdropImage = new fabric.Image(img);
+      const image = new fabric.Image(img);
+      const backdropImage = new fabric.Image(img);
       backdropImage.left = backdropImage.width;
       backdropImage.scaleX = -1;
-      image.filters.push(new fabric.Image.filters.BlendImage({ image: backdropImage }));
+      image.filters.push(new fabric.Image.filters.BlendImage({image: backdropImage}));
       image.applyFilters();
       image.scaleToWidth(400);
       canvas.add(image);
@@ -137,9 +137,9 @@
   function blendImageTest(canvas, callback) {
     getFixture('parrot.png', false, function(img) {
       getFixture('very_large_image.jpg', false, function(backdrop) {
-        var image = new fabric.Image(img);
-        var backdropImage = new fabric.Image(backdrop);
-        image.filters.push(new fabric.Image.filters.BlendImage({image: backdropImage, alpha: 0.5 }));
+        const image = new fabric.Image(img);
+        const backdropImage = new fabric.Image(backdrop);
+        image.filters.push(new fabric.Image.filters.BlendImage({image: backdropImage, alpha: 0.5}));
         image.scaleToWidth(400);
         image.applyFilters();
         canvas.add(image);

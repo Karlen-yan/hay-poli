@@ -1,39 +1,42 @@
-<!-- eslint-disable vue/multi-word-component-names -->
-<template >
+<template>
   <div class="servicios__contenido">
      <div class="srvicios__titulo">
       <h2>Nuestros servicios</h2>
-      
-  <div style="height: 230px; overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M0.00,49.85 C150.00,149.60 349.20,-49.85 500.00,49.85 L500.00,149.60 L0.00,149.60 Z" style="stroke: none; fill: #ffffff;"></path></svg></div>
+     
+          <div style="height: 230px; overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M0.00,49.85 C150.00,149.60 349.20,-49.85 500.00,49.85 L500.00,149.60 L0.00,149.60 Z" style="stroke: none; fill: #ffffff;"></path></svg></div>
 
      </div>
      <div class="servisio-cont">
+        <div class="servicio-ind">
+          <img class="servicio-img" src="https://img.freepik.com/vector-gratis/servicios-impresion-camisetas-demanda-diseno-ropa-promocional-merch-ropa-productos-personalizados-merchandising-concepto-servicio-diseno-merchandising_335657-124.jpg?w=2000" alt="">
+          <h3>Personalizar ropas</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores dignissimos est autem laudantium cum nemo, dolorum illum quia! Nam placeat temporibus quibusdam earum consectetur, porro molestias doloribus aperiam sequi incidunt!</p>
+        </div>
    
+        <div class="servicio-ind">
+          <img class="servicio-img" src="https://img.freepik.com/vector-premium/horario-agenda-planificador-negocios_121223-1418.jpg?w=2000" alt="">
+          <h3>Creación páginas web</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores dignissimos est autem laudantium cum nemo, dolorum illum quia! Nam placeat temporibus quibusdam earum consectetur, porro molestias doloribus aperiam sequi incidunt!</p>
+        </div>
    
-      <div class="servicio-ind">
-        <img class="servicio-img" src="https://img.freepik.com/vector-gratis/servicios-impresion-camisetas-demanda-diseno-ropa-promocional-merch-ropa-productos-personalizados-merchandising-concepto-servicio-diseno-merchandising_335657-124.jpg?w=2000" alt="">
-        <h3>Personalizar ropas</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores dignissimos est autem laudantium cum nemo, dolorum illum quia! Nam placeat temporibus quibusdam earum consectetur, porro molestias doloribus aperiam sequi incidunt!</p>
-      </div>
-   
-      <div class="servicio-ind">
-        <img class="servicio-img" src="https://img.freepik.com/vector-premium/horario-agenda-planificador-negocios_121223-1418.jpg?w=2000" alt="">
-        <h3>Creación páginas web</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores dignissimos est autem laudantium cum nemo, dolorum illum quia! Nam placeat temporibus quibusdam earum consectetur, porro molestias doloribus aperiam sequi incidunt!</p>
-      </div>
-   
-      <div class="servicio-ind">
-        <img class="servicio-img" src="https://img.freepik.com/vector-gratis/gente-negocios-reunida-discutiendo-discusion_107791-10588.jpg?w=2000" alt="">
-        <h3>Acompañamento de organizar eventos</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores dignissimos est autem laudantium cum nemo, dolorum illum quia! Nam placeat temporibus quibusdam earum consectetur, porro molestias doloribus aperiam sequi incidunt!</p>
-      </div>
+        <div class="servicio-ind">
+          
+          <img class="servicio-img" src="https://img.freepik.com/vector-gratis/gente-negocios-reunida-discutiendo-discusion_107791-10588.jpg?w=2000" alt="">
+          
+          <h3>Acompañamento de organizar eventos</h3>
 
-     </div>
-
-       
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores dignissimos est autem laudantium cum nemo, dolorum illum quia! Nam placeat temporibus quibusdam earum consectetur, porro molestias doloribus aperiam sequi incidunt!</p>
+        </div>
+      
+    </div>
   </div>
 </template>
 
+<script>
+//   eslint-disable vue/multi-word-component-names 
+export default {
+}
+</script>
 
 <style>
 .servisio-cont{
@@ -122,8 +125,6 @@
   margin: 0;
   
 }
-
-
 }
 
 </style>

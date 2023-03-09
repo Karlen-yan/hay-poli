@@ -1,9 +1,8 @@
 (function(global) {
-
   'use strict';
 
   /* Adaptation of work of Kevin Lindsey (kevin@kevlindev.com) */
-  var fabric = global.fabric || (global.fabric = { });
+  const fabric = global.fabric || (global.fabric = { });
 
   if (fabric.Intersection) {
     fabric.warn('fabric.Intersection is already defined');
@@ -33,7 +32,7 @@
      * @return {fabric.Intersection} thisArg
      * @chainable
      */
-    appendPoint: function (point) {
+    appendPoint: function(point) {
       this.points.push(point);
       return this;
     },
@@ -44,10 +43,10 @@
      * @return {fabric.Intersection} thisArg
      * @chainable
      */
-    appendPoints: function (points) {
+    appendPoints: function(points) {
       this.points = this.points.concat(points);
       return this;
-    }
+    },
   };
 
   /**
@@ -60,13 +59,13 @@
    * @param {fabric.Point} b2
    * @return {fabric.Intersection}
    */
-  fabric.Intersection.intersectLineLine = function (a1, a2, b1, b2) {
-    var result,
+  fabric.Intersection.intersectLineLine = function(a1, a2, b1, b2) {
+    let result,
         uaT = (b2.x - b1.x) * (a1.y - b1.y) - (b2.y - b1.y) * (a1.x - b1.x),
         ubT = (a2.x - a1.x) * (a1.y - b1.y) - (a2.y - a1.y) * (a1.x - b1.x),
         uB = (b2.y - b1.y) * (a2.x - a1.x) - (b2.x - b1.x) * (a2.y - a1.y);
     if (uB !== 0) {
-      var ua = uaT / uB,
+      const ua = uaT / uB,
           ub = ubT / uB;
       if (0 <= ua && ua <= 1 && 0 <= ub && ub <= 1) {
         result = new Intersection('Intersection');
@@ -98,7 +97,7 @@
    * @return {fabric.Intersection}
    */
   fabric.Intersection.intersectLinePolygon = function(a1, a2, points) {
-    var result = new Intersection(),
+    let result = new Intersection(),
         length = points.length,
         b1, b2, inter, i;
 
@@ -122,12 +121,12 @@
    * @param {Array} points2
    * @return {fabric.Intersection}
    */
-  fabric.Intersection.intersectPolygonPolygon = function (points1, points2) {
-    var result = new Intersection(),
+  fabric.Intersection.intersectPolygonPolygon = function(points1, points2) {
+    let result = new Intersection(),
         length = points1.length, i;
 
     for (i = 0; i < length; i++) {
-      var a1 = points1[i],
+      const a1 = points1[i],
           a2 = points1[(i + 1) % length],
           inter = Intersection.intersectLinePolygon(a1, a2, points2);
 
@@ -147,8 +146,8 @@
    * @param {fabric.Point} r2
    * @return {fabric.Intersection}
    */
-  fabric.Intersection.intersectPolygonRectangle = function (points, r1, r2) {
-    var min = r1.min(r2),
+  fabric.Intersection.intersectPolygonRectangle = function(points, r1, r2) {
+    const min = r1.min(r2),
         max = r1.max(r2),
         topRight = new fabric.Point(max.x, min.y),
         bottomLeft = new fabric.Point(min.x, max.y),
@@ -168,5 +167,4 @@
     }
     return result;
   };
-
 })(typeof exports !== 'undefined' ? exports : this);

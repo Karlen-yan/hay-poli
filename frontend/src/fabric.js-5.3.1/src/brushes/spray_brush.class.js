@@ -85,24 +85,23 @@ fabric.SprayBrush = fabric.util.createClass( fabric.BaseBrush, /** @lends fabric
    * Invoked on mouse up
    */
   onMouseUp: function() {
-    var originalRenderOnAddRemove = this.canvas.renderOnAddRemove;
+    const originalRenderOnAddRemove = this.canvas.renderOnAddRemove;
     this.canvas.renderOnAddRemove = false;
 
-    var rects = [];
+    let rects = [];
 
-    for (var i = 0, ilen = this.sprayChunks.length; i < ilen; i++) {
-      var sprayChunk = this.sprayChunks[i];
+    for (let i = 0, ilen = this.sprayChunks.length; i < ilen; i++) {
+      const sprayChunk = this.sprayChunks[i];
 
-      for (var j = 0, jlen = sprayChunk.length; j < jlen; j++) {
-
-        var rect = new fabric.Rect({
+      for (let j = 0, jlen = sprayChunk.length; j < jlen; j++) {
+        const rect = new fabric.Rect({
           width: sprayChunk[j].width,
           height: sprayChunk[j].width,
           left: sprayChunk[j].x + 1,
           top: sprayChunk[j].y + 1,
           originX: 'center',
           originY: 'center',
-          fill: this.color
+          fill: this.color,
         });
         rects.push(rect);
       }
@@ -112,11 +111,11 @@ fabric.SprayBrush = fabric.util.createClass( fabric.BaseBrush, /** @lends fabric
       rects = this._getOptimizedRects(rects);
     }
 
-    var group = new fabric.Group(rects);
+    const group = new fabric.Group(rects);
     this.shadow && group.set('shadow', new fabric.Shadow(this.shadow));
-    this.canvas.fire('before:path:created', { path: group });
+    this.canvas.fire('before:path:created', {path: group});
     this.canvas.add(group);
-    this.canvas.fire('path:created', { path: group });
+    this.canvas.fire('path:created', {path: group});
 
     this.canvas.clearContext(this.canvas.contextTop);
     this._resetShadow();
@@ -129,9 +128,8 @@ fabric.SprayBrush = fabric.util.createClass( fabric.BaseBrush, /** @lends fabric
    * @param {Array} rects
    */
   _getOptimizedRects: function(rects) {
-
     // avoid creating duplicate rects at the same coordinates
-    var uniqueRects = { }, key, i, len;
+    let uniqueRects = { }, key, i, len;
 
     for (i = 0, len = rects.length; i < len; i++) {
       key = rects[i].left + '' + rects[i].top;
@@ -139,7 +137,7 @@ fabric.SprayBrush = fabric.util.createClass( fabric.BaseBrush, /** @lends fabric
         uniqueRects[key] = rects[i];
       }
     }
-    var uniqueRectsArray = [];
+    const uniqueRectsArray = [];
     for (key in uniqueRects) {
       uniqueRectsArray.push(uniqueRects[key]);
     }
@@ -151,13 +149,13 @@ fabric.SprayBrush = fabric.util.createClass( fabric.BaseBrush, /** @lends fabric
    * Render new chunk of spray brush
    */
   render: function(sprayChunk) {
-    var ctx = this.canvas.contextTop, i, len;
+    let ctx = this.canvas.contextTop, i, len;
     ctx.fillStyle = this.color;
 
     this._saveAndTransform(ctx);
 
     for (i = 0, len = sprayChunk.length; i < len; i++) {
-      var point = sprayChunk[i];
+      const point = sprayChunk[i];
       if (typeof point.opacity !== 'undefined') {
         ctx.globalAlpha = point.opacity;
       }
@@ -170,7 +168,7 @@ fabric.SprayBrush = fabric.util.createClass( fabric.BaseBrush, /** @lends fabric
    * Render all spray chunks
    */
   _render: function() {
-    var ctx = this.canvas.contextTop, i, ilen;
+    let ctx = this.canvas.contextTop, i, ilen;
     ctx.fillStyle = this.color;
 
     this._saveAndTransform(ctx);
@@ -187,10 +185,9 @@ fabric.SprayBrush = fabric.util.createClass( fabric.BaseBrush, /** @lends fabric
   addSprayChunk: function(pointer) {
     this.sprayChunkPoints = [];
 
-    var x, y, width, radius = this.width / 2, i;
+    let x, y, width, radius = this.width / 2, i;
 
     for (i = 0; i < this.density; i++) {
-
       x = fabric.util.getRandomInt(pointer.x - radius, pointer.x + radius);
       y = fabric.util.getRandomInt(pointer.y - radius, pointer.y + radius);
 
@@ -204,7 +201,7 @@ fabric.SprayBrush = fabric.util.createClass( fabric.BaseBrush, /** @lends fabric
         width = this.dotWidth;
       }
 
-      var point = new fabric.Point(x, y);
+      const point = new fabric.Point(x, y);
       point.width = width;
 
       if (this.randomOpacity) {
@@ -215,5 +212,5 @@ fabric.SprayBrush = fabric.util.createClass( fabric.BaseBrush, /** @lends fabric
     }
 
     this.sprayChunks.push(this.sprayChunkPoints);
-  }
+  },
 });

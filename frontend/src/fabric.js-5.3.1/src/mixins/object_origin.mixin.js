@@ -1,15 +1,14 @@
 (function() {
-
-  var degreesToRadians = fabric.util.degreesToRadians,
+  const degreesToRadians = fabric.util.degreesToRadians,
       originXOffset = {
         left: -0.5,
         center: 0,
-        right: 0.5
+        right: 0.5,
       },
       originYOffset = {
         top: -0.5,
         center: 0,
-        bottom: 0.5
+        bottom: 0.5,
       };
 
   fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prototype */ {
@@ -24,7 +23,7 @@
      * @return {fabric.Point}
      */
     translateToGivenOrigin: function(point, fromOriginX, fromOriginY, toOriginX, toOriginY) {
-      var x = point.x,
+      let x = point.x,
           y = point.y,
           offsetX, offsetY, dim;
 
@@ -77,7 +76,7 @@
      * @return {fabric.Point}
      */
     translateToCenterPoint: function(point, originX, originY) {
-      var p = this.translateToGivenOrigin(point, originX, originY, 'center', 'center');
+      const p = this.translateToGivenOrigin(point, originX, originY, 'center', 'center');
       if (this.angle) {
         return fabric.util.rotatePoint(p, point, degreesToRadians(this.angle));
       }
@@ -92,7 +91,7 @@
      * @return {fabric.Point}
      */
     translateToOriginPoint: function(center, originX, originY) {
-      var p = this.translateToGivenOrigin(center, 'center', 'center', originX, originY);
+      const p = this.translateToGivenOrigin(center, 'center', 'center', originX, originY);
       if (this.angle) {
         return fabric.util.rotatePoint(p, center, degreesToRadians(this.angle));
       }
@@ -104,7 +103,7 @@
      * @return {fabric.Point}
      */
     getCenterPoint: function() {
-      var leftTop = new fabric.Point(this.left, this.top);
+      const leftTop = new fabric.Point(this.left, this.top);
       return this.translateToCenterPoint(leftTop, this.originX, this.originY);
     },
 
@@ -124,7 +123,7 @@
      * @return {fabric.Point}
      */
     getPointByOrigin: function(originX, originY) {
-      var center = this.getCenterPoint();
+      const center = this.getCenterPoint();
       return this.translateToOriginPoint(center, originX, originY);
     },
 
@@ -136,7 +135,7 @@
      * @return {fabric.Point}
      */
     toLocalPoint: function(point, originX, originY) {
-      var center = this.getCenterPoint(),
+      let center = this.getCenterPoint(),
           p, p2;
 
       if (typeof originX !== 'undefined' && typeof originY !== 'undefined' ) {
@@ -170,7 +169,7 @@
      * @return {void}
      */
     setPositionByOrigin: function(pos, originX, originY) {
-      var center = this.translateToCenterPoint(pos, originX, originY),
+      const center = this.translateToCenterPoint(pos, originX, originY),
           position = this.translateToOriginPoint(center, this.originX, this.originY);
       this.set('left', position.x);
       this.set('top', position.y);
@@ -180,13 +179,13 @@
      * @param {String} to One of 'left', 'center', 'right'
      */
     adjustPosition: function(to) {
-      var angle = degreesToRadians(this.angle),
+      let angle = degreesToRadians(this.angle),
           hypotFull = this.getScaledWidth(),
           xFull = fabric.util.cos(angle) * hypotFull,
           yFull = fabric.util.sin(angle) * hypotFull,
           offsetFrom, offsetTo;
 
-      //TODO: this function does not consider mixed situation like top, center.
+      // TODO: this function does not consider mixed situation like top, center.
       if (typeof this.originX === 'string') {
         offsetFrom = originXOffset[this.originX];
       }
@@ -214,7 +213,7 @@
       this._originalOriginX = this.originX;
       this._originalOriginY = this.originY;
 
-      var center = this.getCenterPoint();
+      const center = this.getCenterPoint();
 
       this.originX = 'center';
       this.originY = 'center';
@@ -229,7 +228,7 @@
      * @return {void}
      */
     _resetOrigin: function() {
-      var originPoint = this.translateToOriginPoint(
+      const originPoint = this.translateToOriginPoint(
         this.getCenterPoint(),
         this._originalOriginX,
         this._originalOriginY);
@@ -251,5 +250,4 @@
       return this.translateToOriginPoint(this.getCenterPoint(), 'left', 'top');
     },
   });
-
 })();

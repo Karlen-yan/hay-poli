@@ -4,8 +4,7 @@
  *
  */
 function initAligningGuidelines(canvas) {
-
-  var ctx = canvas.getSelectionContext(),
+  let ctx = canvas.getSelectionContext(),
       aligningLineOffset = 5,
       aligningLineMargin = 4,
       aligningLineWidth = 1,
@@ -34,8 +33,8 @@ function initAligningGuidelines(canvas) {
     ctx.lineWidth = aligningLineWidth;
     ctx.strokeStyle = aligningLineColor;
     ctx.beginPath();
-    ctx.moveTo(((x1+viewportTransform[4])*zoom), ((y1+viewportTransform[5])*zoom));
-    ctx.lineTo(((x2+viewportTransform[4])*zoom), ((y2+viewportTransform[5])*zoom));
+    ctx.moveTo(((x1 + viewportTransform[4]) * zoom), ((y1 + viewportTransform[5]) * zoom));
+    ctx.lineTo(((x2 + viewportTransform[4]) * zoom), ((y2 + viewportTransform[5]) * zoom));
     ctx.stroke();
     ctx.restore();
   }
@@ -43,7 +42,7 @@ function initAligningGuidelines(canvas) {
   function isInRange(value1, value2) {
     value1 = Math.round(value1);
     value2 = Math.round(value2);
-    for (var i = value1 - aligningLineMargin, len = value1 + aligningLineMargin; i <= len; i++) {
+    for (let i = value1 - aligningLineMargin, len = value1 + aligningLineMargin; i <= len; i++) {
       if (i === value2) {
         return true;
       }
@@ -51,17 +50,16 @@ function initAligningGuidelines(canvas) {
     return false;
   }
 
-  var verticalLines = [],
+  const verticalLines = [],
       horizontalLines = [];
 
-  canvas.on('mouse:down', function () {
+  canvas.on('mouse:down', function() {
     viewportTransform = canvas.viewportTransform;
     zoom = canvas.getZoom();
   });
 
   canvas.on('object:moving', function(e) {
-
-    var activeObject = e.target,
+    let activeObject = e.target,
         canvasObjects = canvas.getObjects(),
         activeObjectCenter = activeObject.getCenterPoint(),
         activeObjectLeft = activeObjectCenter.x,
@@ -73,16 +71,15 @@ function initAligningGuidelines(canvas) {
         verticalInTheRange = false,
         transform = canvas._currentTransform;
 
-    if (!transform) return;
+    if (!transform) {return;}
 
     // It should be trivial to DRY this up by encapsulating (repeating) creation of x1, x2, y1, and y2 into functions,
     // but we're not doing it here for perf. reasons -- as this a function that's invoked on every mouse move
 
-    for (var i = canvasObjects.length; i--; ) {
+    for (let i = canvasObjects.length; i--; ) {
+      if (canvasObjects[i] === activeObject) {continue;}
 
-      if (canvasObjects[i] === activeObject) continue;
-
-      var objectCenter = canvasObjects[i].getCenterPoint(),
+      const objectCenter = canvasObjects[i].getCenterPoint(),
           objectLeft = objectCenter.x,
           objectTop = objectCenter.y,
           objectBoundingRect = canvasObjects[i].getBoundingRect(),
@@ -94,12 +91,12 @@ function initAligningGuidelines(canvas) {
         verticalInTheRange = true;
         verticalLines.push({
           x: objectLeft,
-          y1: (objectTop < activeObjectTop)
-            ? (objectTop - objectHeight / 2 - aligningLineOffset)
-            : (objectTop + objectHeight / 2 + aligningLineOffset),
-          y2: (activeObjectTop > objectTop)
-            ? (activeObjectTop + activeObjectHeight / 2 + aligningLineOffset)
-            : (activeObjectTop - activeObjectHeight / 2 - aligningLineOffset)
+          y1: (objectTop < activeObjectTop) ?
+            (objectTop - objectHeight / 2 - aligningLineOffset) :
+            (objectTop + objectHeight / 2 + aligningLineOffset),
+          y2: (activeObjectTop > objectTop) ?
+            (activeObjectTop + activeObjectHeight / 2 + aligningLineOffset) :
+            (activeObjectTop - activeObjectHeight / 2 - aligningLineOffset),
         });
         activeObject.setPositionByOrigin(new fabric.Point(objectLeft, activeObjectTop), 'center', 'center');
       }
@@ -109,12 +106,12 @@ function initAligningGuidelines(canvas) {
         verticalInTheRange = true;
         verticalLines.push({
           x: objectLeft - objectWidth / 2,
-          y1: (objectTop < activeObjectTop)
-            ? (objectTop - objectHeight / 2 - aligningLineOffset)
-            : (objectTop + objectHeight / 2 + aligningLineOffset),
-          y2: (activeObjectTop > objectTop)
-            ? (activeObjectTop + activeObjectHeight / 2 + aligningLineOffset)
-            : (activeObjectTop - activeObjectHeight / 2 - aligningLineOffset)
+          y1: (objectTop < activeObjectTop) ?
+            (objectTop - objectHeight / 2 - aligningLineOffset) :
+            (objectTop + objectHeight / 2 + aligningLineOffset),
+          y2: (activeObjectTop > objectTop) ?
+            (activeObjectTop + activeObjectHeight / 2 + aligningLineOffset) :
+            (activeObjectTop - activeObjectHeight / 2 - aligningLineOffset),
         });
         activeObject.setPositionByOrigin(new fabric.Point(objectLeft - objectWidth / 2 + activeObjectWidth / 2, activeObjectTop), 'center', 'center');
       }
@@ -124,12 +121,12 @@ function initAligningGuidelines(canvas) {
         verticalInTheRange = true;
         verticalLines.push({
           x: objectLeft + objectWidth / 2,
-          y1: (objectTop < activeObjectTop)
-            ? (objectTop - objectHeight / 2 - aligningLineOffset)
-            : (objectTop + objectHeight / 2 + aligningLineOffset),
-          y2: (activeObjectTop > objectTop)
-            ? (activeObjectTop + activeObjectHeight / 2 + aligningLineOffset)
-            : (activeObjectTop - activeObjectHeight / 2 - aligningLineOffset)
+          y1: (objectTop < activeObjectTop) ?
+            (objectTop - objectHeight / 2 - aligningLineOffset) :
+            (objectTop + objectHeight / 2 + aligningLineOffset),
+          y2: (activeObjectTop > objectTop) ?
+            (activeObjectTop + activeObjectHeight / 2 + aligningLineOffset) :
+            (activeObjectTop - activeObjectHeight / 2 - aligningLineOffset),
         });
         activeObject.setPositionByOrigin(new fabric.Point(objectLeft + objectWidth / 2 - activeObjectWidth / 2, activeObjectTop), 'center', 'center');
       }
@@ -139,12 +136,12 @@ function initAligningGuidelines(canvas) {
         horizontalInTheRange = true;
         horizontalLines.push({
           y: objectTop,
-          x1: (objectLeft < activeObjectLeft)
-            ? (objectLeft - objectWidth / 2 - aligningLineOffset)
-            : (objectLeft + objectWidth / 2 + aligningLineOffset),
-          x2: (activeObjectLeft > objectLeft)
-            ? (activeObjectLeft + activeObjectWidth / 2 + aligningLineOffset)
-            : (activeObjectLeft - activeObjectWidth / 2 - aligningLineOffset)
+          x1: (objectLeft < activeObjectLeft) ?
+            (objectLeft - objectWidth / 2 - aligningLineOffset) :
+            (objectLeft + objectWidth / 2 + aligningLineOffset),
+          x2: (activeObjectLeft > objectLeft) ?
+            (activeObjectLeft + activeObjectWidth / 2 + aligningLineOffset) :
+            (activeObjectLeft - activeObjectWidth / 2 - aligningLineOffset),
         });
         activeObject.setPositionByOrigin(new fabric.Point(activeObjectLeft, objectTop), 'center', 'center');
       }
@@ -154,12 +151,12 @@ function initAligningGuidelines(canvas) {
         horizontalInTheRange = true;
         horizontalLines.push({
           y: objectTop - objectHeight / 2,
-          x1: (objectLeft < activeObjectLeft)
-            ? (objectLeft - objectWidth / 2 - aligningLineOffset)
-            : (objectLeft + objectWidth / 2 + aligningLineOffset),
-          x2: (activeObjectLeft > objectLeft)
-            ? (activeObjectLeft + activeObjectWidth / 2 + aligningLineOffset)
-            : (activeObjectLeft - activeObjectWidth / 2 - aligningLineOffset)
+          x1: (objectLeft < activeObjectLeft) ?
+            (objectLeft - objectWidth / 2 - aligningLineOffset) :
+            (objectLeft + objectWidth / 2 + aligningLineOffset),
+          x2: (activeObjectLeft > objectLeft) ?
+            (activeObjectLeft + activeObjectWidth / 2 + aligningLineOffset) :
+            (activeObjectLeft - activeObjectWidth / 2 - aligningLineOffset),
         });
         activeObject.setPositionByOrigin(new fabric.Point(activeObjectLeft, objectTop - objectHeight / 2 + activeObjectHeight / 2), 'center', 'center');
       }
@@ -169,12 +166,12 @@ function initAligningGuidelines(canvas) {
         horizontalInTheRange = true;
         horizontalLines.push({
           y: objectTop + objectHeight / 2,
-          x1: (objectLeft < activeObjectLeft)
-            ? (objectLeft - objectWidth / 2 - aligningLineOffset)
-            : (objectLeft + objectWidth / 2 + aligningLineOffset),
-          x2: (activeObjectLeft > objectLeft)
-            ? (activeObjectLeft + activeObjectWidth / 2 + aligningLineOffset)
-            : (activeObjectLeft - activeObjectWidth / 2 - aligningLineOffset)
+          x1: (objectLeft < activeObjectLeft) ?
+            (objectLeft - objectWidth / 2 - aligningLineOffset) :
+            (objectLeft + objectWidth / 2 + aligningLineOffset),
+          x2: (activeObjectLeft > objectLeft) ?
+            (activeObjectLeft + activeObjectWidth / 2 + aligningLineOffset) :
+            (activeObjectLeft - activeObjectWidth / 2 - aligningLineOffset),
         });
         activeObject.setPositionByOrigin(new fabric.Point(activeObjectLeft, objectTop + objectHeight / 2 - activeObjectHeight / 2), 'center', 'center');
       }

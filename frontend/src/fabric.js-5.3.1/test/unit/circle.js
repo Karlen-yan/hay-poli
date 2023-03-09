@@ -1,11 +1,10 @@
 (function() {
-
   QUnit.module('fabric.Circle');
 
   QUnit.test('constructor', function(assert) {
     assert.ok(fabric.Circle);
 
-    var circle = new fabric.Circle();
+    const circle = new fabric.Circle();
 
     assert.ok(circle instanceof fabric.Circle, 'should inherit from fabric.Circle');
     assert.ok(circle instanceof fabric.Object, 'should inherit from fabric.Object');
@@ -15,13 +14,13 @@
 
   QUnit.test('constructor with radius', function(assert) {
     assert.ok(fabric.Circle);
-    var circle = new fabric.Circle({ radius: 20 });
+    const circle = new fabric.Circle({radius: 20});
     assert.equal(circle.width, 40, 'width is set');
     assert.equal(circle.height, 40, 'height is set');
   });
 
   QUnit.test('getRadiusX, getRadiusY', function(assert) {
-    var circle = new fabric.Circle({ radius: 10 });
+    const circle = new fabric.Circle({radius: 10});
 
     assert.ok(typeof circle.getRadiusX === 'function', 'getRadiusX should exist');
     assert.ok(typeof circle.getRadiusY === 'function', 'getRadiusY should exist');
@@ -46,7 +45,7 @@
   });
 
   QUnit.test('setRadius', function(assert) {
-    var circle = new fabric.Circle({radius: 10, strokeWidth: 0});
+    const circle = new fabric.Circle({radius: 10, strokeWidth: 0});
 
     assert.ok(typeof circle.setRadius === 'function');
 
@@ -66,7 +65,7 @@
   });
 
   QUnit.test('set radius', function(assert) {
-    var circle = new fabric.Circle({strokeWidth: 0});
+    const circle = new fabric.Circle({strokeWidth: 0});
 
     circle.set('radius', 20);
 
@@ -78,14 +77,14 @@
   });
 
   QUnit.test('complexity', function(assert) {
-    var circle = new fabric.Circle();
+    const circle = new fabric.Circle();
     assert.ok(typeof circle.complexity === 'function');
     assert.equal(circle.complexity(), 1);
   });
 
   QUnit.test('toObject', function(assert) {
-    var circle = new fabric.Circle();
-    var defaultProperties = {
+    const circle = new fabric.Circle();
+    const defaultProperties = {
       version:                  fabric.version,
       type:                     'circle',
       originX:                  'left',
@@ -119,36 +118,36 @@
       endAngle:                 360,
       skewX:                    0,
       skewY:                    0,
-      strokeUniform:            false
+      strokeUniform:            false,
     };
     assert.ok(typeof circle.toObject === 'function');
     assert.deepEqual(circle.toObject(), defaultProperties);
 
     circle.set('left', 100).set('top', 200).set('radius', 15);
 
-    var augmentedProperties = fabric.util.object.extend(fabric.util.object.clone(defaultProperties), {
+    const augmentedProperties = fabric.util.object.extend(fabric.util.object.clone(defaultProperties), {
       left:   100,
       top:    200,
       width:  30,
       height: 30,
-      radius: 15
+      radius: 15,
     });
 
     assert.deepEqual(circle.toObject(), augmentedProperties);
   });
 
   QUnit.test('toSVG with full circle', function(assert) {
-    var circle = new fabric.Circle({ width: 100, height: 100, radius: 10 });
-    var svg = circle.toSVG();
-    var svgClipPath = circle.toClipPathSVG();
+    const circle = new fabric.Circle({width: 100, height: 100, radius: 10});
+    const svg = circle.toSVG();
+    const svgClipPath = circle.toClipPathSVG();
     assert.equal(svg, '<g transform=\"matrix(1 0 0 1 10.5 10.5)\"  >\n<circle style=\"stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  cx=\"0\" cy=\"0\" r=\"10\" />\n</g>\n');
     assert.equal(svgClipPath, '\t<circle transform=\"matrix(1 0 0 1 10.5 10.5)\" cx=\"0\" cy=\"0\" r=\"10\" />\n', 'circle as clipPath');
   });
 
   QUnit.test('toSVG with half circle', function(assert) {
-    var circle = new fabric.Circle({ width: 100, height: 100, radius: 10, endAngle: fabric.util.radiansToDegrees(Math.PI) });
-    var svg = circle.toSVG();
-    var svgClipPath = circle.toClipPathSVG();
+    const circle = new fabric.Circle({width: 100, height: 100, radius: 10, endAngle: fabric.util.radiansToDegrees(Math.PI)});
+    const svg = circle.toSVG();
+    const svgClipPath = circle.toClipPathSVG();
     assert.equal(svg, '<g transform=\"matrix(1 0 0 1 10.5 10.5)\"  >\n<path d=\"M 10 0 A 10 10 0 0 1 -10 0\" style=\"stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"   />\n</g>\n');
     assert.equal(svgClipPath, '\t<path d=\"M 10 0 A 10 10 0 0 1 -10 0\" transform=\"matrix(1 0 0 1 10.5 10.5)\"  />\n', 'half circle as clipPath');
   });
@@ -156,17 +155,17 @@
   QUnit.test('fromElement', function(assert) {
     assert.ok(typeof fabric.Circle.fromElement === 'function');
 
-    var namespace        = 'http://www.w3.org/2000/svg';
-    var elCircle         = fabric.document.createElementNS(namespace, 'circle'),
-        radius           = 10,
-        left             = 12,
-        top              = 15,
-        fill             = 'ff5555',
-        opacity          = 0.5,
-        strokeWidth      = 2,
-        strokeDashArray  = [5, 2],
-        strokeLineCap    = 'round',
-        strokeLineJoin   = 'bevel',
+    const namespace = 'http://www.w3.org/2000/svg';
+    const elCircle = fabric.document.createElementNS(namespace, 'circle'),
+        radius = 10,
+        left = 12,
+        top = 15,
+        fill = 'ff5555',
+        opacity = 0.5,
+        strokeWidth = 2,
+        strokeDashArray = [5, 2],
+        strokeLineCap = 'round',
+        strokeLineJoin = 'bevel',
         strokeMiterLimit = 5;
 
 
@@ -194,10 +193,10 @@
       assert.equal(oCircle.get('strokeLineJoin'), strokeLineJoin);
       assert.equal(oCircle.get('strokeMiterLimit'), strokeMiterLimit);
 
-      var elFaultyCircle = fabric.document.createElementNS(namespace, 'circle');
+      const elFaultyCircle = fabric.document.createElementNS(namespace, 'circle');
       elFaultyCircle.setAttributeNS(namespace, 'r', '-10');
 
-      var error;
+      let error;
       try {
         fabric.Circle.fromElement(elFaultyCircle);
       }
@@ -221,16 +220,16 @@
   });
 
   QUnit.test('fromObject', function(assert) {
-    var done = assert.async();
+    const done = assert.async();
     assert.ok(typeof fabric.Circle.fromObject === 'function');
 
-    var left    = 112,
-        top     = 234,
-        radius  = 13.45,
-        fill    = 'ff5555';
+    const left = 112,
+        top = 234,
+        radius = 13.45,
+        fill = 'ff5555';
 
     fabric.Circle.fromObject({
-      left: left, top: top, radius: radius, fill: fill
+      left: left, top: top, radius: radius, fill: fill,
     }, function(circle) {
       assert.ok(circle instanceof fabric.Circle);
 
@@ -239,7 +238,7 @@
       assert.equal(circle.get('radius'), radius);
       assert.equal(circle.get('fill'), fill);
 
-      var expected = circle.toObject();
+      const expected = circle.toObject();
       fabric.Circle.fromObject(expected, function(actual) {
         assert.deepEqual(actual.toObject(), expected);
         done();
@@ -248,7 +247,7 @@
   });
 
   QUnit.test('cloning and radius, width, height', function(assert) {
-    var circle = new fabric.Circle({ radius: 10, strokeWidth: 0});
+    const circle = new fabric.Circle({radius: 10, strokeWidth: 0});
     circle.scale(2);
 
     circle.clone(function(clone) {

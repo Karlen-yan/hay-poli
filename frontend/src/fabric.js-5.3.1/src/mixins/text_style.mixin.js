@@ -12,11 +12,11 @@
       if (typeof lineIndex !== 'undefined' && !this.styles[lineIndex]) {
         return true;
       }
-      var obj = typeof lineIndex === 'undefined' ? this.styles : { line: this.styles[lineIndex] };
-      for (var p1 in obj) {
-        for (var p2 in obj[p1]) {
+      const obj = typeof lineIndex === 'undefined' ? this.styles : {line: this.styles[lineIndex]};
+      for (const p1 in obj) {
+        for (const p2 in obj[p1]) {
           // eslint-disable-next-line no-unused-vars
-          for (var p3 in obj[p1][p2]) {
+          for (const p3 in obj[p1][p2]) {
             return false;
           }
         }
@@ -38,7 +38,7 @@
       if (typeof lineIndex !== 'undefined' && !this.styles[lineIndex]) {
         return false;
       }
-      var obj = typeof lineIndex === 'undefined' ? this.styles : { 0: this.styles[lineIndex] };
+      const obj = typeof lineIndex === 'undefined' ? this.styles : {0: this.styles[lineIndex]};
       // eslint-disable-next-line
       for (var p1 in obj) {
         // eslint-disable-next-line
@@ -107,7 +107,7 @@
       }
       // if every grapheme has the same style set then
       // delete those styles and set it on the parent
-      for (var i = 0; i < this._textLines.length; i++) {
+      for (let i = 0; i < this._textLines.length; i++) {
         graphemeCount += this._textLines[i].length;
       }
       if (allStyleObjectPropertiesMatch && stylesCount === graphemeCount) {
@@ -127,7 +127,7 @@
       if (!this.styles || !property || property === '') {
         return;
       }
-      var obj = this.styles, line, lineNum, charNum;
+      let obj = this.styles, line, lineNum, charNum;
       for (lineNum in obj) {
         line = obj[lineNum];
         for (charNum in line) {
@@ -146,7 +146,7 @@
      * @private
      */
     _extendStyles: function(index, styles) {
-      var loc = this.get2DCursorLocation(index);
+      const loc = this.get2DCursorLocation(index);
 
       if (!this._getLineStyle(loc.lineIndex)) {
         this._setLineStyle(loc.lineIndex);
@@ -168,20 +168,20 @@
       if (typeof selectionStart === 'undefined') {
         selectionStart = this.selectionStart;
       }
-      var lines = skipWrapping ? this._unwrappedTextLines : this._textLines,
+      const lines = skipWrapping ? this._unwrappedTextLines : this._textLines,
           len = lines.length;
       for (var i = 0; i < len; i++) {
         if (selectionStart <= lines[i].length) {
           return {
             lineIndex: i,
-            charIndex: selectionStart
+            charIndex: selectionStart,
           };
         }
         selectionStart -= lines[i].length + this.missingNewlineOffset(i);
       }
       return {
         lineIndex: i - 1,
-        charIndex: lines[i - 1].length < selectionStart ? lines[i - 1].length : selectionStart
+        charIndex: lines[i - 1].length < selectionStart ? lines[i - 1].length : selectionStart,
       };
     },
 
@@ -200,8 +200,8 @@
       if (typeof endIndex === 'undefined') {
         endIndex = this.selectionEnd || startIndex;
       }
-      var styles = [];
-      for (var i = startIndex; i < endIndex; i++) {
+      const styles = [];
+      for (let i = startIndex; i < endIndex; i++) {
         styles.push(this.getStyleAtPosition(i, complete));
       }
       return styles;
@@ -215,7 +215,7 @@
      * @private
      */
     getStyleAtPosition: function(position, complete) {
-      var loc = this.get2DCursorLocation(position),
+      const loc = this.get2DCursorLocation(position),
           style = complete ? this.getCompleteStyleDeclaration(loc.lineIndex, loc.charIndex) :
             this._getStyleDeclaration(loc.lineIndex, loc.charIndex);
       return style || {};
@@ -236,7 +236,7 @@
       if (typeof endIndex === 'undefined') {
         endIndex = this.selectionEnd || startIndex;
       }
-      for (var i = startIndex; i < endIndex; i++) {
+      for (let i = startIndex; i < endIndex; i++) {
         this._extendStyles(i, styles);
       }
       /* not included in _extendStyles to avoid clearing cache more than once */
@@ -251,7 +251,7 @@
      * @return {Object} style object
      */
     _getStyleDeclaration: function(lineIndex, charIndex) {
-      var lineStyle = this.styles && this.styles[lineIndex];
+      const lineStyle = this.styles && this.styles[lineIndex];
       if (!lineStyle) {
         return null;
       }
@@ -266,9 +266,9 @@
      * @return {Object} style object
      */
     getCompleteStyleDeclaration: function(lineIndex, charIndex) {
-      var style = this._getStyleDeclaration(lineIndex, charIndex) || { },
+      let style = this._getStyleDeclaration(lineIndex, charIndex) || { },
           styleObject = { }, prop;
-      for (var i = 0; i < this._styleProperties.length; i++) {
+      for (let i = 0; i < this._styleProperties.length; i++) {
         prop = this._styleProperties[i];
         styleObject[prop] = typeof style[prop] === 'undefined' ? this[prop] : style[prop];
       }
@@ -319,6 +319,6 @@
      */
     _deleteLineStyle: function(lineIndex) {
       delete this.styles[lineIndex];
-    }
+    },
   });
 })();

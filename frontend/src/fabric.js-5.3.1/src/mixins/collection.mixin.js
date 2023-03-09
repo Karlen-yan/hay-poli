@@ -17,10 +17,10 @@ fabric.Collection = {
    * @return {Self} thisArg
    * @chainable
    */
-  add: function () {
+  add: function() {
     this._objects.push.apply(this._objects, arguments);
     if (this._onObjectAdded) {
-      for (var i = 0, length = arguments.length; i < length; i++) {
+      for (let i = 0, length = arguments.length; i < length; i++) {
         this._onObjectAdded(arguments[i]);
       }
     }
@@ -40,8 +40,8 @@ fabric.Collection = {
    * @return {Self} thisArg
    * @chainable
    */
-  insertAt: function (object, index, nonSplicing) {
-    var objects = this._objects;
+  insertAt: function(object, index, nonSplicing) {
+    const objects = this._objects;
     if (nonSplicing) {
       objects[index] = object;
     }
@@ -60,10 +60,10 @@ fabric.Collection = {
    * @chainable
    */
   remove: function() {
-    var objects = this._objects,
+    let objects = this._objects,
         index, somethingRemoved = false;
 
-    for (var i = 0, length = arguments.length; i < length; i++) {
+    for (let i = 0, length = arguments.length; i < length; i++) {
       index = objects.indexOf(arguments[i]);
 
       // only call onObjectRemoved if an object was actually removed
@@ -91,8 +91,8 @@ fabric.Collection = {
    * @chainable
    */
   forEachObject: function(callback, context) {
-    var objects = this.getObjects();
-    for (var i = 0, len = objects.length; i < len; i++) {
+    const objects = this.getObjects();
+    for (let i = 0, len = objects.length; i < len; i++) {
       callback.call(context, objects[i], i, objects);
     }
     return this;
@@ -119,7 +119,7 @@ fabric.Collection = {
    * @param {Number} index
    * @return {Self} thisArg
    */
-  item: function (index) {
+  item: function(index) {
     return this._objects[index];
   },
 
@@ -127,7 +127,7 @@ fabric.Collection = {
    * Returns true if collection contains no objects
    * @return {Boolean} true if collection is empty
    */
-  isEmpty: function () {
+  isEmpty: function() {
     return this._objects.length === 0;
   },
 
@@ -145,12 +145,12 @@ fabric.Collection = {
    * @param {Boolean} [deep=false] `true` to check all descendants, `false` to check only `_objects`
    * @return {Boolean} `true` if collection contains an object
    */
-  contains: function (object, deep) {
+  contains: function(object, deep) {
     if (this._objects.indexOf(object) > -1) {
       return true;
     }
     else if (deep) {
-      return this._objects.some(function (obj) {
+      return this._objects.some(function(obj) {
         return typeof obj.contains === 'function' && obj.contains(object, true);
       });
     }
@@ -161,10 +161,10 @@ fabric.Collection = {
    * Returns number representation of a collection complexity
    * @return {Number} complexity
    */
-  complexity: function () {
-    return this._objects.reduce(function (memo, current) {
+  complexity: function() {
+    return this._objects.reduce(function(memo, current) {
       memo += current.complexity ? current.complexity() : 0;
       return memo;
     }, 0);
-  }
+  },
 };

@@ -1,19 +1,19 @@
 (function() {
   fabric.enableGLFiltering = false;
   fabric.isWebglSupported = false;
-  var visualTestLoop;
+  let visualTestLoop;
   if (fabric.isLikelyNode) {
     fabric.nodeCanvas.registerFont(__dirname + '/../fixtures/Ubuntu-Regular.ttf', {
-      family: 'Ubuntu', weight: 'regular', style: 'normal'
+      family: 'Ubuntu', weight: 'regular', style: 'normal',
     });
     fabric.nodeCanvas.registerFont(__dirname + '/../fixtures/Ubuntu-Bold.ttf', {
-      family: 'Ubuntu', weight: 'bold', style: 'normal'
+      family: 'Ubuntu', weight: 'bold', style: 'normal',
     });
     fabric.nodeCanvas.registerFont(__dirname + '/../fixtures/Ubuntu-Italic.ttf', {
-      family: 'Ubuntu', weight: 'regular', style: 'italic'
+      family: 'Ubuntu', weight: 'regular', style: 'italic',
     });
     fabric.nodeCanvas.registerFont(__dirname + '/../fixtures/Ubuntu-BoldItalic.ttf', {
-      family: 'Ubuntu', weight: 'bold', style: 'italic'
+      family: 'Ubuntu', weight: 'bold', style: 'italic',
     });
     visualTestLoop = global.visualTestLoop;
   }
@@ -21,17 +21,17 @@
     visualTestLoop = window.visualTestLoop;
   }
 
-  var tests = [];
+  const tests = [];
 
   function text1(canvas, callback) {
-    var text = new fabric.Text('Kerning: VAVAWA',
-      { fontSize: 20, objectCaching: false, strokeWidth: 0 }
+    const text = new fabric.Text('Kerning: VAVAWA',
+      {fontSize: 20, objectCaching: false, strokeWidth: 0},
     );
-    var text2 = new fabric.Text('multi line\ntext\nwith lot of space on some lines',
-      { fontSize: 20, objectCaching: false, angle: 45, top: 40, left: 40, strokeWidth: 0 }
+    const text2 = new fabric.Text('multi line\ntext\nwith lot of space on some lines',
+      {fontSize: 20, objectCaching: false, angle: 45, top: 40, left: 40, strokeWidth: 0},
     );
-    var text3 = new fabric.Text('multi line\ntext\nwith lot of space on some lines',
-      { fontSize: 20, objectCaching: false, angle: -45, top: 200, left: 0, textAlign: 'right', strokeWidth: 0 }
+    const text3 = new fabric.Text('multi line\ntext\nwith lot of space on some lines',
+      {fontSize: 20, objectCaching: false, angle: -45, top: 200, left: 0, textAlign: 'right', strokeWidth: 0},
     );
     canvas.add(text, text2, text3);
     canvas.renderAll();
@@ -48,26 +48,26 @@
     height: 300,
     beforeEachHandler: function() {
       fabric.Object.prototype.objectCaching = false;
-    }
+    },
   });
 
   function text2(canvas, callback) {
-    var text4 = new fabric.Text('2 spaces trailing  \nno trailing spance\n5 spaces trailing     ',
-      { fontSize: 20, objectCaching: false, top: 200, left: 0, textAlign: 'right', strokeWidth: 0 }
+    const text4 = new fabric.Text('2 spaces trailing  \nno trailing spance\n5 spaces trailing     ',
+      {fontSize: 20, objectCaching: false, top: 200, left: 0, textAlign: 'right', strokeWidth: 0},
     );
-    var rect = new fabric.Rect({
+    const rect = new fabric.Rect({
       width: text4.width,
       height: text4.height,
       strokeWidth: 2,
       stroke: 'blue',
       fill: 'rgba(255, 255, 0, 0.4)',
       top: text4.top,
-      left: text4.left
+      left: text4.left,
     });
-    var text5 = new fabric.Text('  2 spaces both sides  \nno trailing spance\n     5 spaces both sides     ',
-      { fontSize: 20, objectCaching: false, top: 250, angle: -90, left: 200, strokeWidth: 0 }
+    const text5 = new fabric.Text('  2 spaces both sides  \nno trailing spance\n     5 spaces both sides     ',
+      {fontSize: 20, objectCaching: false, top: 250, angle: -90, left: 200, strokeWidth: 0},
     );
-    var rect2 = new fabric.Rect({
+    const rect2 = new fabric.Rect({
       width: text5.width,
       height: text5.height,
       strokeWidth: 2,
@@ -75,10 +75,10 @@
       fill: 'rgba(255, 0, 255, 0.4)',
       top: text5.top,
       left: text5.left,
-      angle: text5.angle
+      angle: text5.angle,
     });
-    var text = new fabric.Text('text with all decorations\nmultiline',
-      { underline: true, overline: true, linethrough: true, fontSize: 30, strokeWidth: 0 }
+    const text = new fabric.Text('text with all decorations\nmultiline',
+      {underline: true, overline: true, linethrough: true, fontSize: 30, strokeWidth: 0},
     );
     canvas.add(rect, text4, rect2, text5, text);
     canvas.renderAll();
@@ -93,10 +93,10 @@
   });
 
   function text3(canvas, callback) {
-    var text = new fabric.Text('lorem ipsum\ndolor\nsit Amet2\nconsectgetur',
-      { objectCaching: false, fontFamily: 'Arial', styles:
-        {0: {0: {fill: 'red',fontSize: 20},1: {fill: 'red',fontSize: 30},2: {fill: 'red',fontSize: 40},3: {fill: 'red',fontSize: 50},4: {fill: 'red',fontSize: 60},6: {textBackgroundColor: 'yellow'},7: {textBackgroundColor: 'yellow',textDecoration: ' line-through',linethrough: true},8: {textBackgroundColor: 'yellow',textDecoration: ' line-through',linethrough: true},9: {textBackgroundColor: 'yellow'}},1: {0: {textDecoration: 'underline'},1: {textDecoration: 'underline'},2: {fill: 'green',fontStyle: 'italic',textDecoration: 'underline'},3: {fill: 'green',fontStyle: 'italic',textDecoration: 'underline'},4: {fill: 'green',fontStyle: 'italic',textDecoration: 'underline'}},2: {0: {fill: 'blue',fontWeight: 'bold'},1: {fill: 'blue',fontWeight: 'bold'},2: {fill: 'blue',fontWeight: 'bold',fontSize: 63},4: {fontFamily: 'Courier',textDecoration: ' underline',underline: true},5: {fontFamily: 'Courier',textDecoration: ' underline',underline: true},6: {fontFamily: 'Courier',textDecoration: ' overline',overline: true},7: {fontFamily: 'Courier',textDecoration: ' overline',overline: true},8: {fontFamily: 'Courier',textDecoration: ' overline',overline: true}},3: {0: {fill: '#666',textDecoration: 'line-through'},1: {fill: '#666',textDecoration: 'line-through'},2: {fill: '#666',textDecoration: 'line-through'},3: {fill: '#666',textDecoration: 'line-through'},4: {fill: '#666',textDecoration: 'line-through'},7: {textDecoration: ' underline',underline: true},8: {stroke: '#ff1e15',strokeWidth: 2},9: {stroke: '#ff1e15',strokeWidth: 2}}}
-      }
+    const text = new fabric.Text('lorem ipsum\ndolor\nsit Amet2\nconsectgetur',
+      {objectCaching: false, fontFamily: 'Arial', styles:
+        {0: {0: {fill: 'red', fontSize: 20}, 1: {fill: 'red', fontSize: 30}, 2: {fill: 'red', fontSize: 40}, 3: {fill: 'red', fontSize: 50}, 4: {fill: 'red', fontSize: 60}, 6: {textBackgroundColor: 'yellow'}, 7: {textBackgroundColor: 'yellow', textDecoration: ' line-through', linethrough: true}, 8: {textBackgroundColor: 'yellow', textDecoration: ' line-through', linethrough: true}, 9: {textBackgroundColor: 'yellow'}}, 1: {0: {textDecoration: 'underline'}, 1: {textDecoration: 'underline'}, 2: {fill: 'green', fontStyle: 'italic', textDecoration: 'underline'}, 3: {fill: 'green', fontStyle: 'italic', textDecoration: 'underline'}, 4: {fill: 'green', fontStyle: 'italic', textDecoration: 'underline'}}, 2: {0: {fill: 'blue', fontWeight: 'bold'}, 1: {fill: 'blue', fontWeight: 'bold'}, 2: {fill: 'blue', fontWeight: 'bold', fontSize: 63}, 4: {fontFamily: 'Courier', textDecoration: ' underline', underline: true}, 5: {fontFamily: 'Courier', textDecoration: ' underline', underline: true}, 6: {fontFamily: 'Courier', textDecoration: ' overline', overline: true}, 7: {fontFamily: 'Courier', textDecoration: ' overline', overline: true}, 8: {fontFamily: 'Courier', textDecoration: ' overline', overline: true}}, 3: {0: {fill: '#666', textDecoration: 'line-through'}, 1: {fill: '#666', textDecoration: 'line-through'}, 2: {fill: '#666', textDecoration: 'line-through'}, 3: {fill: '#666', textDecoration: 'line-through'}, 4: {fill: '#666', textDecoration: 'line-through'}, 7: {textDecoration: ' underline', underline: true}, 8: {stroke: '#ff1e15', strokeWidth: 2}, 9: {stroke: '#ff1e15', strokeWidth: 2}}},
+      },
     );
     canvas.add(text);
     canvas.renderAll();
@@ -111,10 +111,10 @@
   });
 
   function text4(canvas, callback) {
-    var text = new fabric.Text('lorem ipsum\ndolor\nsit Amet2\nconsectgetur', {
-      fontSize: 30, scaleX: 20, scaleY: 30, skewX: 30, skewY: 25, skewY: 15, angle: 25
+    const text = new fabric.Text('lorem ipsum\ndolor\nsit Amet2\nconsectgetur', {
+      fontSize: 30, scaleX: 20, scaleY: 30, skewX: 30, skewY: 25, skewY: 15, angle: 25,
     });
-    var matrix = text.calcTransformMatrix();
+    const matrix = text.calcTransformMatrix();
     canvas.viewportTransform = fabric.util.invertTransform(matrix);
     canvas.viewportTransform[4] = 0;
     canvas.viewportTransform[5] = 0;
@@ -131,29 +131,29 @@
   });
 
   function text5(canvas, callback) {
-    var text = new fabric.Text('Scaling', {
-      fontSize: 10, scaleX: 2, scaleY: 2, fill: 'rgba(0,0,255,0.4)', strokeWidth: 0
+    const text = new fabric.Text('Scaling', {
+      fontSize: 10, scaleX: 2, scaleY: 2, fill: 'rgba(0,0,255,0.4)', strokeWidth: 0,
     });
-    var text2 = new fabric.Text('Scaling', {
-      fontSize: 10, scaleX: 3, scaleY: 3, fill: 'rgba(0,0,255,0.4)', top: 10, strokeWidth: 0
+    const text2 = new fabric.Text('Scaling', {
+      fontSize: 10, scaleX: 3, scaleY: 3, fill: 'rgba(0,0,255,0.4)', top: 10, strokeWidth: 0,
     });
-    var text3 = new fabric.Text('Scaling', {
-      fontSize: 10, scaleX: 4, scaleY: 4, fill: 'rgba(0,0,255,0.4)', top: 20, strokeWidth: 0
+    const text3 = new fabric.Text('Scaling', {
+      fontSize: 10, scaleX: 4, scaleY: 4, fill: 'rgba(0,0,255,0.4)', top: 20, strokeWidth: 0,
     });
-    var text4 = new fabric.Text('Scaling', {
-      fontSize: 10, scaleX: 5, scaleY: 5, fill: 'rgba(0,0,255,0.4)', top: 30, strokeWidth: 0
+    const text4 = new fabric.Text('Scaling', {
+      fontSize: 10, scaleX: 5, scaleY: 5, fill: 'rgba(0,0,255,0.4)', top: 30, strokeWidth: 0,
     });
-    var text5 = new fabric.Text('Scaling', {
-      fontSize: 10, scaleX: 6, scaleY: 6, fill: 'rgba(0,0,255,0.4)', top: 40, strokeWidth: 0
+    const text5 = new fabric.Text('Scaling', {
+      fontSize: 10, scaleX: 6, scaleY: 6, fill: 'rgba(0,0,255,0.4)', top: 40, strokeWidth: 0,
     });
-    var text6 = new fabric.Text('Scaling', {
-      fontSize: 10, scaleX: 7, scaleY: 7, fill: 'rgba(0,0,255,0.4)', top: 50, strokeWidth: 0
+    const text6 = new fabric.Text('Scaling', {
+      fontSize: 10, scaleX: 7, scaleY: 7, fill: 'rgba(0,0,255,0.4)', top: 50, strokeWidth: 0,
     });
-    var text7 = new fabric.Text('A', {
-      fontSize: 80, scaleX: 1, scaleY: 1, fill: 'rgb(0,0,255)', left: 190, strokeWidth: 12, stroke: 'rgba(255,0,0,0.2)'
+    const text7 = new fabric.Text('A', {
+      fontSize: 80, scaleX: 1, scaleY: 1, fill: 'rgb(0,0,255)', left: 190, strokeWidth: 12, stroke: 'rgba(255,0,0,0.2)',
     });
-    var text8 = new fabric.Text('A', {
-      fontSize: 65, scaleX: 8, scaleY: 8, fill: 'rgb(0,0,255)', top: -100, left: -100, strokeWidth: 12, stroke: 'rgba(255,0,0,0.2)'
+    const text8 = new fabric.Text('A', {
+      fontSize: 65, scaleX: 8, scaleY: 8, fill: 'rgb(0,0,255)', top: -100, left: -100, strokeWidth: 12, stroke: 'rgba(255,0,0,0.2)',
     });
     canvas.add(text8, text, text2, text3, text4, text5, text6, text7);
     canvas.renderAll();
@@ -169,10 +169,10 @@
   });
 
   function text6(canvas, callback) {
-    var text = new fabric.Text('regular', {
+    let text = new fabric.Text('regular', {
       left: 0,
       top: 0,
-      fontFamily: 'Ubuntu'
+      fontFamily: 'Ubuntu',
     });
     canvas.add(text);
 
@@ -180,7 +180,7 @@
       left: 0,
       top: 50,
       fontFamily: 'Ubuntu',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
     });
     canvas.add(text);
 
@@ -188,7 +188,7 @@
       left: 0,
       top: 100,
       fontFamily: 'Ubuntu',
-      fontStyle: 'italic'
+      fontStyle: 'italic',
     });
     canvas.add(text);
 
@@ -197,7 +197,7 @@
       top: 150,
       fontFamily: 'Ubuntu',
       fontWeight: 'bold',
-      fontStyle: 'italic'
+      fontStyle: 'italic',
     });
     canvas.add(text);
     canvas.renderAll();
@@ -213,12 +213,12 @@
   });
 
   function text7(canvas, callback) {
-    var gradient = new fabric.Gradient({
+    const gradient = new fabric.Gradient({
       coords: {
         x1: 0,
         y1: 0,
         x2: 1,
-        y2: 0
+        y2: 0,
       },
       gradientUnits: 'percentage',
       colorStops: [{
@@ -226,10 +226,10 @@
         color: 'red',
       }, {
         offset: 1,
-        color: 'blue'
-      }]
+        color: 'blue',
+      }],
     });
-    var text = new fabric.Text('PERCENTAGE GRADIENT\nPERCENTAGE GRADIENT\nPERCENTAGE GRADIENT', {
+    const text = new fabric.Text('PERCENTAGE GRADIENT\nPERCENTAGE GRADIENT\nPERCENTAGE GRADIENT', {
       left: 0,
       top: 0,
       fontSize: 16,
@@ -248,7 +248,7 @@
   });
 
   function text8(canvas, callback) {
-    var text = new fabric.Text('Scaling down', {
+    const text = new fabric.Text('Scaling down', {
       left: 10,
       top: 10,
       fill: 'red',
@@ -272,10 +272,10 @@
   });
 
   function text9(canvas, callback) {
-    var canvasP = fabric.util.createCanvasElement();
+    const canvasP = fabric.util.createCanvasElement();
     canvasP.width = 10;
     canvasP.height = 10;
-    var ctx = canvasP.getContext('2d');
+    const ctx = canvasP.getContext('2d');
     ctx.fillStyle = 'blue';
     ctx.fillRect(0, 0, 5, 5);
     ctx.fillStyle = 'red';
@@ -284,13 +284,13 @@
     ctx.fillRect(5, 0, 5, 5);
     ctx.fillStyle = 'purple';
     ctx.fillRect(0, 5, 5, 5);
-    var pattern = new fabric.Pattern({ source: canvasP, patternTransform: [1, 0.3, 0.6, 0.8, 0, 0] });
-    var relGradient = new fabric.Gradient({
+    const pattern = new fabric.Pattern({source: canvasP, patternTransform: [1, 0.3, 0.6, 0.8, 0, 0]});
+    const relGradient = new fabric.Gradient({
       coords: {
         x1: 0,
         y1: 0,
         x2: 1,
-        y2: 0
+        y2: 0,
       },
       gradientUnits: 'percentage',
       colorStops: [{
@@ -298,10 +298,10 @@
         color: 'red',
       }, {
         offset: 1,
-        color: 'blue'
-      }]
+        color: 'blue',
+      }],
     });
-    var text = new fabric.Text('TEST', {
+    const text = new fabric.Text('TEST', {
       left: 5,
       top: 5,
       fontSize: 180,
@@ -328,8 +328,8 @@
   });
 
   function text10(canvas, callback) {
-    var path = new fabric.Path('M5 100 a95,95 0 1,0 190,0 a95,95 0 1,0 -190,0 z', { visible: false });
-    var test = new fabric.Text('this is a long text we need to wrap around a shape. - BETA feature -', {
+    const path = new fabric.Path('M5 100 a95,95 0 1,0 190,0 a95,95 0 1,0 -190,0 z', {visible: false});
+    const test = new fabric.Text('this is a long text we need to wrap around a shape. - BETA feature -', {
       left: 10,
       top: 10,
       fontSize: 16,
@@ -340,7 +340,7 @@
       strokeLineCap: 'round',
       fill: 'blue',
       stroke: 'red',
-      path: path
+      path: path,
     });
     canvas.add(test);
     canvas.renderAll();
@@ -357,7 +357,7 @@
   });
 
   function text11(canvas, callback) {
-    var itext = new fabric.Text('hello\nworld', {
+    const itext = new fabric.Text('hello\nworld', {
       left: 4,
       top: 4,
       fontFamily: 'Arial',
@@ -368,27 +368,27 @@
           0: {
             fill: 'red',
             underline: true,
-            linethrough: true
+            linethrough: true,
           },
           1: {
             fill: 'blue',
             underline: true,
-            linethrough: true
+            linethrough: true,
           },
           2: {
             fill: 'blue',
             underline: true,
-            linethrough: true
+            linethrough: true,
           },
           3: {
             fill: 'yellow',
             underline: true,
-            linethrough: true
+            linethrough: true,
           },
         },
-      }
+      },
     });
-    var itext2 = new fabric.Text('Version 4.2.0', {
+    const itext2 = new fabric.Text('Version 4.2.0', {
       left: 105,
       top: 4,
       fontFamily: 'Arial',
@@ -398,40 +398,40 @@
         0: {
           0: {
             underline: true,
-            linethrough: true
+            linethrough: true,
           },
           1: {
             fill: 'red',
             underline: true,
-            linethrough: true
+            linethrough: true,
           },
           2: {
             fill: 'red',
             underline: true,
-            linethrough: true
+            linethrough: true,
           },
           3: {
             fill: 'red',
             underline: true,
-            linethrough: true
+            linethrough: true,
           },
           4: {
             fill: 'red',
             underline: true,
-            linethrough: true
+            linethrough: true,
           },
           5: {
             fill: 'red',
             underline: true,
-            linethrough: true
+            linethrough: true,
           },
           6: {
             fill: 'red',
             underline: true,
-            linethrough: true
+            linethrough: true,
           },
         },
-      }
+      },
     });
     canvas.add(itext);
     canvas.add(itext2);
@@ -475,7 +475,7 @@
         canvas.add(text);
         canvas.renderAll();
         callback(canvas.lowerCanvasEl);
-      }
+      },
     );
   }
 

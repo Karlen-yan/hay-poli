@@ -1,5 +1,4 @@
 (function() {
-
   /**
    * Camelizes a string
    * @memberOf fabric.util.string
@@ -47,7 +46,7 @@
    * @return {Array} array containing the graphemes
    */
   function graphemeSplit(textstring) {
-    var i = 0, chr, graphemes = [];
+    let i = 0, chr, graphemes = [];
     for (i = 0, chr; i < textstring.length; i++) {
       if ((chr = getWholeChar(textstring, i)) === false) {
         continue;
@@ -59,7 +58,7 @@
 
   // taken from mdn in the charAt doc page.
   function getWholeChar(str, i) {
-    var code = str.charCodeAt(i);
+    const code = str.charCodeAt(i);
 
     if (isNaN(code)) {
       return ''; // Position not found
@@ -74,7 +73,7 @@
       if (str.length <= (i + 1)) {
         throw 'High surrogate without following low surrogate';
       }
-      var next = str.charCodeAt(i + 1);
+      const next = str.charCodeAt(i + 1);
       if (0xDC00 > next || next > 0xDFFF) {
         throw 'High surrogate without following low surrogate';
       }
@@ -84,7 +83,7 @@
     if (i === 0) {
       throw 'Low surrogate without preceding high surrogate';
     }
-    var prev = str.charCodeAt(i - 1);
+    const prev = str.charCodeAt(i - 1);
 
     // (could change last hex to 0xDB7F to treat high private
     // surrogates as single characters)
@@ -105,6 +104,6 @@
     camelize: camelize,
     capitalize: capitalize,
     escapeXml: escapeXml,
-    graphemeSplit: graphemeSplit
+    graphemeSplit: graphemeSplit,
   };
 })();

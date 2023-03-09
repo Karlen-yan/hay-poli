@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       toFixed = fabric.util.toFixed;
 
   if (fabric.Shadow) {
@@ -74,12 +73,11 @@
      * @return {fabric.Shadow} thisArg
      */
     initialize: function(options) {
-
       if (typeof options === 'string') {
         options = this._parseShadow(options);
       }
 
-      for (var prop in options) {
+      for (const prop in options) {
         this[prop] = options[prop];
       }
 
@@ -92,7 +90,7 @@
      * @return {Object} Shadow object with color, offsetX, offsetY and blur
      */
     _parseShadow: function(shadow) {
-      var shadowStr = shadow.trim(),
+      const shadowStr = shadow.trim(),
           offsetsAndBlur = fabric.Shadow.reOffsetsAndBlur.exec(shadowStr) || [],
           color = shadowStr.replace(fabric.Shadow.reOffsetsAndBlur, '') || 'rgb(0,0,0)';
 
@@ -100,7 +98,7 @@
         color: color.trim(),
         offsetX: parseFloat(offsetsAndBlur[1], 10) || 0,
         offsetY: parseFloat(offsetsAndBlur[2], 10) || 0,
-        blur: parseFloat(offsetsAndBlur[3], 10) || 0
+        blur: parseFloat(offsetsAndBlur[3], 10) || 0,
       };
     },
 
@@ -120,14 +118,14 @@
      * @return {String} SVG representation of a shadow
      */
     toSVG: function(object) {
-      var fBoxX = 40, fBoxY = 40, NUM_FRACTION_DIGITS = fabric.Object.NUM_FRACTION_DIGITS,
+      let fBoxX = 40, fBoxY = 40, NUM_FRACTION_DIGITS = fabric.Object.NUM_FRACTION_DIGITS,
           offset = fabric.util.rotateVector(
-            { x: this.offsetX, y: this.offsetY },
+            {x: this.offsetX, y: this.offsetY},
             fabric.util.degreesToRadians(-object.angle)),
           BLUR_BOX = 20, color = new fabric.Color(this.color);
 
       if (object.width && object.height) {
-        //http://www.w3.org/TR/SVG/filters.html#FilterEffectsRegion
+        // http://www.w3.org/TR/SVG/filters.html#FilterEffectsRegion
         // we add some extra space to filter box to contain the blur ( 20 )
         fBoxX = toFixed((Math.abs(offset.x) + this.blur) / object.width, NUM_FRACTION_DIGITS) * 100 + BLUR_BOX;
         fBoxY = toFixed((Math.abs(offset.y) + this.blur) / object.height, NUM_FRACTION_DIGITS) * 100 + BLUR_BOX;
@@ -168,10 +166,10 @@
           offsetX: this.offsetX,
           offsetY: this.offsetY,
           affectStroke: this.affectStroke,
-          nonScaling: this.nonScaling
+          nonScaling: this.nonScaling,
         };
       }
-      var obj = { }, proto = fabric.Shadow.prototype;
+      const obj = { }, proto = fabric.Shadow.prototype;
 
       ['color', 'blur', 'offsetX', 'offsetY', 'affectStroke', 'nonScaling'].forEach(function(prop) {
         if (this[prop] !== proto[prop]) {
@@ -180,7 +178,7 @@
       }, this);
 
       return obj;
-    }
+    },
   });
 
   /**
@@ -191,5 +189,4 @@
    */
   // eslint-disable-next-line max-len
   fabric.Shadow.reOffsetsAndBlur = /(?:\s|^)(-?\d+(?:\.\d*)?(?:px)?(?:\s?|$))?(-?\d+(?:\.\d*)?(?:px)?(?:\s?|$))?(\d+(?:\.\d*)?(?:px)?)?(?:\s?|$)(?:$|\s)/;
-
 })(typeof exports !== 'undefined' ? exports : this);

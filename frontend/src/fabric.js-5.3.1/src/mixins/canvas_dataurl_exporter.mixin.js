@@ -1,4 +1,4 @@
-(function () {
+(function() {
   fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.StaticCanvas.prototype */ {
 
     /**
@@ -33,10 +33,10 @@
      *   multiplier: 2
      * });
      */
-    toDataURL: function (options) {
+    toDataURL: function(options) {
       options || (options = { });
 
-      var format = options.format || 'png',
+      const format = options.format || 'png',
           quality = options.quality || 1,
           multiplier = (options.multiplier || 1) * (options.enableRetinaScaling ? this.getRetinaScaling() : 1),
           canvasEl = this.toCanvasElement(multiplier, options);
@@ -59,7 +59,7 @@
     toCanvasElement: function(multiplier, cropping) {
       multiplier = multiplier || 1;
       cropping = cropping || { };
-      var scaledWidth = (cropping.width || this.width) * multiplier,
+      const scaledWidth = (cropping.width || this.width) * multiplier,
           scaledHeight = (cropping.height || this.height) * multiplier,
           zoom = this.getZoom(),
           originalWidth = this.width,
@@ -93,5 +93,4 @@
       return canvasEl;
     },
   });
-
 })();

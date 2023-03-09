@@ -5,7 +5,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
    * @return {Number} angle value
    */
   _getAngleValueForStraighten: function() {
-    var angle = this.angle % 360;
+    const angle = this.angle % 360;
     if (angle > 0) {
       return Math.round((angle - 1) / 90) * 90;
     }
@@ -31,7 +31,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
   fxStraighten: function(callbacks) {
     callbacks = callbacks || { };
 
-    var empty = function() { },
+    const empty = function() { },
         onComplete = callbacks.onComplete || empty,
         onChange = callbacks.onChange || empty,
         _this = this;
@@ -50,7 +50,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
         onComplete();
       },
     });
-  }
+  },
 });
 
 fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.StaticCanvas.prototype */ {
@@ -61,7 +61,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
    * @return {fabric.Canvas} thisArg
    * @chainable
    */
-  straightenObject: function (object) {
+  straightenObject: function(object) {
     object.straighten();
     this.requestRenderAll();
     return this;
@@ -72,9 +72,9 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
    * @param {fabric.Object} object Object to straighten
    * @return {fabric.Canvas} thisArg
    */
-  fxStraightenObject: function (object) {
+  fxStraightenObject: function(object) {
     return object.fxStraighten({
-      onChange: this.requestRenderAllBound
+      onChange: this.requestRenderAllBound,
     });
-  }
+  },
 });

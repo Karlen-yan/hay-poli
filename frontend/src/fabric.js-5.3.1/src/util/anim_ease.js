@@ -1,12 +1,11 @@
 (function() {
-
   function normalize(a, c, p, s) {
     if (a < Math.abs(c)) {
       a = c;
       s = p / 4;
     }
     else {
-      //handle the 0/0 case:
+      // handle the 0/0 case:
       if (c === 0 && a === 0) {
         s = p / (2 * Math.PI) * Math.asin(1);
       }
@@ -14,7 +13,7 @@
         s = p / (2 * Math.PI) * Math.asin(c / a);
       }
     }
-    return { a: a, c: c, p: p, s: s };
+    return {a: a, c: c, p: p, s: s};
   }
 
   function elastic(opts, t, d) {
@@ -190,7 +189,7 @@
    * @memberOf fabric.util.ease
    */
   function easeInElastic(t, b, c, d) {
-    var s = 1.70158, p = 0, a = c;
+    let s = 1.70158, p = 0, a = c;
     if (t === 0) {
       return b;
     }
@@ -201,7 +200,7 @@
     if (!p) {
       p = d * 0.3;
     }
-    var opts = normalize(a, c, p, s);
+    const opts = normalize(a, c, p, s);
     return -elastic(opts, t, d) + b;
   }
 
@@ -210,7 +209,7 @@
    * @memberOf fabric.util.ease
    */
   function easeOutElastic(t, b, c, d) {
-    var s = 1.70158, p = 0, a = c;
+    let s = 1.70158, p = 0, a = c;
     if (t === 0) {
       return b;
     }
@@ -221,7 +220,7 @@
     if (!p) {
       p = d * 0.3;
     }
-    var opts = normalize(a, c, p, s);
+    const opts = normalize(a, c, p, s);
     return opts.a * Math.pow(2, -10 * t) * Math.sin((t * d - opts.s) * (2 * Math.PI) / opts.p ) + opts.c + b;
   }
 
@@ -230,7 +229,7 @@
    * @memberOf fabric.util.ease
    */
   function easeInOutElastic(t, b, c, d) {
-    var s = 1.70158, p = 0, a = c;
+    let s = 1.70158, p = 0, a = c;
     if (t === 0) {
       return b;
     }
@@ -241,7 +240,7 @@
     if (!p) {
       p = d * (0.3 * 1.5);
     }
-    var opts = normalize(a, c, p, s);
+    const opts = normalize(a, c, p, s);
     if (t < 1) {
       return -0.5 * elastic(opts, t, d) + b;
     }
@@ -291,7 +290,7 @@
    * @memberOf fabric.util.ease
    */
   function easeInBounce(t, b, c, d) {
-    return c - easeOutBounce (d - t, 0, c, d) + b;
+    return c - easeOutBounce(d - t, 0, c, d) + b;
   }
 
   /**
@@ -319,7 +318,7 @@
    */
   function easeInOutBounce(t, b, c, d) {
     if (t < d / 2) {
-      return easeInBounce (t * 2, 0, c, d) * 0.5 + b;
+      return easeInBounce(t * 2, 0, c, d) * 0.5 + b;
     }
     return easeOutBounce(t * 2 - d, 0, c, d) * 0.5 + c * 0.5 + b;
   }
@@ -392,7 +391,6 @@
     easeInOutBack: easeInOutBack,
     easeInBounce: easeInBounce,
     easeOutBounce: easeOutBounce,
-    easeInOutBounce: easeInOutBounce
+    easeInOutBounce: easeInOutBounce,
   };
-
 })();

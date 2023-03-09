@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric  = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       filters = fabric.Image.filters,
       createClass = fabric.util.createClass;
 
@@ -48,7 +47,7 @@
      * Vibrance value, from -1 to 1.
      * Increases/decreases the saturation of more muted colors with less effect on saturated colors.
      * A value of 0 has no effect.
-     * 
+     *
      * @param {Number} vibrance
      * @default
      */
@@ -73,7 +72,7 @@
       if (this.vibrance === 0) {
         return;
       }
-      var imageData = options.imageData,
+      let imageData = options.imageData,
           data = imageData.data, len = data.length,
           adjust = -this.vibrance, i, max, avg, amt;
 
@@ -118,5 +117,4 @@
    * @return {fabric.Image.filters.Vibrance} Instance of fabric.Image.filters.Vibrance
    */
   fabric.Image.filters.Vibrance.fromObject = fabric.Image.filters.BaseFilter.fromObject;
-
 })(typeof exports !== 'undefined' ? exports : this);

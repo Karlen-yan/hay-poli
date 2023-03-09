@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric  = global.fabric || (global.fabric = { }), pow = Math.pow, floor = Math.floor,
+  const fabric = global.fabric || (global.fabric = { }), pow = Math.pow, floor = Math.floor,
       sqrt = Math.sqrt, abs = Math.abs, round = Math.round, sin = Math.sin,
       ceil = Math.ceil,
       filters = fabric.Image.filters,
@@ -90,23 +89,23 @@
      * @param {Object} options.programCache A map of compiled shader programs, keyed by filter type.
      */
     retrieveShader: function(options) {
-      var filterWindow = this.getFilterWindow(), cacheKey = this.type + '_' + filterWindow;
+      const filterWindow = this.getFilterWindow(), cacheKey = this.type + '_' + filterWindow;
       if (!options.programCache.hasOwnProperty(cacheKey)) {
-        var fragmentShader = this.generateShader(filterWindow);
+        const fragmentShader = this.generateShader(filterWindow);
         options.programCache[cacheKey] = this.createProgram(options.context, fragmentShader);
       }
       return options.programCache[cacheKey];
     },
 
     getFilterWindow: function() {
-      var scale = this.tempScale;
+      const scale = this.tempScale;
       return Math.ceil(this.lanczosLobes / scale);
     },
 
     getTaps: function() {
-      var lobeFunction = this.lanczosCreate(this.lanczosLobes), scale = this.tempScale,
+      const lobeFunction = this.lanczosCreate(this.lanczosLobes), scale = this.tempScale,
           filterWindow = this.getFilterWindow(), taps = new Array(filterWindow);
-      for (var i = 1; i <= filterWindow; i++) {
+      for (let i = 1; i <= filterWindow; i++) {
         taps[i - 1] = lobeFunction(i * scale);
       }
       return taps;
@@ -120,7 +119,7 @@
       var offsets = new Array(filterWindow),
           fragmentShader = this.fragmentSourceTOP, filterWindow;
 
-      for (var i = 1; i <= filterWindow; i++) {
+      for (let i = 1; i <= filterWindow; i++) {
         offsets[i - 1] = i + '.0 * uDelta';
       }
 
@@ -200,7 +199,7 @@
           return 1.0;
         }
         x *= Math.PI;
-        var xx = x / lobes;
+        const xx = x / lobes;
         return (sin(x) / x) * sin(xx) / xx;
       };
     },
@@ -213,14 +212,14 @@
      * @param {Number} scaleY
      */
     applyTo2d: function(options) {
-      var imageData = options.imageData,
+      const imageData = options.imageData,
           scaleX = this.scaleX,
           scaleY = this.scaleY;
 
       this.rcpScaleX = 1 / scaleX;
       this.rcpScaleY = 1 / scaleY;
 
-      var oW = imageData.width, oH = imageData.height,
+      let oW = imageData.width, oH = imageData.height,
           dW = round(oW * scaleX), dH = round(oH * scaleY),
           newData;
 
@@ -249,7 +248,7 @@
      * @returns {ImageData}
      */
     sliceByTwo: function(options, oW, oH, dW, dH) {
-      var imageData = options.imageData,
+      let imageData = options.imageData,
           mult = 0.5, doneW = false, doneH = false, stepW = oW * mult,
           stepH = oH * mult, resources = fabric.filterBackend.resources,
           tmpCanvas, ctx, sX = 0, sY = 0, dX = oW, dY = 0;
@@ -303,9 +302,8 @@
      * @returns {ImageData}
      */
     lanczosResize: function(options, oW, oH, dW, dH) {
-
       function process(u) {
-        var v, i, weight, idx, a, red, green,
+        let v, i, weight, idx, a, red, green,
             blue, alpha, fX, fY;
         center.x = (u + 0.5) * ratioX;
         icenter.x = floor(center.x);
@@ -321,7 +319,7 @@
             if (!cacheLanc[fX]) {
               cacheLanc[fX] = { };
             }
-            for (var j = icenter.y - range2Y; j <= icenter.y + range2Y; j++) {
+            for (let j = icenter.y - range2Y; j <= icenter.y + range2Y; j++) {
               if (j < 0 || j >= oH) {
                 continue;
               }
@@ -378,7 +376,7 @@
      * @returns {ImageData}
      */
     bilinearFiltering: function(options, oW, oH, dW, dH) {
-      var a, b, c, d, x, y, i, j, xDiff, yDiff, chnl,
+      let a, b, c, d, x, y, i, j, xDiff, yDiff, chnl,
           color, offset = 0, origPix, ratioX = this.rcpScaleX,
           ratioY = this.rcpScaleY,
           w4 = 4 * (oW - 1), img = options.imageData,
@@ -416,33 +414,33 @@
      * @returns {ImageData}
      */
     hermiteFastResize: function(options, oW, oH, dW, dH) {
-      var ratioW = this.rcpScaleX, ratioH = this.rcpScaleY,
+      const ratioW = this.rcpScaleX, ratioH = this.rcpScaleY,
           ratioWHalf = ceil(ratioW / 2),
           ratioHHalf = ceil(ratioH / 2),
           img = options.imageData, data = img.data,
           img2 = options.ctx.createImageData(dW, dH), data2 = img2.data;
-      for (var j = 0; j < dH; j++) {
-        for (var i = 0; i < dW; i++) {
-          var x2 = (i + j * dW) * 4, weight = 0, weights = 0, weightsAlpha = 0,
+      for (let j = 0; j < dH; j++) {
+        for (let i = 0; i < dW; i++) {
+          let x2 = (i + j * dW) * 4, weight = 0, weights = 0, weightsAlpha = 0,
               gxR = 0, gxG = 0, gxB = 0, gxA = 0, centerY = (j + 0.5) * ratioH;
-          for (var yy = floor(j * ratioH); yy < (j + 1) * ratioH; yy++) {
-            var dy = abs(centerY - (yy + 0.5)) / ratioHHalf,
+          for (let yy = floor(j * ratioH); yy < (j + 1) * ratioH; yy++) {
+            const dy = abs(centerY - (yy + 0.5)) / ratioHHalf,
                 centerX = (i + 0.5) * ratioW, w0 = dy * dy;
-            for (var xx = floor(i * ratioW); xx < (i + 1) * ratioW; xx++) {
-              var dx = abs(centerX - (xx + 0.5)) / ratioWHalf,
+            for (let xx = floor(i * ratioW); xx < (i + 1) * ratioW; xx++) {
+              let dx = abs(centerX - (xx + 0.5)) / ratioWHalf,
                   w = sqrt(w0 + dx * dx);
               /* eslint-disable max-depth */
               if (w > 1 && w < -1) {
                 continue;
               }
-              //hermite filter
+              // hermite filter
               weight = 2 * w * w * w - 3 * w * w + 1;
               if (weight > 0) {
                 dx = 4 * (xx + yy * oW);
-                //alpha
+                // alpha
                 gxA += weight * data[dx + 3];
                 weightsAlpha += weight;
-                //colors
+                // colors
                 if (data[dx + 3] < 255) {
                   weight = weight * data[dx + 3] / 250;
                 }
@@ -473,9 +471,9 @@
         scaleX: this.scaleX,
         scaleY: this.scaleY,
         resizeType: this.resizeType,
-        lanczosLobes: this.lanczosLobes
+        lanczosLobes: this.lanczosLobes,
       };
-    }
+    },
   });
 
   /**
@@ -486,5 +484,4 @@
    * @return {fabric.Image.filters.Resize} Instance of fabric.Image.filters.Resize
    */
   fabric.Image.filters.Resize.fromObject = fabric.Image.filters.BaseFilter.fromObject;
-
 })(typeof exports !== 'undefined' ? exports : this);

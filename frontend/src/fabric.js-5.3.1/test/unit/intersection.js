@@ -1,11 +1,10 @@
 (function() {
-
   QUnit.module('fabric.Intersection');
 
   QUnit.test('constructor & properties', function(assert) {
     assert.ok(typeof fabric.Intersection === 'function');
 
-    var intersection = new fabric.Intersection();
+    let intersection = new fabric.Intersection();
 
     assert.ok(intersection);
     assert.ok(intersection instanceof fabric.Intersection);
@@ -15,26 +14,26 @@
     assert.ok('status' in intersection, 'has status property');
     assert.equal(intersection.status, undefined, 'no default value for status');
 
-    var status = 'status';
+    const status = 'status';
     intersection = new fabric.Intersection(status);
     assert.equal(intersection.status, status, 'constructor pass status value');
   });
 
   QUnit.test('appendPoint', function(assert) {
-    var point = new fabric.Point(1, 1);
-    var intersection = new fabric.Intersection();
+    const point = new fabric.Point(1, 1);
+    const intersection = new fabric.Intersection();
     assert.ok(typeof intersection.appendPoint === 'function', 'has appendPoint method');
-    var returned = intersection.appendPoint(point);
+    const returned = intersection.appendPoint(point);
     assert.ok(returned instanceof fabric.Intersection, 'returns a fabric.Intersection');
     assert.equal(returned, intersection, 'is chainable');
     assert.equal(intersection.points.indexOf(point), 0, 'now intersection contain points');
   });
 
   QUnit.test('appendPoints', function(assert) {
-    var point = new fabric.Point(1, 1);
-    var intersection = new fabric.Intersection();
+    const point = new fabric.Point(1, 1);
+    const intersection = new fabric.Intersection();
     assert.ok(typeof intersection.appendPoints === 'function', 'has appendPoint method');
-    var returned = intersection.appendPoints([point, point]);
+    const returned = intersection.appendPoints([point, point]);
     assert.ok(returned instanceof fabric.Intersection, 'returns a fabric.Intersection');
     assert.equal(returned, intersection, 'is chainable');
     assert.equal(intersection.points.indexOf(point), 0, 'now intersection contain points');
@@ -42,7 +41,7 @@
   });
 
   QUnit.test('intersectLineLine simple intersection', function(assert) {
-    var p1 = new fabric.Point(0, 0), p2 = new fabric.Point(10,10),
+    const p1 = new fabric.Point(0, 0), p2 = new fabric.Point(10, 10),
         p3 = new fabric.Point(0, 10), p4 = new fabric.Point(10, 0),
         intersection = fabric.Intersection.intersectLineLine(p1, p2, p3, p4);
     assert.ok(typeof fabric.Intersection.intersectLineLine === 'function', 'has intersectLineLine function');
@@ -52,7 +51,7 @@
   });
 
   QUnit.test('intersectLineLine parallel', function(assert) {
-    var p1 = new fabric.Point(0, 0), p2 = new fabric.Point(0,10),
+    const p1 = new fabric.Point(0, 0), p2 = new fabric.Point(0, 10),
         p3 = new fabric.Point(10, 0), p4 = new fabric.Point(10, 10),
         intersection = fabric.Intersection.intersectLineLine(p1, p2, p3, p4);
     assert.ok(intersection instanceof fabric.Intersection, 'returns a fabric.Intersection');
@@ -61,7 +60,7 @@
   });
 
   QUnit.test('intersectLineLine coincident', function(assert) {
-    var p1 = new fabric.Point(0, 0), p2 = new fabric.Point(0, 10),
+    const p1 = new fabric.Point(0, 0), p2 = new fabric.Point(0, 10),
         p3 = new fabric.Point(0, 0), p4 = new fabric.Point(0, 10),
         intersection = fabric.Intersection.intersectLineLine(p1, p2, p3, p4);
     assert.ok(intersection instanceof fabric.Intersection, 'returns a fabric.Intersection');
@@ -70,7 +69,7 @@
   });
 
   QUnit.test('intersectLineLine coincident but different', function(assert) {
-    var p1 = new fabric.Point(0, 0), p2 = new fabric.Point(0, 10),
+    const p1 = new fabric.Point(0, 0), p2 = new fabric.Point(0, 10),
         p3 = new fabric.Point(0, 1), p4 = new fabric.Point(0, 9),
         intersection = fabric.Intersection.intersectLineLine(p1, p2, p3, p4);
     assert.ok(intersection instanceof fabric.Intersection, 'returns a fabric.Intersection');
@@ -79,7 +78,7 @@
   });
 
   QUnit.test('intersectLineLine no intersect', function(assert) {
-    var p1 = new fabric.Point(0, 0), p2 = new fabric.Point(0,10),
+    const p1 = new fabric.Point(0, 0), p2 = new fabric.Point(0, 10),
         p3 = new fabric.Point(10, 0), p4 = new fabric.Point(1, 10),
         intersection = fabric.Intersection.intersectLineLine(p1, p2, p3, p4);
     assert.ok(intersection instanceof fabric.Intersection, 'returns a fabric.Intersection');
@@ -88,7 +87,7 @@
   });
 
   QUnit.test('intersectLinePolygon', function(assert) {
-    var p1 = new fabric.Point(0, 5), p2 = new fabric.Point(10, 5),
+    const p1 = new fabric.Point(0, 5), p2 = new fabric.Point(10, 5),
         p3 = new fabric.Point(5, 0), p4 = new fabric.Point(2, 10),
         p5 = new fabric.Point(8, 10), points = [p3, p4, p5],
         intersection = fabric.Intersection.intersectLinePolygon(p1, p2, points);
@@ -101,7 +100,7 @@
   });
 
   QUnit.test('intersectLinePolygon in one point', function(assert) {
-    var p1 = new fabric.Point(0, 5), p2 = new fabric.Point(5, 5),
+    const p1 = new fabric.Point(0, 5), p2 = new fabric.Point(5, 5),
         p3 = new fabric.Point(5, 0), p4 = new fabric.Point(2, 10),
         p5 = new fabric.Point(8, 10), points = [p3, p4, p5],
         intersection = fabric.Intersection.intersectLinePolygon(p1, p2, points);
@@ -112,7 +111,7 @@
   });
 
   QUnit.test('intersectLinePolygon in one point', function(assert) {
-    var p1 = new fabric.Point(0, 5), p2 = new fabric.Point(3, 5),
+    const p1 = new fabric.Point(0, 5), p2 = new fabric.Point(3, 5),
         p3 = new fabric.Point(5, 0), p4 = new fabric.Point(2, 10),
         p5 = new fabric.Point(8, 10), points = [p3, p4, p5],
         intersection = fabric.Intersection.intersectLinePolygon(p1, p2, points);
@@ -122,8 +121,8 @@
   });
 
   QUnit.test('intersectLinePolygon on a polygon segment', function(assert) {
-    //TODO: fix this. it should return coincident.
-    var p1 = new fabric.Point(1, 10), p2 = new fabric.Point(9, 10),
+    // TODO: fix this. it should return coincident.
+    const p1 = new fabric.Point(1, 10), p2 = new fabric.Point(9, 10),
         p3 = new fabric.Point(5, 0), p4 = new fabric.Point(2, 10),
         p5 = new fabric.Point(8, 10), points = [p3, p4, p5],
         intersection = fabric.Intersection.intersectLinePolygon(p1, p2, points);
@@ -135,7 +134,7 @@
   });
 
   QUnit.test('intersectPolygonPolygon not intersecting', function(assert) {
-    var p3b = new fabric.Point(50, 0), p4b = new fabric.Point(20, 100),
+    const p3b = new fabric.Point(50, 0), p4b = new fabric.Point(20, 100),
         p5b = new fabric.Point(80, 100), pointsb = [p3b, p4b, p5b],
         p3 = new fabric.Point(5, 0), p4 = new fabric.Point(2, 10),
         p5 = new fabric.Point(8, 10), points = [p3, p4, p5],
@@ -147,7 +146,7 @@
   });
 
   QUnit.test('intersectPolygonPolygon intersecting', function(assert) {
-    var p3b = new fabric.Point(1, 1), p4b = new fabric.Point(3, 1),
+    const p3b = new fabric.Point(1, 1), p4b = new fabric.Point(3, 1),
         p5b = new fabric.Point(3, 3), p6b = new fabric.Point(1, 3),
         pointsb = [p3b, p4b, p5b, p6b],
         p3 = new fabric.Point(2, 2), p4 = new fabric.Point(4, 2),
@@ -163,7 +162,7 @@
   });
 
   QUnit.test('intersectPolygonRectangle intersecting', function(assert) {
-    var p3b = new fabric.Point(1, 1),
+    const p3b = new fabric.Point(1, 1),
         p5b = new fabric.Point(3, 3),
         p3 = new fabric.Point(2, 2), p4 = new fabric.Point(4, 2),
         p5 = new fabric.Point(4, 4), p6 = new fabric.Point(2, 4),
@@ -178,7 +177,7 @@
   });
 
   QUnit.test('intersectPolygonRectangle not intersecting', function(assert) {
-    var p3b = new fabric.Point(10, 10),
+    const p3b = new fabric.Point(10, 10),
         p5b = new fabric.Point(30, 30),
         p3 = new fabric.Point(2, 2), p4 = new fabric.Point(4, 2),
         p5 = new fabric.Point(4, 4), p6 = new fabric.Point(2, 4),

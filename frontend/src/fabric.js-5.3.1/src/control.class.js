@@ -1,11 +1,10 @@
 (function(global) {
-
   'use strict';
 
-  var fabric = global.fabric || (global.fabric = { });
+  const fabric = global.fabric || (global.fabric = { });
 
   function Control(options) {
-    for (var i in options) {
+    for (const i in options) {
       this[i] = options[i];
     }
   }
@@ -228,7 +227,7 @@
      * @return {Boolean}
      */
     getVisibility: function(fabricObject, controlKey) {
-      var objectVisibility = fabricObject._controlsVisibility;
+      const objectVisibility = fabricObject._controlsVisibility;
       if (objectVisibility && typeof objectVisibility[controlKey] !== 'undefined') {
         return objectVisibility[controlKey];
       }
@@ -245,10 +244,10 @@
     },
 
 
-    positionHandler: function(dim, finalMatrix /*, fabricObject, currentControl */) {
-      var point = fabric.util.transformPoint({
+    positionHandler: function(dim, finalMatrix /* , fabricObject, currentControl */) {
+      const point = fabric.util.transformPoint({
         x: this.x * dim.x + this.offsetX,
-        y: this.y * dim.y + this.offsetY }, finalMatrix);
+        y: this.y * dim.y + this.offsetY}, finalMatrix);
       return point;
     },
 
@@ -262,7 +261,7 @@
      * @param {boolean} isTouch true if touch corner, false if normal corner
      */
     calcCornerCoords: function(objectAngle, objectCornerSize, centerX, centerY, isTouch) {
-      var cosHalfOffset,
+      let cosHalfOffset,
           sinHalfOffset,
           cosHalfOffsetComp,
           sinHalfOffsetComp,
@@ -270,10 +269,10 @@
           ySize = (isTouch) ? this.touchSizeY : this.sizeY;
       if (xSize && ySize && xSize !== ySize) {
         // handle rectangular corners
-        var controlTriangleAngle = Math.atan2(ySize, xSize);
+        const controlTriangleAngle = Math.atan2(ySize, xSize);
         var cornerHypotenuse = Math.sqrt(xSize * xSize + ySize * ySize) / 2;
         var newTheta = controlTriangleAngle - fabric.util.degreesToRadians(objectAngle);
-        var newThetaComp = Math.PI / 2 - controlTriangleAngle - fabric.util.degreesToRadians(objectAngle);
+        const newThetaComp = Math.PI / 2 - controlTriangleAngle - fabric.util.degreesToRadians(objectAngle);
         cosHalfOffset = cornerHypotenuse * fabric.util.cos(newTheta);
         sinHalfOffset = cornerHypotenuse * fabric.util.sin(newTheta);
         // use complementary angle for two corners
@@ -283,7 +282,7 @@
       else {
         // handle square corners
         // use default object corner size unless size is defined
-        var cornerSize = (xSize && ySize) ? xSize : objectCornerSize;
+        const cornerSize = (xSize && ySize) ? xSize : objectCornerSize;
         /* 0.7071067812 stands for sqrt(2)/2 */
         cornerHypotenuse = cornerSize * 0.7071067812;
         // complementary angles are equal since they're both 45 degrees
@@ -335,5 +334,4 @@
       }
     },
   };
-
 })(typeof exports !== 'undefined' ? exports : this);

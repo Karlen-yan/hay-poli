@@ -1,5 +1,4 @@
 (function() {
-
   /**
    * @private
    * @param {String} eventName
@@ -9,7 +8,7 @@
     if (!this.__eventListeners[eventName]) {
       return;
     }
-    var eventListener = this.__eventListeners[eventName];
+    const eventListener = this.__eventListeners[eventName];
     if (handler) {
       eventListener[eventListener.indexOf(handler)] = false;
     }
@@ -33,7 +32,7 @@
     }
     // one object with key/value pairs was passed
     if (arguments.length === 1) {
-      for (var prop in eventName) {
+      for (const prop in eventName) {
         this.on(prop, eventName[prop]);
       }
     }
@@ -47,7 +46,7 @@
   }
 
   function _once(eventName, handler) {
-    var _handler = function () {
+    var _handler = function() {
       handler.apply(this, arguments);
       this.off(eventName, _handler);
     }.bind(this);
@@ -57,7 +56,7 @@
   function once(eventName, handler) {
     // one object with key/value pairs was passed
     if (arguments.length === 1) {
-      for (var prop in eventName) {
+      for (const prop in eventName) {
         _once.call(this, prop, eventName[prop]);
       }
     }
@@ -90,7 +89,7 @@
     }
     // one object with key/value pairs was passed
     else if (arguments.length === 1 && typeof arguments[0] === 'object') {
-      for (var prop in eventName) {
+      for (const prop in eventName) {
         _removeEventListener.call(this, prop, eventName[prop]);
       }
     }
@@ -113,12 +112,12 @@
       return this;
     }
 
-    var listenersForEvent = this.__eventListeners[eventName];
+    const listenersForEvent = this.__eventListeners[eventName];
     if (!listenersForEvent) {
       return this;
     }
 
-    for (var i = 0, len = listenersForEvent.length; i < len; i++) {
+    for (let i = 0, len = listenersForEvent.length; i < len; i++) {
       listenersForEvent[i] && listenersForEvent[i].call(this, options || { });
     }
     this.__eventListeners[eventName] = listenersForEvent.filter(function(value) {

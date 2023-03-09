@@ -1,5 +1,4 @@
 (function() {
-
   function parseDecoration(object) {
     if (object.textDecoration) {
       object.textDecoration.indexOf('underline') > -1 && (object.underline = true);
@@ -233,7 +232,7 @@
      */
     _fireSelectionChanged: function() {
       this.fire('selection:changed');
-      this.canvas && this.canvas.fire('text:selection:changed', { target: this });
+      this.canvas && this.canvas.fire('text:selection:changed', {target: this});
     },
 
     /**
@@ -277,7 +276,7 @@
       if (!this.isEditing || !this.canvas || !this.canvas.contextTop) {
         return;
       }
-      var ctx = this.canvas.contextTop, v = this.canvas.viewportTransform;
+      const ctx = this.canvas.contextTop, v = this.canvas.viewportTransform;
       ctx.save();
       ctx.transform(v[0], v[1], v[2], v[3], v[4], v[5]);
       this.transform(ctx);
@@ -292,7 +291,7 @@
       if (!this.isEditing || !this.canvas || !this.canvas.contextTop) {
         return;
       }
-      var boundaries = this._getCursorBoundaries(),
+      const boundaries = this._getCursorBoundaries(),
           ctx = this.canvas.contextTop;
       this.clearContextTop(true);
       if (this.selectionStart === this.selectionEnd) {
@@ -306,7 +305,7 @@
 
     _clearTextArea: function(ctx) {
       // we add 4 pixel, to be sure to do not leave any pixel out
-      var width = this.width + 4, height = this.height + 4;
+      const width = this.width + 4, height = this.height + 4;
       ctx.clearRect(-width / 2, -height / 2, width, height);
     },
 
@@ -317,7 +316,6 @@
      * @param {String} typeOfBoundaries
      */
     _getCursorBoundaries: function(position) {
-
       // left/top are left/top of entire text box
       // leftOffset/topOffset are offset from that left/top point of a text box
 
@@ -325,14 +323,14 @@
         position = this.selectionStart;
       }
 
-      var left = this._getLeftOffset(),
+      const left = this._getLeftOffset(),
           top = this._getTopOffset(),
           offsets = this._getCursorBoundariesOffsets(position);
       return {
         left: left,
         top: top,
         leftOffset: offsets.left,
-        topOffset: offsets.top
+        topOffset: offsets.top,
       };
     },
 
@@ -343,7 +341,7 @@
       if (this.cursorOffsetCache && 'top' in this.cursorOffsetCache) {
         return this.cursorOffsetCache;
       }
-      var lineLeftOffset,
+      let lineLeftOffset,
           lineIndex,
           charIndex,
           topOffset = 0,
@@ -352,11 +350,11 @@
           cursorPosition = this.get2DCursorLocation(position);
       charIndex = cursorPosition.charIndex;
       lineIndex = cursorPosition.lineIndex;
-      for (var i = 0; i < lineIndex; i++) {
+      for (let i = 0; i < lineIndex; i++) {
         topOffset += this.getHeightOfLine(i);
       }
       lineLeftOffset = this._getLineLeftOffset(lineIndex);
-      var bound = this.__charBounds[lineIndex][charIndex];
+      const bound = this.__charBounds[lineIndex][charIndex];
       bound && (leftOffset = bound.left);
       if (this.charSpacing !== 0 && charIndex === this._textLines[lineIndex].length) {
         leftOffset -= this._getWidthOfCharSpacing();
@@ -378,7 +376,7 @@
      * @param {CanvasRenderingContext2D} ctx transformed context to draw on
      */
     renderCursor: function(boundaries, ctx) {
-      var cursorLocation = this.get2DCursorLocation(),
+      let cursorLocation = this.get2DCursorLocation(),
           lineIndex = cursorLocation.lineIndex,
           charIndex = cursorLocation.charIndex > 0 ? cursorLocation.charIndex - 1 : 0,
           charHeight = this.getValueOfPropertyAt(lineIndex, charIndex, 'fontSize'),
@@ -386,8 +384,8 @@
           cursorWidth = this.cursorWidth / multiplier,
           topOffset = boundaries.topOffset,
           dy = this.getValueOfPropertyAt(lineIndex, charIndex, 'deltaY');
-      topOffset += (1 - this._fontSizeFraction) * this.getHeightOfLine(lineIndex) / this.lineHeight
-        - charHeight * (1 - this._fontSizeFraction);
+      topOffset += (1 - this._fontSizeFraction) * this.getHeightOfLine(lineIndex) / this.lineHeight -
+        charHeight * (1 - this._fontSizeFraction);
 
       if (this.inCompositionMode) {
         this.renderSelection(boundaries, ctx);
@@ -407,8 +405,7 @@
      * @param {CanvasRenderingContext2D} ctx transformed context to draw on
      */
     renderSelection: function(boundaries, ctx) {
-
-      var selectionStart = this.inCompositionMode ? this.hiddenTextarea.selectionStart : this.selectionStart,
+      const selectionStart = this.inCompositionMode ? this.hiddenTextarea.selectionStart : this.selectionStart,
           selectionEnd = this.inCompositionMode ? this.hiddenTextarea.selectionEnd : this.selectionEnd,
           isJustify = this.textAlign.indexOf('justify') !== -1,
           start = this.get2DCursorLocation(selectionStart),
@@ -418,8 +415,8 @@
           startChar = start.charIndex < 0 ? 0 : start.charIndex,
           endChar = end.charIndex < 0 ? 0 : end.charIndex;
 
-      for (var i = startLine; i <= endLine; i++) {
-        var lineOffset = this._getLineLeftOffset(i) || 0,
+      for (let i = startLine; i <= endLine; i++) {
+        let lineOffset = this._getLineLeftOffset(i) || 0,
             lineHeight = this.getHeightOfLine(i),
             realLineHeight = 0, boxStart = 0, boxEnd = 0;
 
@@ -434,16 +431,16 @@
             boxEnd = this.__charBounds[endLine][endChar].left;
           }
           else {
-            var charSpacing = this._getWidthOfCharSpacing();
-            boxEnd = this.__charBounds[endLine][endChar - 1].left
-              + this.__charBounds[endLine][endChar - 1].width - charSpacing;
+            const charSpacing = this._getWidthOfCharSpacing();
+            boxEnd = this.__charBounds[endLine][endChar - 1].left +
+              this.__charBounds[endLine][endChar - 1].width - charSpacing;
           }
         }
         realLineHeight = lineHeight;
         if (this.lineHeight < 1 || (i === endLine && this.lineHeight > 1)) {
           lineHeight /= this.lineHeight;
         }
-        var drawStart = boundaries.left + lineOffset + boxStart,
+        let drawStart = boundaries.left + lineOffset + boxStart,
             drawWidth = boxEnd - boxStart,
             drawHeight = lineHeight, extraTop = 0;
         if (this.inCompositionMode) {
@@ -474,7 +471,7 @@
      * @return {Number} Character font size
      */
     getCurrentCharFontSize: function() {
-      var cp = this._getCurrentCharIndex();
+      const cp = this._getCurrentCharIndex();
       return this.getValueOfPropertyAt(cp.l, cp.c, 'fontSize');
     },
 
@@ -487,7 +484,7 @@
      * @return {String | fabric.Gradient | fabric.Pattern} Character color (fill)
      */
     getCurrentCharColor: function() {
-      var cp = this._getCurrentCharIndex();
+      const cp = this._getCurrentCharIndex();
       return this.getValueOfPropertyAt(cp.l, cp.c, 'fill');
     },
 
@@ -496,10 +493,10 @@
      * @private
      */
     _getCurrentCharIndex: function() {
-      var cursorPosition = this.get2DCursorLocation(this.selectionStart, true),
+      const cursorPosition = this.get2DCursorLocation(this.selectionStart, true),
           charIndex = cursorPosition.charIndex > 0 ? cursorPosition.charIndex - 1 : 0;
-      return { l: cursorPosition.lineIndex, c: charIndex };
-    }
+      return {l: cursorPosition.lineIndex, c: charIndex};
+    },
   });
 
   /**
@@ -510,13 +507,13 @@
    * @param {function} [callback] invoked with new instance as argument
    */
   fabric.IText.fromObject = function(object, callback) {
-    var styles = fabric.util.stylesFromArray(object.styles, object.text);
-    //copy object to prevent mutation
-    var objCopy = Object.assign({}, object, { styles: styles });
+    const styles = fabric.util.stylesFromArray(object.styles, object.text);
+    // copy object to prevent mutation
+    const objCopy = Object.assign({}, object, {styles: styles});
     parseDecoration(objCopy);
     if (objCopy.styles) {
-      for (var i in objCopy.styles) {
-        for (var j in objCopy.styles[i]) {
+      for (const i in objCopy.styles) {
+        for (const j in objCopy.styles[i]) {
           parseDecoration(objCopy.styles[i][j]);
         }
       }

@@ -15,10 +15,10 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
    * @param {Function} [callbacks.onChange] Invoked on every step of animation
    * @return {fabric.AnimationContext} context
    */
-  fxCenterObjectH: function (object, callbacks) {
+  fxCenterObjectH: function(object, callbacks) {
     callbacks = callbacks || { };
 
-    var empty = function() { },
+    const empty = function() { },
         onComplete = callbacks.onComplete || empty,
         onChange = callbacks.onChange || empty,
         _this = this;
@@ -36,7 +36,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
       onComplete: function() {
         object.setCoords();
         onComplete();
-      }
+      },
     });
   },
 
@@ -48,10 +48,10 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
    * @param {Function} [callbacks.onChange] Invoked on every step of animation
    * @return {fabric.AnimationContext} context
    */
-  fxCenterObjectV: function (object, callbacks) {
+  fxCenterObjectV: function(object, callbacks) {
     callbacks = callbacks || { };
 
-    var empty = function() { },
+    const empty = function() { },
         onComplete = callbacks.onComplete || empty,
         onChange = callbacks.onChange || empty,
         _this = this;
@@ -69,7 +69,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
       onComplete: function() {
         object.setCoords();
         onComplete();
-      }
+      },
     });
   },
 
@@ -81,10 +81,10 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
    * @param {Function} [callbacks.onChange] Invoked on every step of animation
    * @return {fabric.AnimationContext} context
    */
-  fxRemove: function (object, callbacks) {
+  fxRemove: function(object, callbacks) {
     callbacks = callbacks || { };
 
-    var empty = function() { },
+    const empty = function() { },
         onComplete = callbacks.onComplete || empty,
         onChange = callbacks.onChange || empty,
         _this = this;
@@ -99,12 +99,12 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
         _this.requestRenderAll();
         onChange();
       },
-      onComplete: function () {
+      onComplete: function() {
         _this.remove(object);
         onComplete();
-      }
+      },
     });
-  }
+  },
 });
 
 fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prototype */ {
@@ -127,13 +127,13 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
    * object.animate('left', { duration: ... });
    *
    */
-  animate: function () {
+  animate: function() {
     if (arguments[0] && typeof arguments[0] === 'object') {
-      var propsToAnimate = [], prop, skipCallbacks, out = [];
+      let propsToAnimate = [], prop, skipCallbacks, out = [];
       for (prop in arguments[0]) {
         propsToAnimate.push(prop);
       }
-      for (var i = 0, len = propsToAnimate.length; i < len; i++) {
+      for (let i = 0, len = propsToAnimate.length; i < len; i++) {
         prop = propsToAnimate[i];
         skipCallbacks = i !== len - 1;
         out.push(this._animate(prop, arguments[0][prop], arguments[1], skipCallbacks));
@@ -153,7 +153,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
    * @param {Boolean} [skipCallbacks] When true, callbacks like onchange and oncomplete are not invoked
    */
   _animate: function(property, to, options, skipCallbacks) {
-    var _this = this, propPair;
+    let _this = this, propPair;
 
     to = to.toString();
 
@@ -168,13 +168,13 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       propPair = property.split('.');
     }
 
-    var propIsColor =
+    const propIsColor =
       _this.colorProperties.indexOf(property) > -1 ||
       (propPair && _this.colorProperties.indexOf(propPair[1]) > -1);
 
-    var currentValue = propPair
-      ? this.get(propPair[0])[propPair[1]]
-      : this.get(property);
+    const currentValue = propPair ?
+      this.get(propPair[0])[propPair[1]] :
+      this.get(property);
 
     if (!('from' in options)) {
       options.from = currentValue;
@@ -189,7 +189,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       }
     }
 
-    var _options = {
+    const _options = {
       target: this,
       startValue: options.from,
       endValue: to,
@@ -199,7 +199,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       abort: options.abort && function(value, valueProgress, timeProgress) {
         return options.abort.call(_this, value, valueProgress, timeProgress);
       },
-      onChange: function (value, valueProgress, timeProgress) {
+      onChange: function(value, valueProgress, timeProgress) {
         if (propPair) {
           _this[propPair[0]][propPair[1]] = value;
         }
@@ -211,14 +211,14 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
         }
         options.onChange && options.onChange(value, valueProgress, timeProgress);
       },
-      onComplete: function (value, valueProgress, timeProgress) {
+      onComplete: function(value, valueProgress, timeProgress) {
         if (skipCallbacks) {
           return;
         }
 
         _this.setCoords();
         options.onComplete && options.onComplete(value, valueProgress, timeProgress);
-      }
+      },
     };
 
     if (propIsColor) {
@@ -227,5 +227,5 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
     else {
       return fabric.util.animate(_options);
     }
-  }
+  },
 });

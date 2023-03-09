@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric  = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       filters = fabric.Image.filters,
       createClass = fabric.util.createClass;
 
@@ -72,7 +71,7 @@
      * @param {ImageData} options.imageData The Uint8Array to be filtered.
      */
     applyTo2d: function(options) {
-      var imageData = options.imageData,
+      let imageData = options.imageData,
           data = imageData.data, i,
           len = data.length, value,
           mode = this.mode;
@@ -100,9 +99,9 @@
      * @param {Object} options.programCache A map of compiled shader programs, keyed by filter type.
      */
     retrieveShader: function(options) {
-      var cacheKey = this.type + '_' + this.mode;
+      const cacheKey = this.type + '_' + this.mode;
       if (!options.programCache.hasOwnProperty(cacheKey)) {
-        var shaderSource = this.fragmentSource[this.mode];
+        const shaderSource = this.fragmentSource[this.mode];
         options.programCache[cacheKey] = this.createProgram(options.context, shaderSource);
       }
       return options.programCache[cacheKey];
@@ -128,7 +127,7 @@
      */
     sendUniformData: function(gl, uniformLocations) {
       // default average mode.
-      var mode = 1;
+      const mode = 1;
       gl.uniform1i(uniformLocations.uMode, mode);
     },
 
@@ -150,5 +149,4 @@
    * @return {fabric.Image.filters.Grayscale} Instance of fabric.Image.filters.Grayscale
    */
   fabric.Image.filters.Grayscale.fromObject = fabric.Image.filters.BaseFilter.fromObject;
-
 })(typeof exports !== 'undefined' ? exports : this);

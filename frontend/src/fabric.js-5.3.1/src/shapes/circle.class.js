@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       degreesToRadians = fabric.util.degreesToRadians;
 
   if (fabric.Circle) {
@@ -83,7 +82,7 @@
      * of the instance
      */
     _toSVG: function() {
-      var svgString, x = 0, y = 0,
+      let svgString, x = 0, y = 0,
           angle = (this.endAngle - this.startAngle) % 360;
 
       if (angle === 0) {
@@ -91,11 +90,11 @@
           '<circle ', 'COMMON_PARTS',
           'cx="' + x + '" cy="' + y + '" ',
           'r="', this.radius,
-          '" />\n'
+          '" />\n',
         ];
       }
       else {
-        var start = degreesToRadians(this.startAngle),
+        const start = degreesToRadians(this.startAngle),
             end = degreesToRadians(this.endAngle),
             radius = this.radius,
             startX = fabric.util.cos(start) * radius,
@@ -107,7 +106,7 @@
           '<path d="M ' + startX + ' ' + startY,
           ' A ' + radius + ' ' + radius,
           ' 0 ', +largeFlag + ' 1', ' ' + endX + ' ' + endY,
-          '" ', 'COMMON_PARTS', ' />\n'
+          '" ', 'COMMON_PARTS', ' />\n',
         ];
       }
       return svgString;
@@ -126,7 +125,7 @@
         this.radius,
         degreesToRadians(this.startAngle),
         degreesToRadians(this.endAngle),
-        false
+        false,
       );
       this._renderPaintInOrder(ctx);
     },
@@ -176,7 +175,7 @@
    * @throws {Error} If value of `r` attribute is missing or invalid
    */
   fabric.Circle.fromElement = function(element, callback) {
-    var parsedAttributes = fabric.parseAttributes(element, fabric.Circle.ATTRIBUTE_NAMES);
+    const parsedAttributes = fabric.parseAttributes(element, fabric.Circle.ATTRIBUTE_NAMES);
 
     if (!isValidRadius(parsedAttributes)) {
       throw new Error('value of `r` attribute is required and can not be negative');
@@ -206,5 +205,4 @@
   fabric.Circle.fromObject = function(object, callback) {
     fabric.Object._fromObject('Circle', object, callback);
   };
-
 })(typeof exports !== 'undefined' ? exports : this);

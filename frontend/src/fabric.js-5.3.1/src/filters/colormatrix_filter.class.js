@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric  = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       filters = fabric.Image.filters,
       createClass = fabric.util.createClass;
 
@@ -60,7 +59,7 @@
       1, 0, 0, 0, 0,
       0, 1, 0, 0, 0,
       0, 0, 1, 0, 0,
-      0, 0, 0, 1, 0
+      0, 0, 0, 1, 0,
     ],
 
     mainParameter: 'matrix',
@@ -90,7 +89,7 @@
      * @param {ImageData} options.imageData The Uint8Array to be filtered.
      */
     applyTo2d: function(options) {
-      var imageData = options.imageData,
+      let imageData = options.imageData,
           data = imageData.data,
           iLen = data.length,
           m = this.matrix,
@@ -135,12 +134,12 @@
      * @param {Object} uniformLocations A map of string uniform names to WebGLUniformLocation objects
      */
     sendUniformData: function(gl, uniformLocations) {
-      var m = this.matrix,
+      const m = this.matrix,
           matrix = [
             m[0], m[1], m[2], m[3],
             m[5], m[6], m[7], m[8],
             m[10], m[11], m[12], m[13],
-            m[15], m[16], m[17], m[18]
+            m[15], m[16], m[17], m[18],
           ],
           constants = [m[4], m[9], m[14], m[19]];
       gl.uniformMatrix4fv(uniformLocations.uColorMatrix, false, matrix);

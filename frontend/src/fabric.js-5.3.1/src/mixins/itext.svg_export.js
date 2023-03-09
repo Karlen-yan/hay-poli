@@ -1,6 +1,6 @@
 /* _TO_SVG_START_ */
 (function() {
-  var toFixed = fabric.util.toFixed,
+  const toFixed = fabric.util.toFixed,
       multipleSpacesRegex = /  +/g;
 
   fabric.util.object.extend(fabric.Text.prototype, /** @lends fabric.Text.prototype */ {
@@ -11,7 +11,7 @@
      * @return {String} svg representation of an instance
      */
     _toSVG: function() {
-      var offsets = this._getSVGLeftTopOffsets(),
+      const offsets = this._getSVGLeftTopOffsets(),
           textAndBg = this._getSVGTextAndBg(offsets.textTop, offsets.textLeft);
       return this._wrapSVGTextAndBg(textAndBg);
     },
@@ -24,7 +24,7 @@
     toSVG: function(reviver) {
       return this._createBaseSVGMarkup(
         this._toSVG(),
-        { reviver: reviver, noStyle: true, withShadow: true }
+        {reviver: reviver, noStyle: true, withShadow: true},
       );
     },
 
@@ -35,7 +35,7 @@
       return {
         textLeft: -this.width / 2,
         textTop: -this.height / 2,
-        lineTop: this.getHeightOfLine(0)
+        lineTop: this.getHeightOfLine(0),
       };
     },
 
@@ -43,7 +43,7 @@
      * @private
      */
     _wrapSVGTextAndBg: function(textAndBg) {
-      var noShadow = true,
+      const noShadow = true,
           textDecoration = this.getSvgTextDecoration(this);
       return [
         textAndBg.textBgRects.join(''),
@@ -55,7 +55,7 @@
         (textDecoration ? 'text-decoration="' + textDecoration + '" ' : ''),
         'style="', this.getSvgStyles(noShadow), '"', this.addPaintOrder(), ' >',
         textAndBg.textSpans.join(''),
-        '</text>\n'
+        '</text>\n',
       ];
     },
 
@@ -66,14 +66,14 @@
      * @return {Object}
      */
     _getSVGTextAndBg: function(textTopOffset, textLeftOffset) {
-      var textSpans = [],
+      let textSpans = [],
           textBgRects = [],
           height = textTopOffset, lineOffset;
       // bounding-box background
       this._setSVGBg(textBgRects);
 
       // text and text-background
-      for (var i = 0, len = this._textLines.length; i < len; i++) {
+      for (let i = 0, len = this._textLines.length; i < len; i++) {
         lineOffset = this._getLineLeftOffset(i);
         if (this.textBackgroundColor || this.styleHas('textBackgroundColor', i)) {
           this._setSVGTextLineBg(textBgRects, i, textLeftOffset + lineOffset, height);
@@ -84,7 +84,7 @@
 
       return {
         textSpans: textSpans,
-        textBgRects: textBgRects
+        textBgRects: textBgRects,
       };
     },
 
@@ -92,7 +92,7 @@
      * @private
      */
     _createTextCharSpan: function(_char, styleDecl, left, top) {
-      var shouldUseWhitespace = _char !== _char.trim() || _char.match(multipleSpacesRegex),
+      let shouldUseWhitespace = _char !== _char.trim() || _char.match(multipleSpacesRegex),
           styleProps = this.getSvgSpanStyles(styleDecl, shouldUseWhitespace),
           fillStyles = styleProps ? 'style="' + styleProps + '"' : '',
           dy = styleDecl.deltaY, dySpan = '',
@@ -105,13 +105,13 @@
         toFixed(top, NUM_FRACTION_DIGITS), '" ', dySpan,
         fillStyles, '>',
         fabric.util.string.escapeXml(_char),
-        '</tspan>'
+        '</tspan>',
       ].join('');
     },
 
     _setSVGTextLineText: function(textSpans, lineIndex, textLeftOffset, textTopOffset) {
       // set proper line offset
-      var lineHeight = this.getHeightOfLine(lineIndex),
+      let lineHeight = this.getHeightOfLine(lineIndex),
           isJustify = this.textAlign.indexOf('justify') !== -1,
           actualStyle,
           nextStyle,
@@ -122,7 +122,7 @@
           timeToRender;
 
       textTopOffset += lineHeight * (1 - this._fontSizeFraction) / this.lineHeight;
-      for (var i = 0, len = line.length - 1; i <= len; i++) {
+      for (let i = 0, len = line.length - 1; i <= len; i++) {
         timeToRender = i === len || this.charSpacing;
         charsToRender += line[i];
         charBox = this.__charBounds[lineIndex][i];
@@ -156,7 +156,7 @@
     },
 
     _pushTextBgRect: function(textBgRects, color, left, top, width, height) {
-      var NUM_FRACTION_DIGITS = fabric.Object.NUM_FRACTION_DIGITS;
+      const NUM_FRACTION_DIGITS = fabric.Object.NUM_FRACTION_DIGITS;
       textBgRects.push(
         '\t\t<rect ',
         this._getFillAttributes(color),
@@ -172,13 +172,13 @@
     },
 
     _setSVGTextLineBg: function(textBgRects, i, leftOffset, textTopOffset) {
-      var line = this._textLines[i],
+      let line = this._textLines[i],
           heightOfLine = this.getHeightOfLine(i) / this.lineHeight,
           boxWidth = 0,
           boxStart = 0,
           charBox, currentColor,
           lastColor = this.getValueOfPropertyAt(i, 0, 'textBackgroundColor');
-      for (var j = 0, jlen = line.length; j < jlen; j++) {
+      for (let j = 0, jlen = line.length; j < jlen; j++) {
         charBox = this.__charBounds[i][j];
         currentColor = this.getValueOfPropertyAt(i, j, 'textBackgroundColor');
         if (currentColor !== lastColor) {
@@ -205,7 +205,7 @@
      * @return {String}
      */
     _getFillAttributes: function(value) {
-      var fillColor = (value && typeof value === 'string') ? new fabric.Color(value) : '';
+      const fillColor = (value && typeof value === 'string') ? new fabric.Color(value) : '';
       if (!fillColor || !fillColor.getSource() || fillColor.getAlpha() === 1) {
         return 'fill="' + value + '"';
       }
@@ -216,14 +216,14 @@
      * @private
      */
     _getSVGLineTopOffset: function(lineIndex) {
-      var lineTopOffset = 0, lastHeight = 0;
+      let lineTopOffset = 0, lastHeight = 0;
       for (var j = 0; j < lineIndex; j++) {
         lineTopOffset += this.getHeightOfLine(j);
       }
       lastHeight = this.getHeightOfLine(j);
       return {
         lineTop: lineTopOffset,
-        offset: (this._fontSizeMult - this._fontSizeFraction) * lastHeight / (this.lineHeight * this._fontSizeMult)
+        offset: (this._fontSizeMult - this._fontSizeFraction) * lastHeight / (this.lineHeight * this._fontSizeMult),
       };
     },
 
@@ -233,7 +233,7 @@
      * @return {String}
      */
     getSvgStyles: function(skipShadow) {
-      var svgStyle = fabric.Object.prototype.getSvgStyles.call(this, skipShadow);
+      const svgStyle = fabric.Object.prototype.getSvgStyles.call(this, skipShadow);
       return svgStyle + ' white-space: pre;';
     },
   });

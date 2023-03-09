@@ -1,15 +1,14 @@
 (function() {
-
   function arrayFromCoords(coords) {
     return [
       new fabric.Point(coords.tl.x, coords.tl.y),
       new fabric.Point(coords.tr.x, coords.tr.y),
       new fabric.Point(coords.br.x, coords.br.y),
-      new fabric.Point(coords.bl.x, coords.bl.y)
+      new fabric.Point(coords.bl.x, coords.bl.y),
     ];
   }
 
-  var util = fabric.util,
+  const util = fabric.util,
       degreesToRadians = util.degreesToRadians,
       multiplyMatrices = util.multiplyTransformMatrices,
       transformPoint = util.transformPoint;
@@ -101,11 +100,11 @@
      * @return {Boolean} true if object intersects with an area formed by 2 points
      */
     intersectsWithRect: function(pointTL, pointBR, absolute, calculate) {
-      var coords = this.getCoords(absolute, calculate),
+      const coords = this.getCoords(absolute, calculate),
           intersection = fabric.Intersection.intersectPolygonRectangle(
             coords,
             pointTL,
-            pointBR
+            pointBR,
           );
       return intersection.status === 'Intersection';
     },
@@ -118,14 +117,14 @@
      * @return {Boolean} true if object intersects with another object
      */
     intersectsWithObject: function(other, absolute, calculate) {
-      var intersection = fabric.Intersection.intersectPolygonPolygon(
+      const intersection = fabric.Intersection.intersectPolygonPolygon(
         this.getCoords(absolute, calculate),
-        other.getCoords(absolute, calculate)
+        other.getCoords(absolute, calculate),
       );
 
-      return intersection.status === 'Intersection'
-        || other.isContainedWithinObject(this, absolute, calculate)
-        || this.isContainedWithinObject(other, absolute, calculate);
+      return intersection.status === 'Intersection' ||
+        other.isContainedWithinObject(this, absolute, calculate) ||
+        this.isContainedWithinObject(other, absolute, calculate);
     },
 
     /**
@@ -136,7 +135,7 @@
      * @return {Boolean} true if object is fully contained within area of another object
      */
     isContainedWithinObject: function(other, absolute, calculate) {
-      var points = this.getCoords(absolute, calculate),
+      let points = this.getCoords(absolute, calculate),
           otherCoords = absolute ? other.aCoords : other.lineCoords,
           i = 0, lines = other._getImageLines(otherCoords);
       for (; i < 4; i++) {
@@ -156,7 +155,7 @@
      * @return {Boolean} true if object is fully contained within area formed by 2 points
      */
     isContainedWithinRect: function(pointTL, pointBR, absolute, calculate) {
-      var boundingRect = this.getBoundingRect(absolute, calculate);
+      const boundingRect = this.getBoundingRect(absolute, calculate);
 
       return (
         boundingRect.left >= pointTL.x &&
@@ -192,8 +191,8 @@
       if (!this.canvas) {
         return false;
       }
-      var pointTL = this.canvas.vptCoords.tl, pointBR = this.canvas.vptCoords.br;
-      var points = this.getCoords(true, calculate);
+      const pointTL = this.canvas.vptCoords.tl, pointBR = this.canvas.vptCoords.br;
+      const points = this.getCoords(true, calculate);
       // if some point is on screen, the object is on screen.
       if (points.some(function(point) {
         return point.x <= pointBR.x && point.x >= pointTL.x &&
@@ -219,7 +218,7 @@
      */
     _containsCenterOfCanvas: function(pointTL, pointBR, calculate) {
       // worst case scenario the object is so big that contains the screen
-      var centerPoint = { x: (pointTL.x + pointBR.x) / 2, y: (pointTL.y + pointBR.y) / 2 };
+      const centerPoint = {x: (pointTL.x + pointBR.x) / 2, y: (pointTL.y + pointBR.y) / 2};
       if (this.containsPoint(centerPoint, null, true, calculate)) {
         return true;
       }
@@ -235,11 +234,11 @@
       if (!this.canvas) {
         return false;
       }
-      var pointTL = this.canvas.vptCoords.tl, pointBR = this.canvas.vptCoords.br;
+      const pointTL = this.canvas.vptCoords.tl, pointBR = this.canvas.vptCoords.br;
       if (this.intersectsWithRect(pointTL, pointBR, true, calculate)) {
         return true;
       }
-      var allPointsAreOutside = this.getCoords(true, calculate).every(function(point) {
+      const allPointsAreOutside = this.getCoords(true, calculate).every(function(point) {
         return (point.x >= pointBR.x || point.x <= pointTL.x) &&
         (point.y >= pointBR.y || point.y <= pointTL.y);
       });
@@ -252,24 +251,23 @@
      * @param {Object} oCoords Coordinates of the object corners
      */
     _getImageLines: function(oCoords) {
-
-      var lines = {
+      const lines = {
         topline: {
           o: oCoords.tl,
-          d: oCoords.tr
+          d: oCoords.tr,
         },
         rightline: {
           o: oCoords.tr,
-          d: oCoords.br
+          d: oCoords.br,
         },
         bottomline: {
           o: oCoords.br,
-          d: oCoords.bl
+          d: oCoords.bl,
         },
         leftline: {
           o: oCoords.bl,
-          d: oCoords.tl
-        }
+          d: oCoords.tl,
+        },
       };
 
       // // debugging
@@ -299,11 +297,11 @@
      */
     // remove yi, not used but left code here just in case.
     _findCrossPoints: function(point, lines) {
-      var b1, b2, a1, a2, xi, // yi,
+      let b1, b2, a1, a2, xi, // yi,
           xcount = 0,
           iLine;
 
-      for (var lineKey in lines) {
+      for (const lineKey in lines) {
         iLine = lines[lineKey];
         // optimisation 1: line below point. no cross
         if ((iLine.o.y < point.y) && (iLine.d.y < point.y)) {
@@ -348,7 +346,7 @@
      * @return {Object} Object with left, top, width, height properties
      */
     getBoundingRect: function(absolute, calculate) {
-      var coords = this.getCoords(absolute, calculate);
+      const coords = this.getCoords(absolute, calculate);
       return util.makeBoundingBoxFromPoints(coords);
     },
 
@@ -412,7 +410,7 @@
      */
     scaleToWidth: function(value, absolute) {
       // adjust to bounding rect factor so that rotated shapes would fit as well
-      var boundingRectFactor = this.getBoundingRect(absolute).width / this.getScaledWidth();
+      const boundingRectFactor = this.getBoundingRect(absolute).width / this.getScaledWidth();
       return this.scale(value / this.width / boundingRectFactor);
     },
 
@@ -425,18 +423,18 @@
      */
     scaleToHeight: function(value, absolute) {
       // adjust to bounding rect factor so that rotated shapes would fit as well
-      var boundingRectFactor = this.getBoundingRect(absolute).height / this.getScaledHeight();
+      const boundingRectFactor = this.getBoundingRect(absolute).height / this.getScaledHeight();
       return this.scale(value / this.height / boundingRectFactor);
     },
 
     calcLineCoords: function() {
-      var vpt = this.getViewportTransform(),
+      const vpt = this.getViewportTransform(),
           padding = this.padding, angle = degreesToRadians(this.angle),
           cos = util.cos(angle), sin = util.sin(angle),
           cosP = cos * padding, sinP = sin * padding, cosPSinP = cosP + sinP,
           cosPMinusSinP = cosP - sinP, aCoords = this.calcACoords();
 
-      var lineCoords = {
+      const lineCoords = {
         tl: transformPoint(aCoords.tl, vpt),
         tr: transformPoint(aCoords.tr, vpt),
         bl: transformPoint(aCoords.bl, vpt),
@@ -484,17 +482,17 @@
     },
 
     calcACoords: function() {
-      var rotateMatrix = this._calcRotateMatrix(),
+      const rotateMatrix = this._calcRotateMatrix(),
           translateMatrix = this._calcTranslateMatrix(),
           finalMatrix = multiplyMatrices(translateMatrix, rotateMatrix),
           dim = this._getTransformedDimensions(),
           w = dim.x / 2, h = dim.y / 2;
       return {
         // corners
-        tl: transformPoint({ x: -w, y: -h }, finalMatrix),
-        tr: transformPoint({ x: w, y: -h }, finalMatrix),
-        bl: transformPoint({ x: -w, y: h }, finalMatrix),
-        br: transformPoint({ x: w, y: h }, finalMatrix)
+        tl: transformPoint({x: -w, y: -h}, finalMatrix),
+        tr: transformPoint({x: w, y: -h}, finalMatrix),
+        bl: transformPoint({x: -w, y: h}, finalMatrix),
+        br: transformPoint({x: w, y: h}, finalMatrix),
       };
     },
 
@@ -536,12 +534,12 @@
      * @return {Array} rotation matrix for the object
      */
     _calcTranslateMatrix: function() {
-      var center = this.getCenterPoint();
+      const center = this.getCenterPoint();
       return [1, 0, 0, 1, center.x, center.y];
     },
 
     transformMatrixKey: function(skipGroup) {
-      var sep = '_', prefix = '';
+      let sep = '_', prefix = '';
       if (!skipGroup && this.group) {
         prefix = this.group.transformMatrixKey(skipGroup) + sep;
       };
@@ -558,11 +556,11 @@
      * @return {Array} transform matrix for the object
      */
     calcTransformMatrix: function(skipGroup) {
-      var matrix = this.calcOwnMatrix();
+      let matrix = this.calcOwnMatrix();
       if (skipGroup || !this.group) {
         return matrix;
       }
-      var key = this.transformMatrixKey(skipGroup), cache = this.matrixCache || (this.matrixCache = {});
+      const key = this.transformMatrixKey(skipGroup), cache = this.matrixCache || (this.matrixCache = {});
       if (cache.key === key) {
         return cache.value;
       }
@@ -580,11 +578,11 @@
      * @return {Array} transform matrix for the object
      */
     calcOwnMatrix: function() {
-      var key = this.transformMatrixKey(true), cache = this.ownMatrixCache || (this.ownMatrixCache = {});
+      const key = this.transformMatrixKey(true), cache = this.ownMatrixCache || (this.ownMatrixCache = {});
       if (cache.key === key) {
         return cache.value;
       }
-      var tMatrix = this._calcTranslateMatrix(),
+      const tMatrix = this._calcTranslateMatrix(),
           options = {
             angle: this.angle,
             translateX: tMatrix[4],
@@ -608,10 +606,10 @@
      * @return {Object} .y height dimension
      */
     _getNonTransformedDimensions: function() {
-      var strokeWidth = this.strokeWidth,
+      const strokeWidth = this.strokeWidth,
           w = this.width + strokeWidth,
           h = this.height + strokeWidth;
-      return { x: w, y: h };
+      return {x: w, y: h};
     },
 
     /*
@@ -629,7 +627,7 @@
       if (typeof skewY === 'undefined') {
         skewY = this.skewY;
       }
-      var dimensions, dimX, dimY,
+      let dimensions, dimX, dimY,
           noSkew = skewX === 0 && skewY === 0;
 
       if (this.strokeUniform) {
@@ -644,7 +642,7 @@
       if (noSkew) {
         return this._finalizeDimensions(dimX * this.scaleX, dimY * this.scaleY);
       }
-      var bbox = util.sizeAfterTransform(dimX, dimY, {
+      const bbox = util.sizeAfterTransform(dimX, dimY, {
         scaleX: this.scaleX,
         scaleY: this.scaleY,
         skewX: skewX,
@@ -663,9 +661,8 @@
      */
     _finalizeDimensions: function(width, height) {
       return this.strokeUniform ?
-        { x: width + this.strokeWidth, y: height + this.strokeWidth }
-        :
-        { x: width, y: height };
+        {x: width + this.strokeWidth, y: height + this.strokeWidth} :
+        {x: width, y: height};
     },
 
     /*
@@ -673,8 +670,8 @@
      * and active selection
      * private
      */
-    _calculateCurrentDimensions: function()  {
-      var vpt = this.getViewportTransform(),
+    _calculateCurrentDimensions: function() {
+      const vpt = this.getViewportTransform(),
           dim = this._getTransformedDimensions(),
           p = transformPoint(dim, vpt, true);
       return p.scalarAdd(2 * this.padding);

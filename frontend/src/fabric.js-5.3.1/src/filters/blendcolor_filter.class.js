@@ -1,7 +1,7 @@
 (function(global) {
   'use strict';
 
-  var fabric = global.fabric,
+  const fabric = global.fabric,
       filters = fabric.Image.filters,
       createClass = fabric.util.createClass;
 
@@ -111,7 +111,7 @@
      * @param {Object} options.programCache A map of compiled shader programs, keyed by filter type.
      */
     retrieveShader: function(options) {
-      var cacheKey = this.type + '_' + this.mode, shaderSource;
+      let cacheKey = this.type + '_' + this.mode, shaderSource;
       if (!options.programCache.hasOwnProperty(cacheKey)) {
         shaderSource = this.buildSource(this.mode);
         options.programCache[cacheKey] = this.createProgram(options.context, shaderSource);
@@ -126,7 +126,7 @@
      * @param {ImageData} options.imageData The Uint8ClampedArray to be filtered.
      */
     applyTo2d: function(options) {
-      var imageData = options.imageData,
+      let imageData = options.imageData,
           data = imageData.data, iLen = data.length,
           tr, tg, tb,
           r, g, b,
@@ -137,8 +137,7 @@
       tg = source[1] * this.alpha;
       tb = source[2] * this.alpha;
 
-      for (var i = 0; i < iLen; i += 4) {
-
+      for (let i = 0; i < iLen; i += 4) {
         r = data[i];
         g = data[i + 1];
         b = data[i + 2];
@@ -217,7 +216,7 @@
      * @param {Object} uniformLocations A map of string uniform names to WebGLUniformLocation objects
      */
     sendUniformData: function(gl, uniformLocations) {
-      var source = new fabric.Color(this.color).getSource();
+      const source = new fabric.Color(this.color).getSource();
       source[0] = this.alpha * source[0] / 255;
       source[1] = this.alpha * source[1] / 255;
       source[2] = this.alpha * source[2] / 255;
@@ -234,9 +233,9 @@
         type: this.type,
         color: this.color,
         mode: this.mode,
-        alpha: this.alpha
+        alpha: this.alpha,
       };
-    }
+    },
   });
 
   /**
@@ -247,5 +246,4 @@
    * @return {fabric.Image.filters.BlendColor} Instance of fabric.Image.filters.BlendColor
    */
   fabric.Image.filters.BlendColor.fromObject = fabric.Image.filters.BaseFilter.fromObject;
-
 })(typeof exports !== 'undefined' ? exports : this);

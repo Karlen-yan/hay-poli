@@ -1,11 +1,10 @@
 (function(global) {
-
   'use strict';
 
-  var fabric = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       extend = fabric.util.object.extend,
       clone = fabric.util.object.clone,
-      coordProps = { x1: 1, x2: 1, y1: 1, y2: 1 };
+      coordProps = {x1: 1, x2: 1, y1: 1, y2: 1};
 
   if (fabric.Line) {
     fabric.warn('fabric.Line is already defined');
@@ -88,13 +87,13 @@
       this.width = Math.abs(this.x2 - this.x1);
       this.height = Math.abs(this.y2 - this.y1);
 
-      this.left = 'left' in options
-        ? options.left
-        : this._getLeftToOriginX();
+      this.left = 'left' in options ?
+        options.left :
+        this._getLeftToOriginX();
 
-      this.top = 'top' in options
-        ? options.top
-        : this._getTopToOriginY();
+      this.top = 'top' in options ?
+        options.top :
+        this._getTopToOriginY();
     },
 
     /**
@@ -119,13 +118,13 @@
         origin: 'originX',
         axis1: 'x1',
         axis2: 'x2',
-        dimension: 'width'
+        dimension: 'width',
       },
       { // possible values of origin
         nearest: 'left',
         center: 'center',
-        farthest: 'right'
-      }
+        farthest: 'right',
+      },
     ),
 
     /**
@@ -137,13 +136,13 @@
         origin: 'originY',
         axis1: 'y1',
         axis2: 'y2',
-        dimension: 'height'
+        dimension: 'height',
       },
       { // possible values of origin
         nearest: 'top',
         center: 'center',
-        farthest: 'bottom'
-      }
+        farthest: 'bottom',
+      },
     ),
 
     /**
@@ -154,7 +153,7 @@
       ctx.beginPath();
 
 
-      var p = this.calcLinePoints();
+      const p = this.calcLinePoints();
       ctx.moveTo(p.x1, p.y1);
       ctx.lineTo(p.x2, p.y2);
 
@@ -163,7 +162,7 @@
       // TODO: test this
       // make sure setting "fill" changes color of a line
       // (by copying fillStyle to strokeStyle, since line is stroked, not filled)
-      var origStrokeStyle = ctx.strokeStyle;
+      const origStrokeStyle = ctx.strokeStyle;
       ctx.strokeStyle = this.stroke || ctx.fillStyle;
       this.stroke && this._renderStroke(ctx);
       ctx.strokeStyle = origStrokeStyle;
@@ -197,7 +196,7 @@
      * @private
      */
     _getNonTransformedDimensions: function() {
-      var dim = this.callSuper('_getNonTransformedDimensions');
+      const dim = this.callSuper('_getNonTransformedDimensions');
       if (this.strokeLineCap === 'butt') {
         if (this.width === 0) {
           dim.y -= this.strokeWidth;
@@ -214,7 +213,7 @@
      * @private
      */
     calcLinePoints: function() {
-      var xMult = this.x1 <= this.x2 ? -1 : 1,
+      const xMult = this.x1 <= this.x2 ? -1 : 1,
           yMult = this.y1 <= this.y2 ? -1 : 1,
           x1 = (xMult * this.width * 0.5),
           y1 = (yMult * this.height * 0.5),
@@ -225,7 +224,7 @@
         x1: x1,
         x2: x2,
         y1: y1,
-        y2: y2
+        y2: y2,
       };
     },
 
@@ -236,14 +235,14 @@
      * of the instance
      */
     _toSVG: function() {
-      var p = this.calcLinePoints();
+      const p = this.calcLinePoints();
       return [
         '<line ', 'COMMON_PARTS',
         'x1="', p.x1,
         '" y1="', p.y1,
         '" x2="', p.x2,
         '" y2="', p.y2,
-        '" />\n'
+        '" />\n',
       ];
     },
     /* _TO_SVG_END_ */
@@ -268,12 +267,12 @@
    */
   fabric.Line.fromElement = function(element, callback, options) {
     options = options || { };
-    var parsedAttributes = fabric.parseAttributes(element, fabric.Line.ATTRIBUTE_NAMES),
+    const parsedAttributes = fabric.parseAttributes(element, fabric.Line.ATTRIBUTE_NAMES),
         points = [
           parsedAttributes.x1 || 0,
           parsedAttributes.y1 || 0,
           parsedAttributes.x2 || 0,
-          parsedAttributes.y2 || 0
+          parsedAttributes.y2 || 0,
         ];
     callback(new fabric.Line(points, extend(parsedAttributes, options)));
   };
@@ -291,7 +290,7 @@
       delete instance.points;
       callback && callback(instance);
     };
-    var options = clone(object, true);
+    const options = clone(object, true);
     options.points = [object.x1, object.y1, object.x2, object.y2];
     fabric.Object._fromObject('Line', options, _callback, 'points');
   };
@@ -300,7 +299,7 @@
    * Produces a function that calculates distance from canvas edge to Line origin.
    */
   function makeEdgeToOriginGetter(propertyNames, originValues) {
-    var origin = propertyNames.origin,
+    const origin = propertyNames.origin,
         axis1 = propertyNames.axis1,
         axis2 = propertyNames.axis2,
         dimension = propertyNames.dimension,
@@ -318,7 +317,5 @@
           return Math.max(this.get(axis1), this.get(axis2));
       }
     };
-
   }
-
 })(typeof exports !== 'undefined' ? exports : this);

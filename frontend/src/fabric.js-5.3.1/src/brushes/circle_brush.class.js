@@ -26,7 +26,7 @@ fabric.CircleBrush = fabric.util.createClass(fabric.BaseBrush, /** @lends fabric
    * @param {Object} pointer
    */
   drawDot: function(pointer) {
-    var point = this.addPoint(pointer),
+    const point = this.addPoint(pointer),
         ctx = this.canvas.contextTop;
     this._saveAndTransform(ctx);
     this.dot(ctx, point);
@@ -56,7 +56,7 @@ fabric.CircleBrush = fabric.util.createClass(fabric.BaseBrush, /** @lends fabric
    * @private
    */
   _render: function() {
-    var ctx  = this.canvas.contextTop, i, len,
+    let ctx = this.canvas.contextTop, i, len,
         points = this.points;
     this._saveAndTransform(ctx);
     for (i = 0, len = points.length; i < len; i++) {
@@ -87,32 +87,32 @@ fabric.CircleBrush = fabric.util.createClass(fabric.BaseBrush, /** @lends fabric
    * Invoked on mouse up
    */
   onMouseUp: function() {
-    var originalRenderOnAddRemove = this.canvas.renderOnAddRemove, i, len;
+    let originalRenderOnAddRemove = this.canvas.renderOnAddRemove, i, len;
     this.canvas.renderOnAddRemove = false;
 
-    var circles = [];
+    const circles = [];
 
     for (i = 0, len = this.points.length; i < len; i++) {
-      var point = this.points[i],
+      const point = this.points[i],
           circle = new fabric.Circle({
             radius: point.radius,
             left: point.x,
             top: point.y,
             originX: 'center',
             originY: 'center',
-            fill: point.fill
+            fill: point.fill,
           });
 
       this.shadow && (circle.shadow = new fabric.Shadow(this.shadow));
 
       circles.push(circle);
     }
-    var group = new fabric.Group(circles);
+    const group = new fabric.Group(circles);
     group.canvas = this.canvas;
 
-    this.canvas.fire('before:path:created', { path: group });
+    this.canvas.fire('before:path:created', {path: group});
     this.canvas.add(group);
-    this.canvas.fire('path:created', { path: group });
+    this.canvas.fire('path:created', {path: group});
 
     this.canvas.clearContext(this.canvas.contextTop);
     this._resetShadow();
@@ -125,7 +125,7 @@ fabric.CircleBrush = fabric.util.createClass(fabric.BaseBrush, /** @lends fabric
    * @return {fabric.Point} Just added pointer point
    */
   addPoint: function(pointer) {
-    var pointerPoint = new fabric.Point(pointer.x, pointer.y),
+    const pointerPoint = new fabric.Point(pointer.x, pointer.y),
 
         circleRadius = fabric.util.getRandomInt(
           Math.max(0, this.width - 20), this.width + 20) / 2,
@@ -140,5 +140,5 @@ fabric.CircleBrush = fabric.util.createClass(fabric.BaseBrush, /** @lends fabric
     this.points.push(pointerPoint);
 
     return pointerPoint;
-  }
+  },
 });

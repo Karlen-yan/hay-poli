@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric  = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       extend = fabric.util.object.extend,
       filters = fabric.Image.filters,
       createClass = fabric.util.createClass;
@@ -78,7 +77,7 @@
      * @param {Object} canvasEl Canvas element to apply filter to
      */
     applyTo2d: function(options) {
-      var imageData = options.imageData,
+      let imageData = options.imageData,
           data = imageData.data, i,
           distance = this.distance * 255,
           r, g, b,
@@ -131,19 +130,19 @@
      * @param {Object} uniformLocations A map of string uniform names to WebGLUniformLocation objects
      */
     sendUniformData: function(gl, uniformLocations) {
-      var source = new fabric.Color(this.color).getSource(),
+      const source = new fabric.Color(this.color).getSource(),
           distance = parseFloat(this.distance),
           lowC = [
             0 + source[0] / 255 - distance,
             0 + source[1] / 255 - distance,
             0 + source[2] / 255 - distance,
-            1
+            1,
           ],
           highC = [
             source[0] / 255 + distance,
             source[1] / 255 + distance,
             source[2] / 255 + distance,
-            1
+            1,
           ];
       gl.uniform4fv(uniformLocations.uLow, lowC);
       gl.uniform4fv(uniformLocations.uHigh, highC);
@@ -156,9 +155,9 @@
     toObject: function() {
       return extend(this.callSuper('toObject'), {
         color: this.color,
-        distance: this.distance
+        distance: this.distance,
       });
-    }
+    },
   });
 
   /**
@@ -169,5 +168,4 @@
    * @return {fabric.Image.filters.RemoveColor} Instance of fabric.Image.filters.RemoveWhite
    */
   fabric.Image.filters.RemoveColor.fromObject = fabric.Image.filters.BaseFilter.fromObject;
-
 })(typeof exports !== 'undefined' ? exports : this);

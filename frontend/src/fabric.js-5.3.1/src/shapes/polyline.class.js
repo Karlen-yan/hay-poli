@@ -1,8 +1,7 @@
 (function(global) {
-
   'use strict';
 
-  var fabric = global.fabric || (global.fabric = { }),
+  const fabric = global.fabric || (global.fabric = { }),
       extend = fabric.util.object.extend,
       min = fabric.util.array.min,
       max = fabric.util.array.max,
@@ -78,12 +77,12 @@
     /**
      * @private
      */
-    _projectStrokeOnPoints: function () {
+    _projectStrokeOnPoints: function() {
       return projectStrokeOnPoints(this.points, this, true);
     },
 
     _setPositionDimensions: function(options) {
-      var calcDim = this._calcDimensions(options), correctLeftTop,
+      let calcDim = this._calcDimensions(options), correctLeftTop,
           correctSize = this.exactBoundingBox ? this.strokeWidth : 0;
       this.width = calcDim.width - correctSize;
       this.height = calcDim.height - correctSize;
@@ -92,12 +91,12 @@
           {
             // this looks bad, but is one way to keep it optional for now.
             x: calcDim.left - this.strokeWidth / 2 + correctSize / 2,
-            y: calcDim.top - this.strokeWidth / 2 + correctSize / 2
+            y: calcDim.top - this.strokeWidth / 2 + correctSize / 2,
           },
           'left',
           'top',
           this.originX,
-          this.originY
+          this.originY,
         );
       }
       if (typeof options.left === 'undefined') {
@@ -108,7 +107,7 @@
       }
       this.pathOffset = {
         x: calcDim.left + this.width / 2 + correctSize / 2,
-        y: calcDim.top + this.height / 2 + correctSize / 2
+        y: calcDim.top + this.height / 2 + correctSize / 2,
       };
     },
 
@@ -123,8 +122,7 @@
      * @private
      */
     _calcDimensions: function() {
-
-      var points = this.exactBoundingBox ? this._projectStrokeOnPoints() : this.points,
+      const points = this.exactBoundingBox ? this._projectStrokeOnPoints() : this.points,
           minX = min(points, 'x') || 0,
           minY = min(points, 'y') || 0,
           maxX = max(points, 'x') || 0,
@@ -147,7 +145,7 @@
      */
     toObject: function(propertiesToInclude) {
       return extend(this.callSuper('toObject', propertiesToInclude), {
-        points: this.points.concat()
+        points: this.points.concat(),
       });
     },
 
@@ -158,19 +156,19 @@
      * of the instance
      */
     _toSVG: function() {
-      var points = [], diffX = this.pathOffset.x, diffY = this.pathOffset.y,
+      const points = [], diffX = this.pathOffset.x, diffY = this.pathOffset.y,
           NUM_FRACTION_DIGITS = fabric.Object.NUM_FRACTION_DIGITS;
 
-      for (var i = 0, len = this.points.length; i < len; i++) {
+      for (let i = 0, len = this.points.length; i < len; i++) {
         points.push(
           toFixed(this.points[i].x - diffX, NUM_FRACTION_DIGITS), ',',
-          toFixed(this.points[i].y - diffY, NUM_FRACTION_DIGITS), ' '
+          toFixed(this.points[i].y - diffY, NUM_FRACTION_DIGITS), ' ',
         );
       }
       return [
         '<' + this.type + ' ', 'COMMON_PARTS',
         'points="', points.join(''),
-        '" />\n'
+        '" />\n',
       ];
     },
     /* _TO_SVG_END_ */
@@ -181,7 +179,7 @@
      * @param {CanvasRenderingContext2D} ctx Context to render on
      */
     commonRender: function(ctx) {
-      var point, len = this.points.length,
+      let point, len = this.points.length,
           x = this.pathOffset.x,
           y = this.pathOffset.y;
 
@@ -192,7 +190,7 @@
       }
       ctx.beginPath();
       ctx.moveTo(this.points[0].x - x, this.points[0].y - y);
-      for (var i = 0; i < len; i++) {
+      for (let i = 0; i < len; i++) {
         point = this.points[i];
         ctx.lineTo(point.x - x, point.y - y);
       }
@@ -216,7 +214,7 @@
      */
     complexity: function() {
       return this.get('points').length;
-    }
+    },
   });
 
   /* _FROM_SVG_START_ */
@@ -243,7 +241,7 @@
       }
       options || (options = { });
 
-      var points = fabric.parsePointsAttribute(element.getAttribute('points')),
+      const points = fabric.parsePointsAttribute(element.getAttribute('points')),
           parsedAttributes = fabric.parseAttributes(element, fabric[_class].ATTRIBUTE_NAMES);
       parsedAttributes.fromSVG = true;
       callback(new fabric[_class](points, extend(parsedAttributes, options)));
@@ -264,5 +262,4 @@
   fabric.Polyline.fromObject = function(object, callback) {
     return fabric.Object._fromObject('Polyline', object, callback, 'points');
   };
-
 })(typeof exports !== 'undefined' ? exports : this);
