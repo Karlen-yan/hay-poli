@@ -1,26 +1,28 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <div class="pedido">
-      <ProductDescription 
+  <div class="pedido">
+    <ProductDescription 
       :product="product"
       :active="active.product_drawer" 
-      v-on:close-product-drawer="closeProductDrawer()"/>
+      @close-product-drawer="closeProductDrawer()"
+    />
      
       
-      <div class="product-card-container">
-
-  <ProductSummaryCard 
-    v-for="product in items"
-    :key="product.id"
-    :product="product"
-    v-on:view-product="viewProduct($event)" />
-  <ProductSummaryCard 
-    v-for="product in items"
-    :key="product.id"
-    :product="product"
-    v-on:view-product="viewProduct($event)" />
-      </div>
+    <div class="product-card-container">
+      <ProductSummaryCard 
+        v-for="product in items"
+        :key="product.id"
+        :product="product"
+        @view-product="viewProduct($event)"
+      />
+      <ProductSummaryCard 
+        v-for="product in items"
+        :key="product.id"
+        :product="product"
+        @view-product="viewProduct($event)"
+      />
     </div>
+  </div>
 </template>
 <script>
 import items from '../data/items.js';

@@ -1,11 +1,22 @@
 <template>
-    <div class="card">
-        <h3>{{product.name}}</h3>
-        <h5 class="price">Precio: ${{product.price.toFixed(2)}}</h5>
-        <p class="description">Descripción: {{description}}</p>
-        <p class="text-muted">{{ product.category}}</p>
-        <button class="view-product-button" @click="$emit('view-product',product)">Ver producto</button>
-    </div>
+  <div class="card">
+    <h3>{{ product.name }}</h3>
+    <h5 class="price">
+      Precio: ${{ product.price.toFixed(2) }}
+    </h5>
+    <p class="description">
+      Descripción: {{ description }}
+    </p>
+    <p class="text-muted">
+      {{ product.category }}
+    </p>
+    <button
+      class="view-product-button"
+      @click="$emit('view-product',product)"
+    >
+      Ver producto
+    </button>
+  </div>
 </template>
 
 <script>

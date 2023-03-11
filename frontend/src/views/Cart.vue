@@ -1,24 +1,31 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
- <div class="cart__contenido">
-     <div class="srvicios__titulo">
+  <div class="cart__contenido">
+    <div class="srvicios__titulo">
       <h2>Tus productos </h2>
       
-  <div style="height: 230px; overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M0.00,49.85 C150.00,149.60 349.20,-49.85 500.00,49.85 L500.00,149.60 L0.00,149.60 Z" style="stroke: none; fill: #ffffff;"></path></svg></div>
-
-     </div>
-     <div class="cart-cont">
-   
-   
+      <div style="height: 230px; overflow: hidden;">
+        <svg
+          viewBox="0 0 500 150"
+          preserveAspectRatio="none"
+          style="height: 100%; width: 100%;"
+        ><path
+          d="M0.00,49.85 C150.00,149.60 349.20,-49.85 500.00,49.85 L500.00,149.60 L0.00,149.60 Z"
+          style="stroke: none; fill: #ffffff;"
+        /></svg>
+      </div>
+    </div>
+    <div class="cart-cont">
       <div class="cart-ind">
-        <img class="cart-img" src="" alt="">
+        <img
+          class="cart-img"
+          src=""
+          alt=""
+        >
         <h3>Nombre producto</h3>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores dignissimos est autem laudantium cum nemo, dolorum illum quia! Nam placeat temporibus quibusdam earum consectetur, porro molestias doloribus aperiam sequi incidunt!</p>
       </div>
-   
-     </div>
-
-       
+    </div>
   </div>
 </template>
 

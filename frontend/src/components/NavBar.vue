@@ -1,28 +1,93 @@
 <template>
   <header>
     <nav>
-      <input type="checkbox" id="check" />
+      <input
+        id="check"
+        type="checkbox"
+      >
       
-      <label for="check" class="checkbtn">
-         <img class="menu-icon" src="./img/menu1.png" alt="Nkar"/>
+      <label
+        for="check"
+        class="checkbtn"
+      >
+        <img
+          class="menu-icon"
+          src="./img/menu1.png"
+          alt="Nkar"
+        >
       </label>
       
       <ul>
-        <li><router-link to="/" class="hay-poli"></router-link></li>
+        <li>
+          <router-link
+            to="/"
+            class="hay-poli"
+          />
+        </li>
         <li class="enlasesMenu">
-          <router-link  to="/servicios">Servicios</router-link>
-          </li>
-        <li class="enlasesMenu"><router-link to="/contactos">Contactos</router-link></li>
-        <li class="enlasesMenu"><router-link to="/blog">Blog</router-link></li>
-        <li><a class="icon lupa" id="icon-search"></a></li>
+          <router-link to="/servicios">
+            Servicios
+          </router-link>
+        </li>
+        <li class="enlasesMenu">
+          <router-link to="/contactos">
+            Contactos
+          </router-link>
+        </li>
+        <li class="enlasesMenu">
+          <router-link to="/blog">
+            Blog
+          </router-link>
+        </li>
+        <li>
+          <a
+            id="icon-search"
+            class="icon lupa"
+          />
+        </li>
         <!-- <li><a href="#" class="icon lupa" id="icon-search"></a></li> -->
         <li>
-          <a href="#" class="icon bolsa-compra"></a>
+          <a
+            href="#"
+            class="icon bolsa-compra"
+          />
           <ul>
-            <li><router-link to="/cart"><img class="navbar__menu-icono" src="@/components/img/iconosmenu/bolsa_compra.png" alt="">  Bolsa </router-link></li>
-            <li><router-link to="/pedido"><img class="navbar__menu-icono" src="@/components/img/iconosmenu/bolsa_pedido.png" alt="">  Pedido</router-link></li>
-            <li><router-link to="/registro"><img class="navbar__menu-icono" src="@/components/img/iconosmenu/registro.png" alt=""> Registrarse </router-link></li>
-            <li><router-link to="/iniciarsecion"><img class="navbar__menu-icono" src="@/components/img/iconosmenu/perfil_usuario.png" alt=""> Iniciar sesión</router-link></li>
+            <li>
+              <router-link to="/cart">
+                <img
+                  class="navbar__menu-icono"
+                  src="@/components/img/iconosmenu/bolsa_compra.png"
+                  alt=""
+                >  Bolsa
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/pedido">
+                <img
+                  class="navbar__menu-icono"
+                  src="@/components/img/iconosmenu/bolsa_pedido.png"
+                  alt=""
+                >  Pedido
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/registro">
+                <img
+                  class="navbar__menu-icono"
+                  src="@/components/img/iconosmenu/registro.png"
+                  alt=""
+                > Registrarse
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/iniciarsecion">
+                <img
+                  class="navbar__menu-icono"
+                  src="@/components/img/iconosmenu/perfil_usuario.png"
+                  alt=""
+                > Iniciar sesión
+              </router-link>
+            </li>
           </ul>
         </li>
       </ul>

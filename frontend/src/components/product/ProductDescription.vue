@@ -1,41 +1,69 @@
 <template>
-    <div class="drawer-background" :class="{show: active}" @click="$emit('close-product-drawer')" />  
+  <div
+    class="drawer-background"
+    :class="{show: active}"
+    @click="$emit('close-product-drawer')"
+  />  
 
-        <div class="drawer" :class="{show: active}">
-            <div class="drawer-close" @click="$emit('close-product-drawer')">
-                X
-            </div>
+  <div
+    class="drawer"
+    :class="{show: active}"
+  >
+    <div
+      class="drawer-close"
+      @click="$emit('close-product-drawer')"
+    >
+      X
+    </div>
         
         
-        <div v-if="product" class="product-details">
-            <h3 class="text-center">{{product.name}}</h3>
-            <p class="description">{{product.description}}</p>
-            <h3 class="text.center">${{product.price.toFixed(2)}}</h3>
+    <div
+      v-if="product"
+      class="product-details"
+    >
+      <h3 class="text-center">
+        {{ product.name }}
+      </h3>
+      <p class="description">
+        {{ product.description }}
+      </p>
+      <h3 class="text.center">
+        ${{ product.price.toFixed(2) }}
+      </h3>
 
-            <div class="cart-total" v-if="product_total">
-                <h3>En la tarjeta</h3>
-                <h4>{{product_total}}</h4>
-            </div>
+      <div
+        v-if="product_total"
+        class="cart-total"
+      >
+        <h3>En la tarjeta</h3>
+        <h4>{{ product_total }}</h4>
+      </div>
 
-            <div class="button-container">
-                <button class="remove">Eliminar</button>
-                <button class="add" @click="addToCart()">Añadir</button>
-            </div>
-        </div>
-        </div>
-  
+      <div class="button-container">
+        <button class="remove">
+          Eliminar
+        </button>
+        <button
+          class="add"
+          @click="addToCart()"
+        >
+          Añadir
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 export default{
     props:['product', 'active'],
-    methods:{
-        addToCart(){
-            this.$store.commit('addToCart',this.product)
-        }
-    },
     computed: {
         product_total(){
             return  this.$store.getters.productQuantity(this.product);
+        }
+    },
+    methods:{
+        addToCart(){
+            this.$store.commit('addToCart',this.product)
         }
     }
 }

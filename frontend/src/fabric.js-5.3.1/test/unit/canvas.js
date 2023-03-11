@@ -68,7 +68,7 @@
 
   function getAbsolutePath(path) {
     const isAbsolute = /^https?:/.test(path);
-    if (isAbsolute) {return path;};
+    if (isAbsolute) {return path;}
     let imgEl = _createImageElement();
     imgEl.src = path;
     const src = imgEl.src;

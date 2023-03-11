@@ -2179,7 +2179,7 @@ fabric.CommonMethods = {
       segsNorm[i][6] += fy;
     }
     return segsNorm;
-  };
+  }
 
   /**
    * This function take a parsed SVG path and make it simpler for fabricJS logic.
@@ -2352,7 +2352,7 @@ fabric.CommonMethods = {
       previous = current[0];
     }
     return destinationPath;
-  };
+  }
 
   /**
    * Calc length from point x1,y1 to x2,y2
@@ -2691,7 +2691,7 @@ fabric.CommonMethods = {
     }
 
     return result;
-  };
+  }
 
   /**
    *
@@ -3552,7 +3552,7 @@ fabric.CommonMethods = {
   function getNodeCanvas(element) {
     const impl = fabric.jsdomImplForWrapper(element);
     return impl._canvas || impl._image;
-  };
+  }
 
   function cleanUpJsdomNode(element) {
     if (!fabric.isLikelyNode) {
@@ -17177,7 +17177,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
       let sep = '_', prefix = '';
       if (!skipGroup && this.group) {
         prefix = this.group.transformMatrixKey(skipGroup) + sep;
-      };
+      }
       return prefix + this.top + sep + this.left + sep + this.scaleX + sep + this.scaleY +
         sep + this.skewX + sep + this.skewY + sep + this.angle + sep + this.originX + sep + this.originY +
         sep + this.width + sep + this.height + sep + this.strokeWidth + this.flipX + this.flipY;
@@ -17827,7 +17827,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
     forEachControl: function(fn) {
       for (const i in this.controls) {
         fn(this.controls[i], i, this);
-      };
+      }
     },
 
     /**
@@ -18603,7 +18603,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
     function _callback(instance) {
       delete instance.points;
       callback && callback(instance);
-    };
+    }
     const options = clone(object, true);
     options.points = [object.x1, object.y1, object.x2, object.y2];
     fabric.Object._fromObject('Line', options, _callback, 'points');
@@ -21665,7 +21665,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
         if (testPrecision(gl, precisions[i])) {
           fabric.webGlPrecision = precisions[i];
           break;
-        };
+        }
       }
     }
     this.isSupported = isSupported;
@@ -21683,7 +21683,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
     }
     this.setupGLContext(this.tileSize, this.tileSize);
     this.captureGPUInfo();
-  };
+  }
 
   WebglFilterBackend.prototype = /** @lends fabric.WebglFilterBackend.prototype */ {
 
@@ -22030,7 +22030,7 @@ function copyGLTo2DPutImageData(gl, pipelineState) {
   /**
    * Canvas 2D filter backend.
    */
-  function Canvas2dFilterBackend() {};
+  function Canvas2dFilterBackend() {}
 
   Canvas2dFilterBackend.prototype = /** @lends fabric.Canvas2dFilterBackend.prototype */ {
     evictCachesForKey: noop,

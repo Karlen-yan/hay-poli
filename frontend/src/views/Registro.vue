@@ -1,113 +1,216 @@
 <template>
-    <div>
-        <div class="registro">
-          
-            <h1>Registrate</h1>
-  <div style="height: 230px; overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M0.00,49.85 C150.00,149.60 349.20,-49.85 500.00,49.85 L500.00,149.60 L0.00,149.60 Z" style="stroke: none; fill: #ffffff;"></path></svg></div>
+  <div>
+    <div class="registro">
+      <h1>Registrate</h1>
+      <div style="height: 230px; overflow: hidden;">
+        <svg
+          viewBox="0 0 500 150"
+          preserveAspectRatio="none"
+          style="height: 100%; width: 100%;"
+        ><path
+          d="M0.00,49.85 C150.00,149.60 349.20,-49.85 500.00,49.85 L500.00,149.60 L0.00,149.60 Z"
+          style="stroke: none; fill: #ffffff;"
+        /></svg>
+      </div>
+    </div>
+    <form
+      id="formulario"
+      action=""
+      class="formulario"
+    >
+      <!-- grupo  usuario -->
+      <div
+        id="grupo__usuario"
+        class="form__grupo"
+      >
+        <label
+          for="usuario"
+          class="form__label"
+        >Usuario</label>
+        <div class="form__grupo-input">
+          <input
+            id="usuario"
+            type="text"
+            name="usuario"
+            class="form__input"
+          >
+
+          <i class="form__validacion-estado  fas fa-times-circle" />
         </div>
-        <form action="" class="formulario" id="formulario"> 
- 
-            <!-- grupo  usuario -->
-            <div class="form__grupo" id="grupo__usuario">
-                <label for="usuario" class="form__label" >Usuario</label>
-                <div class="form__grupo-input">
-                    <input type="text" name="usuario" id="usuario" class="form__input" >
-
-                    <i class="form__validacion-estado  fas fa-times-circle"></i>
-                </div>
-                <p class="form__input-error">El usuario tiene que ser 4 a 16 digitos</p>
-            </div>
-            <!-- grupo  nombre -->
+        <p class="form__input-error">
+          El usuario tiene que ser 4 a 16 digitos
+        </p>
+      </div>
+      <!-- grupo  nombre -->
             
-            <div class="form__grupo" id="grupo__nombre">
-                <label for="nombre" class="form__label" >Nombre</label>
-                <div class="form__grupo-input">
-                    <input type="text" name="nombre" id="nombre" class="form__input">
+      <div
+        id="grupo__nombre"
+        class="form__grupo"
+      >
+        <label
+          for="nombre"
+          class="form__label"
+        >Nombre</label>
+        <div class="form__grupo-input">
+          <input
+            id="nombre"
+            type="text"
+            name="nombre"
+            class="form__input"
+          >
 
-                    <i class="form__validacion-estado  fas fa-times-circle"></i>
-                </div>
-                <p class="form__input-error">El  nombre tiene que ser 4 a 16 digitos</p>
-            </div>
-            <!-- grupo  telefono -->
-            
-            <div class="form__grupo" id="grupo__telefono">
-                <label for="telefono" class="form__label" >Telefono</label>
-                <div class="form__grupo-input">
-                    <input type="tel" name="telefono" id="telefono" class="form__input">
-
-                    <i class="form__validacion-estado  fas fa-times-circle"></i>
-                </div>
-                <p class="form__input-error">El telefono  tiene que  ser 9 numeros</p>
-            </div>
-
-        <!-- grupo  correo -->
-            
-        <div class="form__grupo" id="grupo__correo">
-            <label for="correo" class="form__label" >Correo Electronico</label>
-            <div class="form__grupo-input">
-                <input type="email" name="correo" id="correo" class="form__input">
-
-                <i class="form__validacion-estado  fas fa-times-circle"></i>
-            </div>
-            <p class="form__input-error">En este campo es importante el siguiente  sinvolo @ </p>
+          <i class="form__validacion-estado  fas fa-times-circle" />
         </div>
-       <!-- grupo  Contraseña  -->
+        <p class="form__input-error">
+          El  nombre tiene que ser 4 a 16 digitos
+        </p>
+      </div>
+      <!-- grupo  telefono -->
             
-        <div class="form__grupo" id="grupo__password">
-            <label for="password" class="form__label" >Contraseña</label>
-            <div class="form__grupo-input">
-                <input type="password" name="password" id="password" class="form__input">
+      <div
+        id="grupo__telefono"
+        class="form__grupo"
+      >
+        <label
+          for="telefono"
+          class="form__label"
+        >Telefono</label>
+        <div class="form__grupo-input">
+          <input
+            id="telefono"
+            type="tel"
+            name="telefono"
+            class="form__input"
+          >
 
-                <i class="form__validacion-estado  fas fa-times-circle"></i>
-            </div>
-            <p class="form__input-error">La contraseña  tiene que ser 4 a 12 digitos.</p>
+          <i class="form__validacion-estado  fas fa-times-circle" />
         </div>
+        <p class="form__input-error">
+          El telefono  tiene que  ser 9 numeros
+        </p>
+      </div>
+
+      <!-- grupo  correo -->
+            
+      <div
+        id="grupo__correo"
+        class="form__grupo"
+      >
+        <label
+          for="correo"
+          class="form__label"
+        >Correo Electronico</label>
+        <div class="form__grupo-input">
+          <input
+            id="correo"
+            type="email"
+            name="correo"
+            class="form__input"
+          >
+
+          <i class="form__validacion-estado  fas fa-times-circle" />
+        </div>
+        <p class="form__input-error">
+          En este campo es importante el siguiente  sinvolo @
+        </p>
+      </div>
+      <!-- grupo  Contraseña  -->
+            
+      <div
+        id="grupo__password"
+        class="form__grupo"
+      >
+        <label
+          for="password"
+          class="form__label"
+        >Contraseña</label>
+        <div class="form__grupo-input">
+          <input
+            id="password"
+            type="password"
+            name="password"
+            class="form__input"
+          >
+
+          <i class="form__validacion-estado  fas fa-times-circle" />
+        </div>
+        <p class="form__input-error">
+          La contraseña  tiene que ser 4 a 12 digitos.
+        </p>
+      </div>
 
       <!-- Repetición de la contraseña  -->
 
 
-        <div class="form__grupo" id="grupo__password2">
-            <label for="password2" class="form__label" >Repetir Contraseña</label>
-            <div class="form__grupo-input">
-                <input type="password" name="password2" id="password2" class="form__input">
+      <div
+        id="grupo__password2"
+        class="form__grupo"
+      >
+        <label
+          for="password2"
+          class="form__label"
+        >Repetir Contraseña</label>
+        <div class="form__grupo-input">
+          <input
+            id="password2"
+            type="password"
+            name="password2"
+            class="form__input"
+          >
 
-                <i class="form__validacion-estado  fas fa-times-circle"></i>
-            </div>
-            <p class="form__input-error">Ambas cotraseñas tienen que ser iguales.</p>
+          <i class="form__validacion-estado  fas fa-times-circle" />
         </div>
+        <p class="form__input-error">
+          Ambas cotraseñas tienen que ser iguales.
+        </p>
+      </div>
 
- <!-- Terminos y condiciones  -->
+      <!-- Terminos y condiciones  -->
 
-        <div class="form__grupo-terminos" >
-            <label for="terminos" class="form__label" >
+      <div class="form__grupo-terminos">
+        <label
+          for="terminos"
+          class="form__label"
+        >
           
-                <input type="checkbox" name="terminos" id="terminos" class="form__input-checkbox">
-                Acepto los terminos y condiciones 
-            </label>
-            
-        </div>
+          <input
+            id="terminos"
+            type="checkbox"
+            name="terminos"
+            class="form__input-checkbox"
+          >
+          Acepto los terminos y condiciones 
+        </label>
+      </div>
 
-<!-- Mensaje error  -->
+      <!-- Mensaje error  -->
 
-        <div class="form__mensaje" id="form__mensaje">
-           
-            <p> <i class="fas fa-exclamation-triangle"></i>   <b>Error:</b>Por favor rellena el formulario correctamente.</p>
+      <div
+        id="form__mensaje"
+        class="form__mensaje"
+      >
+        <p> <i class="fas fa-exclamation-triangle" />   <b>Error:</b>Por favor rellena el formulario correctamente.</p>
+      </div>
 
-        </div>
-
-        <!-- Btn enviar  -->
+      <!-- Btn enviar  -->
 
 
-        <div class="form__grupo form__grupo-btn-enviar">
-            
-           <button type="submit" class="form__btn" >Enviar</button>
-           <p class="form__mensaje-exito"  id="form__mensaje-exito" > Enviado exito</p>
-
-            </div>
-        </form>
-        </div>
-        
-    
+      <div class="form__grupo form__grupo-btn-enviar">
+        <button
+          type="submit"
+          class="form__btn"
+        >
+          Enviar
+        </button>
+        <p
+          id="form__mensaje-exito"
+          class="form__mensaje-exito"
+        >
+          Enviado exito
+        </p>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -264,11 +367,13 @@ if(formulario){
 .formulario{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 9px;
     background-color: #0a2b40;
     width:1200px;
-    margin: 0 auto;
+    margin: 5px auto;
+    padding: 20px;
     border-radius: 10px;
+    margin-top: 50px;
 }
 .registro h1{
     text-align: center;
@@ -358,6 +463,7 @@ if(formulario){
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 15px;
 }
 .form__btn{
     background-color: black;

@@ -61,7 +61,7 @@
     forEachControl: function(fn) {
       for (const i in this.controls) {
         fn(this.controls[i], i, this);
-      };
+      }
     },
 
     /**

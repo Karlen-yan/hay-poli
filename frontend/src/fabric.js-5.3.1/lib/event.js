@@ -934,7 +934,7 @@ eventjs.proxy = (function(root) {
       }
       // /
       tmp = tmp.parentNode;
-    };
+    }
     // /
     bbox.scrollBodyLeft = (window.pageXOffset !== undefined) ? window.pageXOffset : (document.documentElement || document.body.parentNode || document.body).scrollLeft;
     bbox.scrollBodyTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;

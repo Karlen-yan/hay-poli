@@ -227,7 +227,7 @@
       segsNorm[i][6] += fy;
     }
     return segsNorm;
-  };
+  }
 
   /**
    * This function take a parsed SVG path and make it simpler for fabricJS logic.
@@ -400,7 +400,7 @@
       previous = current[0];
     }
     return destinationPath;
-  };
+  }
 
   /**
    * Calc length from point x1,y1 to x2,y2
@@ -739,7 +739,7 @@
     }
 
     return result;
-  };
+  }
 
   /**
    *

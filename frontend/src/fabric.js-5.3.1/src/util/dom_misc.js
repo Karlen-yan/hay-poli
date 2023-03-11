@@ -252,7 +252,7 @@
   function getNodeCanvas(element) {
     const impl = fabric.jsdomImplForWrapper(element);
     return impl._canvas || impl._image;
-  };
+  }
 
   function cleanUpJsdomNode(element) {
     if (!fabric.isLikelyNode) {

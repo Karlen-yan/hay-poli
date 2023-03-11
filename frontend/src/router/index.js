@@ -1,7 +1,7 @@
 import {createWebHistory, createRouter} from 'vue-router';
 // import app from "@/App.vue";
 import Home from '@/views/Home.vue';
-import servicio from '@/views/Servicios.vue';
+import servicio from '@/views/ServiciosPagina.vue';
 import contacto from '@/views/Contactos.vue';
 import iniciarSecion from '@/views/IniciarSesion.vue';
 

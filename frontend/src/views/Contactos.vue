@@ -1,60 +1,82 @@
 <!-- eslint-disable vue/multi-word-component-names -->
-<template >
-<div class="content">
-  
-       <div class="logo_caja_img">
-
-       <div class="contenido_caja_img"> 
-         <h1 class="logoText">Contacta con <span>Nosotros</span></h1>
-        </div>
-       </div>
-        <div class="contact-wrapper animated bounceInUp">
-            <div class="contact-form">
-                <h3>Contacta con nosotros</h3>
-                <form action="">
-                    <p>
-                        <label>Nombre</label>
-                        <input type="text" name="fullname">
-                    </p>
-                    <p>
-                        <label>Email </label>
-                        <input type="email" name="email">
-                    </p>
-                    <p>
-                        <label>Teléfono</label>
-                        <input type="tel" name="phone">
-                    </p>
-                    <p>
-                        <label>Asunto</label>
-                        <input type="text" name="affair">
-                    </p>
-                    <p class="block">
-                       <label>Mensage</label> 
-                        <textarea name="message" rows="3"></textarea>
-                    </p>
-                    <p class="block">
-                        <button>
-                            Enviar
-                        </button>
-                    </p>
-                </form>
-            </div>
-            <div class="contact-info">
-                <h4>Más información</h4>
-                <ul>
-                    <li><i class="fas fa-map-marker-alt"></i> HayPoli</li>
-                    <li><i class="fas fa-phone"></i> (+34) 111 111 111</li>
-                    <li><i class="fas fa-envelope-open-text"></i> Hay@Poli.com</li>
-                </ul>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero provident ipsam necessitatibus repellendus?</p>
-                <p>HayPoli.com</p>
-                <!-- Google mapa  -->
-                <iframe  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23946.36456083902!2d2.105628546596092!3d41.38938706885139!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a279425a8f21%3A0x23e0874a0e6110c2!2sPlaza%20de%20Espa%C3%B1a%2C%2008004%20Barcelona!5e0!3m2!1ses!2ses!4v1671814432574!5m2!1ses!2ses" width="400" height="250" style="border:0;margin: 0 auto; display: block;    box-shadow: 4px 4px 50px rgba(0, 0, 0, 0.684);
-" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-        </div>
-
+<template>
+  <div class="content">
+    <div class="logo_caja_img">
+      <div class="contenido_caja_img"> 
+        <h1 class="logoText">
+          Contacta con <span>Nosotros</span>
+        </h1>
+      </div>
     </div>
+    <div class="contact-wrapper animated bounceInUp">
+      <div class="contact-form">
+        <h3>Contacta con nosotros</h3>
+        <form action="">
+          <p>
+            <label>Nombre</label>
+            <input
+              type="text"
+              name="fullname"
+            >
+          </p>
+          <p>
+            <label>Email </label>
+            <input
+              type="email"
+              name="email"
+            >
+          </p>
+          <p>
+            <label>Teléfono</label>
+            <input
+              type="tel"
+              name="phone"
+            >
+          </p>
+          <p>
+            <label>Asunto</label>
+            <input
+              type="text"
+              name="affair"
+            >
+          </p>
+          <p class="block">
+            <label>Mensage</label> 
+            <textarea
+              name="message"
+              rows="3"
+            />
+          </p>
+          <p class="block">
+            <button>
+              Enviar
+            </button>
+          </p>
+        </form>
+      </div>
+      <div class="contact-info">
+        <h4>Más información</h4>
+        <ul>
+          <li><i class="fas fa-map-marker-alt" /> HayPoli</li>
+          <li><i class="fas fa-phone" /> (+34) 111 111 111</li>
+          <li><i class="fas fa-envelope-open-text" /> Hay@Poli.com</li>
+        </ul>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero provident ipsam necessitatibus repellendus?</p>
+        <p>HayPoli.com</p>
+        <!-- Google mapa  -->
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23946.36456083902!2d2.105628546596092!3d41.38938706885139!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a279425a8f21%3A0x23e0874a0e6110c2!2sPlaza%20de%20Espa%C3%B1a%2C%2008004%20Barcelona!5e0!3m2!1ses!2ses!4v1671814432574!5m2!1ses!2ses"
+          width="400"
+          height="250"
+          style="border:0;margin: 0 auto; display: block;    box-shadow: 4px 4px 50px rgba(0, 0, 0, 0.684);
+"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 
 

@@ -1,23 +1,42 @@
 <!-- eslint-disable vue/multi-word-component-names -->
-<template >
- 
+<template>
   <div class="login">
-   <div class="iniciarsesion__caja-img">
-    <router-link to="/">
-    <img class="iniciarsecion__img" src="@/components/img/hay-poli.png" alt=""></router-link>
-   </div>
+    <div class="iniciarsesion__caja-img">
+      <router-link to="/">
+        <img
+          class="iniciarsecion__img"
+          src="@/components/img/hay-poli.png"
+          alt=""
+        >
+      </router-link>
+    </div>
    
 
-	<h1>Iniciar sesion</h1>
+    <h1>Iniciar sesion</h1>
     <form method="post">
-    <input type="text" name="u" placeholder="Username" required="required" />
-    <input type="password" name="p" placeholder="Password" required="required" />
-    <button type="submit" class="btn btn-primary btn-block btn-large">Iniciar sesion</button>
+      <input
+        type="text"
+        name="u"
+        placeholder="Username"
+        required="required"
+      >
+      <input
+        type="password"
+        name="p"
+        placeholder="Password"
+        required="required"
+      >
+      <button
+        type="submit"
+        class="btn btn-primary btn-block btn-large"
+      >
+        Iniciar sesion
+      </button>
 
-    <a class="btn btn-primary btn-block btn-large brn__registrarse">Registrarse</a>
+      <a class="btn btn-primary btn-block btn-large brn__registrarse">Registrarse</a>
     </form> 
-</div>
-<div class="espacio"></div>
+  </div>
+  <div class="espacio" />
 </template>
 
 <style>

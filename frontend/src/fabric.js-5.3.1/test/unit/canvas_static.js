@@ -56,7 +56,7 @@
 
   function getAbsolutePath(path) {
     const isAbsolute = /^https?:/.test(path);
-    if (isAbsolute) {return path;};
+    if (isAbsolute) {return path;}
     let imgEl = _createImageElement();
     imgEl.src = path;
     const src = imgEl.src;
@@ -508,7 +508,7 @@
   // });
 
   QUnit.test('toCanvasElement', function(assert) {
-    assert.ok(typeof canvas.toCanvasElement === 'function'); ;
+    assert.ok(typeof canvas.toCanvasElement === 'function');
     const canvasEl = canvas.toCanvasElement();
     assert.equal(canvasEl.width, canvas.getWidth(), 'get a canvas of same width');
     assert.equal(canvasEl.height, canvas.getHeight(), 'get a canvas of same height');

@@ -1,43 +1,56 @@
 <template>
-    <div id="api">
-        <h1>BLOG</h1>
-        <div class="raiz_blog">
-
-        <section v-if ="errored">
-           <p>Lo sentimos, no es posible obtener la información en este momento.</p>
-        </section>
+  <div id="api">
+    <h1>BLOG</h1>
+    <div class="raiz_blog">
+      <section v-if="errored">
+        <p>Lo sentimos, no es posible obtener la información en este momento.</p>
+      </section>
         
-        <section v-else class="contenido_de_blog">
-            <div v-if="loading">
-                cargando...
-            </div>
+      <section
+        v-else
+        class="contenido_de_blog"
+      >
+        <div v-if="loading">
+          cargando...
+        </div>
 
 
-            <div
-                v-else
-                v-for="currency in info"
-                :key="currency" 
-                class="caja-imagenes">
-            
-            <img  v-bind:src="currency.img" v-bind:alt="currency.name"
+        <div
+          v-for="currency in info"
+          v-else
+          :key="currency" 
+          class="caja-imagenes"
+        >
+          <img
+            :src="currency.img"
+            :alt="currency.name"
             class="imagenes"
-            >
+          >
             
-            <span class="lighten">
-    <router-link :to="{name:'Post',params: {id:currency.id, name:currency.name, age:currency.Age, alliance: currency.alliance, origin: currency.origin, Death: currency.Death, img: currency.img}}" class="a">
-              <span v-html="currency.name"></span>
-              </router-link>
-            </span>
-            </div>
-        </section>
+          <span class="lighten">
+            <router-link
+              :to="{name:'Post',params: {id:currency.id, name:currency.name, age:currency.Age, alliance: currency.alliance, origin: currency.origin, Death: currency.Death, img: currency.img}}"
+              class="a"
+            >
+              <span v-html="currency.name" />
+            </router-link>
+          </span>
+        </div>
+      </section>
     </div>
-    </div>
+  </div>
 </template>
 <script>
  import axios from 'axios';
     export default{
         // eslint-disable-next-line vue/multi-word-component-names
-        name:'api',
+        name:'Api',
+        filters:{
+            currencydecimal(value){
+             return value.toFixed(2)
+            }
+        }
+        ,
         data(){
             return{
                 info:null,
@@ -45,12 +58,6 @@
                 errored:false
             }
         },
-        filters:{
-            currencydecimal(value){
-             return value.toFixed(2)
-            }
-        }
-        ,
         mounted(){
             axios
                 .get('https://my-json-server.typicode.com/Joanutsu/SNK-JSON/SNK')

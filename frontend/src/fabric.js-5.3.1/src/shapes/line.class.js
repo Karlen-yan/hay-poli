@@ -289,7 +289,7 @@
     function _callback(instance) {
       delete instance.points;
       callback && callback(instance);
-    };
+    }
     const options = clone(object, true);
     options.points = [object.x1, object.y1, object.x2, object.y2];
     fabric.Object._fromObject('Line', options, _callback, 'points');

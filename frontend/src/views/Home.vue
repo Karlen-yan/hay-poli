@@ -1,9 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
- <div>
-     <div class="container">
+  <div>
+    <div class="container">
       <main>
-     
         <!-- slider -->
         <div class="slider">
           <!--  Slider contenido  -->
@@ -13,13 +12,16 @@
                 src="https://fotos.perfil.com/2015/05/01/trim/1280/720/shirt4.jpg"
                 alt="img-1"
                 class="img-responsive"
-              />
+              >
             </figure>
 
             <div class="caja_slider_text_btn">
               <h1>Personaliza tu ropa con tu marca</h1>
-              <br />
-              <a href="#" class="btn_slider">HOLA</a>
+              <br>
+              <a
+                href="#"
+                class="btn_slider"
+              >HOLA</a>
             </div>
 
             <figure>
@@ -27,7 +29,7 @@
                 src="https://www.vittorio.es/media/wysiwyg/uniformes_personalizados/bordado_y_serigrafia/Delantal_de_trabajo_personalizado_con_logo_bordado_1_.jpg"
                 alt="img-2"
                 class="img-responsive"
-              />
+              >
             </figure>
 
             <figure>
@@ -35,290 +37,473 @@
                 src="https://www.pixmagik.com/blog/wp-content/uploads/2021/09/ropa-personalizada.png"
                 alt="img-2"
                 class="img-responsive"
-              />
+              >
             </figure>
           </div>
         </div>
-<h2 class="h2">Algunos de nuestros trabajos.</h2>
+        <h2 class="h2">
+          Algunos de nuestros trabajos.
+        </h2>
 
         <!-- raiz Slider 2  -->
         <div class="raiz_slider2">
           <div class="slider2">
-            <div class="caja1"></div>
-            <div class="caja2"></div>
+            <div class="caja1" />
+            <div class="caja2" />
           </div>
           <div class="slider2">
-            <div class="caja3"></div>
-            <div class="caja4"></div>
+            <div class="caja3" />
+            <div class="caja4" />
           </div>
           <div class="slider2">
-            <div class="caja5"></div>
-            <div class="caja6"></div>
+            <div class="caja5" />
+            <div class="caja6" />
           </div>
         </div>
 
 
 
 
-<h2 class="h2">Con quien trabajamos</h2>
+        <h2 class="h2">
+          Con quien trabajamos
+        </h2>
 
-<div class="responsive">
-  <div class="gallery">
-    <a target="_blank" href="https://pbs.twimg.com/profile_images/1449434922947579908/1euA0uDh_400x400.jpg">
-      <img class="imagen-galeria" src="https://pbs.twimg.com/profile_images/1449434922947579908/1euA0uDh_400x400.jpg" alt="Cinque Terre" width="600" height="400">
-    </a>
-    <div class="desc">Nuestro descripción</div>
+        <div class="responsive">
+          <div class="gallery">
+            <a
+              target="_blank"
+              href="https://pbs.twimg.com/profile_images/1449434922947579908/1euA0uDh_400x400.jpg"
+            >
+              <img
+                class="imagen-galeria"
+                src="https://pbs.twimg.com/profile_images/1449434922947579908/1euA0uDh_400x400.jpg"
+                alt="Cinque Terre"
+                width="600"
+                height="400"
+              >
+            </a>
+            <div class="desc">
+              Nuestro descripción
+            </div>
+          </div>
+        </div>
+
+
+        <div class="responsive">
+          <div class="gallery">
+            <a
+              target="_blank"
+              href="https://e00-expansion.uecdn.es/assets/multimedia/imagenes/2018/07/03/15306157238008.jpg"
+            >
+              <img
+                class="imagen-galeria"
+                src="https://e00-expansion.uecdn.es/assets/multimedia/imagenes/2018/07/03/15306157238008.jpg"
+                alt="Forest"
+                width="600"
+                height="400"
+              >
+            </a>
+            <div class="desc">
+              Add a description of the image here
+            </div>
+          </div>
+        </div>
+
+        <div class="responsive">
+          <div class="gallery">
+            <a
+              target="_blank"
+              href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUYhzPS2-q7rSj7P_W2iZ9lTQwhAaBQ5EYmg&usqp=CAU"
+            >
+              <img
+                class="imagen-galeria"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUYhzPS2-q7rSj7P_W2iZ9lTQwhAaBQ5EYmg&usqp=CAU"
+                alt="Northern Lights"
+                width="600"
+                height="400"
+              >
+            </a>
+            <div class="desc">
+              Add a description of the image here
+            </div>
+          </div>
+        </div>
+
+        <div class="responsive">
+          <div class="gallery">
+            <a
+              target="_blank"
+              href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSByWzp-jPCpQFSxRn-GcaZxa1Sm_UHZtlXJw&usqp=CAU"
+            >
+              <img
+                class="imagen-galeria"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSByWzp-jPCpQFSxRn-GcaZxa1Sm_UHZtlXJw&usqp=CAU"
+                alt="Mountains"
+                width="600"
+                height="400"
+              >
+            </a>
+            <div class="desc">
+              Add a description of the image here
+            </div>
+          </div>
+        </div>
+
+        <div class="clearfix" />
+
+        <div style="padding:50px;">
+          <p>This example use media queries to re-arrange the images on different screen sizes: for screens larger than 700px wide, it will show four images side by side, for screens smaller than 700px, it will show two images side by side. For screens smaller than 500px, the images will stack vertically (100%).</p>
+          <p>You will learn more about media queries and responsive web design later in our CSS Tutorial.</p>
+        </div>
+
+
+
+
+        <h2 class="h2">
+          Nuestros trabajos en bolsas
+        </h2>
+
+
+        <div class="responsive">
+          <div class="gallery">
+            <a
+              target="_blank"
+              href="https://prd360iptcs.blob.core.windows.net/productspecs-container/28/180x240x80_90_KRAFT_BLACK.png?version=47cdb5380453be18b253fd790044d2c5"
+            >
+              <img
+                class="imagen-galeria"
+                src="https://prd360iptcs.blob.core.windows.net/productspecs-container/28/180x240x80_90_KRAFT_BLACK.png?version=47cdb5380453be18b253fd790044d2c5"
+                alt="Cinque Terre"
+                width="600"
+                height="400"
+              >
+            </a>
+            <div class="desc">
+              Nuestro descripción
+            </div>
+          </div>
+        </div>
+
+
+        <div class="responsive">
+          <div class="gallery">
+            <a
+              target="_blank"
+              href="https://prd360iptcs.blob.core.windows.net/productspecs-container/28/180x240x80_25_PAPER_BLACK_TWISTED_SILVER.png?version=47cdb5380453be18b253fd790044d2c5"
+            >
+              <img
+                class="imagen-galeria"
+                src="https://prd360iptcs.blob.core.windows.net/productspecs-container/28/180x240x80_25_PAPER_BLACK_TWISTED_SILVER.png?version=47cdb5380453be18b253fd790044d2c5"
+                alt="Forest"
+                width="600"
+                height="400"
+              >
+            </a>
+            <div class="desc">
+              Nuestro descripción
+            </div>
+          </div>
+        </div>
+
+        <div class="responsive">
+          <div class="gallery">
+            <a
+              target="_blank"
+              href="https://prd360iptcs.blob.core.windows.net/productspecs-container/28/180x240x80_PAPER_TWISTED.png?version=2665028cb1df93cb126ce0e329a7ee89"
+            >
+              <img
+                class="imagen-galeria"
+                src="https://prd360iptcs.blob.core.windows.net/productspecs-container/28/180x240x80_PAPER_TWISTED.png?version=2665028cb1df93cb126ce0e329a7ee89"
+                alt="Northern Lights"
+                width="600"
+                height="400"
+              >
+            </a>
+            <div class="desc">
+              Nuestro descripción
+            </div>
+          </div>
+        </div>
+
+        <div class="responsive responsive_fin">
+          <div class="gallery">
+            <a
+              target="_blank"
+              href="https://prd360iptcs.blob.core.windows.net/productspecs-container/product/migrated/bolsa-de-papel-vertical-con-asas-retorcidas-1309-2-290253_h_f_es-es.png?version=0d07c1aabb97ff700bbb4fd9814ee412"
+            >
+              <img
+                class="imagen-galeria"
+                src="https://prd360iptcs.blob.core.windows.net/productspecs-container/product/migrated/bolsa-de-papel-vertical-con-asas-retorcidas-1309-2-290253_h_f_es-es.png?version=0d07c1aabb97ff700bbb4fd9814ee412"
+                alt="Mountains"
+                width="600"
+                height="400"
+              >
+            </a>
+            <div class="desc">
+              Nuestro descripción
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <!-- carts -->
+    <div class="container2">
+      <div class="cards2">
+        <div class="card2">
+          <div>
+            <h3 class="card-title2">
+              Encabezado 1
+            </h3>
+            <div class="card-content2">
+              <p>Lorem im ipsum dolor sit amet consectetur adipisicing elit. Ab repudiandae magnam harum natus fuga et repellat in maiores.</p>
+              <img
+                class="img_carts_inicio"
+                src="https://cdn.tc.promotron.com/web-images/ef45f8e4-a539-43c8-aca4-1453bd2a627d"
+              >
+            </div>
+          </div>
+          <div class="card-link-wrapper2">
+            <a
+              href=""
+              class="card-link2"
+            >Learn More</a>
+          </div>
+        </div>
+
+        <div class="card2">
+          <div>
+            <h3 class="card-title2">
+              Encabezado 2
+            </h3>
+            <div class="card-content2">
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab repudiandae magnam harum natus fuga et repellat in maiores.</p>
+              <img
+                class="img_carts_inicio"
+                src="https://img.ltwebstatic.com/images3_pi/2021/11/06/1636186226de01eb2c6b754687a3c47ac70e80492b_thumbnail_900x.webp"
+              >
+            </div>
+          </div>
+          <div class="card-link-wrapper2">
+            <a
+              href=""
+              class="card-link2"
+            >Learn More</a>
+          </div>
+        </div>
+
+        <div class="card2">
+          <div>
+            <h3 class="card-title2">
+              Encabezado 3
+            </h3>
+            <div class="card-content2">
+              <p>Phasellus ultrices lorem vel bibendum ultricies. In hendrerit nulla a ante dapibus pulvinar eu eget quam.</p>
+              <img
+                class="img_carts_inicio"
+                src="https://cdn.tc.promotron.com/web-images/84fc0100-6f01-4ab3-b44e-84a86123c6f7"
+              >
+            </div>
+          </div>
+          <div class="card-link-wrapper2">
+            <a
+              href=""
+              class="card-link2"
+            >Learn More</a>
+          </div>
+        </div>
+
+        <div class="card2">
+          <div>
+            <h3 class="card-title2">
+              Encabezado 4
+            </h3>
+            <div class="card-content2">
+              <p>Aenean posuere mauris quam, pellentesque auctor mi bibendum nec. Sed scelerisque lacus nisi, quis auctor lorem ornare vel.</p>
+              <img
+                class="img_carts_inicio"
+                src="https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/114/views/1/appearances/26,width=300,height=300,backgroundColor=fff.jpg"
+              >
+            </div>
+          </div>
+          <div class="card-link-wrapper2">
+            <a
+              href=""
+              class="card-link2"
+            >Learn More</a>
+          </div>
+        </div>
+
+        <div class="card2">
+          <div>
+            <h3 class="card-title2">
+              Encabezado 5
+            </h3>
+            <div class="card-content2">
+              <p>Vestibulum pharetra fringilla felis sit amet tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+              <img
+                class="img_carts_inicio"
+                src="https://cdn.tc.promotron.com/web-images/ef45f8e4-a539-43c8-aca4-1453bd2a627d"
+              >
+            </div>
+          </div>
+          <div class="card-link-wrapper2">
+            <a
+              href=""
+              class="card-link2"
+            >Learn More</a>
+          </div>
+        </div>
+
+        <div class="card2">
+          <div>
+            <h3 class="card-title2">
+              Encabezado 6
+            </h3>
+            <div class="card-content2">
+              <p>Vestibulum pharetra fringilla felis sit amet tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+              <img
+                class="img_carts_inicio"
+                src="https://cdn.tc.promotron.com/web-images/84fc0100-6f01-4ab3-b44e-84a86123c6f7"
+              >
+            </div>
+          </div>
+          <div class="card-link-wrapper2">
+            <a
+              href=""
+              class="card-link2"
+            >Learn More</a>
+          </div>
+        </div>
+
+        <div class="card2">
+          <div>
+            <h3 class="card-title2">
+              Encabezado 7
+            </h3>
+            <div class="card-content2">
+              <p>Vestibulum pharetra fringilla felis sit amet tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+              <img
+                class="img_carts_inicio"
+                src="https://img.ltwebstatic.com/images3_pi/2021/11/06/1636186226de01eb2c6b754687a3c47ac70e80492b_thumbnail_900x.webp"
+              >
+            </div>
+          </div>
+          <div class="card-link-wrapper2">
+            <a
+              href=""
+              class="card-link2"
+            >Learn More</a>
+          </div>
+        </div>
+
+        <div class="card2">
+          <div>
+            <h3 class="card-title2">
+              Encabezado 8
+            </h3>
+            <div class="card-content2">
+              <p> Vestibulum pharetra fringilla felis sit amet tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+              <img
+                class="img_carts_inicio"
+                src="https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/635/views/1/appearances/231,width=300,height=300,backgroundColor=fff.jpg"
+              >
+            </div>
+          </div>
+          <div class="card-link-wrapper2">
+            <a
+              href=""
+              class="card-link2"
+            >Learn More</a>
+          </div>
+        </div>
+
+        <div class="card2">
+          <div>
+            <h3 class="card-title2">
+              Encabezado 9
+            </h3>
+            <div class="card-content2">
+              <p>Vestibulum pharetra fringilla felis sit amet tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+              <img
+                class="img_carts_inicio"
+                src="https://cdn.tc.promotron.com/web-images/ef45f8e4-a539-43c8-aca4-1453bd2a627d"
+              >
+            </div>
+          </div>
+          <div class="card-link-wrapper2">
+            <a
+              href=""
+              class="card-link2"
+            >Learn More</a>
+          </div>
+        </div>
+
+        <div class="card2">
+          <div>
+            <h3 class="card-title2">
+              Encabezado 10
+            </h3>
+            <div class="card-content2">
+              <p>Vestibulum pharetra fringilla felis sit amet tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+              <img
+                class="img_carts_inicio"
+                src="https://img.ltwebstatic.com/images3_pi/2021/01/25/1611570961c433df8e89c9ca1ee4b7e50784b3b110_thumbnail_900x.webp"
+              >
+            </div>
+          </div>
+          <div class="card-link-wrapper2">
+            <a
+              href=""
+              class="card-link2"
+            >Learn More</a>
+          </div>
+        </div>
+
+        <div class="card2">
+          <div>
+            <h3 class="card-title2">
+              Encabezado 11
+            </h3>
+            <div class="card-content2">
+              <p>Vestibulum pharetra fringilla felis sit amet tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+              <img
+                class="img_carts_inicio"
+                src="https://cdn.tc.promotron.com/web-images/84fc0100-6f01-4ab3-b44e-84a86123c6f7"
+              >
+            </div>
+          </div>
+          <div class="card-link-wrapper2">
+            <a
+              href=""
+              class="card-link2"
+            >Learn More</a>
+          </div>
+        </div>
+
+        <div class="card2">
+          <div>
+            <h3 class="card-title2">
+              Encabezado 12
+            </h3>
+            <div class="card-content2">
+              <p>Vestibulum pharetra fringilla felis sit amet tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+              <img
+                class="img_carts_inicio"
+                src="https://img.ltwebstatic.com/images3_pi/2021/11/06/1636186226de01eb2c6b754687a3c47ac70e80492b_thumbnail_900x.webp"
+              >
+            </div>
+          </div>
+          <div class="card-link-wrapper2">
+            <a
+              href=""
+              class="card-link2"
+            >Learn More</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-
-
-<div class="responsive">
-  <div class="gallery">
-    <a target="_blank" href="https://e00-expansion.uecdn.es/assets/multimedia/imagenes/2018/07/03/15306157238008.jpg">
-      <img class="imagen-galeria" src="https://e00-expansion.uecdn.es/assets/multimedia/imagenes/2018/07/03/15306157238008.jpg" alt="Forest" width="600" height="400">
-    </a>
-    <div class="desc">Add a description of the image here</div>
-  </div>
-</div>
-
-<div class="responsive">
-  <div class="gallery">
-    <a target="_blank" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUYhzPS2-q7rSj7P_W2iZ9lTQwhAaBQ5EYmg&usqp=CAU">
-      <img  class="imagen-galeria" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUYhzPS2-q7rSj7P_W2iZ9lTQwhAaBQ5EYmg&usqp=CAU" alt="Northern Lights" width="600" height="400">
-    </a>
-    <div class="desc">Add a description of the image here</div>
-  </div>
-</div>
-
-<div class="responsive">
-  <div class="gallery">
-    <a target="_blank" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSByWzp-jPCpQFSxRn-GcaZxa1Sm_UHZtlXJw&usqp=CAU">
-      <img class="imagen-galeria" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSByWzp-jPCpQFSxRn-GcaZxa1Sm_UHZtlXJw&usqp=CAU" alt="Mountains" width="600" height="400">
-    </a>
-    <div class="desc">Add a description of the image here</div>
-  </div>
-
-</div>
-
-<div class="clearfix"></div>
-
-<div style="padding:50px;">
-  <p>This example use media queries to re-arrange the images on different screen sizes: for screens larger than 700px wide, it will show four images side by side, for screens smaller than 700px, it will show two images side by side. For screens smaller than 500px, the images will stack vertically (100%).</p>
-  <p>You will learn more about media queries and responsive web design later in our CSS Tutorial.</p>
-</div>
-
-
-
-
-<h2 class="h2">Nuestros trabajos en bolsas</h2>
-
-
-<div class="responsive">
-  <div class="gallery">
-    <a target="_blank" href="https://prd360iptcs.blob.core.windows.net/productspecs-container/28/180x240x80_90_KRAFT_BLACK.png?version=47cdb5380453be18b253fd790044d2c5">
-      <img class="imagen-galeria" src="https://prd360iptcs.blob.core.windows.net/productspecs-container/28/180x240x80_90_KRAFT_BLACK.png?version=47cdb5380453be18b253fd790044d2c5" alt="Cinque Terre" width="600" height="400">
-    </a>
-    <div class="desc">Nuestro descripción</div>
-  </div>
-</div>
-
-
-<div class="responsive">
-  <div class="gallery">
-    <a target="_blank" href="https://prd360iptcs.blob.core.windows.net/productspecs-container/28/180x240x80_25_PAPER_BLACK_TWISTED_SILVER.png?version=47cdb5380453be18b253fd790044d2c5">
-      <img class="imagen-galeria" src="https://prd360iptcs.blob.core.windows.net/productspecs-container/28/180x240x80_25_PAPER_BLACK_TWISTED_SILVER.png?version=47cdb5380453be18b253fd790044d2c5" alt="Forest" width="600" height="400">
-    </a>
-    <div class="desc">Nuestro descripción</div>
-  </div>
-</div>
-
-<div class="responsive">
-  <div class="gallery">
-    <a target="_blank" href="https://prd360iptcs.blob.core.windows.net/productspecs-container/28/180x240x80_PAPER_TWISTED.png?version=2665028cb1df93cb126ce0e329a7ee89">
-      <img  class="imagen-galeria" src="https://prd360iptcs.blob.core.windows.net/productspecs-container/28/180x240x80_PAPER_TWISTED.png?version=2665028cb1df93cb126ce0e329a7ee89" alt="Northern Lights" width="600" height="400">
-    </a>
-    <div class="desc">Nuestro descripción</div>
-  </div>
-</div>
-
-<div class="responsive responsive_fin">
-  <div class="gallery">
-    <a target="_blank" href="https://prd360iptcs.blob.core.windows.net/productspecs-container/product/migrated/bolsa-de-papel-vertical-con-asas-retorcidas-1309-2-290253_h_f_es-es.png?version=0d07c1aabb97ff700bbb4fd9814ee412">
-      <img class="imagen-galeria" src="https://prd360iptcs.blob.core.windows.net/productspecs-container/product/migrated/bolsa-de-papel-vertical-con-asas-retorcidas-1309-2-290253_h_f_es-es.png?version=0d07c1aabb97ff700bbb4fd9814ee412" alt="Mountains" width="600" height="400">
-    </a>
-    <div class="desc">Nuestro descripción</div>
-  </div>
-  
-</div>
- 
-     </main>
-
-   </div>
-        <!-- carts -->
-   <div class="container2">
-<div class="cards2">
-
-    <div class="card2">
-      <div>
-        <h3 class="card-title2">Encabezado 1</h3>
-        <div class="card-content2">
-          <p>Lorem im ipsum dolor sit amet consectetur adipisicing elit. Ab repudiandae magnam harum natus fuga et repellat in maiores.</p>
-          <img class="img_carts_inicio" src="https://cdn.tc.promotron.com/web-images/ef45f8e4-a539-43c8-aca4-1453bd2a627d" >
-        </div>
-      </div>
-      <div class="card-link-wrapper2">
-        <a href="" class="card-link2">Learn More</a>
-      </div>
-    </div>
-
-    <div class="card2">
-      <div>
-        <h3 class="card-title2">Encabezado 2</h3>
-        <div class="card-content2">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab repudiandae magnam harum natus fuga et repellat in maiores.</p>
-            <img class="img_carts_inicio" src="https://img.ltwebstatic.com/images3_pi/2021/11/06/1636186226de01eb2c6b754687a3c47ac70e80492b_thumbnail_900x.webp" >
-        </div>
-      </div>
-      <div class="card-link-wrapper2">
-        <a href="" class="card-link2">Learn More</a>
-      </div>
-    </div>
-
-    <div class="card2">
-      <div>
-        <h3 class="card-title2">Encabezado 3</h3>
-        <div class="card-content2">
-          <p>Phasellus ultrices lorem vel bibendum ultricies. In hendrerit nulla a ante dapibus pulvinar eu eget quam.</p>
-        <img class="img_carts_inicio" src="https://cdn.tc.promotron.com/web-images/84fc0100-6f01-4ab3-b44e-84a86123c6f7" >
-        </div>
-      </div>
-      <div class="card-link-wrapper2">
-        <a href="" class="card-link2">Learn More</a>
-      </div>
-    </div>
-
-    <div class="card2">
-      <div>
-        <h3 class="card-title2">Encabezado 4</h3>
-        <div class="card-content2">
-          <p>Aenean posuere mauris quam, pellentesque auctor mi bibendum nec. Sed scelerisque lacus nisi, quis auctor lorem ornare vel.</p>
-        <img class="img_carts_inicio" src="https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/114/views/1/appearances/26,width=300,height=300,backgroundColor=fff.jpg" >
-        </div>
-      </div>
-      <div class="card-link-wrapper2">
-        <a href="" class="card-link2">Learn More</a>
-      </div>
-    </div>
-
-    <div class="card2">
-      <div>
-        <h3 class="card-title2">Encabezado 5</h3>
-        <div class="card-content2">
-          <p>Vestibulum pharetra fringilla felis sit amet tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-        <img class="img_carts_inicio" src="https://cdn.tc.promotron.com/web-images/ef45f8e4-a539-43c8-aca4-1453bd2a627d" >
-        </div>
-      </div>
-      <div class="card-link-wrapper2">
-        <a href="" class="card-link2">Learn More</a>
-      </div>
-    </div>
-
-    <div class="card2">
-      <div>
-        <h3 class="card-title2">Encabezado 6</h3>
-        <div class="card-content2">
-          <p>Vestibulum pharetra fringilla felis sit amet tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-        <img class="img_carts_inicio" src="https://cdn.tc.promotron.com/web-images/84fc0100-6f01-4ab3-b44e-84a86123c6f7" >
-        </div>
-      </div>
-      <div class="card-link-wrapper2">
-        <a href="" class="card-link2">Learn More</a>
-      </div>
-    </div>
-
-    <div class="card2">
-      <div>
-        <h3 class="card-title2">Encabezado 7</h3>
-        <div class="card-content2">
-          <p>Vestibulum pharetra fringilla felis sit amet tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-        <img class="img_carts_inicio" src="https://img.ltwebstatic.com/images3_pi/2021/11/06/1636186226de01eb2c6b754687a3c47ac70e80492b_thumbnail_900x.webp" >
-        </div>
-      </div>
-      <div class="card-link-wrapper2">
-        <a href="" class="card-link2">Learn More</a>
-      </div>
-    </div>
-
-    <div class="card2">
-      <div>
-        <h3 class="card-title2">Encabezado 8</h3>
-        <div class="card-content2">
-          <p> Vestibulum pharetra fringilla felis sit amet tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-        <img class="img_carts_inicio" src="https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/635/views/1/appearances/231,width=300,height=300,backgroundColor=fff.jpg" >
-        </div>
-      </div>
-      <div class="card-link-wrapper2">
-        <a href="" class="card-link2">Learn More</a>
-      </div>
-    </div>
-
-    <div class="card2">
-      <div>
-        <h3 class="card-title2">Encabezado 9</h3>
-        <div class="card-content2">
-          <p>Vestibulum pharetra fringilla felis sit amet tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-        <img class="img_carts_inicio" src="https://cdn.tc.promotron.com/web-images/ef45f8e4-a539-43c8-aca4-1453bd2a627d" >
-        </div>
-      </div>
-      <div class="card-link-wrapper2">
-        <a href="" class="card-link2">Learn More</a>
-      </div>
-    </div>
-
-    <div class="card2">
-      <div>
-        <h3 class="card-title2">Encabezado 10</h3>
-        <div class="card-content2">
-          <p>Vestibulum pharetra fringilla felis sit amet tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-        <img class="img_carts_inicio" src="https://img.ltwebstatic.com/images3_pi/2021/01/25/1611570961c433df8e89c9ca1ee4b7e50784b3b110_thumbnail_900x.webp" >
-        </div>
-      </div>
-      <div class="card-link-wrapper2">
-        <a href="" class="card-link2">Learn More</a>
-      </div>
-    </div>
-
-    <div class="card2">
-      <div>
-        <h3 class="card-title2">Encabezado 11</h3>
-        <div class="card-content2">
-          <p>Vestibulum pharetra fringilla felis sit amet tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-        <img class="img_carts_inicio" src="https://cdn.tc.promotron.com/web-images/84fc0100-6f01-4ab3-b44e-84a86123c6f7" >
-        </div>
-      </div>
-      <div class="card-link-wrapper2">
-        <a href="" class="card-link2">Learn More</a>
-      </div>
-    </div>
-
-    <div class="card2">
-      <div>
-        <h3 class="card-title2">Encabezado 12</h3>
-        <div class="card-content2">
-          <p>Vestibulum pharetra fringilla felis sit amet tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-        <img class="img_carts_inicio" src="https://img.ltwebstatic.com/images3_pi/2021/11/06/1636186226de01eb2c6b754687a3c47ac70e80492b_thumbnail_900x.webp" >
-        </div>
-      </div>
-      <div class="card-link-wrapper2">
-        <a href="" class="card-link2">Learn More</a>
-      </div>
-    </div>
-
-</div>
-   </div>
-
-   </div>
-     </template>
+</template>
 
 <style>
     /* imagenes de dentro de cards */
