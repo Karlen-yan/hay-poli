@@ -1,8 +1,11 @@
+const express = require('express')
+const routes = require('./routes/usuarios.js')
 require('dotenv').config()
 
-const express = require('express')
-const cors = require('cors')
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const app = express()
+const cors = require('cors')
 
 app.use(cors());
 
@@ -12,10 +15,8 @@ app.use(function(req, res, next) {
     next();
   });
 
-app.get('/',(req,res)=>{
-    res.end("Bienvenidos al servidor backend Node.js. Corriendo.")
-})
-
+app.use('/',routes)
+app.use(express.json())
 const PORT = process.env.PORT
 
 app.listen(PORT,()=>{

@@ -16,6 +16,7 @@
     <form
       id="formulario"
       action=""
+      method="post"
       class="formulario"
     >
       <!-- grupo  usuario -->
