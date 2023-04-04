@@ -1,6 +1,7 @@
 <template>
-  <div id="app">
-    <NavBar />
+  <div id="app" v-scroll="scrollHandler" >
+    <NavBar @scroll-to-top="scrollToTop" />
+    <ScrollToTopButton />
     <Home />   
     <!-- <Footer /> -->
     <Footer />
@@ -9,18 +10,39 @@
 
 <script>
 // eslint-disable-next-line
+import { onBeforeRouteUpdate } from 'vue-router'
 import NavBar from "@/components/NavBar.vue";
 import Footer from "@/components/Footer.vue";
+import ScrollToTopButton from "@/components/ScrollToTopButton.vue";
 
 
 export default {
   name: "App",
   components: {
     NavBar,
-    Footer 
+    Footer,
+   ScrollToTopButton
 
-  }
+  },
+  methods: {
+    scrollHandler() {
+      return true;
+    },
+    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    },
+  },
+    setup() {
+    onBeforeRouteUpdate(() => {
+      this.scrollToTop(); 
+    });
+  },
+
   };
+
 </script>
 
 <style>

@@ -16,23 +16,24 @@
 
 
         <div
-          v-for="currency in info"
+          v-for="data in posts"
           v-else
-          :key="currency" 
+          :key="data" 
           class="caja-imagenes"
         >
-          <img
-            :src="currency.img"
-            :alt="currency.name"
-            class="imagenes"
-          >
-            
           <span class="lighten">
-            <router-link
-              :to="{name:'Post',params: {id:currency.id, name:currency.name, age:currency.Age, alliance: currency.alliance, origin: currency.origin, Death: currency.Death, img: currency.img}}"
-              class="a"
-            >
-              <span v-html="currency.name" />
+            <router-link :to="{ name: 'Post', params: { id: data._id }}" class="a">
+              <img
+                :src="data.img"
+                :alt="data.name"
+                class="imagenes"
+              >
+              <div>
+                <h1>{{ data.id }}</h1>
+                <h2 class="blog__h2">{{ data.title }}</h2>
+                <p class="blog__p">{{ data.description }}</p>             
+              </div>
+              <span v-html="data.name" />
             </router-link>
           </span>
         </div>
@@ -53,16 +54,16 @@
         ,
         data(){
             return{
-                info:null,
+                posts:[],
                 loading:true,
                 errored:false
             }
         },
         mounted(){
             axios
-                .get('https://my-json-server.typicode.com/Joanutsu/SNK-JSON/SNK')
+                .get('http://localhost:5000/posts')
                 .then(response =>{
-                    this.info = response.data
+                    this.posts = response.data
                 })
                 .catch(error =>{
                     console.log(error);
@@ -76,43 +77,47 @@
 <style>
 
 #api{
-    margin-top:4%;
-    padding: 0;    
-    background-color: #144e73;
+    background-color:  rgb(95, 120, 136);
     color: white;
-    padding-top: 50px;
-}
-.raiz_blog{
-   width: 100%;
-   display: flex;
-   flex-direction: column-reverse;
-   justify-content: center;
-   align-items: center;
-   
-}
-.contenido_de_blog{
+    padding-top: 10%;
+  }
+  #api h1{
+    font-size: 3em;
+  }
+  .raiz_blog{
+    width: 100%;
     display: flex;
-    flex-wrap:wrap;
-    flex: 1 1;
-    width: 80%;
+    flex-direction: column-reverse;
     justify-content: center;
     align-items: center;
+    /* clip-path: polygon(9% 0, 91% 0, 100% 11%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0 11%); */
+  
+}
+.contenido_de_blog{
+    width: 80%;
     border: 3px solid white;
     margin: 50px;
     padding: 50px;
-/* clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%); */
-clip-path: polygon(9% 0, 91% 0, 100% 11%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0 11%);
-
-
 }
 /* imagenes */
 
 .caja-imagenes{
     padding: 5px;
+    width: 100%;
 }
 .imagenes{
     width: 350px;
     height: 100%;
+}
+.blog__h2{
+  font-size: 20px;
+  color:#1F92BF;
+}
+.blog__h2:hover{
+  color:  rgb(66, 66, 215);
+}
+.blog__p{
+  font-size: 15px;
 }
 .a{
 display: flex;
@@ -128,7 +133,7 @@ margin: 0px 2px 2px 1px;
 }
 .a:hover{
  background-color: white;
- color: red;
+ color: black;
 }
 
 </style>

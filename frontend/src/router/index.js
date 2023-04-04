@@ -10,6 +10,7 @@ import post from '@/views/Post.vue';
 import Cart from '@/views/Cart.vue';
 import Pedido from '@/views/Pedido.vue';
 import Registro from '@/views/Registro.vue';
+import Exito from '@/views/Exito.vue';
 // rutas configuración
 const routes = [
   {
@@ -56,6 +57,11 @@ const routes = [
     path: '/registro',
     name: 'registro',
     component: Registro,
+  },
+  {
+    path: '/exito',
+    name: 'exito',
+    component: Exito,
   },
 ];
 

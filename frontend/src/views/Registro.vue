@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
     <div class="registro">
@@ -15,9 +16,9 @@
     </div>
     <form
       id="formulario"
-      action=""
-      method="post"
+      @submit.prevent="submitForm"
       class="formulario"
+    
     >
       <!-- grupo  usuario -->
       <div
@@ -34,6 +35,8 @@
             type="text"
             name="usuario"
             class="form__input"
+            v-model="usuario"
+            required
           >
 
           <i class="form__validacion-estado  fas fa-times-circle" />
@@ -58,6 +61,8 @@
             type="text"
             name="nombre"
             class="form__input"
+            v-model="nombre"
+            required
           >
 
           <i class="form__validacion-estado  fas fa-times-circle" />
@@ -82,6 +87,8 @@
             type="tel"
             name="telefono"
             class="form__input"
+            v-model="telefono"
+            required
           >
 
           <i class="form__validacion-estado  fas fa-times-circle" />
@@ -107,6 +114,8 @@
             type="email"
             name="correo"
             class="form__input"
+            v-model="correo"
+            required
           >
 
           <i class="form__validacion-estado  fas fa-times-circle" />
@@ -131,6 +140,8 @@
             type="password"
             name="password"
             class="form__input"
+            v-model="password"
+            required
           >
 
           <i class="form__validacion-estado  fas fa-times-circle" />
@@ -157,7 +168,7 @@
             type="password"
             name="password2"
             class="form__input"
-          >
+            v-model="password2">
 
           <i class="form__validacion-estado  fas fa-times-circle" />
         </div>
@@ -211,157 +222,96 @@
         </p>
       </div>
     </form>
+    <p v-show="error">Por favor complete todos los campos. </p>
+    <p v-show="exito">La operacion se ha realizado exìtosamente.</p>
+
   </div>
 </template>
 
 <script>
 //  eslint-disable vue/multi-word-component-names 
+import axios from 'axios'
 
-    const formulario = document.getElementById('formulario');
-const inputs = document.querySelectorAll('#formulario input');
-
-const expreciones = {
-    usuario: /^[a-zA-Z0-9\\-]{4,16}$/, // letras, numeros ,guion y guion_bajo
-    nombre:/^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios , pueden llevar acentos.
-    password:/^.{4,12}$/, // 4 a12 digitos.
-    correo:  /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-    telefono: /^\d{7,14}$/ // 7 a14 numeros.
-
-}
-
-const campos =  {
-    usuario:false,
-    nombre:false,
-    correo:false,
-    telefono:false,
-    password:false
-
-}
-
-const validarFormulario = (e)=>{
-     
-    switch(e.target.name){
-
-       case 'usuario':
-            validarCampo(expreciones.usuario, e.target,'usuario'  );
-       break;
-       
-       case 'nombre':
-        validarCampo(expreciones.nombre, e.target, 'nombre'  );
-
-       break;
-       
-       
-       case 'telefono':
-           validarCampo(expreciones.telefono, e.target, 'telefono'  );
-
-       break;
-       
-       case 'correo':
-        validarCampo(expreciones.correo, e.target, 'correo'  );
-
-       break;
-
-       
-       case 'password':
-        validarCampo(expreciones.password, e.target, 'password'  );
-        validarPassword2();
-       break;
-
-
-       case 'password2':
-        validarPassword2();
-       break;
+export default {
+  data() {
+    return {
+      usuario: '',
+      nombre: '',
+      telefono: '',
+      correo: '',
+      password: '',
+      password2: '',
+      error: false, // se inicializa en falso
+      exito: false // se inicializa en falso
     }
-}
-
-
-const validarCampo = (exprecion,input, campo) =>{
-
-    if(exprecion.test(input.value)){
-      
-        document.getElementById(`grupo__${campo}`).classList.add('form__grupo-correcto');
-        document.getElementById(`grupo__${campo}`).classList.remove('form__grupo-incorrecto');
-        document.querySelector(`#grupo__${campo} i`).classList.add('fa-check-circle');
-        document.querySelector(`#grupo__${campo} i`).classList.remove('fa-times-circle');
-        document.querySelector(`#grupo__${campo} .form__input-error`).classList.remove('form__input-error-activo');
-        campos[campo] = true;
-    }else{
-        document.getElementById(`grupo__${campo}`).classList.add('form__grupo-incorrecto');
-        document.getElementById(`grupo__${campo}`).classList.remove('form__grupo-correcto');
-        document.querySelector(`#grupo__${campo} i`).classList.add('fa-times-circle');
-        document.querySelector(`#grupo__${campo} i`).classList.remove('fa-check-circle');
-        document.querySelector(`#grupo__${campo} .form__input-error`).classList.add('form__input-error-activo');
-        campos[campo] = false;    
-    }
-}
-
-
-const validarPassword2 = ()=> {
-    const password1 =document.getElementById('password');
-    const password2 =document.getElementById('password2');
-
-    if(password1.value !== password2.value){
-        document.getElementById(`grupo__password2`).classList.add('form__grupo-incorrecto');
-        document.getElementById(`grupo__password2`).classList.remove('form__grupo-correcto');
-        document.querySelector(`#grupo__password2 i`).classList.add('fa-times-circle');
-        document.querySelector(`#grupo__password2 i`).classList.remove('fa-check-circle');
-        document.querySelector(`#grupo__password2 .form__input-error`).classList.add('form__input-error-activo');
-        campos['password2'] = false;    
-    }else{
-        document.getElementById(`grupo__password2`).classList.remove('form__grupo-incorrecto');
-        document.getElementById(`grupo__password2`).classList.add('form__grupo-correcto');
-        document.querySelector(`#grupo__password2 i`).classList.remove('fa-times-circle');
-        document.querySelector(`#grupo__password2 i`).classList.add('fa-check-circle');
-        document.querySelector(`#grupo__password2 .form__input-error`).classList.remove('form__input-error-activo');
-        campos['password2'] = true;    
-    }
-}
-
-
-inputs.forEach((input)=>{
-   
-    input.addEventListener('keyup', validarFormulario);
-    input.addEventListener('blur', validarFormulario);
-});
-
-
-
-if(formulario){
-
-    
-    formulario.addEventListener('submit',(e)=>{
-    
-        e.preventDefault();
-    
-    
-        const terminos = document.getElementById('terminos');
-    
-        if(campos.usuario && campos.nombre && campos.telefono && campos.correo  && campos.password && terminos.checked){
-    
-    
-            formulario.reset();
-    
-    
-            document.getElementById('form__mensaje-exito').classList.add('form__mensaje-exito-activo');
-            
-            setInterval(()=>{
-                document.getElementById('form__mensaje-exito').classList.remove('form__mensaje-exito-activo');
-    
-            },5000);
-      
-            document.querySelectorAll('.form__grupo-correcto').forEach((icono)=>{
-              
-                icono.classList.remove('form__grupo-correcto');
-            });
-    
-    
-        }else{
-            document.getElementById('form__mensaje').classList.add('form__mensaje-activo');
+  },
+  methods: {
+    submitForm(e) {
+         e.preventDefault();
+      if (
+        this.usuario &&
+        this.nombre &&
+        this.telefono &&
+        this.correo &&
+        this.password &&
+        this.password2 === this.password 
+      ) {
+        const data = {
+          usuario: this.usuario,
+          nombre: this.nombre,
+          telefono: this.telefono,
+          correo: this.correo,
+          password: this.password,
+          password2: this.password2
         }
-    
-    });
+        axios.post('http://localhost:5000/users', data)
+          .then(response => {
+            console.log(response.data)
+            
+          })
+          .catch(error => {
+            console.error(error)
+          })
+          this.exito = true
+            this.$router.push('/exito')
+      } else {
+        this.error = true // cambiamos a true si hay algún campo vacío
+      }
+    }
+  }
 }
+
+// import axios from 'axios'
+
+// export default {
+//   data() {
+//     return {
+//       usuario:'',
+//       nombre: '',
+//       telefono: '',
+//       correo: '',
+//       password: '',
+//     }
+//   },
+//   methods: {
+//     submitForm() {
+//       const data = {
+//         usuario: this.usuario,
+//         nombre: this.nombre,
+//         telefono: this.telefono,
+//         correo: this.correo,
+//         password: this.password
+//       }
+//       axios.post('http://localhost:5000/users', data)
+//         .then(response => {
+//           console.log(response.data)
+//         })
+//         .catch(error => {
+//           console.error(error)
+//         })
+//     }
+//   }
+// }
 </script>
 
 <style>
@@ -374,21 +324,20 @@ if(formulario){
     margin: 5px auto;
     padding: 20px;
     border-radius: 10px;
-    margin-top: 50px;
+    margin-top: 10%;
 }
 .registro h1{
     text-align: center;
     color: #0a2b40;
- 
-    padding-top: 5%;
+    padding-top: 10%;
+    font-size: 3em;
 }
 .registro{
     background-image: url("https://img.freepik.com/foto-gratis/fondo-azul-degradado-lujo-abstracto-azul-oscuro-liso-banner-estudio-vineta-negra_1258-100378.jpg?w=1380&t=st=1675388778~exp=1675389378~hmac=6831e2b949dd249d94ef90968520bf45b9d99b9230b804deb9da59ce4f439ac4");
     background-repeat: no-repeat;
     background-size: cover;
-    height: 300px;
+    height: 390px;
     /* clip-path: polygon(20% 0%, 80% 0%, 100% 51%, 0 52%); */
-
 }
 .form__label{
     font-weight: 700;
@@ -396,7 +345,6 @@ if(formulario){
     display: block;
     cursor: pointer;
     color: white;
-
 }
 .form__grupo-input{
     position: relative;
@@ -412,7 +360,6 @@ if(formulario){
     transition:.3s ease all ;
     background-color: white;
     margin: 10px;
-
 }
 .form__input:focus{
     border:3px solid rgb(26, 28, 170) ;
@@ -424,7 +371,6 @@ if(formulario){
     color: red;
     display: none;
     margin-bottom:0px ;
-
 }
 .form__input-error-activo{
     display: block;
@@ -436,7 +382,6 @@ if(formulario){
     font-size: 17px;
     opacity: 0;
     z-index: 100;
-
 }
 .form__input-checkbox{
     margin-right: 10px;
@@ -491,7 +436,6 @@ if(formulario){
     display: block;
 }
 
-
 /* Estilos validacion  */
 
 .form__grupo-correcto .form__validacion-estado{
@@ -507,12 +451,7 @@ opacity: 1;
 }
 .form__grupo-incorrecto .form__input{
     border: 3px solid red ;
-
-
-
-
 }
-
 
 /* ekrani chapseri poqracnel mecacnelu hamar   */
 

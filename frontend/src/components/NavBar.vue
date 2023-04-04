@@ -43,7 +43,7 @@
           <a
             id="icon-search"
             class="icon lupa"
-          />
+            />
         </li>
         <!-- <li><a href="#" class="icon lupa" id="icon-search"></a></li> -->
         <li>
@@ -92,6 +92,7 @@
         </li>
       </ul>
     </nav>
+    <router-view />
   </header>
   
   <!-- buscador -->
@@ -105,13 +106,18 @@
       <li><a href="#" class="icon lupa">VUEJS</a></li>
   </ul>
   <div id="cover-ctn-search"></div> -->
-  <router-view />
 </template>
 
 <script>
 
 export default {
   name: "NavBar",
+  watch: {
+    $route() {
+      this.$emit("scroll-to-top");
+    },
+  },
+  
 };
 </script>
 

@@ -1,12 +1,17 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div id="Post">
-    <h1>{{ $route.params.id }}</h1>
+    <Blog :id="$route.params.id" />
   </div>
 </template>
-<script >
 
+<script>
+import Blog from '../components/Blog.vue';
+
+export default {
+  // eslint-disable-next-line vue/multi-word-component-names
+  name: 'Post',
+  components: {
+    Blog
+  },
+};
 </script>
-<style>
-
-</style>

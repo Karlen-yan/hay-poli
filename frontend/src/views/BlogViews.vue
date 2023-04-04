@@ -7,11 +7,8 @@
 <script>
 import api from '../components/Api';
     export default{
-        name:'BlosViews',
         components:{
           api
         }
         }
 </script>
-<style>
-</style>

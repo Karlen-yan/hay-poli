@@ -2,8 +2,15 @@ const express = require('express')
 const router = express.Router()
 const auth = require('../auth/auth')
 
+const getProducts = require('../controllers/apis/getProducts')
+const getProductId = require('../controllers/apis/getProductId')
 const createUser = require('../controllers/users/createUser')
 
-router.post('/registrar',createUser)
+router.post('/users',createUser)
 
-module.exports = router
+router.get('/posts',getProducts);
+router.get('/posts/:id',getPostById);
+
+
+
+module.exports = router;

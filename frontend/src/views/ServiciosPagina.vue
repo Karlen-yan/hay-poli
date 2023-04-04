@@ -62,16 +62,16 @@ export default {
   flex-direction: row;
 }
 .srvicios__titulo{
-  background-color:#0a2b40;
+  background-color: rgb(95, 120, 136);
 
 }
 .srvicios__titulo h2{
   text-align: center;
   justify-content: center;
   align-items: center;
-  padding-top: 5%;
+  padding-top: 10%;
   color: white;
-  
+  font-size: 3em;
 }
 
 .servicio-ind{
