@@ -3,7 +3,7 @@
   <div>
     <div class="registro">
       <h1>Registrate</h1>
-      <div style="height: 230px; overflow: hidden;">
+      <div style="height: 220px; margin-top: -40px; overflow: hidden;">
         <svg
           viewBox="0 0 500 150"
           preserveAspectRatio="none"
@@ -264,6 +264,7 @@ export default {
           password: this.password,
           password2: this.password2
         }
+        
         axios.post('http://localhost:5000/users', data)
           .then(response => {
             console.log(response.data)
@@ -324,19 +325,21 @@ export default {
     margin: 5px auto;
     padding: 20px;
     border-radius: 10px;
-    margin-top: 10%;
+    margin-top: 1.50%;
+    
 }
 .registro h1{
     text-align: center;
     color: #0a2b40;
-    padding-top: 10%;
+    padding-top: 7%;
     font-size: 3em;
+    z-index:  20;
 }
 .registro{
     background-image: url("https://img.freepik.com/foto-gratis/fondo-azul-degradado-lujo-abstracto-azul-oscuro-liso-banner-estudio-vineta-negra_1258-100378.jpg?w=1380&t=st=1675388778~exp=1675389378~hmac=6831e2b949dd249d94ef90968520bf45b9d99b9230b804deb9da59ce4f439ac4");
     background-repeat: no-repeat;
     background-size: cover;
-    height: 390px;
+    height: 320px;
     /* clip-path: polygon(20% 0%, 80% 0%, 100% 51%, 0 52%); */
 }
 .form__label{

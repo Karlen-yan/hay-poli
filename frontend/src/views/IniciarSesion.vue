@@ -10,34 +10,49 @@
         >
       </router-link>
     </div>
-   
 
     <h1>Iniciar sesion</h1>
-    <form method="post">
-      <input
-        type="text"
-        name="u"
-        placeholder="Username"
-        required="required"
-      >
-      <input
-        type="password"
-        name="p"
-        placeholder="Password"
-        required="required"
-      >
-      <button
-        type="submit"
-        class="btn btn-primary btn-block btn-large"
-      >
-        Iniciar sesion
+    <form @submit.prevent="login">
+      <input type="text" ref="usuario"  placeholder="Username" required="required">
+      <input type="password" ref="password"  placeholder="Password"   required="required">
+      <button type="submit" class="btn btn-primary btn-block btn-large">
+        Iniciar sesión
       </button>
-
       <a class="btn btn-primary btn-block btn-large brn__registrarse">Registrarse</a>
-    </form> 
-  </div>
-  <div class="espacio" />
+    </form>
+  </div>  
 </template>
+
+<script>
+
+import axios from 'axios';
+
+export default {
+  methods: {
+  login() {
+    const usuario = this.$refs.usuario.value;
+    const password = this.$refs.password.value;
+
+    axios.post('http://localhost:5000/api/login', {
+      usuario: usuario,
+      password: password
+    })
+    .then(response => {
+      // handle successful response
+      const user = response.data.user;
+      localStorage.setItem('user', JSON.stringify(user)); // Store user in localStorage
+      this.$router.push('/dashboard'); // Redirect to dashboard
+    })
+    .catch(error => {
+      // handle error
+      console.error(error);
+      alert('Nombre de usuario o contraseña incorrectos');
+    });
+  }
+}
+}
+</script>
+
 
 <style>
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
@@ -77,13 +92,14 @@
 	/* left: 10%; */
 	width:100%;
 	height:600px;
-    padding: 100px 20px 0 20px;
-    background-image:url("@/components/img/fondo_iniciarsesion.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size:cover;
-clip-path: polygon(20% 0%, 80% 0%, 100% 0, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0 0);
-    box-shadow: 2px 4px 7px  black;
+  padding: 100px 20px 0 20px;
+  background-image:url("@/components/img/fondo_iniciarsesion.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size:cover;
+  clip-path: polygon(20% 0%, 80% 0%, 100% 0, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0 0);
+  box-shadow: 2px 4px 7px  black;
+  
     
 }
 .login h1 {
@@ -140,7 +156,9 @@ clip-path: polygon(20% 0%, 80% 0%, 100% 0, 100% 80%, 80% 100%, 20% 100%, 0% 80%,
     height: 200px;
 
 }
-
+footer{
+  margin-top: 500px;
+}
 
 @media all and (max-width: 768px) {
 

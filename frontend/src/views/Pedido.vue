@@ -1,31 +1,21 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="pedido">
+  <div>
     <ProductDescription 
-      :product="product"
+      :data="data"
       :active="active.product_drawer" 
       @close-product-drawer="closeProductDrawer()"
     />
-     
-      
-    <div class="product-card-container">
+       
+    
       <ProductSummaryCard 
-        v-for="product in items"
-        :key="product.id"
-        :product="product"
+      :data="data"
         @view-product="viewProduct($event)"
       />
-      <ProductSummaryCard 
-        v-for="product in items"
-        :key="product.id"
-        :product="product"
-        @view-product="viewProduct($event)"
-      />
-    </div>
   </div>
 </template>
 <script>
-import items from '../data/items.js';
+// import items from '../data/items.json';
 import ProductSummaryCard from '../components/product/ProductSummaryCard.vue';
 import ProductDescription from '../components/product/ProductDescription.vue'
 export default{
@@ -38,8 +28,7 @@ export default{
     },
     data(){
         return{
-          items: items,
-          product: null,
+          data: null,
           active:{
             product_drawer: false
           }
@@ -47,24 +36,13 @@ export default{
     },
     methods:{
       viewProduct(product){
-        this.product = product
+        this.data = product
         this.active.product_drawer= true
-        console.log(this.product)
+        console.log(this.data)
       },
       closeProductDrawer(){
         this.active.product_drawer= false
       }
     }
     }
-
 </script>
-
-<style>
-.product-card-container{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items:center;
-  margin-top: 100px;
-}
-</style>

@@ -14,7 +14,6 @@
           cargando...
         </div>
 
-
         <div
           v-for="data in posts"
           v-else

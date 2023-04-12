@@ -1,43 +1,81 @@
 <template>
   <div class="card">
-    <h3>{{ product.name }}</h3>
-    <h5 class="price">
-      Precio: ${{ product.price.toFixed(2) }}
-    </h5>
-    <p class="description">
-      Descripción: {{ description }}
-    </p>
-    <p class="text-muted">
-      {{ product.category }}
-    </p>
-    <button
-      class="view-product-button"
-      @click="$emit('view-product',product)"
+    <div v-if="loading">
+      cargando...
+    </div>
+    <div
+      v-for="data in productos"
+      v-else
+      :key="data"
+      class="item__Card" 
     >
-      Ver producto
-    </button>
+      <h3>Nombre: {{ data.name }}</h3>
+      <h5 class="price">
+        Precio: ${{ data.price }}
+      </h5>
+      <p class="description">
+        Descripción: {{ data.description }}
+      </p>
+      <p class="text-muted">
+        {{ data.category }}
+      </p>
+      <button
+        class="view-product-button"
+        @click="$emit('view-product',data)"
+      >
+        Ver producto
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
  export default{
-    props:['product'],
-    computed:{
-        description(){
-            return this.product.description.substring(0,150)
+  data(){
+            return{
+                productos:[],
+                loading:true,
+                errored:false
+            }
+        },
+        mounted(){
+            axios
+                .get('http://localhost:5000/getProducts')
+                .then(response =>{
+                    this.productos = response.data
+                    console.log(this.productos)
+                })
+                .catch(error =>{
+                    console.log(error);
+                    this.errored = true
+                })
+                .finally(()=>this.loading = false)
         }
-    }
  }    
 </script>
 <style>
 .card{
-  width:80%;
-  margin: 10%;
-  padding: 10px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: 2px;
+  padding: 5px;
   border-radius: 5px;
   background-color: white;
   box-shadow: 0 0 5px  gray;
   margin-top: 100px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+.item__Card{
+  border: solid 1px  rgb(79, 160, 187);
+  padding: 10px;
+  margin: 5px;
+  width: 30%;
 }
 .price{
   color: gray;
@@ -59,10 +97,19 @@
   cursor: pointer;
 }
 
-@media (min-width: 500px){
+@media  only screen and (max-width: 500px){
  .card{
-  width: 350px;
-  margin: 10px;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: none;
  }
+ .item__Card{
+  border: solid 1px  rgb(79, 160, 187);
+  padding: 10px;
+  margin: 5px;
+  width: 90%;
+}
 }
 </style>

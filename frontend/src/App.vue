@@ -2,8 +2,8 @@
   <div id="app" v-scroll="scrollHandler" >
     <NavBar @scroll-to-top="scrollToTop" />
     <ScrollToTopButton />
-    <Home />   
-    <!-- <Footer /> -->
+    <Home />
+    <div style="height: 200px;"></div>
     <Footer />
   </div>
 </template>
@@ -14,6 +14,7 @@ import { onBeforeRouteUpdate } from 'vue-router'
 import NavBar from "@/components/NavBar.vue";
 import Footer from "@/components/Footer.vue";
 import ScrollToTopButton from "@/components/ScrollToTopButton.vue";
+import store from "@/store/index.js";
 
 
 export default {
@@ -25,6 +26,9 @@ export default {
 
   },
   methods: {
+    created() {
+    store.commit("updateLocalStorage");
+  },
     scrollHandler() {
       return true;
     },
@@ -36,10 +40,10 @@ export default {
     },
   },
     setup() {
-    onBeforeRouteUpdate(() => {
-      this.scrollToTop(); 
+      onBeforeRouteUpdate(() => {
+      this.scrollToTop();          
     });
-  },
+    },
 
   };
 

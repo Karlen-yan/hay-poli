@@ -68,7 +68,6 @@ footer {
   background-color: #02385938;
   opacity: 0.7;
   width: 100%;
-  margin-top: 500px;
 }
 
 h1 {

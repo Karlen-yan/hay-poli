@@ -11,6 +11,8 @@ import Cart from '@/views/Cart.vue';
 import Pedido from '@/views/Pedido.vue';
 import Registro from '@/views/Registro.vue';
 import Exito from '@/views/Exito.vue';
+import Dashboard from '@/views/Dashboardblog.vue';
+
 // rutas configuración
 const routes = [
   {
@@ -57,6 +59,11 @@ const routes = [
     path: '/registro',
     name: 'registro',
     component: Registro,
+  },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: Dashboard,
   },
   {
     path: '/exito',

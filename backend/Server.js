@@ -5,6 +5,7 @@ require('dotenv').config()
 const app = express()
 const cors = require('cors')
 const bodyParser = require('body-parser');
+app.set('view engine', 'pug'); // reemplaza 'pug' con el motor de plantillas que estás usando
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

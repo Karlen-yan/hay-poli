@@ -11,48 +11,36 @@
     <div class="contact-wrapper animated bounceInUp">
       <div class="contact-form">
         <h3>Contacta con nosotros</h3>
-        <form action="">
-          <p>
-            <label>Nombre</label>
-            <input
-              type="text"
-              name="fullname"
-            >
-          </p>
-          <p>
-            <label>Email </label>
-            <input
-              type="email"
-              name="email"
-            >
-          </p>
-          <p>
-            <label>Teléfono</label>
-            <input
-              type="tel"
-              name="phone"
-            >
-          </p>
-          <p>
-            <label>Asunto</label>
-            <input
-              type="text"
-              name="affair"
-            >
-          </p>
-          <p class="block">
-            <label>Mensage</label> 
-            <textarea
-              name="message"
-              rows="3"
-            />
-          </p>
-          <p class="block">
-            <button>
-              Enviar
-            </button>
-          </p>
-        </form>
+        <form @submit.prevent="submitForm">
+      <div>
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" v-model="name">
+      </div>
+      <div>
+        <label for="last_name">Apellido:</label>
+        <input type="text" id="last_name" v-model="last_name">
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" v-model="email">
+      </div>
+      <div>
+        <label for="tel">Telefono:</label>
+        <input type="text" id="tel" v-model="tel">
+      </div>
+      <div>
+        <label for="asunto">Asunto:</label>
+        <input id="asunto" v-model="asunto" />
+      </div>
+      <div>
+        <label for="message">Mensaje:</label>
+        <textarea id="message" v-model="message"></textarea>
+      </div>
+      <div>
+        <button type="submit">Enviar</button>
+      </div>
+    </form>
+    <p v-if="response">{{ response }}</p>
       </div>
       <div class="contact-info">
         <h4>Más información</h4>
@@ -70,7 +58,6 @@
           height="250"
           style="border:0;margin: 0 auto; display: block;    box-shadow: 4px 4px 50px rgba(0, 0, 0, 0.684);
 "
-          allowfullscreen=""
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
         />
@@ -79,6 +66,78 @@
   </div>
 </template>
 
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      name: '',
+      last_name:'',
+      tel:'',
+      email: '',
+      message: '',
+      response: ''
+    };
+  },
+  methods: {
+    submitForm(e){
+    e.preventDefault();
+      if (
+        this.name &&
+        this.last_name &&
+        this.email &&
+        this.tel &&
+        this.message &&
+        this.asunto 
+      ) {
+        const data = {
+          name: this.name,
+          last_name: this.last_name,
+          email: this.email,
+          tel: this.tel,
+          message: this.message,
+          asunto: this.asunto
+        }
+        
+        axios.post('http://localhost:5000/contacto', data)
+          .then(response => {
+            console.log(response.data)
+            
+          })
+          .catch(error => {
+            console.error(error)
+          })
+            this.$router.push('/exito')
+      } else {
+        this.error = true // cambiamos a true si hay algún campo vacío
+      }
+    // submitForm() {
+    //   const data = {
+    //     name: this.name,
+    //     email: this.email,
+    //     message: this.message,
+    //   };
+
+    //   axios.post('http://localhost:5000/email', data)
+    //     .then((response) => {
+    //       console.log(response);
+    //       if (response.data.success) {
+    //         this.response = 'Su mensaje se envió correctamente.';
+    //       } else {
+    //         this.response = 'No se pudo enviar su mensaje. Inténtalo de nuevo más tarde.';
+    //       }
+    //     })
+    //     .catch((error) => {
+          
+    //       this.response = 'Se produjo un error al enviar su mensaje. Inténtalo de nuevo más tarde.';
+    //       console.log(error);
+    //     });
+    // },
+    }
+  }
+};
+</script>
 
 <style>
 

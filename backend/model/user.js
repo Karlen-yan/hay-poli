@@ -6,10 +6,8 @@ const userSchema = new coneccion.Schema({
   password: String,
   movile: String,
   usuario:String,
-    nombre: String,
-    telefono: String,                     
-    correo: String,
-    password:String
+  telefono: String,                     
+  correo: String,
 });
 
 
