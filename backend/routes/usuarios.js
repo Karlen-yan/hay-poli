@@ -13,6 +13,7 @@ const enviarMensaje = require('../controllers/mailchimp/sendForm')
 
 // ropas
 const getProductsRopas = require('../controllers/apis/ProductosRopas/getProductsRopas')
+const getProductsRopaName= require('../controllers/apis/ProductosRopas/getProductName')
 
 // Post usuarios 
 router.post('/users',createUser)
@@ -26,6 +27,7 @@ router.delete('/posts/:id',deletePost);
 
 // Productos Ropas 
 router.get('/getProducts',getProductsRopas);
+router.get('/getProductName/:name',getProductsRopaName);
 
 // mailchimp Ruta 
 

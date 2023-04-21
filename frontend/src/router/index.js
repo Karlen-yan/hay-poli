@@ -9,8 +9,10 @@ import blog from '@/views/BlogViews.vue';
 import post from '@/views/Post.vue';
 import Cart from '@/views/Cart.vue';
 import Pedido from '@/views/Pedido.vue';
+import getproduct from '@/views/ProductoSearch.vue';
 import Registro from '@/views/Registro.vue';
 import Exito from '@/views/Exito.vue';
+import postexito from '@/views/ExitoBlog.vue';
 import Dashboard from '@/views/Dashboardblog.vue';
 
 // rutas configuración
@@ -51,6 +53,11 @@ const routes = [
     component: Pedido,
   },
   {
+    path: '/getproduct',
+    name: 'getproduct',
+    component: getproduct,
+  },
+  {
     path: '/iniciarsecion',
     name: 'iniciarSecion',
     component: iniciarSecion,
@@ -69,6 +76,11 @@ const routes = [
     path: '/exito',
     name: 'exito',
     component: Exito,
+  },
+  {
+    path: '/postexito',
+    name: 'postexito',
+    component: postexito,
   },
 ];
 

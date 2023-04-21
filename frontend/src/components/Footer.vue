@@ -6,19 +6,19 @@
           class="hayPoliLogo"
           src="./img/hay-poli.png"
           alt=""
-        ><br>
+        >
         <a
           class="footer__informe-text"
           href="https://goo.gl/maps/r9vVnDNtJ8rJKirN9"
-        >C/ haypoli 189</a><br>
+        >C/ haypoli 189</a>
         <a
           class="footer__informe-text"
           href="tel:666666666"
-        >Tel:666666666</a><br>
+        >Tel:666666666</a>
         <a
           class="footer__informe-text"
           href="mailto:hay@poli.com"
-        >Email:hay@poli.com</a><br>
+        >Email:hay@poli.com</a>
       </div> 
       <div>
         <div>
@@ -63,8 +63,8 @@ export default {
 </script>
 <style>
 footer {
-  position: relative;
-  bottom: 0;
+  /* position: relative; */
+  /* bottom: 0; */
   background-color: #02385938;
   opacity: 0.7;
   width: 100%;
@@ -85,25 +85,31 @@ h1 {
 
 .flex-container > div {
   /* background-color: #f1f1f1; */
-  margin: 15px;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  padding: 10px;
   font-size: 19px;
   width: 40%;
   color: #f1f1f1;
 }
 .hayPoliLogo {
   width: 15%;
+  margin:0 auto;
+}
+.footer__informe-text {
+  text-decoration: none;
+  color: white;
+  padding-top: 10px;
+
+}
+.footer__informe-text:hover{
+  color: rgb(16, 171, 238);
 }
 .footer__icono-redes img {
   width: 5%;
   margin: 0 auto;
   padding: 5px;
-}
-
-.footer__informe-text {
-  text-decoration: none;
-  color: white;
-  padding-top: 25px;
 }
 
 @media all and (max-width: 768px) {

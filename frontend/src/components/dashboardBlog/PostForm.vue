@@ -1,21 +1,20 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <form class="postForm"  @submit.prevent="submitForm">
-    <label for="title">Title:</label>
+    <label for="title">Título</label>
     <input type="text" id="title" v-model="title">
 
-    <label for="img">Img:(ruta)</label>
-    <input type="text" id="img" v-model="img">
+    <label for="img">Imagen:</label>
+    <input type="text" id="img" v-model="img" placeholder="Pon la ruta de la imagen">
 
-    <label for="description">description: </label><br>
-    <textarea  id="description" v-model="description"></textarea>
+    <label for="description">Descripción: </label><br>
+    <textarea  id="description" v-model="description" class="description"></textarea>
     
-    <label for="text">Content:</label><br>
-    <textarea id="text" v-model="text"></textarea>
+    <label for="text">Contenido:</label><br>
+    <textarea id="text" class="text" v-model="text"></textarea>
 
-    <button  type="submit"  class="post__form-button">Add Post</button>
+    <button  type="submit"  class="post__form-button">Guardar</button>
     <p v-show="error">Por favor complete todos los campos. </p>
-    <p v-show="exito">Exito. </p>
 
   </form>
 </template>
@@ -93,11 +92,17 @@ export default {
   margin-top: 15px;
   font-family: 'Times New Roman', Times, serif;
 }
-.postForm textarea{
+.postForm .description{
   margin: 0 auto;
   width: 80%;
   height: 200px;
 }
+.postForm .text{
+  margin: 0 auto;
+  width: 80%;
+  height: 400px;
+}
+
 .post__form-button{
  width: 20%;
  margin: 0 auto;

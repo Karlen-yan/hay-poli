@@ -223,8 +223,6 @@
       </div>
     </form>
     <p v-show="error">Por favor complete todos los campos. </p>
-    <p v-show="exito">La operacion se ha realizado exìtosamente.</p>
-
   </div>
 </template>
 
@@ -351,6 +349,7 @@ export default {
 }
 .form__grupo-input{
     position: relative;
+    
 
 }
 .form__input{

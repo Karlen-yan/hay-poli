@@ -58,12 +58,15 @@ body{
   font-family: "Times New Roman", Times, serif;
 
 }
+
+/* .app{
+  height: 100%;
+} */
 .container {
   display: grid;
   grid-auto-rows: 1fr;
   grid-template-areas:
     "main";
-
   background-color: #02385958;
   justify-content: center;
   align-items: center;

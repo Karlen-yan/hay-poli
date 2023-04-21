@@ -18,7 +18,7 @@
       <button type="submit" class="btn btn-primary btn-block btn-large">
         Iniciar sesión
       </button>
-      <a class="btn btn-primary btn-block btn-large brn__registrarse">Registrarse</a>
+      <router-link to="/registro" class="btn btn-primary btn-block btn-large brn__registrarse">Registrarse</router-link>
     </form>
   </div>  
 </template>
@@ -38,7 +38,6 @@ export default {
       password: password
     })
     .then(response => {
-      // handle successful response
       const user = response.data.user;
       localStorage.setItem('user', JSON.stringify(user)); // Store user in localStorage
       this.$router.push('/dashboard'); // Redirect to dashboard
@@ -56,7 +55,7 @@ export default {
 
 <style>
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
-.btn { display: inline-block; *display: inline;  background-color: #f5f5f5; }
+.btn { display: inline-block; *display: inline; text-decoration: none;  background-color: #f5f5f5; }
 .btn-large { padding: 9px 14px; font-size: 15px; line-height: normal; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
 .btn:hover { color: #333333; text-decoration: none; background-color: #e6e6e6; background-position: 0 -15px; -webkit-transition: background-position 0.1s linear; -moz-transition: background-position 0.1s linear; -ms-transition: background-position 0.1s linear; -o-transition: background-position 0.1s linear; transition: background-position 0.1s linear; }
 .btn-primary, .btn-primary:hover { text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); color: #ffffff; }
@@ -86,12 +85,11 @@ export default {
   background-color: #333333b0;
 }
 .login { 
-	position: absolute;
-	top: 0%;
-    bottom: 0%;
-	/* left: 10%; */
+	/* position: absolute; */
+	/* top: 0%;
+  bottom: 0%; */
 	width:100%;
-	height:600px;
+	height: 600px;
   padding: 100px 20px 0 20px;
   background-image:url("@/components/img/fondo_iniciarsesion.jpg");
   background-repeat: no-repeat;
@@ -157,7 +155,7 @@ export default {
 
 }
 footer{
-  margin-top: 500px;
+  /* margin-top: 500px; */
 }
 
 @media all and (max-width: 768px) {

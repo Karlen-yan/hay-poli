@@ -23,7 +23,7 @@
         class="view-product-button"
         @click="$emit('view-product',data)"
       >
-        Ver producto
+        Ver más productos
       </button>
     </div>
   </div>
@@ -73,8 +73,8 @@ import axios from 'axios';
 }
 .item__Card{
   border: solid 1px  rgb(79, 160, 187);
-  padding: 10px;
-  margin: 5px;
+  padding: 15px;
+  margin: 15px;
   width: 30%;
 }
 .price{

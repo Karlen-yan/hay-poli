@@ -22,12 +22,11 @@ exports.enviarMensaje = async (req, res) => {
         html: `
           <h1>Gracias por contactar con nosotros</h1>
           <p>En breve nos pondremos en contacto con usted.</p>
-          <img src="https://tu-sitio.com/images/logo.png">
           <h2>Servicios que ofrecemos</h2>
           <ul>
-          <li>Servicio 1</li>
-          <li>Servicio 2</li>
-          <li>Servicio 3</li>
+          <li>Personalisar ropas</li>
+          <li>Crear páginas</li>
+          <li>Organizar eventos</li>
           </ul>
           `
         };

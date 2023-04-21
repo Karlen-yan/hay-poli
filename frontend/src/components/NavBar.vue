@@ -40,12 +40,17 @@
           </router-link>
         </li>
         <li>
-          <a
-            id="icon-search"
-            class="icon lupa"
-            />
+          <div>
+            <input type="text" v-model="searchQuery" @keyup.enter="handleInput" placeholder="Buscar...">
+            <ul>
+              <li v-for="item in filteredItems" :key="item">
+                 {{ item }}
+              </li>
+            </ul>
+          </div>
         </li>
-        <!-- <li><a href="#" class="icon lupa" id="icon-search"></a></li> -->
+        <li>
+        </li>
         <li>
           <a
             href="#"
@@ -94,18 +99,6 @@
     </nav>
     <router-view />
   </header>
-  
-  <!-- buscador -->
-  <!-- <div id="ctn-bars-search"><input type="text" id="inputSearch" placeholder="¿Qué deseas buscar?"></div>
-  <ul id="box-search">
-      <li><a href="#" class="icon lupa">HTML</a></li>
-      <li><a href="#" class="icon lupa">CSS</a></li>
-      <li><a href="#" class="icon lupa">JS</a></li>
-      <li><a href="#" class="icon lupa">PHP</a></li>
-      <li><a href="#" class="icon lupa">NODEJS</a></li>
-      <li><a href="#" class="icon lupa">VUEJS</a></li>
-  </ul>
-  <div id="cover-ctn-search"></div> -->
 </template>
 
 <script>
@@ -117,7 +110,38 @@ export default {
       this.$emit("scroll-to-top");
     },
   },
-  
+  data() {
+    return {
+      searchQuery: '',
+      items: ['camiceta', 'camiceta blanca', 'pantalones', 'camisa', 'chaqueta', 'chaqueta roja', 'camiceta amarilla','camiceta negra'],
+      productRoute: '/getproduct'
+    }
+  },
+  computed: {
+    filteredItems() {
+      if (!this.searchQuery) {
+        return this.items
+      } else {
+        const lowerCaseQuery = this.searchQuery.toLowerCase()
+        return this.items.filter(item => item.toLowerCase().includes(lowerCaseQuery))
+      }
+    }
+  },
+  methods: {
+    handleInput(event) {
+      const input = event.target.value.toLowerCase()
+      this.searchQuery = input
+      
+      if (this.filteredItems.length > 0) {
+        const productName = this.filteredItems[0]
+        const product = { name: productName }
+        this.$router.replace({ path: this.productRoute, query: { product: encodeURIComponent(JSON.stringify(product)) } })
+      }
+      // Actualizar la clave del componente
+      this.productRoute = this.$route.fullPath;
+      console.log()
+    },
+  }
 };
 </script>
 
@@ -152,6 +176,11 @@ nav ul li:hover ul {
   /* opacity: 1; */
   background-color: #023859;
 }
+nav ul div:hover ul {
+  visibility: visible;
+  /* opacity: 1; */
+  background-color: #023859;
+}
 nav ul li ul li a {
   display: block;
   font-size: 14px;
@@ -179,83 +208,20 @@ nav ul li ul li a:hover {
   border-radius: 5px;
   }
 
-/* Buscador de contenidos  */
-#ctn-icon-search{
-   position: absolute;
-   right: 20px;
-   height: 100%;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-}
-#ctn-icon-search >i{
-  font-size: 18px;
-  color: red;
-  cursor: pointer;
-  transition: all 300ms;
-}
-#ctn-icon-search > i:hover{
-   color:blue;  
-}
+
 
 /* contenedor de barra de busqueda  */
-#ctn-bars-search{
-  position:fixed;
-  top: -100px;
-  width: 1200px;
-  background-color: white;
-  padding: 20px;
-  z-index: 9;
-  left: 50%;
-  transform: translate(-50%);
-  transition: all 600ms;
+input[type="text" i]{
+  margin-top: 5px;
+  margin-right: 15px;
+  padding:4px;
+  border-radius: 5px;
 
-}
-#ctn-bars-search > input{
-  display: block;
-  width: 1160px;
-  margin: 1px;
-  padding: 10px;
-  font-size: 18px;
-  outline: 0;
-  
 }
 /* caja pequeña de buscador  */
 
-#box-search{
-  position: fixed;
-  top:165px;
-  left: 50%;
-  transform: translate(-50%);
-  width: 1200px;
-  background-color: white;
-  z-index: 8;
-  overflow: hidden;
-list-style-type:none;
-}
 
-#box-search > li a{
-   display: block;
-   width: 1200px;
-   color: silver;
-   padding:12px 20px;
-   
-}
-#box-search > li a:hover{
-background-color: red;
-}
-#box-search > li a {
-  margin-right: 18px;
-  color: #777777;
-}
-#cover-ctn-search{
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  left: 0;
-  background-color:rgba(0,0,0,0.5);
-  z-index: 7;
-}
+/* ************* */
 .enlasesMenu {
   margin-top: 5px;
 }
@@ -393,7 +359,10 @@ nav > ul > li {
     transition: all 330ms ease;
     border-radius: 20px;
     left:30%;
+    font-size: 15px;
+  
   }
+
   /* campo oculto de compras  (hover ) */
 
   nav ul li:hover ul {
@@ -414,6 +383,7 @@ nav > ul > li {
 
   /* icono de compra  movile */
   .bolsa-compra {
+
     background-image: url("./img/bolsa-compra.png");
     background-size: 40%;
     background-position-x: 15px;

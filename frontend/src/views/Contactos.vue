@@ -77,7 +77,8 @@ export default {
       tel:'',
       email: '',
       message: '',
-      response: ''
+      response: '',
+      asunto: ''
     };
   },
   methods: {
@@ -184,6 +185,10 @@ top: 40%;
 .contact-form form {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    margin: 10px;
+}
+.contact-form form div{
+  margin: 10px;
 }
 
 .contact-form form label {
@@ -218,6 +223,7 @@ top: 40%;
     border: 0;
     text-transform: uppercase;
     padding: 1em;
+    margin: 0 auto;
 }
 
 .contact-form form button:hover,

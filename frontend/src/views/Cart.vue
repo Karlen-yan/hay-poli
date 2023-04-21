@@ -35,7 +35,9 @@ export default {
 
 <style>
 
-
+.cart__contenido{
+  height: 700px;
+}
 .cart__titulo{
   background-color:rgb(95, 120, 136);
 
