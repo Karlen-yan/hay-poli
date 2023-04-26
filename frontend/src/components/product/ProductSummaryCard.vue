@@ -10,6 +10,13 @@
       class="item__Card" 
     >
       <h3>Nombre: {{ data.name }}</h3>
+
+      <img
+        :src="data.img"
+        :alt="data.name"
+        class="card__img"
+      >
+
       <h5 class="price">
         Precio: ${{ data.price }}
       </h5>
@@ -17,7 +24,7 @@
         Descripción: {{ data.description }}
       </p>
       <p class="text-muted">
-        {{ data.category }}
+        Categoría: {{ data.category }}
       </p>
       <button
         class="view-product-button"
@@ -56,6 +63,7 @@ import axios from 'axios';
  }    
 </script>
 <style>
+
 .card{
   width: 100%;
   display: flex;
@@ -70,21 +78,35 @@ import axios from 'axios';
   text-align: center;
   justify-content: center;
   align-items: center;
+  background-color: #0a2b40;
 }
 .item__Card{
   border: solid 1px  rgb(79, 160, 187);
   padding: 15px;
   margin: 15px;
   width: 30%;
+  background-color: white;
+}
+.card__img{
+    
+    padding: 7px;
+    width: 50%;
+    height: 150px;
 }
 .price{
   color: gray;
+  padding: 5px;
+
 }
 .description{
   font-size: .85rem;
+  padding: 5px;
+
 }
 .text-muted{
   color: gray;
+  padding: 5px;
+
 }
 .view-product-button{
   padding: 10px;
@@ -95,7 +117,10 @@ import axios from 'axios';
   font-size: 1.15rem;
   border-radius: 5px;
   cursor: pointer;
+  margin-top: 2px;
 }
+
+
 
 @media  only screen and (max-width: 500px){
  .card{

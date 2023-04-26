@@ -6,7 +6,7 @@
 
     <h2 class="coment__title">Comentarios</h2>
     <ul>
-      <li v-for="comment in comments" :key="comment.time" class="coment__lista-perfil">
+      <li v-for="comment in comments" :key="comment.post" class="coment__lista-perfil">
         <div v-if="comments" class="comment__containe-perfil">
           <div> 
             <img class="coment__perfil-img" src="../img/profile.png" alt="">
@@ -21,16 +21,14 @@
     </ul>
 
     <form @submit.prevent="submitComment" class="form__blog-comentario">
-      <input type="text" v-model="name" placeholder="Nombre"  class="coment__input-text" required/>
-      <textarea v-model="commentText" placeholder="Escribe tu comentario"  cols="50" rows="10" id="coment" class="coment__textarea"></textarea>
-      <button type="submit" required>Enviar</button>
+      <input type="text" v-model="name" placeholder="Nombre" class="coment__input-text" required/>
+      <textarea v-model="commentText" placeholder="Escribe tu comentario" cols="50" rows="10" id="coment" class="coment__textarea"></textarea>
+      <button type="submit" class="form__comentario-button" required>Enviar</button>
     </form>
 
-    <div class="caja__btn-back">
-      
+    <div class="caja__btn-back">  
       <router-link to="/blog" class="btn-back">Atrás</router-link>
-    </div>
-    
+    </div>    
   </div>
 </template>
 
@@ -47,11 +45,10 @@ export default {
       errored: false,
       commentText: '',
       name: '',
-      comments: [],
+      comments: {},
     };
   },
   mounted() {
-    
     axios
       .get(`http://localhost:5000/posts/${this.$route.params.id}`)
       .then((response) => {
@@ -63,28 +60,49 @@ export default {
       .finally(() => {
         this.loading = false;
       });
+  
+  const comments = localStorage.getItem('comments');
+  if (comments) {
+    this.comments = JSON.parse(comments);
+  } else {
+    this.loadComments();
+  }
+  },
+  created(){
+    this.loadComments();
   },
   methods: {
+    loadComments() {
+  axios
+    .get(`http://localhost:5000/comments/${this.$route.params.id}`)
+    .then((response) => {
+      this.comments = response.data;
+      localStorage.setItem('comments', JSON.stringify(response.data));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+},
     submitComment() {
-      
       const now = new Date();
       const comment = {
         text: this.commentText,
         name: this.name,
         time: now.toLocaleString(),
       };
-      if(this.commentText != ''){
-        this.comments.push(comment);
-        this.commentText = '';
-        this.name = '';
-        localStorage.setItem('comments', JSON.stringify(this.comments));
-      }
 
+      axios
+        .post(`http://localhost:5000/comments/${this.$route.params.id}`, comment)
+        .then((response) => {
+          this.comments.push(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
 </script>
-
 
 <style>
 .post__container{
@@ -94,7 +112,6 @@ export default {
 .post__container-header{
   padding-top: 6%;
    text-align: center;
-   /* color: #66D8F2; */
    color: white;
    font-weight: normal;
    text-shadow: rgb(66, 66, 215) -2px 2px 4px, #66D8F2 1px -2px 4px;
@@ -117,11 +134,12 @@ export default {
   font-size: 18px;
   font-family:Georgia, 'Times New Roman', Times, serif;
  }
-
-
 .coment__title{
    text-align: center;
    margin-top: 5%;
+   color: #66D8F2;
+   text-shadow: white 1px 1px 2px ;
+   border-top: 1px solid white;
 }
 .coment__lista-perfil{
   text-decoration: none;
@@ -134,19 +152,19 @@ export default {
    margin-top: 15px;
    border: solid silver 1px;
    padding: 15px;
-  
-   
+   background-color: #023859;
 }
 .comment__containe-perfil div:first-child{
   width: 40%;
+  color: #66D8F2;
 }
 .comment__containe-perfil > div:nth-child(2){
   width: 60%;
+  color: white;
 }
 .coment__perfil-img{
   width: 10%;
   height: 100%;
-
 }
 .comment__perfil-name{
   text-align: center;
@@ -155,9 +173,7 @@ export default {
 .comment-time {
   font-size: 13px;
   margin-top: 1px;
-  color: #434343;
 }
-
  /* form comentario */
  .form__blog-comentario{
   margin: 0 auto;
@@ -172,8 +188,19 @@ export default {
 .coment__textarea{
    width: 100%;
    margin-top: 2%;
-
 }
+ /* button send  */
+ .form__comentario-button{
+  background-color: #023859;
+  color: #66D8F2;
+  padding: 10px;
+  border:none;
+  cursor: pointer;
+ }
+ .form__comentario-button:hover{
+  background-color: #02385979;
+}
+/* Button atras  */
 .caja__btn-back{
   margin-top: 10%;
 }

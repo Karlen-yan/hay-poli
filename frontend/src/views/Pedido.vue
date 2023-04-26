@@ -7,11 +7,10 @@
       @close-product-drawer="closeProductDrawer()"
     />
        
-    
-      <ProductSummaryCard 
+    <ProductSummaryCard 
       :data="data"
-        @view-product="viewProduct($event)"
-      />
+      @view-product="viewProduct($event)"
+    />
   </div>
 </template>
 <script>

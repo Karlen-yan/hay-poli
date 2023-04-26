@@ -612,14 +612,7 @@ h3{
   }
 }
 
-/* @media (min-width: 1100px) {
-  .card2 {
-    flex-basis: calc(25% - 30px);
-  }
-  .card2:not(:last-child) {
-    margin-right: 40px;
-  }
-} */
+
 
 @media (min-width: 1400px) {
   .card {

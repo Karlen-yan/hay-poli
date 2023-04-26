@@ -58,7 +58,7 @@ export default {
         console.log(error);
       });
       this.exito = true
-            this.$router.push('/exito')
+            this.$router.push('/postexito')
     
   
   }else{

@@ -4,6 +4,7 @@ const coneccion = require('../db/coneccion')
 const ropaSchema = new coneccion.Schema({
   name: String,
   price: String,
+  img: String,
   category: String,
   description:String
 });

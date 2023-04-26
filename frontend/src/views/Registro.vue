@@ -5,12 +5,12 @@
       <h1>Registrate</h1>
       <div style="height: 220px; margin-top: -40px; overflow: hidden;">
         <svg
-          viewBox="0 0 500 150"
-          preserveAspectRatio="none"
-          style="height: 100%; width: 100%;"
+        viewBox="0 0 500 150"
+        preserveAspectRatio="none"
+        style="height: 100%; width: 100%;"
         ><path
-          d="M0.00,49.85 C150.00,149.60 349.20,-49.85 500.00,49.85 L500.00,149.60 L0.00,149.60 Z"
-          style="stroke: none; fill: #ffffff;"
+        d="M0.00,49.85 C150.00,149.60 349.20,-49.85 500.00,49.85 L500.00,149.60 L0.00,149.60 Z"
+        style="stroke: none; fill: #ffffff;"
         /></svg>
       </div>
     </div>
@@ -18,7 +18,6 @@
       id="formulario"
       @submit.prevent="submitForm"
       class="formulario"
-    
     >
       <!-- grupo  usuario -->
       <div
@@ -41,7 +40,7 @@
 
           <i class="form__validacion-estado  fas fa-times-circle" />
         </div>
-        <p class="form__input-error">
+        <p class="form__input-error" v-if="error" :style="{ display: error ? 'block' : 'none' }">
           El usuario tiene que ser 4 a 16 digitos
         </p>
       </div>
@@ -67,7 +66,7 @@
 
           <i class="form__validacion-estado  fas fa-times-circle" />
         </div>
-        <p class="form__input-error">
+        <p class="form__input-error" v-if="error" :style="{ display: error ? 'block' : 'none' }">
           El  nombre tiene que ser 4 a 16 digitos
         </p>
       </div>
@@ -93,7 +92,7 @@
 
           <i class="form__validacion-estado  fas fa-times-circle" />
         </div>
-        <p class="form__input-error">
+        <p class="form__input-error" v-if="error" :style="{ display: error ? 'block' : 'none' }">
           El telefono  tiene que  ser 9 numeros
         </p>
       </div>
@@ -120,7 +119,7 @@
 
           <i class="form__validacion-estado  fas fa-times-circle" />
         </div>
-        <p class="form__input-error">
+        <p class="form__input-error" v-if="error_correo" :style="{ display: error_correo || error ? 'block' : 'none' }">
           En este campo es importante el siguiente  sinvolo @
         </p>
       </div>
@@ -146,9 +145,8 @@
 
           <i class="form__validacion-estado  fas fa-times-circle" />
         </div>
-        <p class="form__input-error">
-          La contraseña  tiene que ser 4 a 12 digitos.
-        </p>
+        <p class="form__input-error" v-if="error_password" :style="{ display: error_password  ? 'block' : 'none' }">
+          La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número</p>
       </div>
 
       <!-- Repetición de la contraseña  -->
@@ -172,7 +170,7 @@
 
           <i class="form__validacion-estado  fas fa-times-circle" />
         </div>
-        <p class="form__input-error">
+        <p class="form__input-error" v-if="error || error_password2" :style="{ display: error_password2 || error ? 'block' : 'none' }">
           Ambas cotraseñas tienen que ser iguales.
         </p>
       </div>
@@ -201,7 +199,9 @@
         id="form__mensaje"
         class="form__mensaje"
       >
-        <p> <i class="fas fa-exclamation-triangle" />   <b>Error:</b>Por favor rellena el formulario correctamente.</p>
+        <p v-if="error || error_password || error_password2 || error_correo || error_nombre || error_telefono || error_usuario" 
+           :style="{ display: error_password || error ? 'block' : 'none' }">  <b>Error:</b>Por favor rellena el formulario correctamente.
+        </p>
       </div>
 
       <!-- Btn enviar  -->
@@ -239,78 +239,135 @@ export default {
       correo: '',
       password: '',
       password2: '',
+      error_correo: false,
+      error_password: false,
+      error_password2: false,
       error: false, // se inicializa en falso
-      exito: false // se inicializa en falso
     }
   },
   methods: {
     submitForm(e) {
-         e.preventDefault();
-      if (
-        this.usuario &&
-        this.nombre &&
-        this.telefono &&
-        this.correo &&
-        this.password &&
-        this.password2 === this.password 
-      ) {
-        const data = {
-          usuario: this.usuario,
-          nombre: this.nombre,
-          telefono: this.telefono,
-          correo: this.correo,
-          password: this.password,
-          password2: this.password2
-        }
-        
-        axios.post('http://localhost:5000/users', data)
-          .then(response => {
-            console.log(response.data)
-            
-          })
-          .catch(error => {
-            console.error(error)
-          })
-          this.exito = true
-            this.$router.push('/exito')
-      } else {
-        this.error = true // cambiamos a true si hay algún campo vacío
-      }
-    }
+  e.preventDefault();
+
+  // Validación del campo usuario
+  if (!this.usuario) {
+    this.error = true;
+    return;
   }
+
+  // Validación del campo nombre
+  if (!this.nombre) {
+    this.error = true;
+    return;
+  }
+
+  // Validación del campo telefono
+  if (!this.telefono) {
+    this.error = true;
+    return;
+  }
+
+  // Validación del campo correo
+  if (!this.correo) {
+    this.error = true;
+    return;
+  } else if (!this.validarCorreo(this.correo)) {
+    this.error_correo = true;
+    return;
+  }
+
+  // Validación del campo password
+  if (!this.password) {
+    this.error = true;
+    return;
+  } else if (!this.validarPassword(this.password)) {
+    this.error_password = true;
+    return;
+  }
+
+  // Validación del campo password2
+  if (!this.password2) {
+    this.error = true;
+    return;
+  } else if (this.password2 !== this.password) {
+    this.error_password2 = true;
+    return;
+  }
+
+  // Si llega hasta aquí, todos los campos están validados
+  const data = {
+    usuario: this.usuario,
+    nombre: this.nombre,
+    telefono: this.telefono,
+    correo: this.correo,
+    password: this.password,
+    password2: this.password2
+  };
+
+  axios.post('http://localhost:5000/users', data)
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  
+  this.exito = true;
+  this.$router.push('/exito');
+},
+
+// Función para validar correo electrónico
+validarCorreo(correo) {
+  // Expresión regular para validar correo electrónico
+  const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return correoRegex.test(correo);
+},
+
+// Función para validar contraseña
+validarPassword(password) {
+  // La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número
+  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+  return passwordRegex.test(password);
 }
 
-// import axios from 'axios'
 
-// export default {
-//   data() {
-//     return {
-//       usuario:'',
-//       nombre: '',
-//       telefono: '',
-//       correo: '',
-//       password: '',
-//     }
-//   },
-//   methods: {
-//     submitForm() {
-//       const data = {
-//         usuario: this.usuario,
-//         nombre: this.nombre,
-//         telefono: this.telefono,
-//         correo: this.correo,
-//         password: this.password
-//       }
-//       axios.post('http://localhost:5000/users', data)
-//         .then(response => {
-//           console.log(response.data)
-//         })
-//         .catch(error => {
-//           console.error(error)
-//         })
-//     }
-//   }
-// }
+
+    // Original funcionado 
+    // submitForm(e) {
+    //      e.preventDefault();
+    //   if (
+    //     this.usuario &&
+    //     this.nombre &&
+    //     this.telefono &&
+    //     this.correo &&
+    //     this.password &&
+    //     this.password2 === this.password 
+    //   ) {
+    //     const data = {
+    //       usuario: this.usuario,
+    //       nombre: this.nombre,
+    //       telefono: this.telefono,
+    //       correo: this.correo,
+    //       password: this.password,
+    //       password2: this.password2
+    //     }
+        
+    //     axios.post('http://localhost:5000/users', data)
+    //       .then(response => {
+    //         console.log(response.data)
+            
+    //       })
+    //       .catch(error => {
+    //         console.error(error)
+    //       })
+    //       this.exito = true
+    //         this.$router.push('/exito')
+    //   } else {
+    //     this.error = true // cambiamos a true si hay algún campo vacío
+    //   }
+    // }
+  }
+}
 </script>
 
 <style>
@@ -332,13 +389,14 @@ export default {
     padding-top: 7%;
     font-size: 3em;
     z-index:  20;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
+    text-shadow: 0px 0px  5px white;
 }
 .registro{
     background-image: url("https://img.freepik.com/foto-gratis/fondo-azul-degradado-lujo-abstracto-azul-oscuro-liso-banner-estudio-vineta-negra_1258-100378.jpg?w=1380&t=st=1675388778~exp=1675389378~hmac=6831e2b949dd249d94ef90968520bf45b9d99b9230b804deb9da59ce4f439ac4");
     background-repeat: no-repeat;
     background-size: cover;
     height: 320px;
-    /* clip-path: polygon(20% 0%, 80% 0%, 100% 51%, 0 52%); */
 }
 .form__label{
     font-weight: 700;
@@ -349,8 +407,6 @@ export default {
 }
 .form__grupo-input{
     position: relative;
-    
-
 }
 .form__input{
     width: 95%;
@@ -371,11 +427,11 @@ export default {
 .form__input-error{
     font-size: 12px;
     color: red;
-    display: none;
+    /* display: none; */
     margin-bottom:0px ;
 }
 .form__input-error-activo{
-    display: block;
+    /* display: block; */
 }
 .form__validacion-estado{
     right: 10px;
@@ -456,7 +512,6 @@ opacity: 1;
 }
 
 /* ekrani chapseri poqracnel mecacnelu hamar   */
-
 @media screen  and (max-width: 800px){
     .formulario{
         grid-template-columns: 1fr;
@@ -469,5 +524,4 @@ opacity: 1;
         width: 100%;
     }
 }
-    
 </style>

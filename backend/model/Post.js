@@ -18,7 +18,8 @@ const postSchema = new coneccion.Schema({
     text: {
       type: String,
       required: true
-    }
+    },
+    
   });
   
   const Post = coneccion.model('Post', postSchema);

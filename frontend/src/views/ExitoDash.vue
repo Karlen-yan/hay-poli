@@ -3,8 +3,13 @@
   <div class="caja__exito">
     <div class="caja__exito-contenido">
       <h1 class="h1__icono"> ✅ </h1>
-      <h1 class="h1__texto">  La operacion se ha realizado con éxito</h1>
+      <h1 class="h1__texto">El post se ha guardado corectamente</h1>
     </div>
+    
+    <div>
+        <router-link to="/dashboard" class="btn-back"> Atras</router-link>
+    </div>
+     
   </div>
 </template>
 
@@ -28,5 +33,19 @@
  .h1__texto{
     text-align: center;
     color: greenyellow;
+    /* font-size: 20px; */
  }
+ /* button  */
+.btn-back{
+text-align: center;
+text-decoration: none;
+background-color: rgb(56, 84, 103);
+color: white;
+font-size: 18px;
+padding: 10px;
+}
+.btn-back:hover{
+background-color: rgba(56, 84, 103, 0.584);
+color: black;
+}
 </style>
