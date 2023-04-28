@@ -14,6 +14,7 @@ import Registro from '@/views/Registro.vue';
 import Exito from '@/views/Exito.vue';
 import postexito from '@/views/ExitoBlog.vue';
 import Dashboard from '@/views/Dashboardblog.vue';
+import Personalizar from '@/views/PersonalizarRopas.vue';
 
 // rutas configuración
 const routes = [
@@ -71,6 +72,11 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: Dashboard,
+  },
+  {
+    path: '/personalizar',
+    name: 'personalizar',
+    component: Personalizar,
   },
   {
     path: '/exito',
