@@ -1,8 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
-    <div class="registro">
-      <h1>Registrate</h1>
+    <div class="registro animated fadeInDown">
+      <h1 class="animated fadeInDown">Registrate</h1>
       <div style="height: 220px; margin-top: -40px; overflow: hidden;">
         <svg
         viewBox="0 0 500 150"
@@ -17,7 +17,7 @@
     <form
       id="formulario"
       @submit.prevent="submitForm"
-      class="formulario"
+      class="formulario  animated bounceInUp"
     >
       <!-- grupo  usuario -->
       <div

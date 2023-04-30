@@ -11,6 +11,7 @@
           v-for="data in products"
           :key="data.id"
           :data="data"
+           class="animated zoomIn"
         />
       </div>
     </div>

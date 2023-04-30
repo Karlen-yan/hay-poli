@@ -3,7 +3,7 @@
   <div class="content">
     <div class="logo_caja_img">
       <div class="contenido_caja_img"> 
-        <h1 class="logoText">
+        <h1 class="logoText animated fadeInDown">
           Contacta con <span>Nosotros</span>
         </h1>
       </div>
@@ -153,10 +153,9 @@ export default {
     color: #B70E21;
 }
 .contenido_caja_img{
-position: relative;
-top: 40%;
+  position: relative;
+  top: 40%;
 
-  
 }
 .logo_caja_img{
   background-image: url("https://estaticos.muyinteresante.es/uploads/images/article/606255a15bafe87b31e6dabc/eliminar-contactos-iphone_s.jpg");

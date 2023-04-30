@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="login">
-    <div class="iniciarsesion__caja-img">
+  <div class="login animated fadeInDown">
+    <div class="iniciarsesion__caja-img animated fadeInDown">
       <router-link to="/">
         <img
           class="iniciarsecion__img"
@@ -11,7 +11,7 @@
       </router-link>
     </div>
 
-    <h1>Iniciar sesion</h1>
+    <h1 class="animated fadeInDown">Iniciar sesion</h1>
     <form @submit.prevent="login">
       <input type="text" ref="usuario"  placeholder="Username" required="required">
       <input type="password" ref="password"  placeholder="Password"   required="required">

@@ -1,6 +1,6 @@
 <template>
   <div id="api">
-    <h1>BLOG</h1>
+    <h1 class="animated flash">BLOG</h1>
     <div class="raiz_blog">
       <section v-if="errored">
         <p>Lo sentimos, no es posible obtener la información en este momento.</p>
@@ -18,7 +18,7 @@
           v-for="data in posts"
           v-else
           :key="data" 
-          class="caja-imagenes"
+          class="caja-imagenes animated headShake"
         >
           <span class="lighten">
             <router-link :to="{ name: 'Post', params: { id: data._id }}" class="a">

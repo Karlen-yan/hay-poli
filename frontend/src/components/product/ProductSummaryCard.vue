@@ -7,7 +7,7 @@
       v-for="data in productos"
       v-else
       :key="data"
-      class="item__Card" 
+      class="item__Card  animated rotateInDownLeft" 
     >
       <h3>Nombre: {{ data.name }}</h3>
 

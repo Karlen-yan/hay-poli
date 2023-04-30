@@ -1,8 +1,8 @@
 <!-- vue/multi-word-component-names -->
 <template>
   <div class="servicios__contenido">
-    <div class="srvicios__titulo">
-      <h2>Nuestros servicios</h2>
+    <div class="srvicios__titulo animated fadeInDown">
+      <h2 class="animated fadeInDown">Nuestros servicios</h2>
      
       <div style="height: 230px; overflow: hidden;">
         <svg
@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="servisio-cont">
-      <div class="servicio-ind">
+      <div class="servicio-ind animated fadeInLeft">
         <img
           class="servicio-img"
           src="https://img.freepik.com/vector-gratis/servicios-impresion-camisetas-demanda-diseno-ropa-promocional-merch-ropa-productos-personalizados-merchandising-concepto-servicio-diseno-merchandising_335657-124.jpg?w=2000"
@@ -26,7 +26,7 @@
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores dignissimos est autem laudantium cum nemo, dolorum illum quia! Nam placeat temporibus quibusdam earum consectetur, porro molestias doloribus aperiam sequi incidunt!</p>
       </div>
    
-      <div class="servicio-ind">
+      <div class="servicio-ind animated bounceInUp">
         <img
           class="servicio-img"
           src="https://img.freepik.com/vector-premium/horario-agenda-planificador-negocios_121223-1418.jpg?w=2000"
@@ -36,7 +36,7 @@
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores dignissimos est autem laudantium cum nemo, dolorum illum quia! Nam placeat temporibus quibusdam earum consectetur, porro molestias doloribus aperiam sequi incidunt!</p>
       </div>
    
-      <div class="servicio-ind">
+      <div class="servicio-ind animated fadeInRightBig">
         <img
           class="servicio-img"
           src="https://img.freepik.com/vector-gratis/gente-negocios-reunida-discutiendo-discusion_107791-10588.jpg?w=2000"
