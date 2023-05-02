@@ -1,11 +1,11 @@
 # hay-poli
-#Backend
-MONGODB_URI = mongodb+srv://ejemplo:userpassword@cluster0.ojp2btx.mongodb.net/ejemplo # en mongoDB atlas
-PORT = 5000 // por ejemplo
-#Frontend
-myEmail = ejemplo@outlook.com
-myPassword = mycontraseña 
-SENDGRID_API_KEY = ahjkjslkkadkhjklasshdjk  // algo parecido a este 
+# Backend
+# MONGODB_URI = mongodb+srv://ejemplo:userpassword@cluster0.ojp2btx.mongodb.net/ejemplo # en mongoDB atlas
+# PORT = 5000 // por ejemplo
+# Frontend
+# myEmail = ejemplo@outlook.com
+# myPassword = mycontraseña 
+# SENDGRID_API_KEY = ahjkjslkkadkhjklasshdjk  // algo parecido a este 
 
 Regarding the contents of the .env file for the backend, the following steps should be followed:
 
