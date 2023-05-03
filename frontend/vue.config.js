@@ -1,5 +1,4 @@
 module.exports = {
-
   devServer: {
     headers: {
       'Access-Control-Allow-Origin': '*'
@@ -14,5 +13,4 @@ module.exports = {
       'https://hay-poli-frontend.onrender.com/'
     ],
   },
-  
 };
