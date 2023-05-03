@@ -49,9 +49,9 @@ import axios from 'axios';
         },
         mounted(){
             axios
-              //  .get('https://hay-poli.onrender.com/getProducts')
+               .get('https://hay-poli.onrender.com/getProducts')
 
-                .get('http://localhost:5000/getProducts')
+                // .get('http://localhost:5000/getProducts')
                 .then(response =>{
                     this.productos = response.data
                     console.log(this.productos)
