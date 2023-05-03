@@ -76,7 +76,10 @@ export default {
   methods: {
     loadComments() {
   axios
-    .get(`http://localhost:5000/comments/${this.$route.params.id}`)
+    .get(`https://hay-poli.onrender.com/${this.$route.params.id}`)
+    
+    // en local 
+    // .get(`http://localhost:5000/comments/${this.$route.params.id}`)
     .then((response) => {
       this.comments = response.data;
       localStorage.setItem('comments', JSON.stringify(response.data));
@@ -94,7 +97,9 @@ export default {
       };
 
       axios
-        .post(`http://localhost:5000/comments/${this.$route.params.id}`, comment)
+      .post(`https://hay-poli.onrender.com/comments/${this.$route.params.id}`, comment)
+      // en local 
+        // .post(`http://localhost:5000/comments/${this.$route.params.id}`, comment)
         .then((response) => {
           this.comments.push(response.data);
         })
