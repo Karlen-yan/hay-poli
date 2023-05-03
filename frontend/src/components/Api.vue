@@ -60,7 +60,9 @@
         },
         mounted(){
             axios
-                .get('http://localhost:5000/posts')
+                .get('https://hay-poli.onrender.com/posts')
+                // en local
+                // .get('http://localhost:5000/posts')
                 .then(response =>{
                     this.posts = response.data
                 })

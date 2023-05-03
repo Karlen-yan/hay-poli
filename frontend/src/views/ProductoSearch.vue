@@ -37,7 +37,10 @@
     methods: {
       getProductFromRoute() {
         const product = JSON.parse(decodeURIComponent(this.$route.query.product))
-        axios.get(`http://localhost:5000/getProductName/${product.name}`)
+        axios.get(`https://hay-poli.onrender.com/getProductName/${product.name}`)
+        
+        // En local 
+        // axios.get(`http://localhost:5000/getProductName/${product.name}`)
           .then(response => {
             console.log(response.data); 
             this.product = response.data;

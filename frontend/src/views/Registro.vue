@@ -304,7 +304,10 @@ export default {
     password2: this.password2
   };
 
-  axios.post('http://localhost:5000/users', data)
+  axios.post('https://hay-poli.onrender.com/users', data)
+
+  // en local 
+  // axios.post('http://localhost:5000/users', data)
     .then(response => {
       console.log(response.data);
     })
@@ -332,7 +335,7 @@ validarPassword(password) {
 
 
 
-    // Original funcionado 
+    // Original funcionado  sin mas validaciones 
     // submitForm(e) {
     //      e.preventDefault();
     //   if (

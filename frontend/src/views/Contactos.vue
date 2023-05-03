@@ -101,7 +101,10 @@ export default {
           asunto: this.asunto
         }
         
-        axios.post('http://localhost:5000/contacto', data)
+        axios.post('https://hay-poli.onrender.com/contacto', data)
+        
+        // en local
+        // axios.post('http://localhost:5000/contacto', data)
           .then(response => {
             console.log(response.data)
             

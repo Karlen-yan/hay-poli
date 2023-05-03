@@ -50,7 +50,9 @@ export default {
         text: this.text
         }
     
-         axios.post('http://localhost:5000/posts',data)
+         axios.post('https://hay-poli.onrender.com/posts',data)
+        //  en local
+        //  axios.post('http://localhost:5000/posts',data)
           .then(response =>{    
             console.log(response.data)
           })

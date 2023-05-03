@@ -33,7 +33,10 @@ export default {
       const usuario = this.$refs.usuario.value;
       const password = this.$refs.password.value;
 
-      axios.post('http://localhost:5000/api/login', {
+      axios.post('https://hay-poli.onrender.com/api/login', {
+        
+        // en local
+      // axios.post('http://localhost:5000/api/login', {
         usuario: usuario,
         password: password
       })
@@ -49,61 +52,6 @@ export default {
       });}}}
 
 </script>
-
-<!-- Original  -->
-<!-- <template>
-  <div class="login">
-    <div class="iniciarsesion__caja-img">
-      <router-link to="/">
-        <img
-          class="iniciarsecion__img"
-          src="@/components/img/hay-poli.png"
-          alt=""
-        >
-      </router-link>
-    </div>
-
-    <h1>Iniciar sesion</h1>
-    <form @submit.prevent="login">
-      <input type="text" ref="usuario"  placeholder="Username" required="required">
-      <input type="password" ref="password"  placeholder="Password"   required="required">
-      <button type="submit" class="btn btn-primary btn-block btn-large">
-        Iniciar sesión
-      </button>
-      <router-link to="/registro" class="btn btn-primary btn-block btn-large brn__registrarse">Registrarse</router-link>
-    </form>
-  </div>  
-</template>
-
-<script>
-
-import axios from 'axios';
-
-export default {
-  methods: {
-  login() {
-    const usuario = this.$refs.usuario.value;
-    const password = this.$refs.password.value;
-
-    axios.post('http://localhost:5000/api/login', {
-      usuario: usuario,
-      password: password
-    })
-    .then(response => {
-      const user = response.data.user;
-      localStorage.setItem('user', JSON.stringify(user)); // Store user in localStorage
-      this.$router.push('/dashboard'); // Redirect to dashboard
-    })
-    .catch(error => {
-      // handle error
-      console.error(error);
-      alert('Nombre de usuario o contraseña incorrectos');
-    });
-  }
-}
-}
-</> -->
-
 
 <style>
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
@@ -137,9 +85,6 @@ export default {
   background-color: #333333b0;
 }
 .login { 
-	/* position: absolute; */
-	/* top: 0%;
-  bottom: 0%; */
 	width:100%;
 	height: 600px;
   padding: 100px 20px 0 20px;
@@ -206,10 +151,6 @@ export default {
     height: 200px;
 
 }
-footer{
-  /* margin-top: 500px; */
-}
-
 @media all and (max-width: 768px) {
 
 .btn-block {

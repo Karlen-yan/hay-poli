@@ -27,8 +27,11 @@ export default {
     async deletePost(id) {
       try {
         
-    await axios.delete(`http://localhost:5000/posts/${id}`)
-     
+    await axios.delete(`https://hay-poli.onrender.com/posts/${id}`)
+    
+    // en local 
+    // await axios.delete(`http://localhost:5000/posts/${id}`)
+    
     // this.$emit('post-deleted', index);
     this.$router.push('/exito')
   } catch (error) {

@@ -50,7 +50,9 @@ export default {
   },
   mounted() {
     axios
-      .get(`http://localhost:5000/posts/${this.$route.params.id}`)
+      .get(`https://hay-poli.onrender.com/posts/${this.$route.params.id}`)
+      // en local 
+      // .get(`http://localhost:5000/posts/${this.$route.params.id}`)
       .then((response) => {
         this.post = response.data;
       })

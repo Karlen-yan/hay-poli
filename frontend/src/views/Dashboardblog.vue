@@ -45,7 +45,10 @@ export default {
       // If not, redirect to login
       this.$router.push('/iniciarsecion');
     } else {
-      axios.get('http://localhost:5000/posts')
+      axios.get('https://hay-poli.onrender.com/posts')
+      
+      // En local 
+      // axios.get('http://localhost:5000/posts')
         .then(response =>{
           this.posts = response.data
         })
@@ -71,47 +74,7 @@ export default {
 };
 </script>
 
-<!-- Original  -->
-<!-- <template>
-  <div class="dashboard__blog-continer">
-    <h1>Blog Dashboard</h1>
-    <post-form @add-post="addPost"></post-form>
-    <post-list :posts="posts" @delete-post="deletePost" class="listaPost"></post-list>
-  </div>
-</template>
 
-<script>
-import PostForm from '../components/dashboardBlog/PostForm.vue';
-import PostList from '../components/dashboardBlog/PostList.vue';
-import axios from 'axios';
-export default {
-  components: {
-    PostForm,
-    PostList
-  },
-  data() {
-    return {
-      title: '',
-      content: '',
-      posts:[],
-      loading:true,
-      errored:false
-    };
-  },
-  mounted(){
-    axios  
-       .get('http://localhost:5000/posts')
-        .then(response =>{
-              this.posts = response.data
-            })
-         .catch(error =>{
-          console.log(error);
-                    this.errored = true
-                })
-                .finally(()=>this.loading = false)
-  }
-};
-</script> -->
 
 <style>
 /* Container dashboard  */
