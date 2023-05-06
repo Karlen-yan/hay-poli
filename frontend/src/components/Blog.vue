@@ -76,7 +76,7 @@ export default {
   methods: {
     loadComments() {
   axios
-    .get(`https://hay-poli.onrender.com/${this.$route.params.id}`)
+    .get(`https://hay-poli.onrender.com/comments/${this.$route.params.id}`)
     
     // en local 
     // .get(`http://localhost:5000/comments/${this.$route.params.id}`)
