@@ -1,3 +1,7 @@
+// The `<!-- eslint-disable vue/multi-word-component-names -->` comment is disabling a specific ESLint
+// rule for this Vue component. The `vue/multi-word-component-names` rule checks that component names
+// are in PascalCase (i.e. with the first letter of each word capitalized), but this comment disables
+// that rule for this component.
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <form class="postForm"  @submit.prevent="submitForm">
@@ -19,6 +23,14 @@
   </form>
 </template>
 
+// The `script` tag contains the JavaScript code for the Vue component. It imports the Axios library
+// for making HTTP requests, defines the component's data properties (title, img, description, text,
+// error, and exito), and defines the submitForm method that is called when the form is submitted. The
+// submitForm method prevents the default form submission behavior, checks if all required fields are
+// filled out, creates a data object with the form data, and sends a POST request to the specified API
+// endpoint using Axios. If the request is successful, it logs the response data to the console and
+// sets the exito property to true, which triggers a redirect to the postexito page. If any required
+// fields are missing, it sets the error property to true, which displays an error message to the user.
 <script>
 import axios from 'axios';
 

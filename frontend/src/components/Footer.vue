@@ -1,3 +1,6 @@
+// This is a Vue.js template that defines the HTML structure of a footer component. It includes a flex
+// container with two columns, one containing contact information and the other containing social media
+// icons and copyright information. The template also includes CSS styles for the footer component.
 <template>
   <footer>
     <div class="flex-container">
@@ -54,6 +57,9 @@
   </footer>
 </template>
 
+// This is a Vue.js script that exports a default object with a `name` property set to "Footer". This
+// is used to define the name of the Vue component, which can be used in other parts of the application
+// to reference this component.
 
 <script>
 export default {

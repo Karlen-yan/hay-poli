@@ -1,3 +1,9 @@
+// This is a Vue.js template for a blog post page. It includes the post title, image, and text, as well
+// as a section for comments. The comments are displayed using a v-for loop to iterate through an array
+// of comments and display each one with the commenter's name, profile image, comment text, and time.
+// There is also a form for submitting new comments, which includes input fields for the commenter's
+// name and comment text, and a submit button. Finally, there is a button to go back to the blog
+// homepage.
 <template>
   <div class="post__container">
     <h2 class="post__container-header">{{ post.title }}</h2>
@@ -32,6 +38,9 @@
   </div>
 </template>
 
+// This is a Vue.js script that defines the behavior and data for a blog post page. It includes methods
+// for loading comments from an API and submitting new comments, as well as data properties for the
+// post, comments, and form inputs. It also uses the Axios library to make HTTP requests to the API.
 <script>
 import axios from 'axios';
 

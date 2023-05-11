@@ -1,3 +1,11 @@
+/**
+ * This is a Vuex store for managing a shopping cart, with mutations for adding and removing items,
+ * getters for retrieving cart data, and actions for loading and updating cart data from localStorage.
+ * @param cart - The cart is a state property in the Vuex store that represents the items added to the
+ * shopping cart. It is an array that contains objects representing each item, with properties such as
+ * id, name, price, and quantity. The cart is initially empty and is updated through mutations and
+ * actions.
+ */
 
 import {createStore} from 'vuex';
 

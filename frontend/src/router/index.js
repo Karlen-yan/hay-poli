@@ -1,3 +1,7 @@
+/* This is a JavaScript code that sets up the routing configuration for a Vue.js application using the
+Vue Router library. It imports the necessary functions and components from the Vue Router library,
+defines the routes for the application, and creates a router instance using the defined routes and
+web history mode. Finally, it exports the router instance for use in the application. */
 import {createWebHistory, createRouter} from 'vue-router';
 // import app from "@/App.vue";
 import Home from '@/views/Home.vue';

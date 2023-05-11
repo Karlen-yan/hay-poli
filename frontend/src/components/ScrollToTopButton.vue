@@ -1,8 +1,16 @@
+// This is the HTML template for a Vue.js component that creates a button with an arrow icon that
+// appears when the user scrolls down the page and disappears when the user scrolls back up. When
+// clicked, the button will smoothly scroll the page back to the top. The button has an ID of "scroll"
+// and a title of "Scroll to Top". The @click directive is used to call the "scrollToTop" method when
+// the button is clicked.
 <template>
   <a @click="scrollToTop" id="scroll" title="Scroll to Top">
     <i class="fas fa-chevron-up"></i>
   </a>
 </template>
+// This is a Vue.js component that creates a button that appears when the user scrolls down the page
+// and disappears when the user scrolls back up. When clicked, the button will smoothly scroll the page
+// back to the top.
 
 <script>
 export default {

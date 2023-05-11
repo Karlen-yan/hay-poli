@@ -1,3 +1,8 @@
+// This is the template section of a Vue.js component file. It defines the structure of the component's
+// HTML. In this case, it includes a div with an id of "app" that has several child components: NavBar,
+// ScrollToTopButton, Home, a div with a height of 200px, and Footer. The v-scroll directive is used to
+// bind the scrollHandler method to the scroll event of the div. The @scroll-to-top event listener is
+// used to trigger the scrollToTop method when the ScrollToTopButton component is clicked.
 <template>
   <div id="app" v-scroll="scrollHandler" >
     <NavBar @scroll-to-top="scrollToTop" />
@@ -8,6 +13,10 @@
   </div>
 </template>
 
+// This is a script section in a Vue.js component file. It imports several components and a store
+// module, and exports a Vue component named "App". The component includes methods for handling
+// scrolling and updating local storage, and a setup function that triggers a scroll to the top of the
+// page when the route is updated.
 <script>
 // eslint-disable-next-line
 import { onBeforeRouteUpdate } from 'vue-router'

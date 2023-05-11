@@ -1,3 +1,8 @@
+// This is a Vue.js template for a navigation bar component. It includes a hamburger menu icon that
+// toggles a dropdown menu when clicked, links to different pages using Vue Router, a search bar with
+// autocomplete functionality, and a shopping cart icon that displays a dropdown menu with links to
+// different shopping-related pages. The component also includes some responsive styling for mobile
+// devices.
 <template>
   <header>
     <nav>
@@ -100,6 +105,13 @@
     <router-view />
   </header>
 </template>
+
+// This is the script section of a Vue.js component called "NavBar". It includes the component's data,
+// computed properties, methods, and a watch property that listens for changes in the Vue Router's
+//  object and emits an event to scroll to the top of the page. The data property includes a
+// searchQuery string and an array of items to search through. The computed property filters the items
+// array based on the searchQuery string. The handleInput method updates the searchQuery string and
+// updates the Vue Router's path with a query parameter for the first filtered item.
 
 <script>
 
@@ -207,8 +219,6 @@ nav ul li ul li a:hover {
   background-color: #ffffff;
   border-radius: 5px;
   }
-
-
 
 /* contenedor de barra de busqueda  */
 input[type="text" i]{

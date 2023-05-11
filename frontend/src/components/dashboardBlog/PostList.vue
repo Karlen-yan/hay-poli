@@ -1,3 +1,8 @@
+// This is the template section of a Vue component that displays a list of posts. It uses a `v-for`
+// directive to loop through an array of `posts` and display each post's `img`, `title`, `description`,
+// and a "Delete" button. The `deletePost` method is called when the user clicks the "Delete" button,
+// passing in the post's ID and index. The `key` attribute is used to help Vue efficiently update the
+// DOM when the list of posts changes.
 <template>
   <div>
     <div v-for="(post, index) in posts" :key="post._id">
@@ -18,6 +23,11 @@
   </div>
 </template>
 
+// This is a script section of a Vue component that defines a method called `deletePost`. This method
+// uses the Axios library to send a DELETE request to a specified URL with the ID of the post to be
+// deleted. If the request is successful, it redirects the user to a success page using Vue Router. If
+// there is an error, it logs the error to the console. This method is called when the user clicks the
+// "Delete" button in the component's template.
 <script>
 import axios from 'axios';
 
