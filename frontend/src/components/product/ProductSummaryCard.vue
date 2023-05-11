@@ -30,7 +30,7 @@
         class="view-product-button"
         @click="$emit('view-product',data)"
       >
-        Ver más productos
+        Comprar producto
       </button>
     </div>
   </div>
