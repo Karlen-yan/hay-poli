@@ -1,4 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+// The above code is a Vue.js template that defines the structure and content of a webpage. It includes
+// a slider with three images and a text button, followed by a section showcasing some of the company's
+// previous work. The slider is implemented using nested HTML elements and CSS classes, and the content
+// is dynamically generated using Vue.js data and methods.
 <template>
   <div>
     <div class="container">
@@ -60,10 +64,10 @@
             <div class="caja6" />
           </div>
         </div>
-
-
-
-
+<!-- // The above code is displaying a gallery of images with descriptions. The first section
+// displays images of people the company works with, while the second section displays images of
+// bags the company produces. The gallery is responsive and adjusts the number of images
+// displayed based on the screen size. There are also descriptions provided for each image. -->
         <h2 class="h2">
           Con quien trabajamos
         </h2>

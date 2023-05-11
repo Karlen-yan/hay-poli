@@ -1,4 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+// This is a Vue HTML template that defines the structure and content of a success message box. It
+// contains a div with a class of "caja__exito" which serves as the container for the success message.
+// Inside this div, there is another div with a class of "caja__exito-contenido" which contains the
+// actual success message. The message is composed of two h1 elements, one with a class of "h1__icono"
+// which displays a checkmark emoji, and another with a class of "h1__texto" which displays the text
+// "La operacion se ha realizado con éxito" (The operation has been successfully completed).
 <template>
   <div class="caja__exito">
     <div class="caja__exito-contenido">

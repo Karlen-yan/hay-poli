@@ -1,4 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+// The `template` tag contains the HTML code for a Vue component that represents a login form. The
+// form includes input fields for the user's username and password, a submit button, and a link to the
+// registration page. The component also includes a reference to a method called `login` that is
+// triggered when the form is submitted.
 <template>
   <div class="login animated fadeInDown">
     <div class="iniciarsesion__caja-img animated fadeInDown">
@@ -23,6 +27,11 @@
   </div>  
 </template>
 
+// The `script` tag contains JavaScript code that defines a Vue component. The component has a
+// `login` method that sends a POST request to a login API endpoint using the Axios library. If the
+// request is successful, the user object returned by the API is stored in the browser's localStorage
+// and the user is redirected to the dashboard page. If the request fails, an error message is
+// displayed.
 <script>
 
 import axios from 'axios';

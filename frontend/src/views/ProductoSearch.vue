@@ -1,3 +1,7 @@
+// This is a Vue.js template that defines the HTML structure of a search result card. It includes
+// dynamic data bindings using Vue.js syntax, such as `{{ product.name }}` and `{{ product.price }}`,
+// which will display the name and price of a product fetched from an API. It also includes a
+// router-link to navigate to a different page.
 <template>
   <div class="card__search" :key="productRoute">
     <div class="item__Card__search">
@@ -18,6 +22,15 @@
   </div>
 </template>
   
+// This is a Vue.js script that defines the behavior of a search result card component. It imports the
+// Axios library for making HTTP requests, and exports a Vue.js component with a data object that
+// contains a product object with default values for name and description. The component also includes
+// a mounted lifecycle hook that calls the getProductFromRoute method, which retrieves product data
+// from an API endpoint using Axios and sets the product object to the response data. The component
+// also includes a watch property that listens for changes to the route's full path and calls the
+// getProductFromRoute method again. Finally, the component includes a getProductFromRoute method that
+// retrieves the product name from the route query parameters, makes an HTTP GET request to the API
+// endpoint with the product name as a parameter, and sets the product object to the response data.
   <script>
   import axios from 'axios';
   

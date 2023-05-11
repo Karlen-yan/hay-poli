@@ -1,3 +1,8 @@
+// The code is defining the HTML template for a Vue component that allows the user to upload an image,
+// draw on it with different colors, and go back to the dashboard page. It includes an input element
+// for uploading an image, a button to toggle drawing mode, a canvas element for drawing, and three
+// color buttons to select the drawing color. It also includes a router-link element to go back to the
+// dashboard page.
 <template>
   <div class="personalizar-ropa">
     <h1>Personalizar ropa</h1>
@@ -13,10 +18,14 @@
       </div>
     </div>
     <router-link to="/dashboard" class="btn-back">Atras</router-link>
-
   </div>
 </template>
 
+// The code is defining the JavaScript logic for a Vue component that allows the user to upload an
+// image, draw on it with different colors, and go back to the dashboard page. It includes methods for
+// drawing on the canvas, handling file uploads, toggling drawing mode, setting the drawing color, and
+// handling mouse events for drawing. It also uses the interact.js library for handling mouse events on
+// the canvas.
 <script>
 import interact from 'interactjs';
 

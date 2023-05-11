@@ -1,4 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+// This is a Vue.js template that defines the structure and content of a contact form page. It includes
+// HTML markup for the form fields, labels, and buttons, as well as Vue.js directives for data binding
+// and event handling. The template also includes CSS styles for the layout and appearance of the form
+// and contact information.
 <template>
   <div class="content">
     <div class="logo_caja_img">
@@ -12,35 +16,35 @@
       <div class="contact-form">
         <h3>Contacta con nosotros</h3>
         <form @submit.prevent="submitForm">
-      <div>
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" v-model="name">
-      </div>
-      <div>
-        <label for="last_name">Apellido:</label>
-        <input type="text" id="last_name" v-model="last_name">
-      </div>
-      <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" v-model="email">
-      </div>
-      <div>
-        <label for="tel">Telefono:</label>
-        <input type="text" id="tel" v-model="tel">
-      </div>
-      <div>
-        <label for="asunto">Asunto:</label>
-        <input id="asunto" v-model="asunto" />
-      </div>
-      <div>
-        <label for="message">Mensaje:</label>
-        <textarea id="message" v-model="message"></textarea>
-      </div>
-      <div>
-        <button type="submit">Enviar</button>
-      </div>
-    </form>
-    <p v-if="response">{{ response }}</p>
+          <div>
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" v-model="name">
+          </div>
+          <div>
+            <label for="last_name">Apellido:</label>
+            <input type="text" id="last_name" v-model="last_name">
+          </div>
+          <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" v-model="email">
+          </div>
+          <div>
+            <label for="tel">Telefono:</label>
+            <input type="text" id="tel" v-model="tel">
+          </div>
+          <div>
+            <label for="asunto">Asunto:</label>
+            <input id="asunto" v-model="asunto" />
+          </div>
+          <div>
+            <label for="message">Mensaje:</label>
+            <textarea id="message" v-model="message"></textarea>
+          </div>
+          <div>
+            <button type="submit">Enviar</button>
+          </div>
+        </form>
+        <p v-if="response">{{ response }}</p>
       </div>
       <div class="contact-info">
         <h4>Más información</h4>
@@ -66,6 +70,11 @@
   </div>
 </template>
 
+// This is a Vue.js script that defines the behavior of the contact form page. It includes data
+// properties for the form fields, as well as methods for submitting the form and handling the
+// response. It also uses the Axios library to make a POST request to a server endpoint with the form
+// data. The script also includes commented out code for a different POST request to a different server
+// endpoint.
 <script>
 import axios from 'axios';
 

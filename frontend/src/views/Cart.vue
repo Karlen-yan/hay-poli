@@ -1,3 +1,5 @@
+// This allows the component
+// `CartItemCard` to be in camelCase instead of PascalCase.
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="cart__contenido">
@@ -18,6 +20,11 @@
   </div>
 </template>
 
+// This script is importing the `CartItemCard` component from the `../components/cart/CartItemCard.vue`
+// file and registering it as a component in the current Vue component. It also defines a `products`
+// computed property that retrieves the cart items from the Vuex store using the `cartItems` getter.
+// The `props` object defines the `data` and `active` props that can be passed down to child
+// components.
 <script>
 import CartItemCard from '../components/cart/CartItemCard.vue'
 export default {

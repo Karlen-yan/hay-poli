@@ -1,4 +1,11 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<!-- This is a template for a registration form in HTML and Vue.js. The form includes fields for username, name, phone number, email, password, and a confirmation of the password. The form also includes validation messages for each field.
+
+In addition, the form uses some CSS classes from the Animate.css library to add some animation effects to the form.
+
+The Vue.js code for the form includes a submitForm method that will be called when the form is submitted. The method will perform some validation of the form fields, and if the form is valid, it will send the form data to the server using an HTTP request.
+
+Overall, this template provides a good starting point for creating a registration form for a web application. -->
 <template>
   <div>
     <div class="registro animated fadeInDown">
@@ -226,6 +233,11 @@
   </div>
 </template>
 
+// The above code is a Vue component that handles form submission. It includes data properties for the
+// form fields, methods for form validation and submission, and an axios post request to send the form
+// data to a server. The form fields are validated for required fields, valid email format, and strong
+// password criteria. If all fields are valid, the form data is sent to the server and the user is
+// redirected to a success page. If any fields are invalid or empty, an error message is displayed.
 <script>
 //  eslint-disable vue/multi-word-component-names 
 import axios from 'axios'

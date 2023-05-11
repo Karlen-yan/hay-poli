@@ -1,4 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+// This is the HTML template for a Vue component that represents a blog dashboard. It includes several
+// child components such as `post-form` and `post-list`, as well as a FontAwesomeIcon component for a
+// logout button. The template also includes a router-link to a "Personaliza tu ropa" page.
 <template>
   <div class="dashboard__blog-continer">
     <div class="dashboard__header">
@@ -13,6 +16,10 @@
   </div>
 </template>
 
+// This is the script section of a Vue component that represents a blog dashboard. It imports the
+// `PostForm` and `PostList` components, as well as the `axios` library for making HTTP requests. It
+// also imports and configures the `FontAwesomeIcon` component from the `@fortawesome/vue-fontawesome`
+// package.
 <script>
 import PostForm from '../components/dashboardBlog/PostForm.vue';
 import PostList from '../components/dashboardBlog/PostList.vue';
