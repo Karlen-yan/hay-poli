@@ -11,6 +11,9 @@
 # myPassword = mycontraseña 
 # SENDGRID_API_KEY = ahjkjslkkadkhjklasshdjk  // algo parecido a este 
 
+# *********************
+# Database and Backend
+# *********************
 Regarding the contents of the .env file for the backend, the following steps should be followed:
 
 # Create a database in MongoDB Atlas.
