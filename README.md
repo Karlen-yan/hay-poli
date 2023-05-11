@@ -1,4 +1,4 @@
-# hay-poli
+# hay-poli (Página de personalizar ropas y más servicios)
 # Backend
 # MONGODB_URI = mongodb+srv://ejemplo:userpassword@cluster0.ojp2btx.mongodb.net/ejemplo # en mongoDB atlas
 # PORT = 5000 // por ejemplo
