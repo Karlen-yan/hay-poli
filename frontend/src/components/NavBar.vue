@@ -44,7 +44,7 @@
             <input type="text" v-model="searchQuery" @keyup.enter="handleInput" placeholder="Buscar...">
             <ul>
               <li v-for="item in filteredItems" :key="item">
-                 {{ item }}
+                {{ item }}
               </li>
             </ul>
           </div>

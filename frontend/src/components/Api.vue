@@ -1,3 +1,9 @@
+// This is a Vue.js template that defines the HTML structure and dynamic data bindings for a component
+// named "Api". The template includes a header with a title, two sections that conditionally render
+// based on the component's data properties "errored" and "loading", and a loop that iterates over the
+// "posts" data property and renders a set of images and text for each post. The template also uses
+// Vue.js directives such as "v-if", "v-for", and "v-html" to conditionally render elements and bind
+// data to the DOM.
 <template>
   <div id="api">
     <h1 class="animated flash">BLOG</h1>
@@ -41,6 +47,12 @@
   </div>
 </template>
 <script>
+ // This code is defining a Vue component named "Api". It imports the Axios library for making HTTP
+ // requests and uses it to fetch data from an API endpoint. The fetched data is stored in the
+ // component's "posts" data property. The component also has a "loading" boolean property that is set
+ // to true initially and set to false when the data has finished loading. If there is an error while
+ // fetching the data, the "errored" boolean property is set to true. The component also defines a
+ // filter named "currencydecimal" that formats a number to two decimal places.
  import axios from 'axios';
     export default{
         // eslint-disable-next-line vue/multi-word-component-names

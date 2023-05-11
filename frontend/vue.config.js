@@ -5,7 +5,7 @@ module.exports = {
     },
     allowedHosts: [
       'all'
-      
+
     ],
   },
 };
