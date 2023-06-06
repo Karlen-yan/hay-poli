@@ -1,15 +1,15 @@
-# hay-poli (Página de personalizar ropas y más servicios)
+# hay-poli
 # ***********
 # * Backend *
 # ***********
 # MONGODB_URI = mongodb+srv://ejemplo:userpassword@cluster0.ojp2btx.mongodb.net/ejemplo # en mongoDB atlas
-# PORT = 5000 // por ejemplo
+# PORT = 5000 //example
 # ************
 # * Frontend *
 # ************
 # myEmail = ejemplo@outlook.com
 # myPassword = mycontraseña 
-# SENDGRID_API_KEY = ahjkjslkkadkhjklasshdjk  // algo parecido a este 
+# SENDGRID_API_KEY = ahjkjslkkadkhjklasshdjk  // example
 
 # *********************
 # Database and Backend
