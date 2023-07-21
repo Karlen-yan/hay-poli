@@ -117,11 +117,6 @@
 
 export default {
   name: "NavBar",
-  watch: {
-    $route() {
-      this.$emit("scroll-to-top");
-    },
-  },
   data() {
     return {
       searchQuery: '',
@@ -138,6 +133,11 @@ export default {
         return this.items.filter(item => item.toLowerCase().includes(lowerCaseQuery))
       }
     }
+  },
+  watch: {
+    $route() {
+      this.$emit("scroll-to-top");
+    },
   },
   methods: {
     handleInput(event) {
