@@ -39,6 +39,10 @@
       "plugin:vue/vue3-essential",
       "eslint:recommended"
     ],
+    "engines": {
+      "node": ">=14 <15"
+    }
+    ,
     "parserOptions": {
       "parser": "vue-eslint-parser"
     },
