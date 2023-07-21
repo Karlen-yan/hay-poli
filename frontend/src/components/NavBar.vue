@@ -125,7 +125,7 @@ export default {
   data() {
     return {
       searchQuery: '',
-      items: ['camiceta', 'camiceta blanca', 'pantalones', 'camisa', 'chaqueta', 'chaqueta roja', 'camiceta amarilla','camiceta negra'],
+      items: ['camiseta', 'camiseta blanca', 'pantalones', 'camisa', 'chaqueta', 'chaqueta roja', 'camiseta amarilla','camiseta negra'],
       productRoute: '/getproduct'
     }
   },
