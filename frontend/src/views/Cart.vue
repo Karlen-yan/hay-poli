@@ -1,6 +1,6 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 // This allows the component
 // `CartItemCard` to be in camelCase instead of PascalCase.
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="cart__contenido">
     <div class="cart__titulo">

@@ -124,7 +124,7 @@ export default {
 .post__container{
     background-color: rgb(95, 120, 136);
     padding-bottom: 10%;
-  }
+}
 .post__container-header{
   padding-top: 6%;
    text-align: center;
