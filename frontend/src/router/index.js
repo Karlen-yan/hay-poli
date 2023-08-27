@@ -4,7 +4,7 @@ defines the routes for the application, and creates a router instance using the 
 web history mode. Finally, it exports the router instance for use in the application. */
 import {createWebHistory, createRouter} from 'vue-router';
 // import app from "@/App.vue";
-import Home from '@/views/Home.vue';
+import HomePage from '@/views/HomePage.vue';
 import servicio from '@/views/ServiciosPagina.vue';
 import contacto from '@/views/Contactos.vue';
 import iniciarSecion from '@/views/IniciarSesion.vue';
@@ -24,8 +24,8 @@ import Personalizar from '@/views/PersonalizarRopas.vue';
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    name: 'HomePage',
+    component: HomePage,
   },
   {
     path: '/servicios',

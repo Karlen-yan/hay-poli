@@ -4,10 +4,9 @@
 // bind the scrollHandler method to the scroll event of the div. The @scroll-to-top event listener is
 // used to trigger the scrollToTop method when the ScrollToTopButton component is clicked.
 <template>
-  <div id="app" v-scroll="scrollHandler" >
+  <div id="app" v-scroll="scrollHandler">
     <NavBar @scroll-to-top="scrollToTop" />
     <ScrollToTopButton />
-    <Home />
     <div style="height: 200px;"></div>
     <Footer />
   </div>
@@ -35,24 +34,24 @@ export default {
 
   },
   methods: {
-    created() {
-    store.commit("updateLocalStorage");
-  },
     scrollHandler() {
       return true;
     },
+    created() {
+    store.commit("updateLocalStorage");
+  },
     scrollToTop() {
       window.scrollTo({
         top: 0,
         behavior: "smooth",
       });
     },
-  },
     setup() {
       onBeforeRouteUpdate(() => {
       this.scrollToTop();          
     });
     },
+  },
 
   };
 

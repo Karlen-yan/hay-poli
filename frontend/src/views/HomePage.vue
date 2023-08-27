@@ -508,7 +508,11 @@
     </div>
   </div>
 </template>
-
+<script>
+export default {
+  name: "HomePage", 
+};
+</script>
 <style>
     /* imagenes de dentro de cards */
 .container2 {
