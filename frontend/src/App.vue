@@ -67,9 +67,6 @@ body{
 
 }
 
-/* .app{
-  height: 100%;
-} */
 .container {
   display: grid;
   grid-auto-rows: 1fr;

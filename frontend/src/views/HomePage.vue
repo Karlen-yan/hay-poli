@@ -25,7 +25,7 @@
               <a
                 href="#"
                 class="btn_slider"
-              >HOLA</a>
+              >Leer más</a>
             </div>
 
             <figure>

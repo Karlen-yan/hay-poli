@@ -71,7 +71,7 @@ export default {
 footer {
   /* position: relative; */
   /* bottom: 0; */
-  background-color: #02385938;
+   /* background-color: #60788852; */
   opacity: 0.7;
   width: 100%;
 }
