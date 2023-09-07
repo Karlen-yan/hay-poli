@@ -95,6 +95,7 @@ import axios from 'axios';
 .card__img{
     margin-top: -90px;
     border: solid 4px white;
+    border-radius: 5px;
     width: 50%;
     height: 150px;
 }

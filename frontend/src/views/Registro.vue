@@ -167,19 +167,13 @@ Overall, this template provides a good starting point for creating a registratio
       <!-- Terminos y condiciones  -->
 
       <div class="form__grupo-terminos">
-        <label
-          for="terminos"
-          class="form__label"
+        <input
+          id="terminos"
+          type="checkbox"
+          name="terminos"
+          class="form__input-checkbox"
         >
-          
-          <input
-            id="terminos"
-            type="checkbox"
-            name="terminos"
-            class="form__input-checkbox"
-          >
-          Acepto los terminos y condiciones 
-        </label>
+        Acepto los terminos y condiciones 
       </div>
 
       <!-- Mensaje error  -->
@@ -194,7 +188,6 @@ Overall, this template provides a good starting point for creating a registratio
       </div>
 
       <!-- Btn enviar  -->
-
 
       <div class="form__grupo form__grupo-btn-enviar">
         <button
@@ -392,8 +385,8 @@ validarPassword(password) {
     padding-top: 7%;
     font-size: 3.50em;
     z-index:  20;
-    border-bottom: 5px solid #66D8F2;
-    width: 160px;
+    border-bottom: 2px solid #66D8F2;
+    width: 180px;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
 }
 
@@ -410,19 +403,11 @@ validarPassword(password) {
     z-index: 20;
     
   }
-.form__label{
-    font-weight: 700;
-    padding: 0;
-    display: block;
-    cursor: pointer;
-    color: white;
-
-}
 .form__grupo-input{
     position: relative;
 }
 .form__input{
-    width: 95%;
+    width: 90%;
     height: 50px;
     line-height: 45px;
     border-radius: 3px ;
@@ -460,8 +445,13 @@ validarPassword(password) {
     opacity: 0;
     z-index: 100;
 }
+.form__grupo-terminos{
+  margin-right: 50px;
+}
 .form__input-checkbox{
     margin-right: 10px;
+    margin-left: 30px;
+    
 }
 .form__grupo-terminos,
 .form__grupo-btn-enviar,
