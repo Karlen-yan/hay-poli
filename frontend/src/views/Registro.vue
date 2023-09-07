@@ -420,7 +420,7 @@ validarPassword(password) {
     font-size: 16px;
 }
 .form__input::placeholder { 
-  color: white; 
+  color: rgba(255, 255, 255, 0.687); 
 }
 
 .form__input:focus{

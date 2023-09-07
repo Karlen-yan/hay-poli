@@ -20,7 +20,7 @@
       <input type="text" ref="usuario"  placeholder="Username" required="required">
       <input type="password" ref="password"  placeholder="Password"   required="required">
       <button type="submit" class="btn btn-primary btn-block btn-large">
-        Iniciar sesión
+       <span style="color:white; ">Iniciar</span> sesión
       </button>
       <router-link to="/registro" class="btn btn-primary btn-block btn-large brn__registrarse">Registrarse</router-link>
     </form>
@@ -64,7 +64,7 @@ export default {
 
 <style>
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
-.btn { display: inline-block; *display: inline; text-decoration: none;  background-color: #f5f5f5; }
+.btn { display: inline-block; display: inline; text-decoration: none;  background-color: #f5f5f5; }
 .btn-large { padding: 9px 14px; font-size: 15px; line-height: normal; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
 .btn:hover { color: #333333; text-decoration: none; background-color: #e6e6e6; background-position: 0 -15px; -webkit-transition: background-position 0.1s linear; -moz-transition: background-position 0.1s linear; -ms-transition: background-position 0.1s linear; -o-transition: background-position 0.1s linear; transition: background-position 0.1s linear; }
 .btn-primary, .btn-primary:hover { text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); color: #ffffff; }
@@ -73,66 +73,74 @@ export default {
 .btn-primary:hover, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled] { filter: none; background-color: #4a77d4; }
 
 .btn-block {
-     width: 20%; 
+     width: 15%; 
      height: 10%;
      display:block;
      margin: 0 auto;
      cursor: pointer;
-
+     margin-top: 30px;
     }
 .brn__registrarse{
-     width: 20%; 
+     width: 15%; 
      height: 10%;
      display:block;
-     margin-top: 10px;
+     margin-top: 15px;
      background-color: rgb(32, 144, 69);
      cursor: pointer;
      text-align: center;
 }
 .btn-block:hover{
  box-shadow: 0px 0px 20px silver ;
-  background-color: #333333b0;
+  background-color: #02385958;
 }
+/* login  */
 .login { 
 	width:100%;
 	height: 600px;
   padding: 100px 20px 0 20px;
-  background-image:url("@/components/img/fondo_iniciarsesion.jpg");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size:cover;
-  clip-path: polygon(20% 0%, 80% 0%, 100% 0, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0 0);
+  background-image: linear-gradient(
+    to bottom,
+    #02385958,
+    #02385946,
+    #02385915
+    );
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size:cover;
+    clip-path: polygon(20% 0%, 80% 0%, 100% 0, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0 0);
   box-shadow: 2px 4px 7px  black;
   
     
 }
 .login h1 {
-     color: #fff; 
-     text-shadow: 0 0 10px rgba(0,0,0,0.3); letter-spacing:1px; 
+     color: #023859; 
+     text-shadow: 0 0 2px #fff; letter-spacing:1px; 
      text-align:center;
-     padding: 20px;
+     padding: 10px;
+     margin-bottom: 5px;
+     margin-top: 5px;
      }
  
 .login input { 
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 	margin: 0 auto;
-    width: 50%; 
-	margin-bottom: 10px; 
-	background: rgba(0,0,0,0.3);
-	border: none;
+  width: 30%; 
+	margin-bottom: 20px; 
+	background-color: #02385900 ;
+  border: none;
+	border-bottom: 2px solid white;
 	outline: none;
 	padding: 10px;
 	font-size: 13px;
-	color: #fff;
-	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-	border: 1px solid rgba(0,0,0,0.3);
+	color: #023859;
 	border-radius: 4px;
-	box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2);
 	transition: box-shadow .5s ease;
     
 }
-
+.login input::placeholder{
+  color:#023859;
+}
 .login input:focus { 
     box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2);
     }
@@ -142,18 +150,14 @@ export default {
     margin: 0 auto;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    border: 1px solid white;
+    align-items: center;    
     border-radius: 10%;
-    /* box-shadow: 3px 5px 8px silver ; */
-
-}
-.iniciarsesion__caja-img:hover{
-    box-shadow: 0px 0px 20px silver ;
-    background-color: #333333b0;
+    background-color: #02385958;
+    border: 2px white solid;
 }
 .iniciarsecion__img{
     width: 97%;
+    color: #66D8F2;
 }
 
 .espacio{
@@ -173,41 +177,4 @@ export default {
 
 }
 
-
-/* 
-.login { 
-    background-color:#0a2b40d3;
-	margin: 0 auto;
-    margin-top: 200px;
-    padding:150px;
-	width:60%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 2px 3px 8px black;
-
-}
-.login h1 { color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.3); letter-spacing:1px; text-align:center; }
-
-.login form input { 
-	width: 100%; 
-	margin-bottom: 10px; 
-	background: rgba(0,0,0,0.3);
-	border: none;
-	outline: none;
-	padding: 10px;
-	font-size: 13px;
-	color: #fff;
-	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-	border: 1px solid rgba(0,0,0,0.3);
-	border-radius: 4px;
-	box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2);
-	-webkit-transition: box-shadow .5s ease;
-	-moz-transition: box-shadow .5s ease;
-	-o-transition: box-shadow .5s ease;
-	-ms-transition: box-shadow .5s ease;
-	transition: box-shadow .5s ease;
-}
-.login form input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2); } */
 </style>
