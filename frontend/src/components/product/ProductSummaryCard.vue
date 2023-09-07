@@ -9,14 +9,14 @@
       :key="data"
       class="item__Card  animated rotateInDownLeft" 
     >
-      <h3>Nombre: {{ data.name }}</h3>
-
-      <img
+    
+    <img
         :src="data.img"
         :alt="data.name"
         class="card__img"
-      >
-
+        >
+      <h2 class="product__name">{{ data.name }}</h2>
+        
       <h5 class="price">
         Precio: ${{ data.price }}
       </h5>
@@ -72,29 +72,34 @@ import axios from 'axios';
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  margin: 2px;
-  padding: 5px;
-  border-radius: 5px;
-  background-color: white;
-  box-shadow: 0 0 5px  gray;
-  margin-top: 100px;
-  text-align: center;
   justify-content: center;
   align-items: center;
-  background-color: #0a2b40;
+  text-align: center;
+  margin-top: 0;
+  padding-top: 90px;
+  background-image: linear-gradient(
+    to bottom,
+    #02385958,
+    #02385914,
+    #02385900
+  );
 }
 .item__Card{
-  border: solid 1px  rgb(79, 160, 187);
+  border: solid 1px  white;
   padding: 15px;
-  margin: 15px;
+  margin: 120px 15px 15px 15px;
   width: 30%;
   background-color: white;
+  border-radius: 15px;
 }
 .card__img{
-    
-    padding: 7px;
+    margin-top: -90px;
+    border: solid 4px white;
     width: 50%;
     height: 150px;
+}
+.product__name{
+  color:#023859 ;
 }
 .price{
   color: gray;
@@ -104,7 +109,7 @@ import axios from 'axios';
 .description{
   font-size: .85rem;
   padding: 5px;
-
+  color: #0a2b40;
 }
 .text-muted{
   color: gray;

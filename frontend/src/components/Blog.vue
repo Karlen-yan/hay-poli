@@ -122,7 +122,12 @@ export default {
 
 <style>
 .post__container{
-    background-color: rgb(95, 120, 136);
+  background-image: linear-gradient(
+    to bottom,
+    #02385958,
+    #02385914,
+    #02385900
+  );
     padding-bottom: 10%;
 }
 .post__container-header{
@@ -130,8 +135,9 @@ export default {
    text-align: center;
    color: white;
    font-weight: normal;
-   text-shadow: rgb(66, 66, 215) -2px 2px 4px, #66D8F2 1px -2px 4px;
+   text-shadow: black -2px .50px 2px, silver 1px -2px 4px;
    font-size: 2rem;
+   font-family: Candara;
  }
  .post__container-img{
    margin-left: 35%;
@@ -141,21 +147,36 @@ export default {
    box-shadow: 0 0 30px black;
  }
  .post__container-text{
-  text-align: left;
-  max-width: 80%;
-  margin: 0 auto;
-  line-height: 25px;
-  padding: 30px;
-  color: white;
-  font-size: 18px;
-  font-family:Georgia, 'Times New Roman', Times, serif;
+   text-align: left;
+   max-width: 80%;
+   margin: 20px auto;
+   line-height: 25px;
+   padding: 80px 100px 80px 100px;
+   background-image: linear-gradient(
+    to left,
+    #02385906,
+    #fff,
+    #fff,
+    #fff,
+    #fff,
+    #fff,
+    #fff,
+    #02385906
+    
+  );
+   color:#607888;
+   box-shadow: -2px 6px -7px silver;
+   border: none;
+   font-size: 16px;
+   font-family:Georgia, 'Times New Roman', Times, serif;
  }
 .coment__title{
    text-align: center;
-   margin-top: 5%;
+   margin-top: 6%;
    color: #66D8F2;
    text-shadow: white 1px 1px 2px ;
    border-top: 1px solid white;
+   padding-top: 5px;
 }
 .coment__lista-perfil{
   text-decoration: none;
@@ -207,7 +228,7 @@ export default {
 }
  /* button send  */
  .form__comentario-button{
-  background-color: #023859;
+  background-color: #607888;
   color: #66D8F2;
   padding: 10px;
   border:none;
@@ -223,7 +244,7 @@ export default {
 .btn-back{
   text-align: center;
   text-decoration: none;
-  background-color: rgb(56, 84, 103);
+  background-color: #607888;
   color: white;
   font-size: 18px;
   padding: 10px;

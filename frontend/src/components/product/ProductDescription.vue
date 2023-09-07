@@ -6,29 +6,55 @@
       @click="$emit('close-product-drawer')"
     />
     <div class="drawer" :class="{ show: active }">
-      <div class="drawer-close" @click="$emit('close-product-drawer')">X</div>
+      <div 
+        class="drawer-close" 
+        @click="$emit('close-product-drawer')"
+      >
+        X
+      </div>
 
-      <div v-if="data" class="product-details">
-        <h3 class="text-center">
+      <div 
+        v-if="data" 
+        class="product-details"
+      >
+        <h2 class="text-center product__details-name">
           {{ data.name }}
-        </h3>
+        </h2>
         <p class="description">
           {{ data.description }}
         </p>
-        <h3 class="text.center">${{ data.price}}</h3>
+        <h2 class="text.center product__details-price">${{ data.price }}
+        </h2>
 
-        <div v-if="product_total" class="cart-total">
-          <h3>En la tarjeta</h3>
-          <h4>{{ product_total }}</h4>
+        <div 
+          v-if="product_total" 
+          class="cart-total"
+        >
+          <h4 class="product__total-title">
+            En la tarjeta
+          </h4>
+          <h4 class="product__total">
+            {{ product_total }}
+          </h4>
         </div>
 
         <div class="button-container">
-          <button class="remove" @click="removeFromCart()">Eliminar</button>
-          <button class="add" @click="addToCart()">Añadir</button>
+          <button 
+            class="remove" 
+            @click="removeFromCart()"
+          >
+            Eliminar
+          </button>
+          <button 
+            class="add" 
+            @click="addToCart()"
+          >
+            Añadir
+          </button>
         </div>
       </div>
     </div>
-  </div>  
+  </div>
 </template>
 <script>
 
@@ -39,19 +65,16 @@ export default {
   computed: {
     product_total() {
       return this.$store.getters.productQuantity(this.data);
-    }
+    },
   },
   methods: {
-    
     addToCart() {
       this.$store.commit("addToCart", this.data);
     },
     removeFromCart() {
       this.$store.commit("removeFromCart", this.data);
-    }
-
-    
-  }
+    },
+  },
 };
 </script>
 
@@ -110,9 +133,17 @@ export default {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  .product__details-name{
+      color: #023859;
+    }
+  
   p.description {
     padding: 20px;
     line-height: 1.5rem;
+  }
+  
+  .product__details-price{
+    color: #023859;
   }
 
   .button-container {
@@ -124,6 +155,19 @@ export default {
       margin: 0 5px 50px 5px;
       cursor: pointer;
     }
+  }
+}
+.cart-total{
+  text-align: center;
+  margin: 0 5px 30px 5px;
+  color: #02385958;
+  .product__total-title{
+     font-size: 25px;
+    }
+    
+    .product__total{
+    font-size: 25px;
+
   }
 }
 

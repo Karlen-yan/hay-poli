@@ -7,7 +7,7 @@
   <div id="app" v-scroll="scrollHandler">
     <NavBar @scroll-to-top="scrollToTop" />
     <ScrollToTopButton />
-    <div style="height: 200px;"></div>
+    <div class="heigt_div" style="height: 200px;"></div>
     <Footer />
   </div>
 </template>

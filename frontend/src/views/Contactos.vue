@@ -14,7 +14,6 @@
     </div>
     <div class="contact-wrapper animated bounceInUp">
       <div class="contact-form">
-        <h3>Contacta con nosotros</h3>
         <form @submit.prevent="submitForm">
           <div>
             <label for="name">Nombre:</label>
@@ -54,7 +53,7 @@
           <li><i class="fas fa-envelope-open-text" /> Hay@Poli.com</li>
         </ul>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero provident ipsam necessitatibus repellendus?</p>
-        <p>HayPoli.com</p>
+        <p>hay-poli.vercel.app</p>
         <!-- Google mapa  -->
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23946.36456083902!2d2.105628546596092!3d41.38938706885139!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a279425a8f21%3A0x23e0874a0e6110c2!2sPlaza%20de%20Espa%C3%B1a%2C%2008004%20Barcelona!5e0!3m2!1ses!2ses!4v1671814432574!5m2!1ses!2ses"
@@ -154,20 +153,28 @@ export default {
 
 <style>
 
+.content{
+  background-image: linear-gradient(
+    to bottom,
+    #02385958,
+    #02385901,
+    #02385900
+  );
+}
 
 .logoText {
     text-align: center;
     font-size: 3em;
-    background-color: rgba(255, 255, 255, 0.541);
+    background-color:white;
+
  }
 
 .logoText span {
-    color: #B70E21;
+    color: #66D8F2;
 }
 .contenido_caja_img{
   position: relative;
   top: 40%;
-
 }
 .logo_caja_img{
   background-image: url("https://estaticos.muyinteresante.es/uploads/images/article/606255a15bafe87b31e6dabc/eliminar-contactos-iphone_s.jpg");
@@ -189,12 +196,13 @@ export default {
 }
 
 .contact-form {
-    background: #02385972;
-    color: white;
+  background: #02385972;
+  color: white;
 }
 
+
 .contact-form form {
-    display: grid;
+  display: grid;
     grid-template-columns: 1fr 1fr;
     margin: 10px;
 }
@@ -218,45 +226,52 @@ export default {
 .contact-form form button,
 .contact-form form input,
 .contact-form form textarea {
-    width: 100%;
+  width: 100%;
     padding: .6em;
     border: none;
-    /* background: rgba(192, 192, 192, 0.11); */
-    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.684);
+    background: rgba(192, 192, 192, 0.11);
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.684); */
     outline: 0;
-    /* color: #fff; */
-    border-bottom: 1px solid #d63031;
+    border-bottom: 1px solid #66D8F2;
 }
 
 .contact-form form button {
-    background: #B70E21;
+  background: #66D8F2;
     color: white;
     border: 0;
     text-transform: uppercase;
     padding: 1em;
     margin: 0 auto;
+    cursor: pointer;
+    width: 100px;
 }
 
 .contact-form form button:hover,
 .contact-form form button:focus {
-    background: #d63031;
-    color: #fff;
-    transition: background-color 1s ease-out;
+  background: #434343;
+  color: #fff;
+  transition: background-color 1s ease-out;
     outline: 0;
 }
 
 /* CONTACT INFO */
 .contact-info {
-    background-color: #023859a4;
-    color:white;
-
+  background-color: #023859;
+  opacity:.70;
+  color:white;
+  
 }
 
 .contact-info h4, .contact-info ul, .contact-info p {
-    text-align: center;
-    margin: 0 0 1rem 0;
+  text-align: center;
+  margin: 0 0 1rem 0;
 }
 
+.contact-info h4{
+  color: #66D8F2;
+  text-shadow: 0 0 1px black;
+  font-size: 2rem;
+}
 /* LARGE SIZE */
 @media(min-width: 768px) {
     .contact-wrapper {

@@ -6,7 +6,7 @@
 // data to the DOM.
 <template>
   <div id="api">
-    <h1 class="animated flash">BLOG</h1>
+    <h1>BLOG</h1>
     <div class="raiz_blog">
       <section v-if="errored">
         <p>Lo sentimos, no es posible obtener la información en este momento.</p>
@@ -24,22 +24,28 @@
           v-for="data in posts"
           v-else
           :key="data" 
-          class="caja-imagenes animated headShake"
+          class="caja-imagenes"
         >
           <span class="lighten">
-            <router-link :to="{ name: 'Post', params: { id: data._id }}" class="a">
-              <img
-                :src="data.img"
-                :alt="data.name"
-                class="imagenes"
-              >
-              <div>
-                <h1>{{ data.id }}</h1>
-                <h2 class="blog__h2">{{ data.title }}</h2>
-                <p class="blog__p">{{ data.description }}</p>             
+            <div class="algo">
+              <h1>{{ data.id }}</h1>
+              <h2 class="blog__h2">{{ data.title }}</h2>
+              <div class="item__img">
+               <img
+                 :src="data.img"
+                 :alt="data.name"
+                 class="blogimagenes"
+               >   
               </div>
-              <span v-html="data.name" />
-            </router-link>
+              <p class="blog__p">{{ data.description }}</p>
+              <div class="item__blog-a">
+                <router-link :to="{ name: 'Post', params: { id: data._id }}" class="link__blog-a">
+                  <a>Leer más</a>
+                </router-link>
+                
+              </div>             
+            </div>
+            <span v-html="data.name"/>
           </span>
         </div>
       </section>
@@ -90,63 +96,89 @@
 <style>
 
 #api{
-    background-color:  rgb(95, 120, 136);
-    color: white;
-    padding-top: 10%;
+  background-image: linear-gradient(
+    to bottom,
+    #02385958,
+    #02385914,
+    #02385900
+  );
+  padding-top: 10%;
+}
+#api h1{
+  font-size: 3em;
+  color: white;
   }
-  #api h1{
-    font-size: 3em;
-  }
-  .raiz_blog{
+  /* .raiz_blog{
     width: 100%;
     display: flex;
     flex-direction: column-reverse;
     justify-content: center;
-    align-items: center;
-    /* clip-path: polygon(9% 0, 91% 0, 100% 11%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0 11%); */
-  
-}
+    align-items: center;  
+} */
 .contenido_de_blog{
-    width: 80%;
-    border: 3px solid white;
-    margin: 50px;
-    padding: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 50px;
+}
+.lighten {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  background-color: white;
+  box-shadow: 0 0 5px silver;
+  padding: 30px;
+  margin: 5px;
+  width: 100%;
+  height: 470px;
 }
 /* imagenes */
 
 .caja-imagenes{
-    padding: 5px;
-    width: 100%;
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+.item__img{
+  display: flex;
 }
-.imagenes{
-    width: 350px;
-    height: 100%;
+.blogimagenes{
+  
+  margin:15px auto;
+  width: 50%;
+  height: 20%;
+
 }
 .blog__h2{
   font-size: 20px;
-  color:#1F92BF;
-}
-.blog__h2:hover{
-  color:  rgb(66, 66, 215);
 }
 .blog__p{
   font-size: 15px;
+  color: black;
 }
-.a{
-display: flex;
-justify-content: center;
-align-items: center;
-cursor: pointer;
-text-decoration: none;
-background-color: #023859;
-color: white;
-text-align: center;
-padding: 5px;
-margin: 0px 2px 2px 1px;
+
+.item__blog-a{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
 }
-.a:hover{
- background-color: white;
- color: black;
+.link__blog-a{
+  color:white;
+  background-color: #66D8F2;
+  margin: 30px;
+  padding:5px;
+  text-decoration:none;
+  cursor:pointer;
+  text-align: center;
 }
 
 </style>

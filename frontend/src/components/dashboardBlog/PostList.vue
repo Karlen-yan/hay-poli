@@ -7,11 +7,10 @@
   <div>
     <div v-for="(post, index) in posts" :key="post._id">
       <div class="post__list-continer">
-        
-          <img
+        <img
           :src="post.img"
           :alt="post.name"
-          class="imagenes" >
+          class="imagenes">
         
         <div class="post__list-continer-extra">
           <h4>{{ post.title }}</h4>
