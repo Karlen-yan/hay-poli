@@ -10,7 +10,7 @@ Overall, this template provides a good starting point for creating a registratio
   <div>
     <div class="registro animated fadeInDown">
       <h1 class="animated fadeInDown">Registrate</h1>
-      <div style="height: 220px; margin-top: -40px; overflow: hidden;">
+      <div style="height: 280px; margin-top: -120px; overflow: hidden;">
         <svg
         viewBox="0 0 500 150"
         preserveAspectRatio="none"
@@ -31,16 +31,13 @@ Overall, this template provides a good starting point for creating a registratio
         id="grupo__usuario"
         class="form__grupo"
       >
-        <label
-          for="usuario"
-          class="form__label"
-        >Usuario</label>
         <div class="form__grupo-input">
           <input
             id="usuario"
             type="text"
             name="usuario"
             class="form__input"
+            placeholder="Usuario"
             v-model="usuario"
             required
           >
@@ -57,10 +54,6 @@ Overall, this template provides a good starting point for creating a registratio
         id="grupo__nombre"
         class="form__grupo"
       >
-        <label
-          for="nombre"
-          class="form__label"
-        >Nombre</label>
         <div class="form__grupo-input">
           <input
             id="nombre"
@@ -68,6 +61,7 @@ Overall, this template provides a good starting point for creating a registratio
             name="nombre"
             class="form__input"
             v-model="nombre"
+            placeholder="Nombre"
             required
           >
 
@@ -83,10 +77,6 @@ Overall, this template provides a good starting point for creating a registratio
         id="grupo__telefono"
         class="form__grupo"
       >
-        <label
-          for="telefono"
-          class="form__label"
-        >Telefono</label>
         <div class="form__grupo-input">
           <input
             id="telefono"
@@ -94,6 +84,7 @@ Overall, this template provides a good starting point for creating a registratio
             name="telefono"
             class="form__input"
             v-model="telefono"
+            placeholder="Teléfono"
             required
           >
 
@@ -110,10 +101,6 @@ Overall, this template provides a good starting point for creating a registratio
         id="grupo__correo"
         class="form__grupo"
       >
-        <label
-          for="correo"
-          class="form__label"
-        >Correo Electronico</label>
         <div class="form__grupo-input">
           <input
             id="correo"
@@ -121,6 +108,7 @@ Overall, this template provides a good starting point for creating a registratio
             name="correo"
             class="form__input"
             v-model="correo"
+            placeholder="Correo Electronico"
             required
           >
 
@@ -136,10 +124,6 @@ Overall, this template provides a good starting point for creating a registratio
         id="grupo__password"
         class="form__grupo"
       >
-        <label
-          for="password"
-          class="form__label"
-        >Contraseña</label>
         <div class="form__grupo-input">
           <input
             id="password"
@@ -147,6 +131,7 @@ Overall, this template provides a good starting point for creating a registratio
             name="password"
             class="form__input"
             v-model="password"
+            placeholder="Contraseña"
             required
           >
 
@@ -163,16 +148,13 @@ Overall, this template provides a good starting point for creating a registratio
         id="grupo__password2"
         class="form__grupo"
       >
-        <label
-          for="password2"
-          class="form__label"
-        >Repetir Contraseña</label>
         <div class="form__grupo-input">
           <input
             id="password2"
             type="password"
             name="password2"
             class="form__input"
+            placeholder="Repetir Contraseña"
             v-model="password2">
 
           <i class="form__validacion-estado  fas fa-times-circle" />
@@ -386,63 +368,85 @@ validarPassword(password) {
 </script>
 
 <style>
+  .registro{
+    background-image: linear-gradient(
+    to bottom,
+    #02385958,
+    #02385914,
+    #02385900
+  );
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 350px;
+  }
+.registro h1{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+    text-align: center;
+    color:  #023859;
+    text-shadow: 0 0 3px #66D8F2;
+    padding-bottom: 5px;
+    margin: 0 auto;
+    padding-top: 7%;
+    font-size: 3.50em;
+    z-index:  20;
+    border-bottom: 5px solid #66D8F2;
+    width: 160px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
+}
+
 .formulario{
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 9px;
-    background-color: #0a2b40;
+    background-color: #02385958;
     width:1200px;
     margin: 5px auto;
     padding: 20px;
     border-radius: 10px;
-    margin-top: 1.50%;
+    margin-top: -50px;
+    z-index: 20;
     
-}
-.registro h1{
-    text-align: center;
-    color: #0a2b40;
-    padding-top: 7%;
-    font-size: 3em;
-    z-index:  20;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
-    text-shadow: 0px 0px  5px white;
-}
-.registro{
-    background-image: url("https://img.freepik.com/foto-gratis/fondo-azul-degradado-lujo-abstracto-azul-oscuro-liso-banner-estudio-vineta-negra_1258-100378.jpg?w=1380&t=st=1675388778~exp=1675389378~hmac=6831e2b949dd249d94ef90968520bf45b9d99b9230b804deb9da59ce4f439ac4");
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 320px;
-}
+  }
 .form__label{
     font-weight: 700;
-    padding: 15px;
+    padding: 0;
     display: block;
     cursor: pointer;
     color: white;
+
 }
 .form__grupo-input{
     position: relative;
 }
 .form__input{
     width: 95%;
-    height: 40px;
-    line-height: 40px;
+    height: 50px;
+    line-height: 45px;
     border-radius: 3px ;
     border: 3px solid transparent;
     padding: 0px 40px 0px 10px ;
     transition:.3s ease all ;
-    background-color: white;
-    margin: 10px;
+    background-color: #02385900;
+    border-bottom:solid 1px #66D8F2;
+    margin: 30px;
+    font-size: 16px;
 }
+.form__input::placeholder { 
+  color: white; 
+}
+
 .form__input:focus{
-    border:3px solid rgb(26, 28, 170) ;
+    border:3px solid  #66D8F2;
     outline: none;
-    box-shadow: 3px 0px 30px 0px  rgb(112, 110, 110);
+    box-shadow: 0 0 5px  rgb(112, 110, 110);
 }
 .form__input-error{
     font-size: 12px;
     color: red;
-    /* display: none; */
+    display: none;
     margin-bottom:0px ;
 }
 .form__input-error-activo{
@@ -485,7 +489,7 @@ validarPassword(password) {
     margin: 15px;
 }
 .form__btn{
-    background-color: black;
+    background-color: #66D8F2;
     color: white;
     width: 30%;
     height: 45px;
@@ -497,8 +501,7 @@ validarPassword(password) {
     cursor:pointer;
 }
 .form__btn:hover{
-    box-shadow: 3px 0px 30px rgb(100, 100, 100); 
-    background-color: rgba(28, 28, 28, 0.415);
+    background-color: #66d8f262;
 }
 .form__mensaje-exito{
     font-size: 14px;
