@@ -21,11 +21,6 @@
 
             <div class="caja_slider_text_btn">
               <h1>Personaliza tu ropa con tu marca</h1>
-              <br>
-              <a
-                href="#"
-                class="btn_slider"
-              >Leer más</a>
             </div>
 
             <figure>
@@ -514,6 +509,18 @@ export default {
 };
 </script>
 <style>
+/* btn slider  */
+.caja_slider_text_btn {
+  position: absolute;
+  color: #023859;
+  top: 30%;
+  padding: 15px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.233);
+}
+.caja_slider_text_btn > h1 {
+  font-size: 40px;
+}
     /* imagenes de dentro de cards */
 .container2 {
   max-width: 100%;
@@ -612,6 +619,13 @@ h3{
 }
 
 @media (max-width: 768px) {
+  .caja_slider_text_btn {
+  top: 15%;
+  padding: 15px;
+}
+.caja_slider_text_btn > h1 {
+  font-size: 25px;
+}
   .card2 {
     flex-basis: calc(calc(100% / 3) - 20px);
   }
@@ -699,9 +713,9 @@ div.desc {
 }
 .h2{
   margin-top: 30px;
- background-color: white;
+  background-color: white;
   width: 100%;
-  height: 100px;
+  height: 100%;
   padding: 30px;
 }
 
@@ -710,6 +724,7 @@ div.desc {
     width: 49.99999%;
     margin: 6px 0;
   }
+  
 }
 
 @media only screen and (max-width: 500px) {

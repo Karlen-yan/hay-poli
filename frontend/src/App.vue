@@ -134,30 +134,16 @@ main {
     margin-left: -200%;
   }
 }
-/* btn slider  */
-.caja_slider_text_btn {
-  position: absolute;
-  color: #023859;
-  top: 30%;
-  padding: 15px;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.233);
-}
-.caja_slider_text_btn > h1 {
-  font-size: 40px;
-}
 
-/* ***** hay que acabar  ****  **/
-/* Boton de slider 1   */
-.btn_slider {
-  position: absolute;
-  background-color: rgba(140, 144, 148, 0.789);
-  padding: 10px;
-  margin-top: 50px;
-  margin-left: 50%;
-  text-decoration: none;
-  color: white;
-  font-size: 30px;
+@media (max-width: 768px) {
+  .slider-container {
+  height: 100%;
+}
+.slider {
+  height: 30vh;
+  margin-top: 30px;
+  margin-bottom: 0;
+}
 }
 /******* fin slider ****/
 

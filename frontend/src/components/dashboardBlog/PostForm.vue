@@ -17,20 +17,18 @@
     <label for="text">Contenido:</label><br>
     <textarea id="text" class="text" v-model="text"></textarea>
 
-    <button  type="submit"  class="post__form-button">Guardar</button>
-    <p v-show="error">Por favor complete todos los campos. </p>
-
+    <button  
+      type="submit"  
+      class="post__form-button"
+    >
+      Guardar
+    </button>
+    <p v-show="error">
+      Por favor complete todos los campos. 
+    </p>
   </form>
 </template>
 
-// The `script` tag contains the JavaScript code for the Vue component. It imports the Axios library
-// for making HTTP requests, defines the component's data properties (title, img, description, text,
-// error, and exito), and defines the submitForm method that is called when the form is submitted. The
-// submitForm method prevents the default form submission behavior, checks if all required fields are
-// filled out, creates a data object with the form data, and sends a POST request to the specified API
-// endpoint using Axios. If the request is successful, it logs the response data to the console and
-// sets the exito property to true, which triggers a redirect to the postexito page. If any required
-// fields are missing, it sets the error property to true, which displays an error message to the user.
 <script>
 import axios from 'axios';
 
@@ -87,11 +85,13 @@ export default {
   margin-top: 50px;
   display: flex;
   flex-direction: column;
-  background-color: #0a2b40;
-  padding: 15px;
-  color: rgba(255, 255, 255, 0.752);
+  float: right;
+  background-color: white;
+  color:  black;
   font-size: 18px;
-  margin: 20px;
+  width: 80%;
+  margin: 0 auto;  
+  padding: 20px;
   
 }
 .postForm input{

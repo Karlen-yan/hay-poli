@@ -3,17 +3,23 @@
 // child components such as `post-form` and `post-list`, as well as a FontAwesomeIcon component for a
 // logout button. The template also includes a router-link to a "Personaliza tu ropa" page.
 <template>
-  <div class="dashboard__blog-continer">
-    <div class="dashboard__header">
-      <router-link to="/personalizar" class="btn-back"> Personaliza tu ropa</router-link>
-    </div>
-    <h1>Blog Dashboard</h1>
-    <post-form @add-post="addPost"></post-form>
-    <post-list :posts="posts" @delete-post="deletePost" class="listaPost"></post-list>
+  <div class="Layout__dashboard">
+    <div class="dashboard__blog-continer"> 
+      <div class="dashboard">
+        <DashboardMenu />
+        
+        <post-form  ref="postForm" @add-post="addPost"></post-form>
+
+      </div>
+
+
+      <post-list :posts="posts"
+        @delete-post="deletePost" class="listaPost"></post-list>
     <div class="item__icon">
       <FontAwesomeIcon :icon="['fasr', 'arrow-right-from-bracket']" class="logout" @click="logout" />
     </div>
   </div>
+</div>
 </template>
 
 // This is the script section of a Vue component that represents a blog dashboard. It imports the
@@ -27,6 +33,7 @@ import axios from 'axios';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import DashboardMenu from '../components/dashboardBlog/DashboardMenu.vue';
 
 library.add(faArrowRightFromBracket)
 
@@ -34,8 +41,8 @@ export default {
   components: {
     PostForm,
     PostList,
-    FontAwesomeIcon
-  
+    FontAwesomeIcon,
+    DashboardMenu
   },
   data() {
     return {
@@ -68,15 +75,17 @@ export default {
   },
   methods: {
     logout() {
-      localStorage.removeItem('user'); // Remove user from localStorage
-      this.$router.push('/iniciarsecion'); // Redirect to login
+      localStorage.removeItem('user'); 
+
+      this.$router.push('/iniciarsecion'); 
     },
     addPost(post) {
       this.posts.push(post);
     },
     deletePost(postId) {
       this.posts = this.posts.filter(post => post.id !== postId);
-    }
+    },
+   
   }
 };
 </script>
@@ -86,16 +95,25 @@ export default {
 <style>
 /* Container dashboard  */
 .dashboard__blog-continer{
-  background-color: rgb(95, 120, 136);
-  padding-top: 6%;
-}
+  background-image: linear-gradient(
+    to bottom,
+    #02385958,
+    #02385914,
+    #02385900
+    );
+    padding-top: 3.90%;
+  }
+  .dashboard{
+   display: flex;
+   flex-direction: row;
+
+  }
 .dashboard__blog-continer h1{
   color: white;
   font-size: 2rem;
   padding-bottom: 15px;
+
 }
-
-
 .item__icon{
   width: 91%;
 }
